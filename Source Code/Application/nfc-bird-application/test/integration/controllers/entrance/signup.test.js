@@ -35,5 +35,4 @@ describe('entrance/signup.login', function() {
       .end(done);
     });
   });
-
 });
