@@ -45,39 +45,16 @@ module.exports = {
         extendedDescription: 'Must be one of MALE / FEMALE / UNKNOWN'
       },
 
-      motherId: {
-        required: false,
-        type: 'string',
-        description: 'The ID of the mother bird',
-        extendedDescription: 'Must match an existing bird in the database.'
-      },
-
-      fatherId: {
-        required: false,
-        type: 'string',
-        description: 'The ID of the father bird.',
-        extendedDescription: 'Must match an existing bird in the database.'
-      },
-
       fatherName: {
         required: false,
         type: 'string',
-        description: 'The name of the father bird, if not stored in the database.',
-        extendedDescription: 'If this is provided, fatherId must be empty'
-      },
-
-      secondFatherId: {
-        required: false,
-        type: 'string',
-        description: 'The ID of the second father bird.',
-        extendedDescription: 'Must match an existing bird in the database.'
+        description: 'The name of the father bird.'
       },
 
       secondFatherName: {
         required: false,
         type: 'string',
-        description: 'The name of the second father bird, if not stored in the database.',
-        extendedDescription: 'If this is provided, secondFatherId must be empty'
+        description: 'The name of the second father bird.'
       },
 
       groupName: {
@@ -89,8 +66,7 @@ module.exports = {
       motherName: {
         required: false,
         type: 'string',
-        description: 'The name of the mother bird, if not stored in the database.',
-        extendedDescription: 'If this is provided, secondFatherId must be empty'
+        description: 'The name of the mother bird.'
       },
 
       nfcRingId: {
