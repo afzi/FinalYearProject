@@ -25,6 +25,8 @@ module.exports.routes = {
   'GET /login':              { action: 'entrance/view-login' },
   'GET /password/new':       { action: 'entrance/view-new-password' },
 
+  'GET /bird/register':      { action: 'bird/view-create-bird' },
+
   'GET /account':            { action: 'account/view-account-overview' },
   'GET /account/password':   { action: 'account/view-edit-password' },
   'GET /account/profile':    { action: 'account/view-edit-profile' },
@@ -48,12 +50,12 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
-  '/api/v1/account/logout':                           { action: 'account/logout' },
-  'PUT   /api/v1/account/update-password/:userId?':            { action: 'account/update-password' },
-  'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
+  '/api/v1/account/logout':                              { action: 'account/logout' },
+  'PUT   /api/v1/account/update-password/:userId?':      { action: 'account/update-password' },
+  'PUT   /api/v1/account/update-profile':                { action: 'account/update-profile' },
   'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-  'POST  /api/v1/bird/create-bird':    { action: 'bird/create-bird' }
+  'POST  /api/v1/bird/create-bird':                      { action: 'bird/create-bird' }
 
 };
