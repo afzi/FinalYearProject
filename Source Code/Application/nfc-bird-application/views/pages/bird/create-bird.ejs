@@ -1,4 +1,3 @@
-
 <div id="signup" v-cloak>
         <div class="container" v-if="!cloudSuccess">
           <h1 class="text-center">Register New Bird</h1>
@@ -34,12 +33,12 @@
                 </div>
 
                 <div class="form-group">
-                    <select id="sex" class="form-control">
-                        <option value="" disabled selected hidden>Gender</option>
-                        <option value="male" >Male</option>
-                        <option value="female">Female</option>
-                        <option value="unknown">unknown</option>
-                    </select>
+                <select id="sex" class="form-control">
+                    <option value="" disabled selected hidden>Gender</option>
+                    <option value="male" >Male</option>
+                    <option value="female">Female</option>
+                    <option value="unknown">unknown</option>
+                </select>
                     <!-- <input type="radio" value="male" :class= "[formErrors.gender ? 'is-invalid' : '']" v-model.trim="formData.gender"> Male
                     <div class="invalid-feedback" v-if="formErrors.gender">Male</div>
                     <input type="radio" value="female" :class="[formErrors.gender ? 'is-invalid' : '']" v-model.trim="formData.gender"> Female
@@ -120,21 +119,89 @@
                     <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
                 </div>
         
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="whenReleased" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
-                    <div class="invalid-feedback" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
-                </div>
-
-              
-              <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your username. Please select a different one.</small></p>
-
-              <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
-              
-              <div class="form-group">
-                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Register bird</ajax-button>
-              </div>
-            </ajax-form>
-          </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="motherName" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
+            <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
         </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="fatherId" :class="[formErrors.fatherId ? 'is-invalid' : '']" v-model.trim="formData.fatherId" autocomplete="fatherId">
+            <div class="invalid-feedback" v-if="formErrors.fatherId">Please provide fatherId.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="fatherName" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
+            <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="secondFatherId" :class="[formErrors.secondFatherId ? 'is-invalid' : '']" v-model.trim="formData.secondFatherId" autocomplete="secondFatherId">
+            <div class="invalid-feedback" v-if="formErrors.secondFatherId">Please provide second FatherId.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="secondFatherName" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
+            <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="groupName" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim="formData.groupName" autocomplete="groupName">
+            <div class="invalid-feedback" v-if="formErrors.groupName">Please provide groupName.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="nfcRingId" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" autocomplete="nfcRingId">
+            <div class="invalid-feedback" v-if="formErrors.nfcRingId">Please provide nfc RingId.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="layDate" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
+            <div class="invalid-feedback" v-if="formErrors.layDate">Please provide layDate.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="hatchDate" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
+            <div class="invalid-feedback" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="incDays" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
+            <div class="invalid-feedback" v-if="formErrors.incDays">Please provide incDays.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="whereHatched" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
+            <div class="invalid-feedback" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="whereFledged" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
+            <div class="invalid-feedback" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
+            <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="whereReleased" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
+            <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="whenReleased" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
+            <div class="invalid-feedback" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
+        </div>
+
+          <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+          
+          <div class="form-group">
+            <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Register</ajax-button>
+          </div>
+        </ajax-form>
       </div>
-      <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
+    </div>
+  </div>
+  <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
+  

@@ -19,12 +19,6 @@ module.exports = {
         description: 'The STUD ID (legacy)'
       },
   
-      newStudId: {
-        required: false,
-        type: 'string',
-        description: 'The new STUD ID (legacy)'
-      },
-  
       leftRingId:  {
         required: false,
         type: 'string',
@@ -168,16 +162,25 @@ module.exports = {
   
       invalid: {
         responseType: 'badRequest',
-        description: 'The provided fullName, password and/or username are invalid.',
+        description: 'The provided input is invalid.',
         extendedDescription: 'If this request was sent from a graphical user interface, the request '+
         'parameters should have been validated/coerced _before_ they were sent.'
       },
   
-      usernameAlreadyInUse: {
+      birdNameAlreadyInUse: {
         statusCode: 409,
-        description: 'The provided username is already in use.',
+        description: 'The provided bird name is already in use.',
+      },
+
+      rfidAlreadyInUse: {
+        statusCode: 409,
+        description: 'The provided RFID has already been assigned to another bird.',
       },
   
+      parentNotMatching: {
+        statusCode: 409,
+        description: 'One or more of the parents couldn\'t be resolved to an existing bird; use name instead of ID',
+      }
     },
   
   
