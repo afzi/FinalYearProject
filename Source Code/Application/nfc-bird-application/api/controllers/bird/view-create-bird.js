@@ -23,9 +23,15 @@ module.exports = {
   
     fn: async function () {
   
+<<<<<<< HEAD
       // if (this.req.me) {
       //   throw {redirect: '/'};
       // }
+=======
+    //   if (this.req.me) {
+    //     throw {redirect: '/'};
+    //   }
+>>>>>>> dde2e2ea0320ee5d925748fc2d850129a9c56e8d
   
       return {};
   
