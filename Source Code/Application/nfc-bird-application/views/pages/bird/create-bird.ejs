@@ -1,3 +1,4 @@
+ 
 <div id="signup" v-cloak>
         <div class="container" v-if="!cloudSuccess">
           <h1 class="text-center">Register New Bird</h1>
@@ -7,28 +8,28 @@
              
                 <div class="form-group">
                     <!-- <label for="password">Stud ID</label> -->
-                    <input id="studId" type="text" class="form-control" placeholder="studId" :class="[formErrors.studId ? 'is-invalid' : '']" v-model.trim="formData.studId" autocomplete="studId" focus-first>
+                    <input id="studId" type="text" class="form-control" placeholder="Stud Id" :class="[formErrors.studId ? 'is-invalid' : '']" v-model.trim="formData.studId" autocomplete="studId" focus-first>
                     <div class="invalid-feedback" v-if="formErrors.studId">Please provide a valid studId.</div>
                 </div>
 
                 <div class="form-group">
                     <!-- <label for="password">New Stud ID</label> -->
-                    <input id="newStudId" type="text" class="form-control" placeholder="newStudId" :class="[formErrors.newStudId ? 'is-invalid' : '']" v-model.trim="formData.newStudId" autocomplete="newStudId">
+                    <input id="newStudId" type="text" class="form-control" placeholder="New Stud Id" :class="[formErrors.newStudId ? 'is-invalid' : '']" v-model.trim="formData.newStudId" autocomplete="newStudId">
                     <div class="invalid-feedback" v-if="formErrors.newStudId">Please enter New StudId.</div>
                 </div>
 
                 <div class="form-group">
-                    <input id="leftRingId" type="text" class="form-control" placeholder="leftRingId" :class="[formErrors.leftRingId ? 'is-invalid' : '']" v-model.trim="formData.leftRingId" autocomplete="leftRingId">
+                    <input id="leftRingId" type="text" class="form-control" placeholder="Left Ring Id" :class="[formErrors.leftRingId ? 'is-invalid' : '']" v-model.trim="formData.leftRingId" autocomplete="leftRingId">
                     <div class="invalid-feedback" v-if="formErrors.leftRingId">Please enter left RingId.</div>
                 </div>
         
                 <div class="form-group">
-                    <input id="rightRingId" type="text" class="form-control" placeholder="rightRingId" :class="[formErrors.rightRingId ? 'is-invalid' : '']" v-model.trim="formData.rightRingId" autocomplete="rightRingId">
+                    <input id="rightRingId" type="text" class="form-control" placeholder="Right Ring Id" :class="[formErrors.rightRingId ? 'is-invalid' : '']" v-model.trim="formData.rightRingId" autocomplete="rightRingId">
                     <div class="invalid-feedback" v-if="formErrors.rightRingId">Please enter Right RingId.</div>
                 </div>
 
                 <div class="form-group">
-                    <input id="echoName" type="text" class="form-control" placeholder="echoName" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName">
+                    <input id="echoName" type="text" class="form-control" placeholder="Bird Name" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName">
                     <div class="invalid-feedback" v-if="formErrors.echoName">Please provide EchoName.</div>
                 </div>
 
@@ -44,156 +45,95 @@
                     <input type="radio" value="female" :class="[formErrors.gender ? 'is-invalid' : '']" v-model.trim="formData.gender"> Female
                     <div class="invalid-feedback" v-if="formErrors.gender">Female</div> -->
                 </div>
-
-                <div class="form-group">
-                    <input id="motherId" type="text" class="form-control" placeholder="motherId" :class="[formErrors.motherId ? 'is-invalid' : '']" v-model.trim="formData.motherId" autocomplete="motherId">
-                    <div class="invalid-feedback" v-if="formErrors.motherId">Please provide motherId.</div>
-                </div>
-                
-                <div class="form-group">
-                    <input id="motherName" type="text" class="form-control" placeholder="motherName" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
-                    <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="fatherId" type="text" class="form-control" placeholder="fatherId" :class="[formErrors.fatherId ? 'is-invalid' : '']" v-model.trim="formData.fatherId" autocomplete="fatherId">
-                    <div class="invalid-feedback" v-if="formErrors.fatherId">Please provide fatherId.</div>
-                </div>
-
-                <div class="form-group">
-                    <input id="fatherName" type="text" class="form-control" placeholder="fatherName" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
-                    <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="secondFatherId" type="text" class="form-control" placeholder="secondFatherId" :class="[formErrors.secondFatherId ? 'is-invalid' : '']" v-model.trim="formData.secondFatherId" autocomplete="secondFatherId">
-                    <div class="invalid-feedback" v-if="formErrors.secondFatherId">Please provide second FatherId.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="secondFatherName" type="text" class="form-control" placeholder="secondFatherName" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
-                    <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
-                </div>
-        
                 <div class="form-group">
                     <input id="groupName" type="text" class="form-control" placeholder="groupName" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim="formData.groupName" autocomplete="groupName">
                     <div class="invalid-feedback" v-if="formErrors.groupName">Please provide groupName.</div>
                 </div>
                 <div class="form-group">
-                    <input id="nfcRingId" type="text" class="form-control" placeholder="nfcRingId" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" autocomplete="nfcRingId">
+                    <input id="nfcRingId" type="text" class="form-control" placeholder="nfc Ring Id" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" autocomplete="nfcRingId">
                     <div class="invalid-feedback" v-if="formErrors.nfcRingId">Please provide nfc RingId.</div>
                 </div>
-        
-                <div class="form-group">
-                    <input id="layDate" type="text" class="form-control" placeholder="layDate" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
-                    <div class="invalid-feedback" v-if="formErrors.layDate">Please provide layDate.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="hatchDate" type="text" class="form-control" placeholder="hatchDate" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
-                    <div class="invalid-feedback" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="incDays" type="text" class="form-control" placeholder="incDays" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
-                    <div class="invalid-feedback" v-if="formErrors.incDays">Please provide incDays.</div>
-                </div>
+
+                <div style="padding:5px 0px!important;" class="container">
+                <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">+ Family</button>
+                    
+                    <!-- <div id="demo" class="form-group collapse">
+                        <input id="motherId" type="text" class="form-control" placeholder="motherId" :class="[formErrors.motherId ? 'is-invalid' : '']" v-model.trim="formData.motherId" autocomplete="motherId">
+                        <div class="invalid-feedback" v-if="formErrors.motherId">Please provide motherId.</div>
+                    </div> -->
+                    
+                    <div id="demo" class="form-group collapse">
+                        <input id="motherName" type="text" class="form-control" placeholder="motherName" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
+                        <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
+                    </div>
+
+                    <!-- <div id="demo" class="form-group collapse">
+                        <input id="fatherId" type="text" class="form-control" placeholder="fatherId" :class="[formErrors.fatherId ? 'is-invalid' : '']" v-model.trim="formData.fatherId" autocomplete="fatherId">
+                        <div class="invalid-feedback" v-if="formErrors.fatherId">Please provide fatherId.</div>
+                    </div> -->
+    
+                    <div id="demo" class="form-group collapse">
+                        <input id="fatherName" type="text" class="form-control" placeholder="fatherName" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
+                        <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
+                    </div>
             
-                <div class="form-group">
-                    <input id="whereHatched" type="text" class="form-control" placeholder="whereHatched" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
-                    <div class="invalid-feedback" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
-                </div>
+                    <!-- <div id="demo" class="form-group collapse">
+                        <input id="secondFatherId" type="text" class="form-control" placeholder="secondFatherId" :class="[formErrors.secondFatherId ? 'is-invalid' : '']" v-model.trim="formData.secondFatherId" autocomplete="secondFatherId">
+                        <div class="invalid-feedback" v-if="formErrors.secondFatherId">Please provide second FatherId.</div>
+                    </div> -->
+            
+                    <div id="demo" class="form-group collapse">
+                        <input id="secondFatherName" type="text" class="form-control" placeholder="secondFatherName" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
+                        <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
+                    </div>
+
+                  </div>
+
+                  <div style="padding:5px 0px!important;" class="container">
+                    <button style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">+ History</button>
+
+                    <div id="demo2" class="form-group collapse">
+                        <input id="layDate" type="text" class="form-control" placeholder="layDate" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
+                        <div class="invalid-feedback" v-if="formErrors.layDate">Please provide layDate.</div>
+                    </div>
+            
+                    <div id="demo2" class="form-group collapse">
+                        <input id="hatchDate" type="text" class="form-control" placeholder="hatchDate" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
+                        <div class="invalid-feedback" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
+                    </div>
+            
+                    <div id="demo2" class="form-group collapse">
+                        <input id="incDays" type="text" class="form-control" placeholder="incDays" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
+                        <div class="invalid-feedback" v-if="formErrors.incDays">Please provide incDays.</div>
+                    </div>
+                
+                    <div id="demo2" class="form-group collapse">
+                        <input id="whereHatched" type="text" class="form-control" placeholder="whereHatched" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
+                        <div class="invalid-feedback" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
+                    </div>
+            
+                    <div id="demo2" class="form-group collapse">
+                        <input id="whereFledged" type="text" class="form-control" placeholder="whereFledged" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
+                        <div class="invalid-feedback" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
+                    </div>
+            
+                    <div id="demo2" class="form-group collapse">
+                        <input id="whenFledged" type="text" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
+                        <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
+                    </div>
+            
+                    <div id="demo2" class="form-group collapse">
+                        <input id="whenReleased" type="text" class="form-control" placeholder="whereReleased" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
+                        <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
+                    </div>
+
+                    <div id="demo2" class="form-group collapse">
+                        <input type="text" class="form-control" placeholder="whenReleased" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
+                        <div class="invalid-feedback" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
+                    </div>
+
+                  </div>
         
-                <div class="form-group">
-                    <input id="whereFledged" type="text" class="form-control" placeholder="whereFledged" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
-                    <div class="invalid-feedback" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="whenFledged" type="text" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
-                    <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
-                </div>
-        
-                <div class="form-group">
-                    <input id="whenReleased" type="text" class="form-control" placeholder="whereReleased" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
-                    <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
-                </div>
-        
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="motherName" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
-            <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="fatherId" :class="[formErrors.fatherId ? 'is-invalid' : '']" v-model.trim="formData.fatherId" autocomplete="fatherId">
-            <div class="invalid-feedback" v-if="formErrors.fatherId">Please provide fatherId.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="fatherName" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
-            <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="secondFatherId" :class="[formErrors.secondFatherId ? 'is-invalid' : '']" v-model.trim="formData.secondFatherId" autocomplete="secondFatherId">
-            <div class="invalid-feedback" v-if="formErrors.secondFatherId">Please provide second FatherId.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="secondFatherName" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
-            <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="groupName" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim="formData.groupName" autocomplete="groupName">
-            <div class="invalid-feedback" v-if="formErrors.groupName">Please provide groupName.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="nfcRingId" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" autocomplete="nfcRingId">
-            <div class="invalid-feedback" v-if="formErrors.nfcRingId">Please provide nfc RingId.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="layDate" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
-            <div class="invalid-feedback" v-if="formErrors.layDate">Please provide layDate.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="hatchDate" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
-            <div class="invalid-feedback" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="incDays" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
-            <div class="invalid-feedback" v-if="formErrors.incDays">Please provide incDays.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="whereHatched" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
-            <div class="invalid-feedback" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="whereFledged" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
-            <div class="invalid-feedback" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
-            <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="whereReleased" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
-            <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="whenReleased" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
-            <div class="invalid-feedback" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
-        </div>
-
           <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
           
           <div class="form-group">
@@ -203,5 +143,5 @@
       </div>
     </div>
   </div>
-  <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
+  <!-- <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %> -->
   
