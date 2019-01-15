@@ -17,11 +17,11 @@ module.exports = {
             unique: true,
         },
         birdID: {
-            modal: 'Bird',
+            model: 'Bird',
             unique: true,
         },
         nfcRFIDInternal: {
-            modal: 'RFIDTag',
+            model: 'RFIDTag',
             required: true,
             unique: true,
         },
