@@ -5,79 +5,32 @@
  */
 
 module.exports = {
-
-  attributes: {
-
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-    username: {
-      type: 'string',
-      required: true,
-      unique: true,
-      minLength: 4,
-      maxLength: 20,
-      example: 'Mary Sue'
-    },
-
-    password: {
-      type: 'string',
-      required: true,
-      description: 'Securely hashed representation of the user\'s login password.',
-      protect: true,
-      example: '2$28a8eabna301089103-13948134nad'
-    },
-
-    passwordChangedBy: {
-      model: 'User',
-      required: false,
-      description: 'Who has changed the password on this account last?'
-    },
-
-    fullName: {
-      type: 'string',
-      required: true,
-      description: 'Full representation of the user\'s name.',
-      maxLength: 120,
-      example: 'Mary Sue van der McHenst'
-    },
-
-    isSuperAdmin: {
-      type: 'boolean',
-      description: 'Whether this user is a "super admin" with extra permissions, etc.',
-      extendedDescription:
-`Super admins might have extra permissions, see a different default home page when they log in,
-or even have a completely different feature set from normal users.  In this app, the \`isSuperAdmin\`
-flag is just here as a simple way to represent two different kinds of users.  Usually, it's a good idea
-to keep the data model as simple as possible, only adding attributes when you actually need them for
-features being built right now.
-
-For example, a "super admin" user for a small to medium-sized e-commerce website might be able to
-change prices, deactivate seasonal categories, add new offerings, and view live orders as they come in.
-On the other hand, for an e-commerce website like Walmart.com that has undergone years of development
-by a large team, those administrative features might be split across a few different roles.
-
-So, while this \`isSuperAdmin\` demarcation might not be the right approach forever, it's a good place to start.`
-    },
-
-    lastSeenAt: {
-      type: 'number',
-      description: 'A JS timestamp (epoch ms) representing the moment at which this user most recently interacted with the backend while logged in (or 0 if they have not interacted with the backend at all yet).',
-      example: 1502844074211
-    },
-
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-    // n/a
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    // n/a
-
-  },
-
-
+    attributes: {
+        username: {
+            type: 'string',
+            required: true,
+            unique: true,
+            minLength: 4,
+            maxLength: 20,
+        },
+        password: {
+            type: 'string',
+            required: true,
+            description: 'Securely hashed representation of the user\'s login password.',
+            protect: true,
+            example: '2$28a8eabna301089103-13948134nad'
+        },
+        firstName: {
+            type: 'string',
+            required: true,
+            maxLength: 60,
+            example: 'John'
+        },
+        lastName: {
+            type: 'string',
+            required: true,
+            maxLength: 60,
+            example: 'Cena'
+        },
+    }
 };
