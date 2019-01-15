@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-group">
-                <input id="echoName" type="text" class="form-control" placeholder="Bird Name" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName">
+                <input id="echoName" type="text" class="form-control" placeholder="Bird Name" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName" @blur="validateEcho()">
                 <div class="invalid-feedback" v-if="formErrors.echoName">Please provide EchoName.</div>
             </div>
 

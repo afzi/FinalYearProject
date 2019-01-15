@@ -171,7 +171,7 @@ module.exports = {
       console.log("Received request to register bird")
 
       // Build up data for the new bird record and save it to the database.
-      Bird.create({
+      await Bird.create({
         birdName: inputs.echoName,
         nfcRfid: inputs.nfcRingId,
         createdBy: this.req.session.userId,

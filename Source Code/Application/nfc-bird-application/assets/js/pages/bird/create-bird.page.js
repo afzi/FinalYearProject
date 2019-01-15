@@ -58,6 +58,15 @@ parasails.registerPage('create-bird', {
   
         return argins;
       },
+
+      validateEcho: function() {
+        if(this.formData.echoName) {
+
+        } else {
+          this.formErrors.echoName = true;
+        }
+
+      }
   
     }
   });
