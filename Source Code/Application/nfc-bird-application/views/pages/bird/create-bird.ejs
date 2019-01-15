@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-            <select id="sex" class="form-control">
+            <select id="sex"  class="form-control" :class= "[formErrors.sex ? 'is-invalid' : '']" v-model.trim="formData.sex">
                 <option value="" disabled selected hidden>Gender</option>
                 <option value="male" >Male</option>
                 <option value="female">Female</option>
