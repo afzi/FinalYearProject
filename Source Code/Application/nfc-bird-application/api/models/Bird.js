@@ -16,11 +16,8 @@ module.exports = {
         rightRingID: { type: 'string', },
         sex: { type: 'string', },
         motherName: { type: 'string', },
-        motherBirdID: { model: 'Bird', },
         fatherName: { type: 'string' },
-        fatherBirdID: { model: 'Bird', },
         secondFatherName: { type: 'string', },
-        secondFatherBirdID: { model: 'Bird', },
         researcherNotes: { type: 'string', },
         layDate: { type: 'ref', columnType: 'DATETIME', },
         hatchDate: { type: 'ref', columnType: 'DATETIME', }, //if not set, Hatched = False

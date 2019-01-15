@@ -18,6 +18,12 @@ module.exports = {
         type: 'string',
         description: 'The STUD ID (legacy)'
       },
+
+      newStudId: {
+        required: false,
+        type: 'string',
+        description: 'The NEW STUD ID (legacy)'
+      },
   
       leftRingId:  {
         required: false,
@@ -126,6 +132,17 @@ module.exports = {
         description: 'The date when this bird was released.',
         extendedDescription: 'Must be a valid timestamp'
       },
+
+      notes: {
+        required: false,
+        type: 'string',
+        description: 'Researcher notes.'
+      },
+
+      currentNestSite: {
+        required: false,
+        type: 'string',
+        description: 'Where is the bird currently nesting'      }
   
     },
   
@@ -133,7 +150,7 @@ module.exports = {
     exits: {
   
       success: {
-        description: 'New user account was created successfully.'
+        description: 'New bird record was created successfully.'
       },
   
       invalid: {
@@ -143,40 +160,44 @@ module.exports = {
         'parameters should have been validated/coerced _before_ they were sent.'
       },
   
-      birdNameAlreadyInUse: {
+      alreadyInUse: {
         statusCode: 409,
-        description: 'The provided bird name is already in use.',
-      },
-
-      rfidAlreadyInUse: {
-        statusCode: 409,
-        description: 'The provided RFID has already been assigned to another bird.',
-      },
-  
-      parentNotMatching: {
-        statusCode: 409,
-        description: 'One or more of the parents couldn\'t be resolved to an existing bird; use name instead of ID',
+        description: 'One or more of the provided fields are already in use.',
       }
     },
   
   
     fn: async function (inputs) {
-  
-      var newUsername = inputs.username.toLowerCase();
-  
-      // Build up data for the new user record and save it to the database.
-      // (Also use `fetch` to retrieve the new ID so that we can use it below.)
-      var newUserRecord = await User.create(_.extend({
-        username: newUsername,
-        password: await sails.helpers.passwords.hashPassword(inputs.password),
-        fullName: inputs.fullName
-      }))
-      .intercept('E_UNIQUE', 'usernameAlreadyInUse')
-      .intercept({name: 'UsageError'}, 'invalid')
-      .fetch();
-  
-      // Store the user's new id in their session.
-      this.req.session.userId = newUserRecord.id;
+      console.log("Received request to register bird")
+
+      // Build up data for the new bird record and save it to the database.
+      Bird.create({
+        birdName: inputs.echoName,
+        nfcRfid: inputs.nfcRingId,
+        createdBy: this.req.session.userId,
+        editeddBy: this.req.session.userId,
+        studID: inputs.studId,
+        newStudID: inputs.newStudId,
+        leftRingID: inputs.leftRingId,
+        rightRingID: inputs.rightRingId,
+        sex: inputs.sex,
+        motherName: inputs.motherName,
+        fatherName: inputs.fatherName,
+        secondFatherName: inputs.secondFatherName,
+        researcherNotes: inputs.notes,
+        layDate: inputs.layDate,
+        hatchDate: inputs.hatchDate,
+        incubationDays: inputs.incDays,
+        whereHatched: inputs.whereHatched,
+        whereFledged: inputs.whereFledged,
+        whenFledged: inputs.whenFledged,
+        whereReleased: inputs.whereReleased,
+        whenReleased: inputs.whenReleased,
+        groupName: inputs.groupName,
+        currentNestSite: inputs.currentNestSite
+      })
+      .intercept('E_UNIQUE', 'alreadyInUse')
+      .intercept({name: 'UsageError'}, 'invalid');
     }
   
   };
