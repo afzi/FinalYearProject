@@ -5,9 +5,6 @@
  */
 
 module.exports = {
-<<<<<<< HEAD
-    
-=======
     attributes: {
         nfcRFID: {
             type: 'number',
@@ -20,5 +17,4 @@ module.exports = {
             unique: true,
         },
     }
->>>>>>> 75c5bbf706b93f28446301a72acc7fc0debea93f
 };
