@@ -56,9 +56,10 @@ module.exports.routes = {
   'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-  'POST  /api/v1/bird/create-bird':                      { action: 'bird/create-bird' },
   'GET   /api/v1/bird/unique-bird-name':                 { action: 'bird/unique-bird-name'},
+  'POST  /api/v1/bird':                                  { action: 'bird/create-bird' },
   'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
   'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},  
+  'GET   /api/v1/bird':                                  { action: 'bird/get-bird'},  
 
 };

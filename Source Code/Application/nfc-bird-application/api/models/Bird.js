@@ -83,10 +83,6 @@ module.exports = {
         currentNestSite: {
             type: 'string',
         },
-        dateOut: {
-            type: 'ref',
-            columnType: 'DATETIME',
-        },
         //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
         //birdStatus
         //seenSinceFledged

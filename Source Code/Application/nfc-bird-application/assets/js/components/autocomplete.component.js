@@ -28,6 +28,10 @@ parasails.registerComponent('autocomplete', {
                 type: String,
                 required: true
             },
+            map: {
+                type: String,
+                required: false
+            },
             action: {
                 type: String,
                 required: false
@@ -135,13 +139,13 @@ parasails.registerComponent('autocomplete', {
             // Let's warn the parent that a change was made
             // this.$emit(`#${this.for}`, this.search);
             let argins = JSON.parse(this.params);
-            argins[this.for] = this.search;
+            argins[this.map || this.for] = this.search;
     
             // Is the data given by an outside ajax request?
             if (this.isAsync) {
               this.isLoading = true;
               Cloud[this.action].with(argins).then(result => {
-                  this.incomingData = result.map(nextResult => nextResult.nfcRFID);
+                  this.incomingData = result.map(nextResult => nextResult[this.map || this.for]);
               });
             } else {
               // Data is sync, we can search our flat array
