@@ -5,21 +5,26 @@
  */
 
 module.exports = {
-    primaryKey: 'nfcRFID',
+    autoPK: false,
+    autoCreatedAt: false,
+    autoUpdatedAt: false,
 
     attributes: {
+        birdID: {
+            model: "bird"
+        },
         nfcRFID: {
-            type: 'string',
+            type: "string",
+            columnType: "varchar",
+            unique: true,
             required: true,
-            unique: true
+            primaryKey: true
         },
         nfcRFIDInternal: {
-            type: 'string',
-            required: true,
+            type: "string",
+            columnType: "varchar",
             unique: true,
-        },
-        birdId: {
-            model: 'bird'
+            required: true
         }
     }
 };

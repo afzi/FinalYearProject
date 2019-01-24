@@ -9,16 +9,17 @@ module.exports = {
     autoCreatedAt: false,
 
     attributes: {
-        feederID: {
-            type: 'number',
-            autoIncrement: true,
+        nestID: {
+            type: "string",
+            columnType: "varchar",
+            maxLength: 10,
             required: true,
             primaryKey: true
         },
         createdBy: {
             model: "user"
         },
-        feederDescription: {
+        nestDescription: {
             type: "string",
             columnType: "varchar",
             maxLength: 200
