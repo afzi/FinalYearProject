@@ -5,16 +5,21 @@
  */
 
 module.exports = {
+    primaryKey: 'nfcRFID',
+
     attributes: {
         nfcRFID: {
-            type: 'number',
+            type: 'string',
             required: true,
-            unique: true,
+            unique: true
         },
         nfcRFIDInternal: {
-            type: 'number',
+            type: 'string',
             required: true,
             unique: true,
         },
+        birdId: {
+            model: 'bird'
+        }
     }
 };

@@ -27,7 +27,7 @@ module.exports = {
       if(!inputs.echoName) return exits.success(false);
   
       result = await Bird.count({
-        echoName: inputs.echoName
+        birdName: inputs.echoName
       })
   
       return exits.success(result == 0)

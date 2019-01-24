@@ -25,14 +25,14 @@ module.exports = {
     },
   
   
-    fn: async function (inputs, exits) {
-      if(!inputs.nfcFriendlyName) return exits.success(false);
+    fn: async function (inputs) {
+      if(!inputs.nfcFriendlyName) return false;
   
       result = await RFIDTag.count({
-        RFID_Friendly_ID: inputs.nfcFriendlyName
+        nfcRFID: inputs.nfcFriendlyName
       })
   
-      return exits.success(result > 0)
+      return (result > 0)
     }
   
   
