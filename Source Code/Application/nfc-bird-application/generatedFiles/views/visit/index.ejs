@@ -1,0 +1,67 @@
+<h1>visit</h1>
+
+
+<% if (result.length == 0) { %>
+  <h4>
+    0 visit
+  </h4>
+<% } else { %>
+<table>
+	<thead>
+    <th>#</th>
+		<th>id</th>
+			<th>visitID</th>
+			<th>feederID</th>
+			<th>birdID</th>
+			<th>ncfRFIDInternal</th>
+
+		<th>created at</th>
+		<th>updated at</th>
+		<th colspan="3"></th>
+	</thead>
+
+	<tbody>
+		<% result.forEach((item, i) => { %>
+			<tr>
+				<td>
+					<%= (i + 1) %>
+				</td>
+				<td>
+					<%= item.id %>
+				</td>
+					<td>
+						<%= item.visitID %>
+					</td>
+					<td>
+						<%= item.feederID %>
+					</td>
+					<td>
+						<%= item.birdID %>
+					</td>
+					<td>
+						<%= item.ncfRFIDInternal %>
+					</td>
+				<td>
+					<%= item.createdAt %>
+				</td>
+				<td>
+					<%= item.updatedAt %>
+				</td>
+				<td>
+					<a href="/visit/show/<%= item.id %>">Show</a>
+				</td>
+				<td>
+					<a href="/visit/delete/<%= item.id %>">Delete</a>
+				</td>
+        <td>
+					<a href="/visit/edit/<%= item.id %>">Edit</a>
+				</td>
+			</tr>
+			<% }) %>
+	</tbody>
+</table>
+
+<% } %>
+
+<br>
+<a href="/visit/create">New</a>
