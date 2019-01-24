@@ -4,17 +4,18 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
-    autoCreatedAt: false,
+
+    primaryKey: "nestID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
+        createdAt: false,
         nestID: {
             type: "string",
             columnType: "varchar",
             maxLength: 10,
-            required: true,
-            primaryKey: true
+            required: true
         },
         createdBy: {
             model: "user"

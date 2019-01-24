@@ -4,16 +4,17 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
-    autoCreatedAt: false,
+
+    primaryKey: "userID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
+        createdAt: false,
         userID: {
             type: 'number',
             autoIncrement: true,
-            required: true,
-            primaryKey: true
+            required: true
         },
         username: {
             type: "string",
@@ -27,10 +28,9 @@ module.exports = {
             maxLength: 40,
             required: true
         },
-        passwordHash: {
+        password: {
             type: "string",
             columnType: "varchar",
-            maxLength: 20,
             required: true
         },
         hasRead: {

@@ -4,15 +4,16 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
+
+    primaryKey: "visitID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
         visitID: {
             type: 'number',
             autoIncrement: true,
-            required: true,
-            primaryKey: true
+            required: true
         },
         feederID: {
             model: "feeder"

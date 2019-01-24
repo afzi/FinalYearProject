@@ -4,15 +4,16 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
+
+    primaryKey: "logID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
         logID: {
             type: 'number',
             autoIncrement: true,
             required: true,
-            primaryKey: true
         },
         userID: {
             model: "user"

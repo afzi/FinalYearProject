@@ -4,13 +4,12 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoCreatedAt: false,
 
+    //PK is defaut sails id field
     attributes: {
+        createdAt: false,
         birdID: {
-            model: Bird,
-            primaryKey: true
+            model: "Bird"
         },
         birdCondition: {
             type: "string",

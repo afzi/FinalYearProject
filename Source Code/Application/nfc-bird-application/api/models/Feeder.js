@@ -4,16 +4,17 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
-    autoCreatedAt: false,
+
+    primaryKey: "feederID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
+        createdAt: false,
         feederID: {
             type: 'number',
             autoIncrement: true,
-            required: true,
-            primaryKey: true
+            required: true
         },
         createdBy: {
             model: "user"

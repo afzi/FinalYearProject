@@ -4,24 +4,20 @@
 */
 
 module.exports = {
-    autoPK: false,
-    autoUpdatedAt: false,
+    primaryKey: "birdID",
 
     attributes: {
+        id: false,
+        updatedAt: false,
+        //createdOn provided by sails
         birdID: {
             type: 'number',
             autoIncrement: true,
-            required: true,
-            primaryKey: true
+            required: true
         },
         createdBy: {
             model: "user"
         },
-        // createdOn: {
-        //     type: "string",
-        //     columnType: "datetime",
-        //     required: true
-        // }, AUTO MADE BY SAILS
         birdName: {
             type: "string",
             columnType: "varchar",
@@ -51,7 +47,6 @@ module.exports = {
         },
         sex: {
             type: "string",
-            columnType: "enum",
             isIn: ["m", "f"]
         },
         layDate: {
@@ -59,31 +54,23 @@ module.exports = {
             columnType: "date"
         },
         hatchedWhere: {
-            type: "string",
-            columnType: "varchar",
-            maxLength: 20
+            model: "nestsite"
         },
         hatchDate: {
             type: "string",
             columnType: "date"
         },
         incubationDays: {
-            type: "number",
-            columnType: "int",
-            isInteger: true
+            type: "number"
         },
         birdFledged: {
             type: "boolean"
         },
         fledgedWhere: {
-            type: "string",
-            columnType: "varchar",
-            maxLength: 20
+            model: "nestsite"
         },
         releasedWhere: {
-            type: "string",
-            columnType: "varchar",
-            maxLength: 20
+            model: "nestsite"
         },
         releasedWhen: {
             type: "string",
