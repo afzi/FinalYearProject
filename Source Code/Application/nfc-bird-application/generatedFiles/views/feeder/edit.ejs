@@ -1,0 +1,24 @@
+<div class="">
+  <h1>New feeder</h1>
+
+  <div class="body">
+    <form class="" action="/feeder/update" method="post">
+      <input name="id" value="<%= element.id %>" hidden="true" required>
+        <div class="">
+          <label for="">feederID</label>
+          <input type="number" name="feederID" value="<%= element.feederID %>" required="true">
+        </div>
+        <div class="">
+          <label for="">createdBy</label>
+          <input type="number" name="createdBy" value="<%= element.createdBy %>" required="false">
+        </div>
+        <div class="">
+          <label for="">feederDescription</label>
+          <input type="text" name="feederDescription" value="<%= element.feederDescription %>" required="false">
+        </div>
+      <button type="submit">Update feeder</button>
+    </form>
+    <br />
+    <a href="/feeder">Index</a>
+  </div>
+</div>

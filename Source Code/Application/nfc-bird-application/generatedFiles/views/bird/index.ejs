@@ -1,0 +1,159 @@
+<h1>bird</h1>
+
+
+<% if (result.length == 0) { %>
+  <h4>
+    0 bird
+  </h4>
+<% } else { %>
+<table>
+	<thead>
+    <th>#</th>
+		<th>id</th>
+			<th>birdID</th>
+			<th>createdBy</th>
+			<th>createdOn</th>
+			<th>birdName</th>
+			<th>studID</th>
+			<th>newStudID</th>
+			<th>leftRingID</th>
+			<th>rightRingID</th>
+			<th>sex</th>
+			<th>layDate</th>
+			<th>hatchedWhere</th>
+			<th>hatchDate</th>
+			<th>incubationDays</th>
+			<th>birdFledged</th>
+			<th>fledgedWhere</th>
+			<th>releasedWhere</th>
+			<th>releasedWhen</th>
+			<th>groupName</th>
+			<th>currentNestSite</th>
+			<th>motherName</th>
+			<th>motherID</th>
+			<th>fatherName</th>
+			<th>fatherID</th>
+			<th>secondFatherName</th>
+			<th>secondFatherID</th>
+			<th>researcherNotes</th>
+			<th>dateOut</th>
+
+		<th>created at</th>
+		<th>updated at</th>
+		<th colspan="3"></th>
+	</thead>
+
+	<tbody>
+		<% result.forEach((item, i) => { %>
+			<tr>
+				<td>
+					<%= (i + 1) %>
+				</td>
+				<td>
+					<%= item.id %>
+				</td>
+					<td>
+						<%= item.birdID %>
+					</td>
+					<td>
+						<%= item.createdBy %>
+					</td>
+					<td>
+						<%= item.createdOn %>
+					</td>
+					<td>
+						<%= item.birdName %>
+					</td>
+					<td>
+						<%= item.studID %>
+					</td>
+					<td>
+						<%= item.newStudID %>
+					</td>
+					<td>
+						<%= item.leftRingID %>
+					</td>
+					<td>
+						<%= item.rightRingID %>
+					</td>
+					<td>
+						<%= item.sex %>
+					</td>
+					<td>
+						<%= item.layDate %>
+					</td>
+					<td>
+						<%= item.hatchedWhere %>
+					</td>
+					<td>
+						<%= item.hatchDate %>
+					</td>
+					<td>
+						<%= item.incubationDays %>
+					</td>
+					<td>
+						<%= item.birdFledged %>
+					</td>
+					<td>
+						<%= item.fledgedWhere %>
+					</td>
+					<td>
+						<%= item.releasedWhere %>
+					</td>
+					<td>
+						<%= item.releasedWhen %>
+					</td>
+					<td>
+						<%= item.groupName %>
+					</td>
+					<td>
+						<%= item.currentNestSite %>
+					</td>
+					<td>
+						<%= item.motherName %>
+					</td>
+					<td>
+						<%= item.motherID %>
+					</td>
+					<td>
+						<%= item.fatherName %>
+					</td>
+					<td>
+						<%= item.fatherID %>
+					</td>
+					<td>
+						<%= item.secondFatherName %>
+					</td>
+					<td>
+						<%= item.secondFatherID %>
+					</td>
+					<td>
+						<%= item.researcherNotes %>
+					</td>
+					<td>
+						<%= item.dateOut %>
+					</td>
+				<td>
+					<%= item.createdAt %>
+				</td>
+				<td>
+					<%= item.updatedAt %>
+				</td>
+				<td>
+					<a href="/bird/show/<%= item.id %>">Show</a>
+				</td>
+				<td>
+					<a href="/bird/delete/<%= item.id %>">Delete</a>
+				</td>
+        <td>
+					<a href="/bird/edit/<%= item.id %>">Edit</a>
+				</td>
+			</tr>
+			<% }) %>
+	</tbody>
+</table>
+
+<% } %>
+
+<br>
+<a href="/bird/create">New</a>

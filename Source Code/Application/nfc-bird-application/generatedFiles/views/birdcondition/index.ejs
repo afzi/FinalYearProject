@@ -1,0 +1,59 @@
+<h1>birdcondition</h1>
+
+
+<% if (result.length == 0) { %>
+  <h4>
+    0 birdcondition
+  </h4>
+<% } else { %>
+<table>
+	<thead>
+    <th>#</th>
+		<th>id</th>
+			<th>birdID</th>
+			<th>birdCondition</th>
+
+		<th>created at</th>
+		<th>updated at</th>
+		<th colspan="3"></th>
+	</thead>
+
+	<tbody>
+		<% result.forEach((item, i) => { %>
+			<tr>
+				<td>
+					<%= (i + 1) %>
+				</td>
+				<td>
+					<%= item.id %>
+				</td>
+					<td>
+						<%= item.birdID %>
+					</td>
+					<td>
+						<%= item.birdCondition %>
+					</td>
+				<td>
+					<%= item.createdAt %>
+				</td>
+				<td>
+					<%= item.updatedAt %>
+				</td>
+				<td>
+					<a href="/birdcondition/show/<%= item.id %>">Show</a>
+				</td>
+				<td>
+					<a href="/birdcondition/delete/<%= item.id %>">Delete</a>
+				</td>
+        <td>
+					<a href="/birdcondition/edit/<%= item.id %>">Edit</a>
+				</td>
+			</tr>
+			<% }) %>
+	</tbody>
+</table>
+
+<% } %>
+
+<br>
+<a href="/birdcondition/create">New</a>
