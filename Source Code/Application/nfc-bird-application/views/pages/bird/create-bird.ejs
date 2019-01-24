@@ -122,7 +122,7 @@
                 </div>
         
                 <div id="demo2" class="form-group collapse">
-                    <input id="whenFledged" type="text" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
+                    <input id="whenFledged" type="date" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
                     <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
                 </div>
         

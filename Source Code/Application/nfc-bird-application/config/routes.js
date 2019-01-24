@@ -53,13 +53,25 @@ module.exports.routes = {
   '/api/v1/account/logout':                              { action: 'account/logout' },
   'PUT   /api/v1/account/update-password/:userId?':      { action: 'account/update-password' },
   'PUT   /api/v1/account/update-profile':                { action: 'account/update-profile' },
+
   'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
+
+
+  'GET   /api/v1/bird/unique-bird-name':                 { action: 'bird/unique-bird-name'},
+  'GET   /api/v1/bird':                                  { action: 'bird/get-bird'},
+  
+  'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
+  'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},
+  
+  'GET   /api/v1/nestsite':                              { action: 'nestsite/get-nestsite'},
+  'POST  /api/v1/nestsite':                              { action: 'nestsite/create-nestsite'},    
+
+
+  'POST  /api/v1/bird':                                  { action: 'bird/create-bird' },
+
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-  'GET   /api/v1/bird/unique-bird-name':                 { action: 'bird/unique-bird-name'},
-  'POST  /api/v1/bird':                                  { action: 'bird/create-bird' },
-  'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
-  'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},  
-  'GET   /api/v1/bird':                                  { action: 'bird/get-bird'},  
+
+
 
 };
