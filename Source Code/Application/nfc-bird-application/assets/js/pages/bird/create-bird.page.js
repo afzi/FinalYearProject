@@ -46,8 +46,9 @@ parasails.registerPage('create-bird', {
         this.formErrors = {};
   
         var argins = this.formData;
-  
- 
+        
+        this.validateEcho();
+        this.validateRFID();
   
         // If there were any issues, they've already now been communicated to the user,
         // so simply return undefined.  (This signifies that the submission should be
@@ -60,12 +61,21 @@ parasails.registerPage('create-bird', {
       },
 
       validateEcho: function() {
-        if(this.formData.echoName) {
+        var isUniqueBirdName = parasails.require('isUniqueBirdName')
 
-        } else {
-          this.formErrors.echoName = true;
-        }
 
+        result = isUniqueBirdName(this.formData.echoName).then(result => {
+          this.formErrors.echoName = !result;
+        })
+
+      },
+
+      validateRFID: function() {
+        var isValidRfidTag = parasails.require('isValidRfidTag')
+
+        result = isValidRfidTag(this.formData.nfcRingId).then(result => {
+          this.formErrors.nfcRingId = !result;
+        })
       }
   
     }

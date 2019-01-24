@@ -175,7 +175,7 @@ module.exports = {
         birdName: inputs.echoName,
         nfcRfid: inputs.nfcRingId,
         createdBy: this.req.session.userId,
-        editeddBy: this.req.session.userId,
+        editedBy: this.req.session.userId,
         studID: inputs.studId,
         newStudID: inputs.newStudId,
         leftRingID: inputs.leftRingId,
@@ -196,8 +196,8 @@ module.exports = {
         groupName: inputs.groupName,
         currentNestSite: inputs.currentNestSite
       })
-      .intercept('E_UNIQUE', 'alreadyInUse')
-      .intercept({name: 'UsageError'}, 'invalid');
+      // .intercept('E_UNIQUE', 'alreadyInUse') UNCOMMENT THE INTERCEPTS WHEN DONE WITH DEBUGGING
+      // .intercept({name: 'UsageError'}, 'invalid');
     }
   
   };

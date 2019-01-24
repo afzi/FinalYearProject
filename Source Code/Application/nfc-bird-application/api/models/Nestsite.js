@@ -5,21 +5,22 @@
 
 module.exports = {
 
-    primaryKey: "feederID",
+    primaryKey: "nestID",
 
     attributes: {
         id: false,
         updatedAt: false,
         createdAt: false,
-        feederID: {
-            type: 'number',
-            autoIncrement: true,
+        nestID: {
+            type: "string",
+            columnType: "varchar",
+            maxLength: 10,
             required: true
         },
         createdBy: {
             model: "user"
         },
-        feederDescription: {
+        nestDescription: {
             type: "string",
             columnType: "varchar",
             maxLength: 200

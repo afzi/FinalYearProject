@@ -5,24 +5,17 @@
 
 module.exports = {
 
-    primaryKey: "feederID",
-
+    //PK is defaut sails id field
     attributes: {
-        id: false,
-        updatedAt: false,
         createdAt: false,
-        feederID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true
+        birdID: {
+            model: "Bird"
         },
-        createdBy: {
-            model: "user"
-        },
-        feederDescription: {
+        birdCondition: {
             type: "string",
             columnType: "varchar",
             maxLength: 200
         }
+        //updatedAt added by sails
     }
 };
