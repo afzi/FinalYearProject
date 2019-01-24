@@ -154,7 +154,7 @@ module.exports = {
         extendedDescription: 'Must be a valid timestamp'
       },
 
-      notes: {
+      researcherNotes: {
         required: false,
         type: 'string',
         description: 'Researcher notes.'
@@ -208,7 +208,7 @@ module.exports = {
       if(inputs.motherName) query.motherName = {'contains': inputs.motherName}
       if(inputs.secondFatherName) query.secondFatherName = {'contains': inputs.secondFatherName}
       if(inputs.groupName) query.groupName = {'contains': inputs.groupName}
-      if(inputs.notes) query.notes = {'contains': inputs.notes}
+      if(inputs.researcherNotes) query.researcherNotes = {'contains': inputs.researcherNotes}
       
       if(inputs.layDateFrom) query.layDate = {'>=': inputs.layDateFrom}
       if(inputs.layDateTo) query.layDate['<='] = inputs.layDateTo;
