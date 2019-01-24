@@ -1,3 +1,3 @@
-parasails.registerUtility('isValidRfidTag', function isValidRfidTag(supposedRfidTag) {
-    return Cloud.rfidTagExists.with({nfcFriendlyName: supposedRfidTag});
+parasails.registerUtility('isValidRfidTag', async function isValidRfidTag(supposedRfidTag) {
+    return await Cloud.rfidTagExists.with({nfcFriendlyName: supposedRfidTag});
 });

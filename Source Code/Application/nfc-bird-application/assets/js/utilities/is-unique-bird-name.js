@@ -1,3 +1,3 @@
-parasails.registerUtility('isUniqueBirdName', function isUniqueBirdName(supposedBirdName) {
-    return Cloud.isUniqueBirdName.with({echoName: supposedBirdName});
+parasails.registerUtility('isUniqueBirdName', async function isUniqueBirdName(supposedBirdName) {
+    return await Cloud.uniqueBirdName.with({echoName: supposedBirdName});
 });

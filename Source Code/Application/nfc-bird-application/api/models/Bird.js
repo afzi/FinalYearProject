@@ -6,11 +6,6 @@
 
 module.exports = {
     attributes: {
-        birdID: {
-            type: 'number',
-            required: true,
-            unique: true,
-        },
         birdName: {
             type: 'string',
             unique: true,
