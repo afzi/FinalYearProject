@@ -14,6 +14,14 @@ by modifying its session.`,
 
   inputs: {
 
+
+    fullName:  {
+      required: true,
+      type: 'string',
+      example: 'Frida Kahlo de Rivera',
+      description: 'The user\'s full name.',
+    },
+
     username: {
       required: true,
       type: 'string',
@@ -27,14 +35,9 @@ by modifying its session.`,
       maxLength: 200,
       example: 'passwordlol',
       description: 'The unencrypted password to use for the new account.'
-    },
-
-    fullName:  {
-      required: true,
-      type: 'string',
-      example: 'Frida Kahlo de Rivera',
-      description: 'The user\'s full name.',
     }
+
+  
 
   },
 
