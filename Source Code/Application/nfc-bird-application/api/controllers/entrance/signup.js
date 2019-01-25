@@ -35,9 +35,25 @@ by modifying its session.`,
       maxLength: 200,
       example: 'passwordlol',
       description: 'The unencrypted password to use for the new account.'
+    },
+    hasRead:{
+      type:"boolean"
+    },
+    hasCreateEdit: {
+      type: "boolean"
+    },
+    hasEditFull: {
+      type: "boolean"
+    },
+    hasExportSimple: {
+      type: "boolean"
+    },
+    hasExportFull: {
+      type: "boolean"
+    },
+    hasAdmin: {
+      type: "boolean"
     }
-
-  
 
   },
 
@@ -72,7 +88,14 @@ by modifying its session.`,
     var newUserRecord = await User.create(_.extend({
       username: newUsername,
       password: await sails.helpers.passwords.hashPassword(inputs.password),
-      fullName: inputs.fullName
+      fullName: inputs.fullName,
+      hasRead: inputs.hasRead,
+      hasCreateEdit: inputs.hasCreateEdit,
+      hasEditFull: inputs.hasEditFull,
+      hasExportSimple: inputs.hasExportSimple,
+      hasExportFull: inputs.hasExportFull,
+      hasAdmin: inputs.hasAdmin
+
     }))
     .intercept('E_UNIQUE', 'usernameAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')

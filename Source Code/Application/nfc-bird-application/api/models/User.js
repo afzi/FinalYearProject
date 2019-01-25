@@ -5,24 +5,24 @@
 
 module.exports = {
 
-    primaryKey: "userID",
+    // primaryKey: "userID",
 
     attributes: {
-        id: false,
+        // id: false,
         updatedAt: false,
         createdAt: false,
-        userID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true
-        },
+        // userID: {
+        //     type: 'number',
+        //     autoIncrement: true,
+        //     required: true
+        // },
         username: {
             type: "string",
             columnType: "varchar",
             maxLength: 20,
             required: true
         },
-        fullname: {
+        fullName: {
             type: "string",
             columnType: "varchar",
             maxLength: 40,

@@ -58,7 +58,7 @@ parasails.registerPage('signup', {
       }
 
       // Validate password:
-      if(!argins.password) {
+      if(!argins.password || argins.password.length<6) {
         this.formErrors.password = true;
       }
 
@@ -68,9 +68,9 @@ parasails.registerPage('signup', {
       }
 
       // Validate ToS agreement:
-      if(!argins.agreed) {
-        this.formErrors.agreed = true;
-      }
+      // if(!argins.agreed) {
+      //   this.formErrors.agreed = true;
+      // }
 
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
