@@ -22,6 +22,18 @@ module.exports = {
           required: false,
           type: 'string',
           description: 'The RFID GUID (or part of it)'
+      },
+
+      skip: {
+          required: false,
+          type: 'number',
+          description: 'How many records to skip (if used in pagination - where does the page begin)'
+      },
+
+      limit: {
+          required: false,
+          type: 'number',
+          description: 'How many records to return (if used in pagination - what is the page size)'
       }
     },
   
@@ -50,8 +62,12 @@ module.exports = {
         if(birdIdConstraint) query.birdId = birdIdConstraint;
         if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId}
         if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+        
+        let finalQuery = {where: query}
+        if(inputs.skip) finalQuery.skip = inputs.skip;
+        if(inputs.limit) finalQuery.limit = inputs.limit;
 
-        var result = await RFIDTag.find(query);
+        var result = await RFIDTag.find(finalQuery);
   
         return result;
     }
