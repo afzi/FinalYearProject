@@ -72,22 +72,30 @@ parasails.registerPage('create-bird', {
       },
 
       validateEcho: function(vm) {
-        if(!vm) vm = this;
-        result = Cloud.uniqueBirdName.with({echoName: vm.formData.echoName}).then(result => {
-          Vue.set(vm.formErrors, 'echoName', !result);
-        })
+          if(!vm) vm = this;
+
+          if(!vm.formData.echoName || vm.formData.echoName == "") Vue.set(vm.formErrors, 'echoName', true);
+          else {
+            result = Cloud.uniqueBirdName.with({echoName: vm.formData.echoName}).then(result => {
+              Vue.set(vm.formErrors, 'echoName', !result);
+            })
+          }
 
       },
 
       validateRFID: function(vm) {
         if(!vm) vm = this;
-        result = Cloud.rfidTagExists.with({nfcFriendlyName: vm.formData.nfcRingId}).then(result => {
-          Vue.set(vm.formErrors, 'nfcRingId', !result);
-        })
+        if(!vm.formData.nfcRingId || vm.formData.nfcRingId == "") Vue.set(vm.formErrors, 'nfcRingId', false);
+        else {
+          result = Cloud.rfidTagExists.with({nfcFriendlyName: vm.formData.nfcRingId}).then(result => {
+            Vue.set(vm.formErrors, 'nfcRingId', !result);
+          })
+        }
       },
 
       validateNestsite: function(vm) {
         if(!vm) vm = this;
+        if(!vm.formData.currentNestSite || vm.formData.currentNestSite == "") Vue.set(vm.formErrors, 'currentNestSite', false);
         if(vm.formData.currentNestSite && vm.formData.currentNestSite != "") {
           result = Cloud.nestsiteExists.with({nestID: vm.formData.currentNestSite}).then(result => {
             Vue.set(vm.formErrors, 'currentNestSite', !result);
