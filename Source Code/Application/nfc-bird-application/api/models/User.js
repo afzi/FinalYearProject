@@ -15,7 +15,7 @@ module.exports = {
         //     type: 'number',
         //     autoIncrement: true,
         //     required: true
-        // },
+        // }, AUTO MADE BY SAILS
         username: {
             type: "string",
             columnType: "varchar",

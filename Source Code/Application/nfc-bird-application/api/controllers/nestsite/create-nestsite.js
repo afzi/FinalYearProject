@@ -25,7 +25,7 @@ module.exports = {
     exits: {
   
       success: {
-        description: 'All done.',
+        description: 'All done.'
       },
 
       invalid: {
@@ -37,7 +37,7 @@ module.exports = {
   
       alreadyInUse: {
         statusCode: 409,
-        description: 'One or more of the provided fields are already in use.',
+        description: 'One or more of the provided fields are already in use.'
       }
   
     },
@@ -51,7 +51,6 @@ module.exports = {
           .intercept('E_UNIQUE', 'alreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid');
         }
-    }
   
   
   // };
