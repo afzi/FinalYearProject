@@ -100,9 +100,6 @@ by modifying its session.`,
     .intercept('E_UNIQUE', 'usernameAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
-
-    // Store the user's new id in their session.
-    this.req.session.userId = newUserRecord.id;
   }
 
 };

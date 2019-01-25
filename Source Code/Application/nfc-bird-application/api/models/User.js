@@ -31,7 +31,8 @@ module.exports = {
         password: {
             type: "string",
             columnType: "varchar",
-            required: true
+            required: true,
+            protect: true
         },
         hasRead: {
             type: "boolean"

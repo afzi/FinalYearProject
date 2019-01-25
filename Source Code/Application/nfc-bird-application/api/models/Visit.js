@@ -4,24 +4,15 @@
 */
 
 module.exports = {
-
-    primaryKey: "visitID",
-
     attributes: {
-        id: false,
         updatedAt: false,
-        visitID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true
-        },
-        feederID: {
-            model: "feeder"
-        },
+        // feederID: {
+        //     model: "feeder"
+        // },
         birdID: {
             model: "bird"
         },
-        ncfRFIDInternal: {
+        ncfRFID: {
             model: "rfidtag"
         }
         //CreatedOn (i.e. visit time) Auto made by sails

@@ -18,6 +18,12 @@ module.exports = {
         required: false,
         type: 'string',
         description: 'The nest description'
+      },
+
+      distanceToHopperMetres: {
+        required: false,
+        type: 'number',
+        description: 'Distance to the hoppers, in metres'
       }
     },
   
@@ -46,7 +52,10 @@ module.exports = {
     fn: async function (inputs) {
         await Nestsite.create({
             nestID: inputs.nestID,
-            nestDescription: inputs.nestDescription
+            nestDescription: inputs.nestDescription,
+            distanceToHoppersMetres: inputs.distanceToHopperMetres,
+            createdBy: this.req.session.userId,
+            editedBy: this.req.session.userId
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid');

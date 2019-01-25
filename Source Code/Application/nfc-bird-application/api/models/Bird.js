@@ -4,18 +4,12 @@
 */
 
 module.exports = {
-    primaryKey: "birdID",
 
     attributes: {
-        id: false,
-        updatedAt: false,
-        //createdOn provided by sails
-        birdID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true
-        },
         createdBy: {
+            model: "user"
+        },
+        editedBy: {
             model: "user"
         },
         birdName: {
@@ -47,24 +41,25 @@ module.exports = {
         },
         sex: {
             type: "string",
-            isIn: ["m", "f"]
+            isIn: ["male", "female", "unknown"]
         },
         layDate: {
-            type: "string",
-            columnType: "date"
+            type: "ref",
+            columnType: "datetime"
         },
         hatchedWhere: {
             model: "nestsite"
         },
         hatchDate: {
-            type: "string",
-            columnType: "date"
+            type: "ref",
+            columnType: "datetime"
         },
         incubationDays: {
             type: "number"
         },
-        birdFledged: {
-            type: "boolean"
+        fledgeDate: {
+            type: "ref",
+            columnType: "datetime"
         },
         fledgedWhere: {
             model: "nestsite"
@@ -73,16 +68,13 @@ module.exports = {
             model: "nestsite"
         },
         releasedWhen: {
-            type: "string",
+            type: "ref",
             columnType: "datetime"
         },
         groupName: {
             type: "string",
             columnType: "varchar",
             maxLength: 20
-        },
-        currentNestSite: {
-            model: "nestsite"
         },
         motherName: {
             type: "string",
@@ -93,9 +85,6 @@ module.exports = {
             type: "string",
             columnType: "varchar",
             maxLength: 20
-        },
-        currentNestSite: {
-            type: 'string',
         },
         //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
         //birdStatus

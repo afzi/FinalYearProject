@@ -7,34 +7,34 @@
             
             <div class="form-group">
                 <!-- <label for="password">Stud ID</label> -->
-                <input id="studId" type="text" class="form-control" placeholder="Stud Id" :class="[formErrors.studId ? 'is-invalid' : '']" v-model.trim="formData.studId" autocomplete="studId" focus-first>
+                <input id="studId" type="text" class="form-control" placeholder="Stud Id" title="Stud Id" :class="[formErrors.studId ? 'is-invalid' : '']" v-model.trim="formData.studId" autocomplete="studId" focus-first>
                 <div class="invalid-feedback" v-if="formErrors.studId">Please provide a valid studId.</div>
             </div>
 
             <div class="form-group">
                 <!-- <label for="password">New Stud ID</label> -->
-                <input id="newStudId" type="text" class="form-control" placeholder="New Stud Id" :class="[formErrors.newStudId ? 'is-invalid' : '']" v-model.trim="formData.newStudId" autocomplete="newStudId">
+                <input id="newStudId" type="text" class="form-control" placeholder="New Stud Id" title="New Stud Id" :class="[formErrors.newStudId ? 'is-invalid' : '']" v-model.trim="formData.newStudId" autocomplete="newStudId">
                 <div class="invalid-feedback" v-if="formErrors.newStudId">Please enter New StudId.</div>
             </div>
 
             <div class="form-group">
-                <input id="leftRingId" type="text" class="form-control" placeholder="Left Ring Id" :class="[formErrors.leftRingId ? 'is-invalid' : '']" v-model.trim="formData.leftRingId" autocomplete="leftRingId">
+                <input id="leftRingId" type="text" class="form-control" placeholder="Left Ring Id" title="Left Ring Id" :class="[formErrors.leftRingId ? 'is-invalid' : '']" v-model.trim="formData.leftRingId" autocomplete="leftRingId">
                 <div class="invalid-feedback" v-if="formErrors.leftRingId">Please enter left RingId.</div>
             </div>
     
             <div class="form-group">
-                <input id="rightRingId" type="text" class="form-control" placeholder="Right Ring Id" :class="[formErrors.rightRingId ? 'is-invalid' : '']" v-model.trim="formData.rightRingId" autocomplete="rightRingId">
+                <input id="rightRingId" type="text" class="form-control" placeholder="Right Ring Id" title="Right Ring Id" :class="[formErrors.rightRingId ? 'is-invalid' : '']" v-model.trim="formData.rightRingId" autocomplete="rightRingId">
                 <div class="invalid-feedback" v-if="formErrors.rightRingId">Please enter Right RingId.</div>
             </div>
 
             <div class="form-group">
-                <input id="echoName" type="text" class="form-control" placeholder="Bird Name" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName" @blur="validateEcho()">
+                <input id="echoName" type="text" class="form-control" placeholder="Bird Name" title="Bird Name" :class="[formErrors.echoName ? 'is-invalid' : '']" v-model.trim="formData.echoName" autocomplete="echoName" @blur="liveValidate(validateEcho, 1000)">
                 <div class="invalid-feedback" v-if="formErrors.echoName">Please provide EchoName.</div>
             </div>
 
             <div class="form-group">
             <select id="sex"  class="form-control" :class= "[formErrors.sex ? 'is-invalid' : '']" v-model.trim="formData.sex">
-                <option value="" disabled selected hidden>Gender</option>
+                <option disabled selected value="">Gender</option>
                 <option value="male" >Male</option>
                 <option value="female">Female</option>
                 <option value="unknown">Unknown</option>
@@ -45,95 +45,106 @@
                 <div class="invalid-feedback" v-if="formErrors.gender">Female</div> -->
             </div>
             <div class="form-group">
-                <input id="groupName" type="text" class="form-control" placeholder="groupName" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim="formData.groupName" autocomplete="groupName">
+                <input id="groupName" type="text" class="form-control" placeholder="Group Name" title="Group Name" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim.lazy="formData.groupName" autocomplete="groupName">
+                <autocomplete for="groupName" action="getBird" params='{"limit": 1}' is-async> </autocomplete>
                 <div class="invalid-feedback" v-if="formErrors.groupName">Please provide groupName.</div>
-                <autocomplete for="groupName" action="getBird" params='{"limit": 1}' is-async />
             </div>
             <div class="form-group">
-                <input id="nfcRingId" type="text" class="form-control" placeholder="nfc Ring Id" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" @blur="validateRFID()">
+                <input id="nfcRingId" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim.lazy="formData.nfcRingId" @blur="liveValidate(validateRFID, 1000)">
+                <autocomplete for="nfcRingId" action="getRfid" params='{"isAssigned": false, "limit": 5}' map="nfcRFID" is-async> </autocomplete>
                 <div class="invalid-feedback" v-if="formErrors.nfcRingId">Please provide nfc RingId.</div>
-                <autocomplete for="nfcRingId" action="getRfid" params='{"isAssigned": false, "limit": 5}' is-async />
+            </div>
+
+            <div id="group-nestsite" class="form-group">
+                <input type="text" id="currentNestSite" class="form-control" placeholder="Current nest site" title="Current nest site" :class="[formErrors.currentNestSite ? 'is-invalid' : '']" v-model.trim.lazy="formData.currentNestSite" @blur="liveValidate(validateNestsite, 1000)">
+                <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                <div class="invalid-feedback" v-if="formErrors.currentNestSite">Please provide a valid nest-site.</div>
+                <div v-if="formData.currentNestSite != null && formData.currentNestSite != ''" class="create-bird-history">
+                    <input onfocus="(this.type='date')" id="currentNestSiteDate" class="form-control" placeholder="Nesting here since when?" title="Nesting here since when?" :class="[formErrors.currentNestSiteDate ? 'is-invalid' : '']" v-model.trim="formData.currentNestSiteDate" @blur="liveValidate(validateNestsiteDate, 1000)">
+                    <div class="invalid-feedback" v-if="formErrors.currentNestSiteDate">Please provide a valid nest-site date.</div>
+                </div>
             </div>
 
             <div style="padding:5px 0px!important;" class="container">
-            <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">+ Family</button>
+            <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".create-bird-family">+ Family</button>
                 
-                <!-- <div id="demo" class="form-group collapse">
+                <!-- <div class="create-bird-family" class="form-group collapse">
                     <input id="motherId" type="text" class="form-control" placeholder="motherId" :class="[formErrors.motherId ? 'is-invalid' : '']" v-model.trim="formData.motherId" autocomplete="motherId">
                     <div class="invalid-feedback" v-if="formErrors.motherId">Please provide motherId.</div>
                 </div> -->
                 
-                <div id="demo" class="form-group collapse">
-                    <input id="motherName" type="text" class="form-control" placeholder="motherName" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
+                <div class="form-group collapse create-bird-family">
+                    <input id="motherName" type="text" class="form-control" placeholder="Name of mother" title="Name of mother" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.motherName" autocomplete="motherName">
+                    <autocomplete for="motherName" action="getBird" params='{"limit": 5, "gender": "female"}' map="birdName" is-async> </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
-                    <autocomplete for="motherName" action="getBird" params='{"limit": 5, "gender": "female"}' map="birdName" is-async />
                 </div>
 
-                <!-- <div id="demo" class="form-group collapse">
+                <!-- <div class="create-bird-family" class="form-group collapse">
                     <input id="fatherId" type="text" class="form-control" placeholder="fatherId" :class="[formErrors.fatherId ? 'is-invalid' : '']" v-model.trim="formData.fatherId" autocomplete="fatherId">
                     <div class="invalid-feedback" v-if="formErrors.fatherId">Please provide fatherId.</div>
                 </div> -->
 
-                <div id="demo" class="form-group collapse">
-                    <input id="fatherName" type="text" class="form-control" placeholder="fatherName" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
+                <div class="form-group collapse create-bird-family">
+                    <input id="fatherName" type="text" class="form-control" placeholder="Name of father" title="Name of father" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.fatherName" autocomplete="fatherName">
+                    <autocomplete for="fatherName" action="getBird" params='{"limit": 5, "gender": "male"}' map="birdName" is-async> </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
-                    <autocomplete for="fatherName" action="getBird" params='{"limit": 5, "gender": "male"}' map="birdName" is-async />
                 </div>
         
-                <!-- <div id="demo" class="form-group collapse">
+                <!-- <div class="create-bird-family" class="form-group collapse">
                     <input id="secondFatherId" type="text" class="form-control" placeholder="secondFatherId" :class="[formErrors.secondFatherId ? 'is-invalid' : '']" v-model.trim="formData.secondFatherId" autocomplete="secondFatherId">
                     <div class="invalid-feedback" v-if="formErrors.secondFatherId">Please provide second FatherId.</div>
                 </div> -->
         
-                <div id="demo" class="form-group collapse">
-                    <input id="secondFatherName" type="text" class="form-control" placeholder="secondFatherName" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
+                <div class="form-group collapse create-bird-family">
+                    <input id="secondFatherName" type="text" class="form-control" placeholder="Name of second father" title="Name of second father" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.secondFatherName" autocomplete="secondFatherName">
+                    <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async > </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
-                    <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async />
+                    
                 </div>
 
                 </div>
 
                 <div style="padding:5px 0px!important;" class="container">
-                <button style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">+ History</button>
+                <button style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".create-bird-history">+ History</button>
 
-                <div id="demo2" class="form-group collapse">
-                    <input id="layDate" type="text" class="form-control" placeholder="layDate" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
-                    <div class="invalid-feedback" v-if="formErrors.layDate">Please provide layDate.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="layDate" onfocus="(this.type='date')" class="form-control" placeholder="Lay date" title="Lay date" :class="[formErrors.layDate ? 'is-invalid' : '']" v-model.trim="formData.layDate" autocomplete="layDate">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.layDate">Please provide layDate.</div>
                 </div>
         
-                <div id="demo2" class="form-group collapse">
-                    <input id="hatchDate" type="text" class="form-control" placeholder="hatchDate" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
-                    <div class="invalid-feedback" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="hatchDate" onfocus="(this.type='date')" class="form-control" placeholder="Hatch date" title="Hatch date" :class="[formErrors.hatchDate ? 'is-invalid' : '']" v-model.trim="formData.hatchDate" autocomplete="hatchDate">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.hatchDate">Please provide hatchDate.</div>
                 </div>
         
-                <div id="demo2" class="form-group collapse">
-                    <input id="incDays" type="text" class="form-control" placeholder="incDays" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
-                    <div class="invalid-feedback" v-if="formErrors.incDays">Please provide incDays.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="incDays" type="number" class="form-control" placeholder="Incubation length (days)" title="Incubation length (days)" :class="[formErrors.incDays ? 'is-invalid' : '']" v-model.trim="formData.incDays" autocomplete="incDays">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.incDays">Please provide incDays.</div>
                 </div>
             
-                <div id="demo2" class="form-group collapse">
-                    <input id="whereHatched" type="text" class="form-control" placeholder="whereHatched" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
-                    <div class="invalid-feedback" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="whereHatched" type="text" class="form-control" placeholder="Hatch location" title="Hatch location" :class="[formErrors.whereHatched ? 'is-invalid' : '']" v-model.trim="formData.whereHatched" autocomplete="whereHatched">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.whereHatched">Please provide whereHatched.</div>
                 </div>
         
-                <div id="demo2" class="form-group collapse">
-                    <input id="whereFledged" type="text" class="form-control" placeholder="whereFledged" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
-                    <div class="invalid-feedback" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="whereFledged" type="text" class="form-control" placeholder="Fledge location" title="Fledge location" :class="[formErrors.whereFledged ? 'is-invalid' : '']" v-model.trim="formData.whereFledged" autocomplete="whereFledged">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.whereFledged">Please provide whereFledged.</div>
                 </div>
         
-                <div id="demo2" class="form-group collapse">
-                    <input id="whenFledged" type="date" class="form-control" placeholder="whenFledged" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
-                    <div class="invalid-feedback" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input onfocus="(this.type='date')" id="whenFledged" type="date" class="form-control" placeholder="Fledge date" title="Fledge date" :class="[formErrors.whenFledged ? 'is-invalid' : '']" v-model.trim="formData.whenFledged" autocomplete="whenFledged">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.whenFledged">Please provide whenFledged.</div>
                 </div>
         
-                <div id="demo2" class="form-group collapse">
-                    <input id="whereReleased" type="text" class="form-control" placeholder="whereReleased" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
-                    <div class="invalid-feedback" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input id="whereReleased" type="text" class="form-control" placeholder="Release location" title="Release location" :class="[formErrors.whereReleased ? 'is-invalid' : '']" v-model.trim="formData.whereReleased" autocomplete="whereReleased">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.whereReleased">Please provide whereReleased.</div>
                 </div>
 
-                <div id="demo2" class="form-group collapse">
-                    <input type="text" id="whenReleased" class="form-control" placeholder="whenReleased" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
-                    <div class="invalid-feedback" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
+                <div id="demo2" class="form-group collapse create-bird-history">
+                    <input onfocus="(this.type='date')" id="whenReleased" class="form-control" placeholder="Release date" title="Release date" :class="[formErrors.whenReleased ? 'is-invalid' : '']" v-model.trim="formData.whenReleased" autocomplete="whenReleased">
+                    <div class="invalid-feedback create-bird-history" v-if="formErrors.whenReleased">Please provide whenReleased.</div>
                 </div>
 
                 </div>

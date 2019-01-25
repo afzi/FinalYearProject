@@ -48,7 +48,7 @@ module.exports = {
         required: false,
         type: 'string',
         description: 'The sex (male / female / unknown)',
-        extendedDescription: 'Must be one of MALE / FEMALE / UNKNOWN'
+        extendedDescription: 'Must be one of male / female / unknown'
       },
 
       fatherName: {

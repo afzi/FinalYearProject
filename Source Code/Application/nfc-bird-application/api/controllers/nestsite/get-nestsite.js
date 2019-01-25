@@ -20,6 +20,18 @@ module.exports = {
         description: 'The nest description'
       },
 
+      distanceMetresFrom: {
+        required: false,
+        type: 'number',
+        description: 'Distance from this nestsite to the hoppers'
+      },
+
+      distanceMetresTo: {
+        required: false,
+        type: 'number',
+        description: 'Distance from this nestsite to the hoppers'
+      },
+
       skip: {
           required: false,
           type: 'number',
@@ -44,8 +56,12 @@ module.exports = {
   
   
     fn: async function (inputs) {
-        if(inputs.nestId) query.nestID = {'contains': inputs.nestID}
+        let query = {}
+
+        if(inputs.nestID) query.nestID = {'contains': inputs.nestID}
         if(inputs.nestDescription) query.nestDescription = {'contains': inputs.nestDescription}
+        if(inputs.distanceMetresFrom) query.distanceToHoppersMetres = {'>=': inputs.distanceMetresFrom};
+        if(inputs.distanceMetresTo) query.distanceToHoppersMetres = {'<=': inputs.distanceMetresTo};
         
         let finalQuery = {where: query}
         if(inputs.skip) finalQuery.skip = inputs.skip;

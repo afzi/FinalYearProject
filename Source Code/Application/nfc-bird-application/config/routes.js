@@ -26,6 +26,7 @@ module.exports.routes = {
   'GET /password/new':       { action: 'entrance/view-new-password' },
 
   'GET /bird/register':      { action: 'bird/view-create-bird' },
+  'GET /nestsite/register':  { action: 'nestsite/view-create-nestsite' },
 
   'GET /account':            { action: 'account/view-account-overview' },
   'GET /account/password':   { action: 'account/view-edit-password' },
@@ -63,9 +64,10 @@ module.exports.routes = {
   'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
   'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},
   
+  'GET   /api/v1/nestsite/nestsite-exists':              { action: 'nestsite/nestsite-exists'},  
   'GET   /api/v1/nestsite':                              { action: 'nestsite/get-nestsite'},
-  'POST  /api/v1/nestsite':                              { action: 'nestsite/create-nestsite'},    
 
+  'POST  /api/v1/nestsite':                              { action: 'nestsite/create-nestsite'},    
 
   'POST  /api/v1/bird':                                  { action: 'bird/create-bird' },
 

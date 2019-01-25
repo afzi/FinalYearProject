@@ -142,7 +142,14 @@ module.exports = {
       currentNestSite: {
         required: false,
         type: 'string',
-        description: 'Where is the bird currently nesting'      }
+        description: 'Where is the bird currently nesting'
+      },
+
+      currentNestSiteSince: {
+        required: false,
+        type: 'number',
+        description: 'How long has this bird been in its current nest-site'
+      }
   
     },
   
@@ -173,34 +180,59 @@ module.exports = {
       // todo validate RFID exists before creating bird record
 
       // Build up data for the new bird record and save it to the database.
-      await Bird.create({
-        birdName: inputs.echoName,
-        nfcRfid: inputs.nfcRingId,
-        createdBy: this.req.session.userId,
-        editedBy: this.req.session.userId,
-        studID: inputs.studId,
-        newStudID: inputs.newStudId,
-        leftRingID: inputs.leftRingId,
-        rightRingID: inputs.rightRingId,
-        sex: inputs.sex,
-        motherName: inputs.motherName,
-        fatherName: inputs.fatherName,
-        secondFatherName: inputs.secondFatherName,
-        researcherNotes: inputs.notes,
-        layDate: inputs.layDate,
-        hatchDate: inputs.hatchDate,
-        incubationDays: inputs.incDays,
-        whereHatched: inputs.whereHatched,
-        whereFledged: inputs.whereFledged,
-        whenFledged: inputs.whenFledged,
-        whereReleased: inputs.whereReleased,
-        whenReleased: inputs.whenReleased,
-        groupName: inputs.groupName,
-        currentNestSite: inputs.currentNestSite
+
+
+      
+      await sails.getDatastore().transaction(async db => {
+        let bird = await Bird.create({
+          birdName: inputs.echoName,
+          createdBy: this.req.session.userId,
+          editedBy: this.req.session.userId,
+          studID: inputs.studId,
+          newStudID: inputs.newStudId,
+          leftRingID: inputs.leftRingId,
+          rightRingID: inputs.rightRingId,
+          sex: inputs.sex,
+          motherName: inputs.motherName,
+          fatherName: inputs.fatherName,
+          secondFatherName: inputs.secondFatherName,
+          researcherNotes: inputs.notes,
+          layDate: inputs.layDate,
+          hatchDate: inputs.hatchDate || null,
+          incubationDays: inputs.incDays,
+          hatchedWhere: inputs.whereHatched,
+          whereFledged: inputs.whereFledged,
+          fledgeDate: inputs.whenFledged || null,
+          releasedWhere: inputs.whereReleased,
+          releasedWhen: inputs.whenReleased || null,
+          groupName: inputs.groupName
+        })
+        .usingConnection(db)
+        .fetch();
+
+      if(inputs.nfcRingId) {
+        await RFIDTag.update({
+          nfcRFID: inputs.nfcRingId
+        }).set({
+          birdID: bird.id
+        })
+        .usingConnection(db)
+      }
+
+
+      if(inputs.currentNestSite) {
+        await Birdnest.create({
+          birdID: bird.id,
+          nestID: inputs.currentNestSite,
+          dateEntered: inputs.currentNestSiteSince || new Date()
+        })
+        .usingConnection(db)
+      }
+
       })
       .intercept('E_UNIQUE', 'alreadyInUse')
-      .intercept({name: 'UsageError'}, 'invalid');
+      .intercept({name: 'UsageError'}, 'invalid')
+
     }
-  
   };
   

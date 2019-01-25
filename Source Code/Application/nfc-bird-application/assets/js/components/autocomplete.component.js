@@ -97,14 +97,6 @@ parasails.registerComponent('autocomplete', {
     },
     mounted: async function(){
       $(`#${this.for}`).on('input', this.onChange);
-    //   $(`#${this.for}`).on('blur', e => {
-    //       e.preventDefault();
-    //       this.close()});
-    //   $(`#${this.for}`).on('keydown.down', this.onArrowDown);
-    //   $(`#${this.for}`).on('keydown.up', this.onArrowUp);
-    //   $(`#${this.for}`).on('keydown.enter', this.onEnter);
-      
-    //   $(`#${this.for}`).attr('v-model', this.search);
 
       document.addEventListener('click', this.handleClickOutside);
     },
@@ -165,6 +157,7 @@ parasails.registerComponent('autocomplete', {
 
         setResult(result) {
             $(`#${this.for}`).val(result);
+            $(`#${this.for}`)[0].dispatchEvent(new Event('change'));
             this.close();
         },
 
@@ -191,7 +184,7 @@ parasails.registerComponent('autocomplete', {
             $(`#${this.for}`).val(this.results[this.arrowCounter]);
             this.isOpen = false;
             this.arrowCounter = -1;
-        },
+        }
   
     }
   });
