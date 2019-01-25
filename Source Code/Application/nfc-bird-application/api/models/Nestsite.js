@@ -15,7 +15,8 @@ module.exports = {
             type: "string",
             columnType: "varchar",
             maxLength: 10,
-            required: true
+            required: true,
+            unique: true
         },
         createdBy: {
             model: "user"

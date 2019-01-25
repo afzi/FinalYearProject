@@ -170,6 +170,8 @@ module.exports = {
     fn: async function (inputs) {
       console.log("Received request to register bird")
 
+      // todo validate RFID exists before creating bird record
+
       // Build up data for the new bird record and save it to the database.
       await Bird.create({
         birdName: inputs.echoName,
@@ -196,8 +198,8 @@ module.exports = {
         groupName: inputs.groupName,
         currentNestSite: inputs.currentNestSite
       })
-      // .intercept('E_UNIQUE', 'alreadyInUse') UNCOMMENT THE INTERCEPTS WHEN DONE WITH DEBUGGING
-      // .intercept({name: 'UsageError'}, 'invalid');
+      .intercept('E_UNIQUE', 'alreadyInUse')
+      .intercept({name: 'UsageError'}, 'invalid');
     }
   
   };

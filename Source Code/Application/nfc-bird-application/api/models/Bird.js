@@ -89,33 +89,29 @@ module.exports = {
             columnType: "varchar",
             maxLength: 20
         },
-        motherID: {
-            model: "bird"
-        },
         fatherName: {
             type: "string",
             columnType: "varchar",
             maxLength: 20
         },
-        fatherID: {
-            model: "bird"
+        currentNestSite: {
+            type: 'string',
         },
+        //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
+        //birdStatus
+        //seenSinceFledged
+        //recentlySeen
+        //lastSeenDate
+        //deathDate
         secondFatherName: {
             type: "string",
             columnType: "varchar",
             maxLength: 20
         },
-        secondFatherID: {
-            model: "bird"
-        },
         researcherNotes: {
             type: "string",
             columnType: "varchar",
             maxLength: 200
-        },
-        dateOut: { //death date
-            type: "string",
-            columnType: "date"
         }
     }
 };

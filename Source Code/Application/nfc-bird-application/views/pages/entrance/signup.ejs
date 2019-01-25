@@ -28,7 +28,13 @@
                       <div class="invalid-feedback" v-if="formErrors.username">Please enter a valid username.</div>
                     </div>
               </td>
-              <td>&nbsp;</td>
+              <td>
+                <div class="form-group">
+                  <a href="#" data-toggle="tooltip" data-placement="right" title="Minimum 6 characters">
+                      <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                      </a>
+              </div>
+              </td>
               </tr>
               
               <tr>
@@ -38,9 +44,9 @@
                       <div class="invalid-feedback" v-if="formErrors.password">Please enter a password.</div>
                   </div>
               </td>
-              <td align="right">
+              <td>
                   <div class="form-group">
-                      <a href="#" data-toggle="tooltip" data-placement="right" title="Minimum 6 maximum 12 characters">
+                      <a href="#" data-toggle="tooltip" data-placement="right" title="Minimum 6 characters">
                           <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                           </a>
                   </div>
@@ -65,42 +71,42 @@
                 <td colspan="2"><label for="Privileges">Privileges</label><br></td>
                 </tr>
                 <tr>
-                <td><input id="read" type="checkbox" name="Read" value="Read"> Read</td>
+                <td><input id="hasRead" type="checkbox"  name="hasRead" value="hasRead" v-model="formData.hasRead"> Read</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to view bird entries">
                       <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                     </a>
                   </td>
                 </tr>
                 <tr>
-                <td><input type="checkbox" name="Create" value="Create"> Create</td>
+                <td><input id="hasCreateEdit" type="checkbox" name="hasCreateEdit" value="hasCreateEdit" v-model="formData.hasCreateEdit"> Create</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to make new birds (and nest sites)">
                     <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                     </a>
                   </td>
                 </tr>
                 <tr>
-                <td> <input type="checkbox" name="Edit" value="Edit"> Edit<br></td>
+                <td> <input id="hasEditFull" type="checkbox" name="hasEditFull" value="hasEditFull" v-model="formData.hasEditFull"> Edit</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to edit information on the system">
                      <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                     </a>
                   </td>
                 </tr>
                 <tr>
-                <td><input type="checkbox" name="Simple" value="Simple"> Export Simple</td>
+                <td><input id="hasExportSimple" type="checkbox" name="hasExportSimple" value="hasExportSimple" v-model="formData.hasExportSimple"> Export Simple</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export a limited set of data using pre-created filters, suitable for upper management">
                     <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                   </a>
                 </td>
                 </tr>
                 <tr>
-                <td><input type="checkbox" name="Full" value="Full"> Export Full</td>
+                <td><input id="hasExportFull" type="checkbox" name="hasExportFull" value="hasExportFull" v-model="formData.hasExportFull"> Export Full</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export all data in the system and gives the option for custom filters, suitable for researchers">
                       <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                     </a>
                   </td>
                 </tr>
                 <tr>
-                <td> <input type="checkbox" name="Admin" value="Admin"> Admin</td>
+                <td> <input id="hasAdmin" type="checkbox" name="hasAdmin" value="hasAdmin" v-model="formData.hasAdmin"> Admin</td>
                 <td><a data-toggle="tooltip" data-placement="right" title="Allows user to do everything above as well as register new users and feeders.">
                        <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/> 
                      </a>
@@ -119,6 +125,7 @@
         </div> -->
 
         <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small>It looks like there's already an account with your username. Please select a different one.</small></p>
+        
         <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
         <div class="form-group">
           <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Create account</ajax-button>
