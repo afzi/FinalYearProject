@@ -7,11 +7,12 @@
 module.exports = {
 
     primaryKey: "nfcRFID",
-
+    
     attributes: {
         id: false,
         createdAt: false,
         updatedAt: false,
+
         birdID: {
             model: "bird"
         },

@@ -5,8 +5,11 @@
 
 module.exports = {
 
-    //PK is defaut sails id field
     attributes: {
+        //primaryKey provided by sails ID
+        updatedAt: false,
+        createdAt: false,
+        
         birdID: {
             model: "Bird",
             required: true

@@ -4,8 +4,12 @@
 */
 
 module.exports = {
-
+    
     attributes: {
+        //BirdID provided by sails ID
+        //createdOn provided by sails
+        //updatedOn provided by sails
+        
         createdBy: {
             model: "user"
         },
@@ -15,7 +19,8 @@ module.exports = {
         birdName: {
             type: "string",
             columnType: "varchar",
-            maxLength: 20
+            maxLength: 20,
+            unique: true
         },
         studID: {
             type: "string",
@@ -43,6 +48,9 @@ module.exports = {
             type: "string",
             isIn: ["male", "female", "unknown"]
         },
+        isBreeder: {
+            type: "boolean"
+        },
         layDate: {
             type: "ref",
             columnType: "datetime"
@@ -50,7 +58,7 @@ module.exports = {
         hatchedWhere: {
             model: "nestsite"
         },
-        hatchDate: {
+        hatchDate: { //USE THIS TO CALCULATE AGE
             type: "ref",
             columnType: "datetime"
         },
@@ -86,12 +94,6 @@ module.exports = {
             columnType: "varchar",
             maxLength: 20
         },
-        //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
-        //birdStatus
-        //seenSinceFledged
-        //recentlySeen
-        //lastSeenDate
-        //deathDate
         secondFatherName: {
             type: "string",
             columnType: "varchar",
@@ -102,5 +104,11 @@ module.exports = {
             columnType: "varchar",
             maxLength: 200
         }
+        //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
+        //birdStatus
+        //seenSinceFledged
+        //recentlySeen
+        //lastSeenDate
+        //deathDate
     }
 };

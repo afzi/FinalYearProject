@@ -11,6 +11,7 @@ module.exports = {
         id: false,
         updatedAt: false,
         createdAt: false,
+        
         nestID: {
             type: "string",
             columnType: "varchar",

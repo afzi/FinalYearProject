@@ -5,9 +5,11 @@
 
 module.exports = {
 
-    //PK is defaut sails id field
     attributes: {
+        //entryDate added by sails
+        //primaryKey provided by sails ID
         createdAt: false,
+
         birdID: {
             model: "Bird"
         },
@@ -16,6 +18,6 @@ module.exports = {
             columnType: "varchar",
             maxLength: 200
         }
-        //updatedAt added by sails
+        
     }
 };
