@@ -9,7 +9,7 @@ module.exports = {
         //BirdID provided by sails ID
         //createdOn provided by sails
         //updatedOn provided by sails
-        
+
         createdBy: {
             model: "user"
         },
@@ -53,21 +53,21 @@ module.exports = {
         },
         layDate: {
             type: "ref",
-            columnType: "datetime"
+            columnType: "bigint(20)"
         },
         hatchedWhere: {
             model: "nestsite"
         },
         hatchDate: { //USE THIS TO CALCULATE AGE
             type: "ref",
-            columnType: "datetime"
+            columnType: "bigint(20)"
         },
         incubationDays: {
             type: "number"
         },
         fledgeDate: {
             type: "ref",
-            columnType: "datetime"
+            columnType: "bigint(20)"
         },
         fledgedWhere: {
             model: "nestsite"
@@ -77,7 +77,7 @@ module.exports = {
         },
         releasedWhen: {
             type: "ref",
-            columnType: "datetime"
+            columnType: "bigint(20)"
         },
         groupName: {
             type: "string",
