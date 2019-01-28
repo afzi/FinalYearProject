@@ -58,7 +58,7 @@
             <div id="group-nestsite" class="form-group">
                 <input type="text" id="currentNestSite" class="form-control" placeholder="Current nest site" title="Current nest site" :class="[formErrors.currentNestSite ? 'is-invalid' : '']" v-model.trim.lazy="formData.currentNestSite" @blur="liveValidate(validateNestsite, 1000)">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                <div class="invalid-feedback" v-if="formErrors.currentNestSite">Please provide a valid nest-site.</div>
+                <div class="invalid-feedback" v-if="formErrors.currentNestSite">Please provide a valid nest-site. <a target="_blank" href="/nestsite/register">Create new</a></div>
                 <div v-if="formData.currentNestSite != null && formData.currentNestSite != ''" class="create-bird-history">
                     <input onfocus="(this.type='date')" id="currentNestSiteDate" class="form-control" placeholder="Nesting here since when?" title="Nesting here since when?" :class="[formErrors.currentNestSiteDate ? 'is-invalid' : '']" v-model.trim="formData.currentNestSiteDate" @blur="liveValidate(validateNestsiteDate, 1000)">
                     <div class="invalid-feedback" v-if="formErrors.currentNestSiteDate">Please provide a valid nest-site date.</div>
