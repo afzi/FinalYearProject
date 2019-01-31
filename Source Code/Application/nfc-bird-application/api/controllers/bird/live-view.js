@@ -36,6 +36,7 @@ module.exports = {
 
       var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY);
 
+      console.log("I MADE IT HERE");
       console.log(rawResult);
 
       return rawResult;

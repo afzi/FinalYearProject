@@ -63,6 +63,7 @@ module.exports.routes = {
 
   'GET   /api/v1/bird/unique-bird-name':                 { action: 'bird/unique-bird-name'},
   'GET   /api/v1/bird':                                  { action: 'bird/get-bird'},
+  'GET   /api/v1/bird/live-view':                        { action: 'bird/live-view'},
   
   'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
   'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},
