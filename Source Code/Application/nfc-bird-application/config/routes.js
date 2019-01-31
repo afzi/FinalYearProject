@@ -26,6 +26,7 @@ module.exports.routes = {
   'GET /password/new':       { action: 'entrance/view-new-password' },
 
   'GET /bird/register':      { action: 'bird/view-create-bird' },
+  'GET /bird/live':          { action: 'bird/view-live-bird' },
   'GET /nestsite/register':  { action: 'nestsite/view-create-nestsite' },
 
   'GET /account':            { action: 'account/view-account-overview' },
@@ -65,6 +66,7 @@ module.exports.routes = {
 
   'GET   /api/v1/bird/unique-bird-name':                 { action: 'bird/unique-bird-name'},
   'GET   /api/v1/bird':                                  { action: 'bird/get-bird'},
+  'GET   /api/v1/bird/live-view':                        { action: 'bird/live-view'},
   
   'GET   /api/v1/rfidtag/rfid-tag-exists':               { action: 'rfidtag/rfid-tag-exists'},  
   'GET   /api/v1/rfidtag':                               { action: 'rfidtag/get-rfid'},
