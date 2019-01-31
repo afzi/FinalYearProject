@@ -1,6 +1,5 @@
 module.exports = {
 
-
     friendlyName: 'Get Birds',
   
   

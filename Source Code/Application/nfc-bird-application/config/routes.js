@@ -29,6 +29,9 @@ module.exports.routes = {
   'GET /nestsite/register':  { action: 'nestsite/view-create-nestsite' },
 
   'GET /account':            { action: 'account/view-account-overview' },
+
+  'GET /birds':            { action: 'bird/view-get-bird' },
+
   'GET /account/password':   { action: 'account/view-edit-password' },
   'GET /account/profile':    { action: 'account/view-edit-profile' },
 
