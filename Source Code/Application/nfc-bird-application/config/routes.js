@@ -26,6 +26,7 @@ module.exports.routes = {
   'GET /password/new':       { action: 'entrance/view-new-password' },
 
   'GET /bird/register':      { action: 'bird/view-create-bird' },
+  'GET /bird/live':          { action: 'bird/view-live-bird' },
   'GET /nestsite/register':  { action: 'nestsite/view-create-nestsite' },
 
   'GET /account':            { action: 'account/view-account-overview' },
