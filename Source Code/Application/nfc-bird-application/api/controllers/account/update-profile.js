@@ -31,6 +31,7 @@ module.exports = {
     // (We always set the fullName if provided.)
     var valuesToSet = {
       fullName: inputs.fullName,
+      username: inputs.username,
     };
 
 

@@ -11,20 +11,27 @@ module.exports = {
         id: false,
         updatedAt: false,
         createdAt: false,
+        
         nestID: {
             type: "string",
             columnType: "varchar",
-            maxLength: 10,
             required: true,
             unique: true
         },
         createdBy: {
             model: "user"
         },
+        editedBy: {
+            model: "user"
+        },
         nestDescription: {
             type: "string",
             columnType: "varchar",
             maxLength: 200
+        },
+        distanceToHoppersMetres: {
+            type: "number",
+            columnType: "integer"
         }
     }
 };

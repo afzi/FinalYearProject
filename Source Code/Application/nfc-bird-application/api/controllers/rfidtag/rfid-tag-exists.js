@@ -12,6 +12,12 @@ module.exports = {
         required: false,
         type: 'string',
         description: 'The friendly name of the NFC token'
+      },
+
+      assignedStatus: {
+        required: false,
+        type: 'boolean',
+        description: 'Whether this tag has been assigned to a bird'
       }
     },
   
@@ -27,10 +33,24 @@ module.exports = {
   
     fn: async function (inputs) {
       if(!inputs.nfcFriendlyName) return false;
+
+      let birdIdConstraint;
+      if(inputs.isAssigned) {
+          birdIdConstraint = {
+              '!=': null
+          }
+      } else if(inputs.isAssigned === false) {
+          birdIdConstraint = null;
+      }
+
+      let query = {};
+
+      if(birdIdConstraint) query.birdId = birdIdConstraint;
+      query.nfcRFID = inputs.nfcFriendlyName;
   
-      result = await RFIDTag.count({
-        nfcRFID: inputs.nfcFriendlyName
-      })
+      result = await RFIDTag.count(
+        query
+      )
   
       return (result > 0)
     }

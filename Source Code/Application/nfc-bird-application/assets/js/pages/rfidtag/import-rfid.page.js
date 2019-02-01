@@ -1,11 +1,8 @@
-parasails.registerPage('edit-profile', {
+parasails.registerPage('import-rfid', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    // Main syncing/loading state for this page.
-    syncing: false,
-
     // Form data
     formData: { /* … */ },
 
@@ -13,21 +10,24 @@ parasails.registerPage('edit-profile', {
     // > Has property set to `true` for each invalid property in `formData`.
     formErrors: { /* … */ },
 
-    // Server error state for the form
+    // Syncing / loading state
+    syncing: false,
+
+    // Server error state
     cloudError: '',
+
+    // Success state when form has been submitted
+    cloudSuccess: false,
+
+    csvValid: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
   beforeMount: function() {
-    // Attach raw data exposed by the server.
+    // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
-
-    // Set the form data.
-    this.formData.fullName = this.me.fullName;
-    this.formData.username = this.me.username;
-    this.formData.emailAddress = this.me.emailChangeCandidate ? this.me.emailChangeCandidate : this.me.emailAddress;
   },
   mounted: async function() {
     //…
@@ -37,30 +37,19 @@ parasails.registerPage('edit-profile', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-
     submittedForm: async function() {
-      // Redirect to the account page on success.
-      // > (Note that we re-enable the syncing state here.  This is on purpose--
-      // > to make sure the spinner stays there until the page navigation finishes.)
       this.syncing = true;
-      window.location = '/account';
+      window.location = '/';
     },
 
     handleParsingForm: function() {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
 
+
       var argins = this.formData;
 
-      // Validate name:
-      if(!argins.fullName) {
-        this.formErrors.fullName = true;
-      }
-
-      // Validate email:
-      if(!argins.emailAddress) {
-        this.formErrors.emailAddress = true;
-      }
+      validateCsv();
 
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
@@ -72,5 +61,8 @@ parasails.registerPage('edit-profile', {
       return argins;
     },
 
+    validateCsv: function() {
+      console.log("CSV valid af bro");
+    }
   }
 });

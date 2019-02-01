@@ -23,10 +23,6 @@ module.exports = {
 
   fn: async function () {
 
-    if (this.req.me) {
-      throw {redirect: '/'};
-    }
-
     return {};
 
   }

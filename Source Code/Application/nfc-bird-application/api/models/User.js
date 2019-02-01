@@ -5,22 +5,17 @@
 
 module.exports = {
 
-    // primaryKey: "userID",
-
     attributes: {
-        // id: false,
+        //UserID provided by sails ID
         updatedAt: false,
         createdAt: false,
-        // userID: {
-        //     type: 'number',
-        //     autoIncrement: true,
-        //     required: true
-        // }, AUTO MADE BY SAILS
+
         username: {
             type: "string",
             columnType: "varchar",
             maxLength: 20,
-            required: true
+            required: true,
+            unique: true
         },
         fullName: {
             type: "string",
@@ -31,24 +26,22 @@ module.exports = {
         password: {
             type: "string",
             columnType: "varchar",
-            required: true
+            required: true,
+            protect: true
         },
         hasRead: {
             type: "boolean"
         },
-        hasCreateEdit: {
+        hasCreateEdit: { // implies having read
             type: "boolean"
         },
-        hasEditFull: {
+        hasEditFull: { // implies having createEdit and read
             type: "boolean"
         },
-        hasExportSimple: {
+        hasExport: { //implies having read aswell
             type: "boolean"
         },
-        hasExportFull: {
-            type: "boolean"
-        },
-        hasAdmin: {
+        hasAdmin: { //implies all = user creation
             type: "boolean"
         }
     }

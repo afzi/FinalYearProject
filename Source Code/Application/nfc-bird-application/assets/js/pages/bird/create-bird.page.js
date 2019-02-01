@@ -4,7 +4,7 @@ parasails.registerPage('create-bird', {
     //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
     data: {
       // Form data
-      formData: { /* … */ },
+      formData: { sex: '' },
   
       // For tracking client-side validation errors in our form.
       // > Has property set to `true` for each invalid property in `formData`.
@@ -28,7 +28,7 @@ parasails.registerPage('create-bird', {
       _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-      //…
+
     },
   
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -47,8 +47,7 @@ parasails.registerPage('create-bird', {
   
         var argins = this.formData;
         
-        this.validateEcho();
-        this.validateRFID();
+        this.validateForm();
   
         // If there were any issues, they've already now been communicated to the user,
         // so simply return undefined.  (This signifies that the submission should be
@@ -60,22 +59,57 @@ parasails.registerPage('create-bird', {
         return argins;
       },
 
-      validateEcho: function() {
-        var isUniqueBirdName = parasails.require('isUniqueBirdName')
+      validateForm: function() {
+        this.validateEcho();
+        this.validateRFID();
+        this.validateNestsite();
+        this.validateNestsiteDate();
+      },
 
+      liveValidate(toSchedule, delay) {
+          var vm = this;
+          setTimeout(toSchedule, delay, vm);
+      },
 
-        result = isUniqueBirdName(this.formData.echoName).then(result => {
-          this.formErrors.echoName = !result;
-        })
+      validateEcho: function(vm) {
+          if(!vm) vm = this;
+
+          if(!vm.formData.echoName || vm.formData.echoName == "") Vue.set(vm.formErrors, 'echoName', true);
+          else {
+            result = Cloud.uniqueBirdName.with({echoName: vm.formData.echoName}).then(result => {
+              Vue.set(vm.formErrors, 'echoName', !result);
+            })
+          }
 
       },
 
-      validateRFID: function() {
-        var isValidRfidTag = parasails.require('isValidRfidTag')
+      validateRFID: function(vm) {
+        if(!vm) vm = this;
+        if(!vm.formData.nfcRingId || vm.formData.nfcRingId == "") Vue.set(vm.formErrors, 'nfcRingId', false);
+        else {
+          result = Cloud.rfidTagExists.with({nfcFriendlyName: vm.formData.nfcRingId}).then(result => {
+            Vue.set(vm.formErrors, 'nfcRingId', !result);
+          })
+        }
+      },
 
-        result = isValidRfidTag(this.formData.nfcRingId).then(result => {
-          this.formErrors.nfcRingId = !result;
-        })
+      validateNestsite: function(vm) {
+        if(!vm) vm = this;
+        if(!vm.formData.currentNestSite || vm.formData.currentNestSite == "") Vue.set(vm.formErrors, 'currentNestSite', false);
+        if(vm.formData.currentNestSite && vm.formData.currentNestSite != "") {
+          result = Cloud.nestsiteExists.with({nestID: vm.formData.currentNestSite}).then(result => {
+            Vue.set(vm.formErrors, 'currentNestSite', !result);
+          })
+        }
+      },
+
+      validateNestsiteDate: function(vm) {
+        if(!vm) vm = this;
+        if(vm.formData.currentNestSite && vm.formData.currentNestSite != "" && (!vm.formData.currentNestSiteDate || vm.formData.currentNestSiteDate == "")) {
+          Vue.set(vm.formErrors, 'currentNestSiteDate', true);
+        } else {
+          Vue.set(vm.formErrors, 'currentNestSiteDate', false);
+        }
       }
   
     }

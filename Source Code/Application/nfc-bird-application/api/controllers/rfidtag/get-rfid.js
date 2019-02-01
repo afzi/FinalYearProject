@@ -8,7 +8,7 @@ module.exports = {
   
   
     inputs: {
-      nfcRingId: {
+      nfcRFID: {
         required: false,
         type: 'string',
         description: 'The friendly name of the NFC token (or part of it)'
@@ -60,7 +60,7 @@ module.exports = {
         let query = {};
 
         if(birdIdConstraint) query.birdId = birdIdConstraint;
-        if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId}
+        if(inputs.nfcRFID) query.nfcRFID = {'contains': inputs.nfcRFID}
         if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
         
         let finalQuery = {where: query}

@@ -45,12 +45,12 @@ by modifying its session.`,
     hasEditFull: {
       type: "boolean"
     },
-    hasExportSimple: {
+    hasExport: {
       type: "boolean"
     },
-    hasExportFull: {
-      type: "boolean"
-    },
+    // hasExportFull: {
+    //   type: "boolean"
+    // },
     hasAdmin: {
       type: "boolean"
     }
@@ -92,17 +92,13 @@ by modifying its session.`,
       hasRead: inputs.hasRead,
       hasCreateEdit: inputs.hasCreateEdit,
       hasEditFull: inputs.hasEditFull,
-      hasExportSimple: inputs.hasExportSimple,
-      hasExportFull: inputs.hasExportFull,
+      hasExport: inputs.hasExport,
       hasAdmin: inputs.hasAdmin
 
     }))
     .intercept('E_UNIQUE', 'usernameAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
-
-    // Store the user's new id in their session.
-    this.req.session.userId = newUserRecord.id;
   }
 
 };

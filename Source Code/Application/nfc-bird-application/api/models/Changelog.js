@@ -10,6 +10,8 @@ module.exports = {
     attributes: {
         id: false,
         updatedAt: false,
+        //changedOn provided by sails createdAt
+        
         logID: {
             type: 'number',
             autoIncrement: true,
@@ -26,12 +28,6 @@ module.exports = {
             columnType: "varchar",
             maxLength: 20,
             required: true
-                // },
-                // changedOn: {
-                //     type: "string",
-                //     columnType: "datetime",
-                //     required: true
-                // } AUTO MADE BY SAILS
         }
     }
 };

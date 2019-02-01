@@ -4,24 +4,23 @@
 */
 
 module.exports = {
-    primaryKey: "birdID",
-
+    
     attributes: {
-        id: false,
-        updatedAt: false,
+        //BirdID provided by sails ID
         //createdOn provided by sails
-        birdID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true
-        },
+        //updatedOn provided by sails
+
         createdBy: {
+            model: "user"
+        },
+        editedBy: {
             model: "user"
         },
         birdName: {
             type: "string",
             columnType: "varchar",
-            maxLength: 20
+            maxLength: 20,
+            unique: true
         },
         studID: {
             type: "string",
@@ -47,24 +46,28 @@ module.exports = {
         },
         sex: {
             type: "string",
-            isIn: ["m", "f"]
+            isIn: ["male", "female", "unknown"]
+        },
+        isBreeder: {
+            type: "boolean"
         },
         layDate: {
-            type: "string",
-            columnType: "date"
+            type: "ref",
+            columnType: "bigint(20)"
         },
         hatchedWhere: {
             model: "nestsite"
         },
-        hatchDate: {
-            type: "string",
-            columnType: "date"
+        hatchDate: { //USE THIS TO CALCULATE AGE
+            type: "ref",
+            columnType: "bigint(20)"
         },
         incubationDays: {
             type: "number"
         },
-        birdFledged: {
-            type: "boolean"
+        fledgeDate: {
+            type: "ref",
+            columnType: "bigint(20)"
         },
         fledgedWhere: {
             model: "nestsite"
@@ -73,16 +76,13 @@ module.exports = {
             model: "nestsite"
         },
         releasedWhen: {
-            type: "string",
-            columnType: "datetime"
+            type: "ref",
+            columnType: "bigint(20)"
         },
         groupName: {
             type: "string",
             columnType: "varchar",
             maxLength: 20
-        },
-        currentNestSite: {
-            model: "nestsite"
         },
         motherName: {
             type: "string",
@@ -94,15 +94,6 @@ module.exports = {
             columnType: "varchar",
             maxLength: 20
         },
-        currentNestSite: {
-            type: 'string',
-        },
-        //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
-        //birdStatus
-        //seenSinceFledged
-        //recentlySeen
-        //lastSeenDate
-        //deathDate
         secondFatherName: {
             type: "string",
             columnType: "varchar",
@@ -113,5 +104,11 @@ module.exports = {
             columnType: "varchar",
             maxLength: 200
         }
+        //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
+        //birdStatus
+        //seenSinceFledged
+        //recentlySeen
+        //lastSeenDate
+        //deathDate
     }
 };
