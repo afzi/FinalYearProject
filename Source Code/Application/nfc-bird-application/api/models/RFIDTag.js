@@ -27,6 +27,10 @@ module.exports = {
             columnType: "varchar",
             unique: true,
             required: true
+        },
+        colour: {
+            type: "string",
+            columnType: "varchar"
         }
     }
 };

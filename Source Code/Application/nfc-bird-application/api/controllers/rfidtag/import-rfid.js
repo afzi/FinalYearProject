@@ -37,8 +37,40 @@ module.exports = {
     },
   
   
-    fn: async function (inputs) {
-        console.log("HAI");
+    fn: async function (inputs, exits) {
+        let numSkipped = 0;
+        let numSuccess = 0;
+
+        for(nextValue of inputs.csv.values) {
+          
+            exist = await RFIDTag.count({
+              nfcRFID: nextValue.short
+            })
+
+            exist += await RFIDTag.count({
+              nfcRFIDInternal: nextValue.long
+            })
+            .intercept({name: 'UsageError'}, 'invalid');
+  
+            if(exist > 0) {
+              numSkipped ++;
+            } else {
+              await RFIDTag.create({
+                nfcRFID: nextValue.short,
+                nfcRFIDInternal: nextValue.long,
+                colour: nextValue.colour
+              })
+              .intercept({name: 'UsageError'}, 'invalid');
+
+              numSuccess ++;
+            }
+          
+        }
+
+
+        
+
+        return exits.success({success: numSuccess, skipped: numSkipped});
     }
   
   
