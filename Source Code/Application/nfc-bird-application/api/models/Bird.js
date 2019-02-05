@@ -17,39 +17,41 @@ module.exports = {
             model: "user"
         },
         birdName: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20,
             unique: true
         },
         studID: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20,
             unique: true
         },
         newStudID: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20,
             unique: true
         },
         leftRingID: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 30
         },
         rightRingID: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 30
         },
         sex: {
-            type: "string",
+            type: "ref",
+            columnType: "varchar",
             isIn: ["male", "female", "unknown"]
         },
         isBreeder: {
-            type: "boolean"
+            type: "ref",
+            columnType: "boolean"
         },
         layDate: {
             type: "ref",
@@ -80,27 +82,27 @@ module.exports = {
             columnType: "bigint(20)"
         },
         groupName: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20
         },
         motherName: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20
         },
         fatherName: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20
         },
         secondFatherName: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 20
         },
         researcherNotes: {
-            type: "string",
+            type: "ref",
             columnType: "varchar",
             maxLength: 200
         }

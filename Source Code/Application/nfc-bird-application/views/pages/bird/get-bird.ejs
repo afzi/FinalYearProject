@@ -1,16 +1,43 @@
-<div id="create-bird">
+<div id="get-bird">
     <div class="container" v-if="!cloudSuccess">
         <h1 class="text-center">Birds Table </h1>
-        <div class="create-bird-form">
         <hr/>
-            <div class="row">
-                <div class="col-3">Name:</div>
-                
-                <strong>{{me.username}}</strong>
-            </div>
 
-            
-        </div>
+        <p>{{result}}</p>
+        
+                
+                <table id="all-birds" border="1">
+                    <thead role="rowgroup">
+                        <tr role="row">
+                            <th role="columnheader"  style="width: 10%">Echo Name</th>
+                            <th role="columnheader"  style="width: 10%">Bird ID</th>
+                            <th role="columnheader"  style="width: 10%">Sex</th>
+                            <th role="columnheader"  style="width: 10%">Male Parent</th>
+                            <th role="columnheader"  style="width: 10%">Female Parent</th>
+                            <th role="columnheader"  style="width: 10%">Age</th>
+                            <th role="columnheader"  style="width: 10%">Breeder</th>
+                            <th role="columnheader"  style="width: 10%">Current Nest</th>
+                            <th role="columnheader"  style="width: 10%">Distance To Hopper</th>
+                            <th role="columnheader"  style="width: 10%">Previous Nest</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody role="rowgroup" id="warnings-table-body">
+                        <tr v-for="bird in result">
+                            <td>{{bird.birdName}}</td>
+                            <td>{{bird.id}}</td>
+                            <td>{{bird.sex}}</td>
+                            <td>{{bird.fatherName}}</td>
+                            <td>{{bird.motherName}}</td>
+                            <td>{{bird.layDate}}</td>
+                            <td>{{bird.isBreeder}}</td>
+                            <td>Nest site -- todo</td>
+                            <td>Nest site -- todo</td>
+                            <td>Nest site -- todo</td>
+                        </tr>
+                    </tbody>
+                    </table>
+
     </div>
 </div>
 

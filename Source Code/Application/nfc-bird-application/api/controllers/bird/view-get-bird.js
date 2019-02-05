@@ -1,10 +1,10 @@
 module.exports = {
 
 
-    friendlyName: 'View create-bird',
+    friendlyName: 'View get-bird',
   
   
-    description: 'Display "create-bird" page.',
+    description: 'Display "get-bird" page.',
   
   
     exits: {
@@ -21,7 +21,8 @@ module.exports = {
     },
   
   
-    fn: async function () {
+    fn: async function(req, res) {
+      sails.log("testing 123");
   
     //   if (this.req.me) {
     //     throw {redirect: '/'};
