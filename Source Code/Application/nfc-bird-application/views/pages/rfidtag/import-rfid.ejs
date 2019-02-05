@@ -2,8 +2,31 @@
 
   <div class="container" v-if="!cloudSuccess">
     <h1 class="text-center">Import NFC rings from CSV</h1>
+    <table id="all-rfids" border="1">
+        <thead role="rowgroup">
+            <tr role="row">
+                <th role="columnheader"  style="width: 10%">Printed Ring ID</th>
+                <th role="columnheader"  style="width: 10%">Ring colour</th>
+                <th role="columnheader"  style="width: 20%">System ID</th>
+                <th role="columnheader"  style="width: 10%">Assigned</th>
+                <th role="columnheader"  style="width: 10%">Assigned to Bird</th>
+                <th role="columnheader"  style="width: 10%">Assignment Date</th>
+            </tr>
+        </thead>
+
+        <tbody role="rowgroup" id="rfid-table-body">
+            <tr v-for="rfidtag in currentRfids">
+                <td>{{rfidtag.nfcRFID}}</td>
+                <td>{{rfidtag.colour}}</td>
+                <td>{{rfidtag.nfcRFIDInternal}}</td>
+                <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
+                <td>{{rfidtag.birdID}}</td>
+                <td>TODO</td>
+            </tr>
+        </tbody>
+        </table>
     <paginate
-        :page-count="20"
+        :page-count="Math.ceil(rfidCount / pageSize)"
         :click-handler="pageClick"
         :prev-text="'Prev'"
         :next-text="'Next'"

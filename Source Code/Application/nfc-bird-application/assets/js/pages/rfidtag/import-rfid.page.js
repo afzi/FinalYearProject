@@ -23,7 +23,13 @@ parasails.registerPage('import-rfid', {
 
     statusText: '',
 
-    csvParsed: []
+    csvParsed: [],
+
+    currentRfids: [],
+
+    rfidCount: 0,
+
+    pageSize: 20
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -34,7 +40,8 @@ parasails.registerPage('import-rfid', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    //…
+    this.currentRfids = await Cloud.getRfid.with({skip: 0, limit: this.pageSize});
+    this.rfidCount = SAILS_LOCALS.rfidCount;
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -53,7 +60,7 @@ parasails.registerPage('import-rfid', {
     },
 
     pageClick: async function(pageNum) {
-      console.log(pageNum)
+      this.currentRfids = await Cloud.getRfid.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
     },
 
     startSubmit: async function(result) {

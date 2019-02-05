@@ -17,9 +17,10 @@ module.exports = {
 
 
   fn: async function () {
+    var numRfids = await RFIDTag.count();
 
     // Respond with view.
-    return {};
+    return {rfidCount: numRfids};
 
   }
 

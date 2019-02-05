@@ -29,7 +29,7 @@ module.exports = {
             required: true
         },
         colour: {
-            type: "string",
+            type: "ref",
             columnType: "varchar"
         }
     }
