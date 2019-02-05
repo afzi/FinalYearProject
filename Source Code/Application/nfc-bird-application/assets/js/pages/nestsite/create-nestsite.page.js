@@ -63,10 +63,9 @@ parasails.registerPage('create-nestsite', {
       return argins;
     },
 
-    validateNestName: function(vm) {
-      if(!vm) vm = this;
-      result = Cloud.nestsiteExists.with({nestID: vm.formData.nestID}).then(result => {
-        Vue.set(vm.formErrors, 'nestID', result);
+    validateNestName: function() {
+      result = Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
+        Vue.set(this.formErrors, 'nestID', result);
       })
     },
 

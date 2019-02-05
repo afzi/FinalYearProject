@@ -52,6 +52,10 @@ parasails.registerPage('import-rfid', {
       // window.location = '/';
     },
 
+    pageClick: async function(pageNum) {
+      console.log(pageNum)
+    },
+
     startSubmit: async function(result) {
       this.syncing = true;
       this.csvValid = false;
@@ -86,7 +90,7 @@ parasails.registerPage('import-rfid', {
     validateCsv: function(parsed) {
       this.statusText = "Validating...";
 
-      if(!parsed.data[0] || !(parsed.meta.fields[0] == "short" && parsed.meta.fields[1] == "long" && parsed.meta.fields[2] == "colour")) {
+      if(!parsed.data[0] || parsed.meta.fields.length != 3 || !(parsed.meta.fields[0] == "short" && parsed.meta.fields[1] == "long" && parsed.meta.fields[2] == "colour")) {
         this.statusText = "CSV invalid";
         this.formErrors.csvUpload = true;
         this.csvValid = false;

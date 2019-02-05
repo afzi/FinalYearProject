@@ -2,6 +2,21 @@
 
   <div class="container" v-if="!cloudSuccess">
     <h1 class="text-center">Import NFC rings from CSV</h1>
+    <paginate
+        :page-count="20"
+        :click-handler="pageClick"
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        :container-class="'pagination'"
+        :page-class="'page-item'"
+        :page-link-class="'page-link'"
+        :prev-class="'ignore page-item'"
+        :prev-link-class="'page-link'"
+        :next-class="'ignore page-item'"
+        :next-link-class="'page-link'"
+        :disabled-class="'ignore disabled'"
+    >
+    </paginate>
     <div class="import-rfid-form">
     <hr/>
     <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
