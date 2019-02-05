@@ -2,6 +2,9 @@
     <div class="container" v-if="!cloudSuccess">
         <h1 class="text-center">Birds Table </h1>
         <hr/>
+
+        <p>{{result}}</p>
+        
                 
                 <table id="all-birds" border="1">
                     <thead role="rowgroup">
@@ -20,6 +23,18 @@
                     </thead>
     
                     <tbody role="rowgroup" id="warnings-table-body">
+                        <tr v-for="bird in result">
+                            <td>{{bird.birdName}}</td>
+                            <td>{{bird.id}}</td>
+                            <td>{{bird.sex}}</td>
+                            <td>{{bird.fatherName}}</td>
+                            <td>{{bird.motherName}}</td>
+                            <td>{{bird.layDate}}</td>
+                            <td>{{bird.isBreeder}}</td>
+                            <td>Nest site -- todo</td>
+                            <td>Nest site -- todo</td>
+                            <td>Nest site -- todo</td>
+                        </tr>
                     </tbody>
                     </table>
 
