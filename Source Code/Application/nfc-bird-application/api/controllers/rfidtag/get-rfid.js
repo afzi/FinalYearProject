@@ -23,6 +23,11 @@ module.exports = {
           type: 'string',
           description: 'The RFID GUID (or part of it)'
       },
+      colour: {
+        required: false,
+        type: 'string',
+        description: 'The colour (or part of it)'
+    },
 
       skip: {
           required: false,
@@ -62,6 +67,7 @@ module.exports = {
         if(birdIdConstraint) query.birdId = birdIdConstraint;
         if(inputs.nfcRFID) query.nfcRFID = {'contains': inputs.nfcRFID}
         if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+        if(inputs.colour) query.colour = {'contains': inputs.colour}
         
         let finalQuery = {where: query}
         if(inputs.skip) finalQuery.skip = inputs.skip;

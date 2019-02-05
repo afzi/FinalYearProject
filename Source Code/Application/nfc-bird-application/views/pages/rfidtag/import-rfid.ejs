@@ -4,17 +4,18 @@
     <h1 class="text-center">Import NFC rings from CSV</h1>
     <div class="import-rfid-form">
     <hr/>
-    <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm" autocomplete="off">
+    <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
         
         <div class="form-group">
             <!-- <label for="password">Stud ID</label> -->
-            <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="validateCsv" accept=".csv" focus-first>
+            <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="parseCsv" accept=".csv" focus-first>
             <div class="invalid-feedback" v-if="formErrors.csvUpload">Please upload a valid file. See tooltip for help.</div>
             <div class="valid-feedback" v-else-if="csvValid">File is valid, you may proceed</div>
         </div>
     
         <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
-        
+        <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
+
         <div class="form-group">
             <ajax-button type="submit" :syncing="syncing" :disabled="!csvValid" class="btn-dark btn-lg btn-block">Import</ajax-button>
         </div>

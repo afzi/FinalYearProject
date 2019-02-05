@@ -1,31 +1,29 @@
 module.exports = {
 
+    //DELETE -- DOESNT Get called by anything?
 
     friendlyName: 'View live bird visits',
   
   
     description: 'gets information on birds that have recently visited',
-  
-  
-    inputs: {
-  
-    },
-  
-  
+
+
     exits: {
-  
-      success: {
-        description: 'Bird data '
-      },
-  
-      invalid: {
-        responseType: 'badRequest'
-      }
+
+        success: {
+            description: 'Bird data ',
+            viewTemplatePath: 'pages/live/live-view'
+        },
+
+        invalid: {
+            responseType: 'badRequest'
+        }
     },
-  
-  
-    fn: async function (inputs) {
-      var LIVEVIEWQUERY = `
+
+
+    fn: async function(req, res) {
+        sails.log("I MADE IT HERE 1");
+        var LIVEVIEWQUERY = `
       SELECT birds.id,birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt 
       FROM nfcbirds.bird AS birds
       INNER JOIN nfcbirds.rfidtag AS tags
@@ -36,10 +34,10 @@ module.exports = {
 
       var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY);
 
-      console.log("I MADE IT HERE");
-      console.log(rawResult);
+        sails.log("I MADE IT HERE 2");
+        sails.log(rawResult);
 
-      return rawResult;
+        res.send("test")
     }
   };
   

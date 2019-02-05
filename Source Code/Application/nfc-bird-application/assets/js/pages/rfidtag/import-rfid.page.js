@@ -19,7 +19,11 @@ parasails.registerPage('import-rfid', {
     // Success state when form has been submitted
     cloudSuccess: false,
 
-    csvValid: false
+    csvValid: false,
+
+    statusText: '',
+
+    csvParsed: []
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -37,9 +41,21 @@ parasails.registerPage('import-rfid', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    submittedForm: async function() {
+    submittedForm: async function(result) {
+      this.syncing = false;
+      this.statusText = `Successfully imported ${result.success} rings.`;
+
+      if(result.skipped > 0) {
+        this.statusText += ` ${result.skipped} rings were skipped due to non-unique attributes (either short or long ID)`;
+      }
+      
+      // window.location = '/';
+    },
+
+    startSubmit: async function(result) {
       this.syncing = true;
-      window.location = '/';
+      this.csvValid = false;
+      this.statusText = `Importing...`;
     },
 
     handleParsingForm: function() {
@@ -47,9 +63,15 @@ parasails.registerPage('import-rfid', {
       this.formErrors = {};
 
 
-      var argins = this.formData;
+      var argins = {};
 
-      validateCsv();
+      if(this.csvParsed && this.csvParsed.length > 0) {
+        argins.csv = {
+          values: this.csvParsed
+        }
+      } else {
+        this.formErrors.csvUpload = true;
+      }
 
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
@@ -61,8 +83,42 @@ parasails.registerPage('import-rfid', {
       return argins;
     },
 
-    validateCsv: function() {
-      console.log("CSV valid af bro");
+    validateCsv: function(parsed) {
+      this.statusText = "Validating...";
+
+      if(!parsed.data[0] || !(parsed.meta.fields[0] == "short" && parsed.meta.fields[1] == "long" && parsed.meta.fields[2] == "colour")) {
+        this.statusText = "CSV invalid";
+        this.formErrors.csvUpload = true;
+        this.csvValid = false;
+      } else {
+        this.csvParsed = parsed.data;
+        this.formErrors.csvUpload = false;
+        this.csvValid = true;
+        this.statusText = `Ready to upload ${this.csvParsed.length} RFID rings`;
+      }
+
+    },
+
+    parseCsv: function(e) {
+      this.csvValid = false;
+      this.formErrors.csvUpload = false;
+      this.statusText = "Parsing..."; 
+
+      // var reader = new FileReader();
+
+      // reader.onload = (file) => {
+      //   papaparse.parse(file, this.validateCsv);
+      // }
+
+      papaparse.parse(e.target.files[0], {
+        complete: this.validateCsv,
+        error: () => {
+          this.formErrors.csvUpload = true;
+          this.statusText = "CSV invalid";
+        },
+        header: true,
+        skipEmptyLines: true
+      });
     }
   }
 });
