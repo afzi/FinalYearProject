@@ -29,7 +29,9 @@ parasails.registerPage('import-rfid', {
 
     rfidCount: 0,
 
-    pageSize: 20
+    pageSize: 20,
+
+    currentPage: 1
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -55,12 +57,17 @@ parasails.registerPage('import-rfid', {
       if(result.skipped > 0) {
         this.statusText += ` ${result.skipped} rings were skipped due to non-unique attributes (either short or long ID)`;
       }
+
+      this.currentRfids = await Cloud.getRfid.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.rfidCount = await Cloud.countRfid();
       
       // window.location = '/';
     },
 
     pageClick: async function(pageNum) {
       this.currentRfids = await Cloud.getRfid.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
+      this.rfidCount = await Cloud.countRfid();
+      this.currentPage = pageNum;
     },
 
     startSubmit: async function(result) {

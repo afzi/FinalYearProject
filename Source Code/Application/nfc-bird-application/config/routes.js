@@ -70,6 +70,7 @@ module.exports.routes = {
 
     'GET   /api/v1/rfidtag/rfid-tag-exists': { action: 'rfidtag/rfid-tag-exists' },
     'GET   /api/v1/rfidtag': { action: 'rfidtag/get-rfid' },
+    'GET   /api/v1/rfidtag/count': { action:  'rfidtag/count-rfid' },
 
     'GET   /api/v1/nestsite/nestsite-exists': { action: 'nestsite/nestsite-exists' },
     'GET   /api/v1/nestsite': { action: 'nestsite/get-nestsite' },
