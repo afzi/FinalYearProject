@@ -16,7 +16,7 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.result = await Cloud.getBird({skip: 0, limit: 5});
+        this.result = await Cloud.getBird.with({skip: 0, limit: 5});
         console.log("getting birds")
     },
 
