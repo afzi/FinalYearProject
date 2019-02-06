@@ -5,7 +5,11 @@ parasails.registerPage('live-view', {
     data: {
         cloudSuccess: false,
 
-        result: {}
+        visitData: [], // the data returned from the sql query in live-view.js
+
+        pageSize: 20, // number of records per page of table
+
+        currentPage: 1 // current table page
     },
 
     //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -16,16 +20,13 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.result = await Cloud.liveView();
-        console.log("Got live view")
+        this.visitData = await Cloud.liveView();
     },
 
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
-        trySomething: function() {
-            return "tried something";
-        }
+        
     }
 });

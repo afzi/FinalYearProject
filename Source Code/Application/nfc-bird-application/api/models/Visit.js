@@ -19,7 +19,7 @@ module.exports = {
         birdID: {
             model: "bird"
         },
-        ncfRFID: {
+        nfcRFID: {
             model: "rfidtag",
             required: true
         }
