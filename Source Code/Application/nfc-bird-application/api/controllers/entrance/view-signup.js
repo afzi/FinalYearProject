@@ -1,31 +1,31 @@
 module.exports = {
 
 
-  friendlyName: 'View signup',
+    friendlyName: 'View signup',
 
 
-  description: 'Display "Signup" page.',
+    description: 'Display "Signup" page.',
 
 
-  exits: {
+    exits: {
 
-    success: {
-      viewTemplatePath: 'pages/entrance/signup',
+        success: {
+            viewTemplatePath: 'pages/entrance/signup',
+        },
+
+        redirect: {
+            description: 'The requesting user is already logged in.',
+            responseType: 'redirect'
+        }
+
     },
 
-    redirect: {
-      description: 'The requesting user is already logged in.',
-      responseType: 'redirect'
+
+    fn: async function() {
+
+        return { title: 'Sign Up' };
+
     }
-
-  },
-
-
-  fn: async function () {
-
-    return {};
-
-  }
 
 
 };

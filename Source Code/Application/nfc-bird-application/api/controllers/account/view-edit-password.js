@@ -1,26 +1,26 @@
 module.exports = {
 
 
-  friendlyName: 'View edit password',
+    friendlyName: 'View edit password',
 
 
-  description: 'Display "Edit password" page.',
+    description: 'Display "Edit password" page.',
 
 
-  exits: {
+    exits: {
 
-    success: {
-      viewTemplatePath: 'pages/account/edit-password'
+        success: {
+            viewTemplatePath: 'pages/account/edit-password'
+        }
+
+    },
+
+
+    fn: async function() {
+
+        return { title: 'Edit Password' };
+
     }
-
-  },
-
-
-  fn: async function () {
-
-    return {};
-
-  }
 
 
 };

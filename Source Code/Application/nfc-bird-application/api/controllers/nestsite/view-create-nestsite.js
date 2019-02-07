@@ -1,27 +1,27 @@
 module.exports = {
 
 
-  friendlyName: 'View create nestsite',
+    friendlyName: 'View create nestsite',
 
 
-  description: 'Display "Create nestsite" page.',
+    description: 'Display "Create nestsite" page.',
 
 
-  exits: {
+    exits: {
 
-    success: {
-      viewTemplatePath: 'pages/nestsite/create-nestsite'
+        success: {
+            viewTemplatePath: 'pages/nestsite/create-nestsite'
+        }
+
+    },
+
+
+    fn: async function() {
+
+        // Respond with view.
+        return { title: 'Manage Nest Site' };
+
     }
-
-  },
-
-
-  fn: async function () {
-
-    // Respond with view.
-    return {};
-
-  }
 
 
 };
