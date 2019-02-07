@@ -5,7 +5,7 @@ parasails.registerPage('live-view', {
     data: {
         cloudSuccess: false,
 
-        result: {}
+        visitData: {}
     },
 
     //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -16,8 +16,7 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.result = await Cloud.liveView();
-        console.log("Got live view")
+        this.visitData = await Cloud.liveView();
     },
 
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

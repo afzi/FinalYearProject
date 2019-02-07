@@ -22,7 +22,7 @@ module.exports = {
 
 
     fn: async function(req, res) {
-        return {};
+        return { title: "Live View" };
     }
 
 
