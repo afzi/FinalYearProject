@@ -27,7 +27,7 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.currentBirds = await Cloud.getBird.with({skip: 0, limit: this.pageSize});
+        this.currentBirds = await Cloud.getBird.with({includeConditions: true, includeNestsites: true, includeVisits: true, skip: 0, limit: this.pageSize});
         this.BirdCount = SAILS_LOCALS.BirdCount;
     },
 
@@ -57,7 +57,7 @@ parasails.registerPage('get-bird', {
     methods: {
 
         pageClick: async function(pageNum) {
-            this.currentBirds = await Cloud.getBird.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
+            this.currentBirds = await Cloud.getBird.with({includeConditions: true, includeNestsites: true, includeVisits: true, skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
             this.BirdCount = await Cloud.countBird();
             this.currentPage = pageNum;
           },

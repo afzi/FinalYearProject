@@ -33,7 +33,7 @@ parasails.registerPage('create-nestsite', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    this.currentNestsites = await Cloud.getNestsite.with({skip: 0, limit: this.pageSize});
+    this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: 0, limit: this.pageSize});
     this.nestsiteCount = await Cloud.countNestsite();
   },
 
@@ -44,7 +44,7 @@ parasails.registerPage('create-nestsite', {
 
     submittedForm: async function() {
       this.syncing = true;
-      this.currentNestsites = await Cloud.getNestsite.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
       this.nestsiteCount = await Cloud.countNestsite();
 
       $('.modal').modal('hide');
@@ -97,18 +97,18 @@ parasails.registerPage('create-nestsite', {
       }
     },
 
-    selectIndexFormData(index) {
+    selectIndexFormData: async function(index) {
       this.formErrors = {};
       this.formData = this.currentNestsites[index];
     },
 
-    resetFormData() {
+    resetFormData: async function() {
       this.formErrors = {};
       this.formData = {};
     },
 
     pageClick: async function(pageNum) {
-      this.currentNestsites = await Cloud.getNestsite.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
+      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
       this.nestsiteCount = await Cloud.countNestsite();
       this.currentPage = pageNum;
     },
@@ -116,7 +116,7 @@ parasails.registerPage('create-nestsite', {
     promptDeleteNestsite: async function(index) {
       if(confirm(`Are you sure you want to delete nestsite ${this.currentNestsites[index].nestID}?`)) {
         await Cloud.deleteNestsite(this.currentNestsites[index].id);
-        this.currentNestsites = await Cloud.getNestsite.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+        this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
         this.nestsiteCount = await Cloud.countNestsite();
       }
     }

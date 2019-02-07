@@ -20,12 +20,12 @@ module.exports = {
         },
         dateEntered: {
             type: "ref",
-            columnType: "date",
+            columnType: "datetime",
             required: true
         },
         dateLeft: {
             type: "ref",
-            columnType: "date"
+            columnType: "datetime"
         }
     }
 };

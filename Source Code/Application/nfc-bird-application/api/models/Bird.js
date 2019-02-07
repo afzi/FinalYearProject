@@ -105,7 +105,12 @@ module.exports = {
             type: "ref",
             columnType: "varchar",
             maxLength: 200
-        }
+        },
+
+        nests: {
+            collection: 'nestsite',
+            via: 'birds'
+          }
         //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
         //birdStatus
         //seenSinceFledged

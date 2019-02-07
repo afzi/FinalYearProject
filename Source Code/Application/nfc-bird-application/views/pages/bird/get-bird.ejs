@@ -17,7 +17,6 @@
             <th style="width: 10%">Current Nest</th>
             <th style="width: 10%">Distance To Hopper</th>
             <th style="width: 10%">Previous Nest</th>
-            <th style="width: 10%">details</th>
 
         </tr>
     </thead>
@@ -31,10 +30,9 @@
             <td>{{bird.motherName}}</td>
             <td>{{bird.layDate}}</td>
             <td>{{bird.isBreeder}}</td>
+            <td>{{ bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID : ' ' }}</td>
             <td>Nest site -- todo</td>
             <td>Nest site -- todo</td>
-            <td>Nest site -- todo</td>
-            <td> <button class="btn" @click="clickOpenExampleModalButton3(index)">details</button> </td>
         </tr>
     </tbody>
     </table>
@@ -87,7 +85,7 @@
                     </tr>
                     <tr>
                         <td>Last Seen Date</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td>
                     </tr>
                     <tr>
                         <td>Where Now</td>

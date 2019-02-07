@@ -75,7 +75,7 @@ module.exports = {
         if(inputs.skip) finalQuery.skip = inputs.skip;
         if(inputs.limit) finalQuery.limit = inputs.limit;
 
-        var result = await RFIDTag.find(finalQuery);
+        var result = await RFIDTag.find(finalQuery).populate('birdID');
         result.rfidCount = numRfids;
   
         return result;
