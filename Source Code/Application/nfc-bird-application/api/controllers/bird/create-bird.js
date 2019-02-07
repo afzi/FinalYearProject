@@ -221,12 +221,16 @@ module.exports = {
 
 
       if(inputs.currentNestSite) {
+        var nestId = await Nestsite.findOne({nestID: inputs.currentNestSite})
+        .usingConnection(db)
+        .id;
+
         await Birdnest.create({
           birdID: bird.id,
-          nestID: inputs.currentNestSite,
+          nestID: nestId,
           dateEntered: inputs.currentNestSiteSince || new Date()
         })
-        .usingConnection(db)
+        .usingConnection(db);
       }
 
       })

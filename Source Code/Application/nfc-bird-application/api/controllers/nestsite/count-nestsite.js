@@ -20,13 +20,13 @@ module.exports = {
         description: 'The nest description'
       },
 
-      distanceMetresFrom: {
+      distanceKmFrom: {
         required: false,
         type: 'number',
         description: 'Distance from this nestsite to the hoppers'
       },
 
-      distanceMetresTo: {
+      distanceKmTo: {
         required: false,
         type: 'number',
         description: 'Distance from this nestsite to the hoppers'
@@ -48,8 +48,8 @@ module.exports = {
 
         if(inputs.nestID) query.nestID = {'contains': inputs.nestID}
         if(inputs.nestDescription) query.nestDescription = {'contains': inputs.nestDescription}
-        if(inputs.distanceMetresFrom) query.distanceToHoppersMetres = {'>=': inputs.distanceMetresFrom};
-        if(inputs.distanceMetresTo) query.distanceToHoppersMetres = {'<=': inputs.distanceMetresTo};
+        if(inputs.distanceKmFrom) query.distanceToHoppersKm = {'>=': inputs.distanceKmFrom};
+        if(inputs.distanceKmTo) query.distanceToHoppersKm = {'<=': inputs.distanceKmTo};
 
         var result = await Nestsite.count(query);
   

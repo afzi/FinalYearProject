@@ -26,10 +26,10 @@ module.exports = {
         description: 'The nest description'
       },
 
-      distanceToHoppersMetres: {
+      distanceToHoppersKm: {
         required: false,
         type: 'number',
-        description: 'Distance to the hoppers, in metres'
+        description: 'Distance to the hoppers, in km'
       }
     },
   
@@ -60,7 +60,7 @@ module.exports = {
         .set({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
-            distanceToHoppersMetres: inputs.distanceToHoppersMetres,
+            distanceToHoppersKm: inputs.distanceToHoppersKm,
             createdBy: this.req.session.userId,
             editedBy: this.req.session.userId
           })

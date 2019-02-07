@@ -10,8 +10,6 @@ module.exports = {
     
     attributes: {
         id: false,
-        createdAt: false,
-        updatedAt: false,
 
         birdID: {
             model: "bird"

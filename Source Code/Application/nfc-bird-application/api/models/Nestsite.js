@@ -25,9 +25,9 @@ module.exports = {
             columnType: "varchar",
             maxLength: 200
         },
-        distanceToHoppersMetres: {
-            type: "number",
-            columnType: "integer"
+        distanceToHoppersKm: {
+            type: "ref",
+            columnType: "float"
         },
         latitude: {
             type: "ref",
@@ -36,6 +36,11 @@ module.exports = {
         longitude: {
             type: "ref",
             columnType: "float"
-        }
+        },
+
+        birds: {
+            collection: 'bird',
+            via: 'nests'
+          }
     }
 };

@@ -170,6 +170,24 @@ module.exports = {
             description: 'The current condition of the bird'
         },
 
+        includeConditions: {
+          required: false,
+          type: 'boolean',
+          description: 'Whether to include the condition history of the bird'
+        },
+
+        includeVisits: {
+          required: false,
+          type: 'boolean',
+          description: 'Whether to include the visit history of the bird'
+        },
+
+        includeNestsites: {
+          required: false,
+          type: 'boolean',
+          description: 'Whether to include the nest site history of the bird'
+        },
+
         skip: {
             required: false,
             type: 'number',
@@ -224,6 +242,27 @@ module.exports = {
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
 
       var result = await Bird.find(finalQuery);
+
+      // TODO this is horribly inefficient
+
+      if(inputs.includeConditions || inputs.includeNestsites || inputs.includeVisits) {
+        for(nextBird of result) {
+          if(inputs.includeConditions) {
+            var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+            nextBird.conditionHistory = conditionHistory;
+          }
+
+          if(inputs.includeNestsites) {
+            var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'});
+            nextBird.nestsiteHistory = nestsiteHistory;
+          }
+
+          if(inputs.includeVisits) {
+            var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+            nextBird.visitHistory = visitHistory;
+          }
+        }
+      }
 
       return result;
     }
