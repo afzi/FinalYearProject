@@ -74,8 +74,12 @@ module.exports.routes = {
 
     'GET   /api/v1/nestsite/nestsite-exists': { action: 'nestsite/nestsite-exists' },
     'GET   /api/v1/nestsite': { action: 'nestsite/get-nestsite' },
+    'GET   /api/v1/nestsite/count': { action: 'nestsite/count-nestsite' },
 
     'POST  /api/v1/nestsite': { action: 'nestsite/create-nestsite' },
+    'PUT   /api/v1/nestsite': { action: 'nestsite/edit-nestsite' },
+
+    'DELETE   /api/v1/nestsite': { action: 'nestsite/delete-nestsite' },
 
     'POST  /api/v1/bird': { action: 'bird/create-bird' },
 

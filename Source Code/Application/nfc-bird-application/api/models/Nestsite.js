@@ -4,11 +4,7 @@
 */
 
 module.exports = {
-
-    primaryKey: "nestID",
-
     attributes: {
-        id: false,
         updatedAt: false,
         createdAt: false,
         
@@ -32,6 +28,14 @@ module.exports = {
         distanceToHoppersMetres: {
             type: "number",
             columnType: "integer"
+        },
+        latitude: {
+            type: "ref",
+            columnType: "float"
+        },
+        longitude: {
+            type: "ref",
+            columnType: "float"
         }
     }
 };

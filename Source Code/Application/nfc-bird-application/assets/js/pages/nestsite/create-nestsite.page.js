@@ -15,6 +15,14 @@ parasails.registerPage('create-nestsite', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
+
+    currentNestsites: [],
+
+    nestsiteCount: 0,
+
+    pageSize: 20,
+
+    currentPage: 1
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -25,7 +33,8 @@ parasails.registerPage('create-nestsite', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    //…
+    this.currentNestsites = await Cloud.getNestsite.with({skip: 0, limit: this.pageSize});
+    this.nestsiteCount = await Cloud.countNestsite();
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -35,21 +44,19 @@ parasails.registerPage('create-nestsite', {
 
     submittedForm: async function() {
       this.syncing = true;
-      window.location = '/';
+      this.currentNestsites = await Cloud.getNestsite.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.nestsiteCount = await Cloud.countNestsite();
+
+      $('.modal').modal('hide');
+      this.syncing = false;
     },
 
-    handleParsingForm: function() {
+    handleParsingFormCreate: function() {
       // Clear out any pre-existing error messages.
       this.formErrors = {};
 
 
       var argins = this.formData;
-      if(this.formData.distanceToHoppers && this.formData.distanceUnits == "km") {
-        argins.distanceToHopperMetres = this.formData.distanceToHoppers * 1000;
-      } else {
-        argins.distanceToHopperMetres = this.formData.distanceToHoppers;
-      }
-
       
       this.validateNestName();
 
@@ -63,15 +70,55 @@ parasails.registerPage('create-nestsite', {
       return argins;
     },
 
-    validateNestName: function() {
-      result = Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
-        Vue.set(this.formErrors, 'nestID', result);
-      })
+    handleParsingFormEdit: function() {
+      // Clear out any pre-existing error messages.
+      this.formErrors = {};
+
+
+      var argins = this.formData;
+
+      // If there were any issues, they've already now been communicated to the user,
+      // so simply return undefined.  (This signifies that the submission should be
+      // cancelled.)
+      if (Object.keys(this.formErrors).length > 0) {
+        return;
+      }
+
+      return argins;
     },
 
-    liveValidate(toSchedule, delay) {
-      var vm = this;
-      setTimeout(toSchedule, delay, vm);
+    validateNestName: function() {
+      if(!this.formData.nestID || this.formData.nestID == "") {
+        this.formErrors.nestID = result;
+      } else {
+        Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
+          this.formErrors.nestID = result;
+         });
+      }
+    },
+
+    selectIndexFormData(index) {
+      this.formErrors = {};
+      this.formData = this.currentNestsites[index];
+    },
+
+    resetFormData() {
+      this.formErrors = {};
+      this.formData = {};
+    },
+
+    pageClick: async function(pageNum) {
+      this.currentNestsites = await Cloud.getNestsite.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
+      this.nestsiteCount = await Cloud.countNestsite();
+      this.currentPage = pageNum;
+    },
+
+    promptDeleteNestsite: async function(index) {
+      if(confirm(`Are you sure you want to delete nestsite ${this.currentNestsites[index].nestID}?`)) {
+        await Cloud.deleteNestsite(this.currentNestsites[index].id);
+        this.currentNestsites = await Cloud.getNestsite.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+        this.nestsiteCount = await Cloud.countNestsite();
+      }
     }
 
   }

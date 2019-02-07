@@ -20,12 +20,26 @@ module.exports = {
         description: 'The nest description'
       },
 
-      distanceToHopperMetres: {
+      distanceToHoppersMetres: {
         required: false,
         type: 'number',
         description: 'Distance to the hoppers, in metres'
+      },
+
+      longitude: {
+        required: false,
+        type: 'number',
+        description: 'The longitude'
+      },
+  
+      latitude: {
+        required: false,
+        type: 'number',
+        description: 'The latitude'
       }
     },
+
+
   
   
     exits: {
@@ -53,9 +67,11 @@ module.exports = {
         await Nestsite.create({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
-            distanceToHoppersMetres: inputs.distanceToHopperMetres,
+            distanceToHoppersMetres: inputs.distanceToHoppersMetres,
             createdBy: this.req.session.userId,
-            editedBy: this.req.session.userId
+            editedBy: this.req.session.userId,
+            latitude: inputs.latitude,
+            longitude: inputs.longitude
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid');

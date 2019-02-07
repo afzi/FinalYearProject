@@ -1,38 +1,153 @@
 <div id="create-nestsite">
   <div class="container" v-if="!cloudSuccess">
-      <h1 class="text-center">Register a Nest Site</h1>
-      <div class="create-nestsite-form">
-      <hr/>
-      <ajax-form action="createNestsite" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm" autocomplete="off">
-          
-          <div class="form-group">
-              <!-- <label for="password">Stud ID</label> -->
-              <input id="nestID" type="text" class="form-control" placeholder="Nestsite name" :class="[formErrors.nestID ? 'is-invalid' : '']" v-model.trim="formData.nestID" @blur="validateNestName" focus-first>
-              <div class="invalid-feedback" v-if="formErrors.nestID">Please enter a unique Nest site name.</div>
-          </div>
-
-          <div class="form-group">
-              <!-- <label for="password">New Stud ID</label> -->
-              <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control" placeholder="Nest Site Description" :class="[formErrors.nestDescription ? 'is-invalid' : '']" v-model.trim="formData.nestDescription"></textarea>
-              <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid nestsite description.</div>
-          </div>
-
-          <div class="form-group" id="distance-group">
-              <input id="distanceToHoppers" type="number" class="form-control" placeholder="Distance to hoppers" :class="[formErrors.distanceToHoppers ? 'is-invalid' : '']" v-model.trim="formData.distanceToHoppers">
-              <select id="distanceUnits"  class="form-control" :class= "[formErrors.distanceUnits ? 'is-invalid' : '']" v-model.trim="formData.distanceUnits">
-                <option value="m" selected>m</option>
-                <option value="km">km</option>
-            </select>
-              <div class="invalid-feedback" v-if="formErrors.distanceToHoppers">Please enter a valid distance.</div>
-          </div>
+      <h1 class="text-center">Manage Nest Sites</h1>
       
-          <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
-          
-          <div class="form-group">
-              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Register</ajax-button>
-          </div>
-      </ajax-form>
-      </div>
+      <table id="all-nestsites" border="1">
+        <thead role="rowgroup">
+            <tr role="row">
+                <th role="columnheader"  style="width: 15%">Nestsite ID</th>
+                <th role="columnheader"  style="width: 20%">Description</th>
+                <th role="columnheader"  style="width: 15%">Coordinates</th>
+                <th role="columnheader"  style="width: 10%">Distance to hoppers (m)</th>
+                <th role="columnheader"  style="width: 15%">Occupied by (male)</th>
+                <th role="columnheader"  style="width: 15%">Occupied by (female)</th>
+                <th role="columnheader"  style="width: 15%">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody role="rowgroup" id="rfid-table-body">
+            <tr v-for="(nestsite, index) in currentNestsites">
+                <td>{{nestsite.nestID}}</td>
+                <td>{{nestsite.nestDescription}}</td>
+                <td>{{(nestsite.longitude ? nestsite.longitude : "") + " " + (nestsite.latitude? nestsite.latitude : "")}}</td>
+                <td>{{nestsite.distanceToHoppersMetres}}</td>
+                <td>TODO</td>
+                <td>TODO</td>
+                <td>
+                    <i class="fas fa-edit" data-toggle="modal" data-target="#editNestsiteModal" @click="selectIndexFormData(index)"></i>
+                    <i class="fas fa-trash-alt" @click="promptDeleteNestsite(index)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <paginate
+    :page-count="Math.ceil(nestsiteCount / pageSize)"
+    :click-handler="pageClick"
+    :prev-text="'Prev'"
+    :next-text="'Next'"
+    :container-class="'pagination'"
+    :page-class="'page-item'"
+    :page-link-class="'page-link'"
+    :prev-class="'ignore page-item'"
+    :prev-link-class="'page-link'"
+    :next-class="'ignore page-item'"
+    :next-link-class="'page-link'"
+    :disabled-class="'ignore disabled'"
+>
+</paginate>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button>
+
+    <div class="modal fade" id="editNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="editNestsiteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editNestsiteModalLabel">Edit nestsite</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <ajax-form action="editNestsite" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormEdit" autocomplete="off">
+                    <div class="modal-body">
+                                <div class="form-group">
+                                    <input disabled id="nestID" type="text" class="form-control" placeholder="Nestsite name" :class="[formErrors.nestID ? 'is-invalid' : '']" v-model.trim="formData.nestID" @blur="validateNestName" focus-first>
+                                    <div class="invalid-feedback" v-if="formErrors.nestID">Please enter a unique Nest site name.</div>
+                                </div>
+                      
+                                <div class="form-group">
+                                    <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control" placeholder="Nest Site Description" :class="[formErrors.nestDescription ? 'is-invalid' : '']" v-model.trim="formData.nestDescription"></textarea>
+                                    <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid nestsite description.</div>
+                                </div>
+                      
+                                <div class="form-group" id="distance-group">
+                                    <input id="distanceToHoppersMetres" type="number" class="form-control" placeholder="Distance to hoppers" title="Distance to hoppers" :class="[formErrors.distanceToHoppersMetres ? 'is-invalid' : '']" v-model.trim="formData.distanceToHoppersMetres">
+                                    <div class="invalid-feedback" v-if="formErrors.distanceToHoppersMetres">Please enter a valid distance.</div>
+                                </div>
+
+                                <div class="form-group">
+                                        <input id="longitude" type="number" step="0.00001" class="form-control" placeholder="Longitude" title="Longitude ":class="[formErrors.longitude ? 'is-invalid' : '']" v-model.trim="formData.longitude">
+                                        <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid longitude.</div>
+                                </div>
+
+                                <div class="form-group">
+                                        <input id="latitude" type="number" step="0.00001" class="form-control" placeholder="Latitude" title="Latitude" :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
+                                        <div class="invalid-feedback" v-if="formErrors.latitude">Please enter a valid latitude.</div>
+                                </div>
+                            
+                                
+                                
+                                <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="form-group">
+                                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Save</ajax-button>
+                        </div>
+                    </div>
+                </ajax-form>
+              </div>
+            </div>
+    </div>
+
+    <div class="modal fade" id="createNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="createNestsiteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="createNestsiteModalLabel">Create nestsite</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <ajax-form action="createNestsite" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormCreate" autocomplete="off">
+                    <div class="modal-body">
+                                <div class="form-group">
+                                    <input id="nestID" type="text" class="form-control" placeholder="Nestsite name" :class="[formErrors.nestID ? 'is-invalid' : '']" v-model.trim="formData.nestID" @blur="validateNestName" focus-first>
+                                    <div class="invalid-feedback" v-if="formErrors.nestID">Please enter a unique Nest site name.</div>
+                                </div>
+                      
+                                <div class="form-group">
+                                    <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control" placeholder="Nest Site Description" :class="[formErrors.nestDescription ? 'is-invalid' : '']" v-model.trim="formData.nestDescription"></textarea>
+                                    <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid nestsite description.</div>
+                                </div>
+                      
+                                <div class="form-group" id="distance-group">
+                                    <input id="distanceToHoppersMetres" type="number" class="form-control" placeholder="Distance to hoppers" title="Distance to hoppers" :class="[formErrors.distanceToHoppersMetres ? 'is-invalid' : '']" v-model.trim="formData.distanceToHoppersMetres">
+                                    <div class="invalid-feedback" v-if="formErrors.distanceToHoppersMetres">Please enter a valid distance.</div>
+                                </div>
+
+                                <div class="form-group">
+                                        <input id="longitude" type="number" step="0.00001" class="form-control" placeholder="Longitude" title="Longitude ":class="[formErrors.longitude ? 'is-invalid' : '']" v-model.trim="formData.longitude">
+                                        <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid longitude.</div>
+                                </div>
+
+                                <div class="form-group">
+                                        <input id="latitude" type="number" step="0.00001" class="form-control" placeholder="Latitude" title="Latitude" :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
+                                        <div class="invalid-feedback" v-if="formErrors.latitude">Please enter a valid latitude.</div>
+                                </div>
+                            
+                                
+                                
+                                <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="form-group">
+                                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Create</ajax-button>
+                        </div>
+                    </div>
+                </ajax-form>
+              </div>
+            </div>
+    </div>
   </div>
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
