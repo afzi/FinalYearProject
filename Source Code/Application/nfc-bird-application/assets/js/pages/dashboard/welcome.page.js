@@ -35,6 +35,10 @@ parasails.registerPage('welcome', {
         this.modal = 'example2';
         break;
 
+        case'hello3':
+        this.modal = 'example3';
+        break;
+
       default: this.modal = '';
 
         
@@ -53,7 +57,6 @@ parasails.registerPage('welcome', {
       // this.modal = 'example';
       // ```
     },
-
     clickOpenExampleModalButton2: async function() {
       this.goto('/welcome/hello2');
       // Or, without deep links, instead do:
@@ -61,6 +64,14 @@ parasails.registerPage('welcome', {
       // this.modal = 'example';
       // ```
     },
+    clickOpenExampleModalButton3: async function() {
+      this.goto('/welcome/hello3');
+      // Or, without deep links, instead do:
+      // ```
+      // this.modal = 'example';
+      // ```
+    },
+
 
     closeExampleModal: async function() {
       this.goto('/welcome');
@@ -69,8 +80,16 @@ parasails.registerPage('welcome', {
       // this.modal = '';
       // ```
     },
+
     closeExampleModal2: async function() {
       this.goto('/welcome');
+      // Or, without deep links, instead do:
+      // ```
+      // this.modal = '';
+      // ```
+    },
+    closeExampleModal3: async function() {
+      this.goto('/birds');
       // Or, without deep links, instead do:
       // ```
       // this.modal = '';
