@@ -1,6 +1,6 @@
 <div id="live-view">
     <div class="container" v-if="!cloudSuccess">
-        <table id="live-visits" border="1">
+        <table id="live-visits" border="1" class = "table table-bordered table-condensed table-striped table-hover">
             <thead role="rowgroup">
                 <tr role="row">
                     <th role="columnheader" style="width: 10%">Bird ID</th>
@@ -12,7 +12,12 @@
             </thead>
 
             <tbody role="rowgroup" id="rfid-table-body">
-                <tr v-for="visit in visitData">
+                <tr style="cursor:pointer;" class = "clickable-row" v-for="visit in visitData" onclick='
+                $(document).ready(function($) {
+                    $(".clickable-row").click(function() {
+                        window.document.location = "/birds";
+                    });
+                });'>
                     <td>{{visit.id}}</td>
                     <td>{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
@@ -21,6 +26,7 @@
                 </tr>
             </tbody>
         </table>
+
         <!-- <paginate
             :page-count="Math.ceil(rfidCount / pageSize)"
             :click-handler="pageClick"

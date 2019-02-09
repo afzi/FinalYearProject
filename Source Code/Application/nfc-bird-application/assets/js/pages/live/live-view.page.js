@@ -5,7 +5,11 @@ parasails.registerPage('live-view', {
     data: {
         cloudSuccess: false,
 
-        visitData: {}
+        visitData: {},
+
+        curVisitCount: 0,
+
+        newVisitCount: 0
     },
 
     //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,5 +26,14 @@ parasails.registerPage('live-view', {
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
-    methods: {}
+    methods: {
+        checkNew: async function(){
+            console.log("Here 2")
+            this.newVisitCount = Cloud.countVisits();
+            console.log(this.newVisitCount + "New");
+            console.log(this.curVisitCount + "Current");
+            //setTimeout(this.checkNew(),10000); STACK OVERFLOW ERROR
+        }
+
+    }
 });

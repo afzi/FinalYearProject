@@ -3989,9 +3989,10 @@ input[type="button"].btn-block {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 2rem;
   line-height: inherit;
   white-space: nowrap;
+  color: #83cbd7 !important;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {
@@ -6149,7 +6150,7 @@ button.bg-light:focus {
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
 button.bg-dark:focus {
-  background-color: #1d2124 !important;
+  background-color: #001117 !important;
 }
 
 .bg-white {

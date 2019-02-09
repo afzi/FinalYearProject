@@ -21,8 +21,13 @@ module.exports = {
     },
 
 
-    fn: async function(req, res) {
-        return { title: "Live View" };
+    fn: async function() {
+        var numVisits = await Visit.count();
+
+        return { 
+            visitCount: numVisits,
+            title: "Live View" 
+        };
     }
 
 

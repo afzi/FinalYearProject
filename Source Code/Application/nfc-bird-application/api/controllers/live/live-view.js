@@ -38,14 +38,15 @@ module.exports = {
             INNER JOIN nfcbirds.rfidtag AS tags
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
-            ON tags.nfcRFIDInternal = visits.nfcRFID;
-            `;
-        // WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE())
+            ON tags.nfcRFIDInternal = visits.nfcRFID
+            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE());`;
+            
         var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
+            row.createdAt = TimeUtil.unixToDate(row.createdAt);
             parsedResult.push(row)
         }
 

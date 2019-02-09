@@ -27,7 +27,7 @@ module.exports = {
             throw { redirect: '/' };
         }
 
-        return { title: 'Login' };
+        return { title: 'Echo Population Database' };
 
     }
 
