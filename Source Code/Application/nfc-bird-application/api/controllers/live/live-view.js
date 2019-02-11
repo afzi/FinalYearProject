@@ -42,9 +42,9 @@ module.exports = {
             ON tags.nfcRFIDInternal = visits.nfcRFID
             WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE())
             ORDER BY visits.createdAt
-            LIMIT $1, $2;`;
+            LIMIT $1 OFFSET $2;`;
 
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, { inputs: numOfRows, inputs: offset });
+        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [inputs.numOfRows, inputs.offset ]);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {

@@ -25,7 +25,7 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.visitData = await Cloud.liveView({ offset: 0, numOfRows: this.pageSize });
+        this.visitData = await Cloud.liveView.with({ offset: 0, numOfRows: this.pageSize });
     },
 
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
