@@ -4,11 +4,10 @@
 */
 
 module.exports = {
-
+    updatedAt: false,
     attributes: {
         //entryDate added by sails
         //primaryKey provided by sails ID
-        createdAt: false,
 
         birdID: {
             model: "Bird"

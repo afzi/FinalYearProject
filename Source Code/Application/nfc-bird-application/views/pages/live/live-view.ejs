@@ -1,47 +1,36 @@
 <div id="live-view">
-    <div class="container" v-if="!cloudSuccess">
-        <h1 class="text-center">Live View</h1>
-
-        <table id="live-visits" border="1">
+    <div class="container" v-if="!cloudSuccess" style="padding-top: 25px;">
+        <table id="live-visits" border="1" class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
-                <tr role="row">
-                    <th role="columnheader"  style="width: 10%">Bird ID</th>
-                    <th role="columnheader"  style="width: 10%">Bird Name</th>
-                    <th role="columnheader"  style="width: 20%">Left Ring Colour</th>
-                    <th role="columnheader"  style="width: 20%">Right Ring Colour</th>
-                    <th role="columnheader"  style="width: 10%">Visit Time</th>
+                <tr class="font-weight-bold" role="row" style="background-color: #83cbd7">
+                    <th role="columnheader" style="width: 10%">Bird Name</th>
+                    <th role="columnheader" style="width: 20%">Left Ring Colour</th>
+                    <th role="columnheader" style="width: 20%">Right Ring Colour</th>
+                    <th role="columnheader" style="width: 10%">Visit Time</th>
                 </tr>
             </thead>
 
             <tbody role="rowgroup" id="rfid-table-body">
-                <tr v-for="visit in visitData">
-                    <td>{{visit.id}}</td>
-                    <td>{{visit.birdName}}</td>
+                <tr style="cursor:pointer;" class="clickable-row" v-for="visit in visitData" onclick='
+                $(document).ready(function($) {
+                    $(".clickable-row").click(function() {
+                        window.document.location = "/birds"; // TODO: Make this link to single bird modal
+                    });
+                });'>
+                    <td class="font-weight-bold" style="background-color:#D6D6D6">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>
                     <td>{{visit.createdAt}}</td>
                 </tr>
             </tbody>
-            </table>
-        <!-- <paginate
-            :page-count="Math.ceil(rfidCount / pageSize)"
-            :click-handler="pageClick"
-            :prev-text="'Prev'"
-            :next-text="'Next'"
-            :container-class="'pagination'"
-            :page-class="'page-item'"
-            :page-link-class="'page-link'"
-            :prev-class="'ignore page-item'"
-            :prev-link-class="'page-link'"
-            :next-class="'ignore page-item'"
-            :next-link-class="'page-link'"
-            :disabled-class="'ignore disabled'"
-        >
-        </paginate> -->
+        </table>
+
+        <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+            :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+        </paginate>
 
 
 
     </div>
 </div>
-  <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
-  
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
