@@ -6,13 +6,13 @@ module.exports = {
     description: 'gets information on birds that have recently visited',
 
     inputs: {
-        skip: {
+        offset: {
             required: false,
             type: 'number',
             description: 'How many records to skip (if used in pagination - where does the page begin)'
         },
 
-        limit: {
+        numOfRows: {
             required: false,
             type: 'number',
             description: 'How many records to return (if used in pagination - what is the page size)'
@@ -32,6 +32,7 @@ module.exports = {
 
 
     fn: async function(inputs, exits) {
+        sails.log("Hola");
         var LIVEVIEWQUERY = `
             SELECT birds.id, birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt
             FROM nfcbirds.bird AS birds
@@ -39,9 +40,11 @@ module.exports = {
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
             ON tags.nfcRFIDInternal = visits.nfcRFID
-            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE());`;
-            
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY);
+            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE())
+            ORDER BY visits.createdAt
+            LIMIT $1, $2;`;
+
+        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, { inputs: numOfRows, inputs: offset });
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
@@ -49,6 +52,7 @@ module.exports = {
             row.createdAt = TimeUtil.unixToDate(row.createdAt);
             parsedResult.push(row)
         }
+        parsedResult.visitCount = rows.length;
 
         return exits.success(parsedResult);
     }
