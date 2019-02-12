@@ -64,7 +64,7 @@
 
     <table class="table">
     <tr>
-        <td>
+        <td style="width:50%;">
         <div class="modal-body">
             <div class="container">
                 <div class="row mb-3">
@@ -97,23 +97,23 @@
                     </tr>
                     <tr>
                         <td>Stud ID</td>
-                        <td style="text-align:right">{{currentBird.birdName}}</td>
+                        <td style="text-align:right">{{ currentBird.studID }}</td>
                     </tr>
                     <tr>
                         <td>New Stud ID</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{currentBird.newStudID }}</td>
                     </tr>
                     <tr>
                         <td>Right Ring ID</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{currentBird.rightRingID }}</td>
                     </tr>
                     <tr>
                         <td>Left Ring ID</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{currentBird.leftRingID }}</td>
                     </tr>
                     <tr>
                         <td>Group Name</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{currentBird.groupName }}</td>
                     </tr>
                     <tr>
                         <td>Sex</td>
@@ -161,7 +161,7 @@
                                 <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                     <tr>
                                         <td>Lay Date</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.layDate }}</td>
                                     </tr>
                                         <tr>
                                         <td>Hatched</td>
@@ -169,11 +169,11 @@
                                     </tr>
                                     <tr>
                                         <td>Hatch Date</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.hatchDate }}</td>
                                     </tr>
                                     <tr>
                                         <td>Incubation Days</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.incubationDays }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Laid</td>
@@ -181,23 +181,23 @@
                                     </tr>
                                     <tr>
                                         <td>Where Hatched</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.hatchedWhere }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Fledged</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.fledgedWhere }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Released</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.releasedWhere }}</td>
                                     </tr>
                                     <tr>
                                         <td>When Released</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.releasedWhen }}</td>
                                     </tr>
                                     <tr>
                                         <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? new Date(currentBird.nestsiteHistory[0].nestID) : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
@@ -205,18 +205,14 @@
                                     </tr>
                                     <tr>
                                         <td>Notes</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.researcherNotes }}</td>
                                     </tr>
                                     <tr>
                                         <td>Created by</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.createdBy }}</td>
                                     </tr>
                                     <tr>
                                         <td>Creates on</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Notes</td>
                                         <td style="text-align:right">{{currentBird.birdName }}</td>
                                     </tr>
                                 </table> 
@@ -228,7 +224,7 @@
 
             </td>
             </tr>
-
+            
             <tr>
                 <td>
                     hello
@@ -238,6 +234,7 @@
                     hello2
                 </td>
             </tr>
+
             </table>
 
 
