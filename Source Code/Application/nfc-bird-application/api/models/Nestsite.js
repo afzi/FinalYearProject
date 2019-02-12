@@ -37,10 +37,5 @@ module.exports = {
             type: "ref",
             columnType: "float"
         },
-
-        birds: {
-            collection: 'bird',
-            via: 'nests'
-          }
     }
 };

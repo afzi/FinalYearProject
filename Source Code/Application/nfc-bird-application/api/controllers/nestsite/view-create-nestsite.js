@@ -19,7 +19,7 @@ module.exports = {
     fn: async function() {
 
         // Respond with view.
-        return { title: 'Manage Nest Site' };
+        return { title: 'Manage Nest Sites' };
 
     }
 

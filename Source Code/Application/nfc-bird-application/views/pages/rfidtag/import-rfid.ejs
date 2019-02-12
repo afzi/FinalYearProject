@@ -1,7 +1,6 @@
 <div id="import-rfid" v-cloak>
 
   <div class="container" v-if="!cloudSuccess">
-    <h1 class="text-center">Import NFC rings from CSV</h1>
     <table id="all-rfids" border="1">
         <thead role="rowgroup">
             <tr role="row">
@@ -41,6 +40,7 @@
     >
     </paginate>
     <div class="import-rfid-form">
+            <h1 class="text-center">Import RFID tags from CSV</h1>
     <hr/>
     <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
         
