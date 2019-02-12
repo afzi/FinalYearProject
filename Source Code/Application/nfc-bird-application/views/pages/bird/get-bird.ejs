@@ -93,11 +93,11 @@
                     </tr>
                     <tr>
                         <td>Bird ID</td>
-                        <td style="text-align:right">{{currentBird.ID }}</td>
+                        <td style="text-align:right">{{currentBird.id }}</td>
                     </tr>
                     <tr>
                         <td>Stud ID</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                        <td style="text-align:right">{{currentBird.birdName}}</td>
                     </tr>
                     <tr>
                         <td>New Stud ID</td>
@@ -122,6 +122,27 @@
                     <tr>
                         <td>Condition</td>
                         <td style="text-align:right">{{currentBird.birdName }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding:5px 0px!important;" class="container">
+                                <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
+                                    
+                                    <div class="form-group collapse condition-history">
+                                       <div>one</div>
+                                    </div>
+                    
+                                    <div class="form-group collapse condition-history">
+                                        <div>two</div>
+                                    </div>
+                            
+                                    <div class="form-group collapse condition-history">
+                                       <div>three</div>
+                                        
+                                    </div>
+                    
+                                    </div>
+                        </td>
                     </tr>
                 </table> 
                 </div>
@@ -168,7 +189,7 @@
                                     </tr>
                                     <tr>
                                         <td>Where Released</td>
-                                        <td>{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.birdName }}</td>
                                     </tr>
                                     <tr>
                                         <td>When Released</td>
@@ -176,7 +197,7 @@
                                     </tr>
                                     <tr>
                                         <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? new Date(currentBird.nestsiteHistory[0].nestID) : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
@@ -204,7 +225,18 @@
                             
                             </div>
                         </div>
+
             </td>
+            </tr>
+
+            <tr>
+                <td>
+                    hello
+                </td>
+
+                <td>
+                    hello2
+                </td>
             </tr>
             </table>
 

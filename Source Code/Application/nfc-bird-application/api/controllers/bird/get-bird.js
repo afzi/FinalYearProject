@@ -255,6 +255,7 @@ module.exports = {
           if(inputs.includeNestsites) {
             var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
             nextBird.nestsiteHistory = nestsiteHistory;
+            console.log(nestsiteHistory);
           }
 
           if(inputs.includeVisits) {
