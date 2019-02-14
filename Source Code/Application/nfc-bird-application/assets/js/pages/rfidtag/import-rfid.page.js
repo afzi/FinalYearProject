@@ -42,8 +42,7 @@ parasails.registerPage('import-rfid', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    this.currentRfids = await Cloud.getRfid.with({skip: 0, limit: this.pageSize});
-    this.rfidCount = SAILS_LOCALS.rfidCount;
+    this.refresh();
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -58,16 +57,19 @@ parasails.registerPage('import-rfid', {
         this.statusText += ` ${result.skipped} rings were skipped due to non-unique attributes (either short or long ID)`;
       }
 
-      this.currentRfids = await Cloud.getRfid.with({skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
-      this.rfidCount = await Cloud.countRfid();
+      this.refresh();
       
       // window.location = '/';
     },
 
     pageClick: async function(pageNum) {
-      this.currentRfids = await Cloud.getRfid.with({skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
-      this.rfidCount = await Cloud.countRfid();
       this.currentPage = pageNum;
+      this.refresh();
+    },
+
+    refresh: async function() {
+      this.currentRfids = await Cloud.getRfid.with({skip:  (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.rfidCount = await Cloud.countRfid();
     },
 
     startSubmit: async function(result) {
@@ -137,6 +139,13 @@ parasails.registerPage('import-rfid', {
         header: true,
         skipEmptyLines: true
       });
+    },
+
+    promptDeleteRing: async function(index) {
+      if(confirm(`Are you sure you want to delete ring ${this.currentRfids[index].nfcRFID}?`)) {
+        await Cloud.deleteRfid(this.currentRfids[index].nfcRFID);
+        this.refresh();
+      }
     }
   }
 });

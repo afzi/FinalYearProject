@@ -66,7 +66,11 @@ module.exports = {
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
           .intercept({name: 'UsageError'}, 'invalid');
+
+          
+          await sails.helpers.logActivity(this.req.me.id, 'Edited a nestsite', inputs);
         }
+
   
   
  };

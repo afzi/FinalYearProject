@@ -89,7 +89,7 @@ parasails.registerPage('create-nestsite', {
 
     validateNestName: function() {
       if(!this.formData.nestID || this.formData.nestID == "") {
-        this.formErrors.nestID = result;
+        this.formErrors.nestID = true;
       } else {
         Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
           this.formErrors.nestID = result;

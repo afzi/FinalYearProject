@@ -4,30 +4,23 @@
 */
 
 module.exports = {
-
-    primaryKey: "logID",
-
     attributes: {
-        id: false,
         updatedAt: false,
-        //changedOn provided by sails createdAt
+        createdBy: false,
+        updatedBy: false,
         
-        logID: {
-            type: 'number',
-            autoIncrement: true,
-            required: true,
-        },
-        userID: {
-            model: "user"
-        },
-        birdID: {
-            model: "bird"
-        },
-        changes: {
-            type: "string",
-            columnType: "varchar",
-            maxLength: 20,
+        user: {
+            model: "user",
             required: true
+        },
+        action: {
+            type: "ref",
+            columnType: "varchar",
+            required: true
+        },
+        data: {
+            type: "ref",
+            columnType: "varchar"
         }
     }
 };

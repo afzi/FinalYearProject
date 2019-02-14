@@ -53,8 +53,6 @@ module.exports = {
   
   
     fn: async function (inputs) {
-        var numRfids = await RFIDTag.count();
-
         let birdIdConstraint;
         if(inputs.isAssigned) {
             birdIdConstraint = {
@@ -76,7 +74,6 @@ module.exports = {
         if(inputs.limit) finalQuery.limit = inputs.limit;
 
         var result = await RFIDTag.find(finalQuery).populate('birdID');
-        result.rfidCount = numRfids;
   
         return result;
     }

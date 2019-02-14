@@ -79,17 +79,32 @@
 
                         <!-- Only in desktop nav -->
                         <div class="nav-item dropdown d-none d-sm-block">
-                            <a style="color:white" class="nav-link dropdown-toggle btn btn-outline-info ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
+                            <a style="color:white" class="nav-link dropdown-toggle btn btn-outline-info ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Birds</a>
                             <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
                                 <a class="dropdown-item" href="/live/view">Live View</a>
                                 <a class="dropdown-item" href="/birds">View All Data</a>
                                 <a class="dropdown-item" href="/bird/register">Register New Bird</a>
                                 <a class="dropdown-item" href="/rfidtag">Manage Rings</a>
                                 <a class="dropdown-item" href="/nestsites">Manage Nest Sites</a>
-                                <a class="dropdown-item" href="/account">Admin</a>
-                                <a class="dropdown-item" href="/logout">Log out</a>
                             </div>
                         </div>
+
+                        <div class="nav-item dropdown d-none d-sm-block">
+                                <a style="color:white" class="nav-link dropdown-toggle btn btn-outline-info ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
+                                    <a class="dropdown-item" href="/account/manage-users">Manage Users</a>
+                                </div>
+                        </div>
+
+                        <div class="nav-item dropdown d-none d-sm-block">
+                                <a style="color:white" class="nav-link dropdown-toggle btn btn-outline-info ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+                                <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
+                                        <a class="dropdown-item" href="/logout">Log out</a>
+                                </div>
+                        </div>
+
+
+
                         <!-- Only in mobile nav -->
                         <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account">Account Settings</a>
                         <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/logout">Sign out</a>
@@ -551,11 +566,13 @@
                         <script src="/js/components/autocomplete.component.js"></script>
                         <script src="/js/components/js-timestamp.component.js"></script>
                         <script src="/js/components/modal.component.js"></script>
+                        <script src="/js/components/searchbar.component.js"></script>
                         <script src="/js/browserify-include.js"></script>
                         <script src="/js/pages/498.page.js"></script>
                         <script src="/js/pages/account/account-overview.page.js"></script>
                         <script src="/js/pages/account/edit-password.page.js"></script>
                         <script src="/js/pages/account/edit-profile.page.js"></script>
+                        <script src="/js/pages/account/manage-users.page.js"></script>
                         <script src="/js/pages/bird/create-bird.page.js"></script>
                         <script src="/js/pages/bird/get-bird.page.js"></script>
                         <script src="/js/pages/contact.page.js"></script>
