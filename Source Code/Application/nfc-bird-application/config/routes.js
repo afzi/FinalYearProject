@@ -32,7 +32,7 @@ module.exports.routes = {
 
     'GET /birds': { action: 'bird/view-get-bird' },
 
-    'GET /birds/hello3': { action: 'bird/view-get-bird' },
+    // 'GET /birds/hello3': { action: 'bird/view-get-bird' },
 
     'GET /account/password': { action: 'account/view-edit-password' },
     'GET /account/profile': { action: 'account/view-edit-profile' },
