@@ -2,16 +2,16 @@
   <div class="container">
       <div class="flex-container filterbar">
           <span>
-              Filter: </span>
+              Filter:&nbsp;&nbsp;</span>
           <div class="form-group">
             <input id="user-filter" class="form-control" type="text" v-model.trim="currentUserFilter" placeholder="Username" title="Username" @input="refresh">
             <autocomplete for="user-filter" action="getUser" params='{"limit": 5}' map="username" is-async> </autocomplete>
           </div>
           <div class="form-group">
-              <input id="date-from-filter" class="form-control" type="date" v-model.trim="currentDateFromFilter" placeholder="Date from" title="Date from" @input="refresh">
+              <datepicker id="date-from-filter" class="form-control" v-model="currentDateFromFilter" placeholder="Date from" title="Date from" @dp-hide="refresh" :config="datepickerOptions">
           </div>
           <div class="form-group">
-              <input id="date-to-filter" class="form-control" type="date" v-model.trim="currentDateToFilter" placeholder="Date to" title="Date to" @input="refresh">
+              <datepicker id="date-to-filter" class="form-control" v-model="currentDateToFilter" placeholder="Date to" title="Date to" @dp-hide="refresh" :config="datepickerOptions">
           </div>
           <div class="form-group">
               <input id="action-filter" class="form-control" type="text" v-model.trim="currentActionFilter" placeholder="Action (contains)" title="Action (contains)" @input="refresh">
@@ -19,7 +19,7 @@
           <div class="form-group">
               <input id="data-filter" class="form-control" type="text" v-model.trim="currentDataFilter" placeholder="Data (contains)" title="Data (contains)" @input="refresh">
             </div>
-          <div>
+          <div class="form-group">
               <button class="btn btn-secondary" @click="clearFilters">Clear</button>
             </div>
         </div>

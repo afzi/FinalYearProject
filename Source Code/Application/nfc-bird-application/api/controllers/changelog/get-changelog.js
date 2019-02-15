@@ -74,7 +74,7 @@ module.exports = {
       if(inputs.username) query.username = inputs.username
       
       if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
-      if(inputs.dateTo) query.layDate['<='] = inputs.createdAt;
+      if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
       let finalQuery = {where: query}
       if(inputs.skip) finalQuery.skip = inputs.skip;
