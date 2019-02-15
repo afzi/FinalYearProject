@@ -71,7 +71,7 @@ module.exports = {
 
       let query = {}
       if(inputs.data) query.data = {'contains': inputs.data}
-      if(inputs.username) query.username = inputs.username
+      if(inputs.action) query.action = {'contains': inputs.action}
       
       if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
       if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
@@ -82,6 +82,10 @@ module.exports = {
       finalQuery.sort = 'createdAt DESC';
 
       var result = await Changelog.find(finalQuery).populate('user');
+
+      if(inputs.username) {
+        result = result.filter(nextResult => nextResult.user.username == inputs.username);
+      }
 
       return result;
     }

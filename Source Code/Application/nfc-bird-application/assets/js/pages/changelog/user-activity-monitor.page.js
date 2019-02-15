@@ -49,7 +49,7 @@ parasails.registerPage('user-activity-monitor', {
               clear: 'far fa-trash-alt',
               close: 'far fa-times-circle'
           },
-          format: 'DD/MM/YYYY HH:mm:ss',
+          format: 'YYYY/MM/DD HH:mm:ss',
           maxDate: new Date(),
           showTodayButton: true,
           showClear: true,
@@ -66,6 +66,27 @@ parasails.registerPage('user-activity-monitor', {
   },
   mounted: async function() {
     this.refresh();
+    setInterval(this.refresh(), 5000);
+  },
+
+  watch: {
+    // whenever one of the filters changes, this function will run
+    currentUserFilter: function (_, _) {
+      this.refresh();
+    },
+    currentActionFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDateFromFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDateToFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDataFilter: function (_, _) {
+      this.refresh();
+    }
+    
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

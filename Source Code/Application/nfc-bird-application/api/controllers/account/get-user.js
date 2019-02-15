@@ -71,6 +71,7 @@ module.exports = {
         let query = {};
 
         if(inputs.fullName) query.fullName = {'contains': inputs.fullName}
+        if(inputs.username) query.username = {'contains': inputs.username}
         
         let finalQuery = {where: query}
         if(inputs.skip) finalQuery.skip = inputs.skip;
