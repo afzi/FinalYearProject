@@ -29,7 +29,7 @@
             <td>{{bird.fatherName}}</td>
             <td>{{bird.motherName}}</td>
             <td>{{bird.layDate}}</td>
-            <td>{{bird.isBreeder}}</td>
+            <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
             <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
             <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
             <td>{{bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
@@ -89,7 +89,7 @@
                     </tr>
                     <tr>
                         <td>Age</td>
-                        <td style="text-align:right">{{new Date().valueOf()}}</td>
+                        <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
                     </tr>
                     <tr>
                         <td>Bird ID</td>
@@ -121,7 +121,7 @@
                     </tr>
                     <tr>
                         <td>Condition</td>
-                        <td style="text-align:right">{{currentBird.conditionHistory ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
+                        <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -174,7 +174,7 @@
                                     </tr>
                                     <tr>
                                         <td>Hatch Date</td>
-                                        <td style="text-align:right">{{currentBird.hatchDate }}</td>
+                                        <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Incubation Days</td>
@@ -206,7 +206,7 @@
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.birdName}}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Notes</td>
@@ -218,7 +218,7 @@
                                     </tr>
                                     <tr>
                                         <td>Creates on</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.createdAt }}</td>
                                     </tr>
                                 </table> 
                                 </div>
@@ -248,7 +248,7 @@
                             </tr>
                             <tr>
                                 <td>Female Stud ID</td>
-                                <td style="text-align:right">{{currentBird.motherName }}</td>
+                                <td style="text-align:right">{{currentBird.birdName }}</td>
                             </tr>
                             <tr>
                                 <td>Male Parent</td>
@@ -264,7 +264,7 @@
                             </tr>
                             <tr>
                                 <td>2nd Male ID</td>
-                                <td style="text-align:right">{{ currentBird.studID }}</td>
+                                <td style="text-align:right">{{ currentBird.birdName }}</td>
                             </tr>
                         </table> 
                         </div>
@@ -282,27 +282,15 @@
                                 <div class="row mb-3">
                                         <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                             <tr>
-                                                <td>Lay Date</td>
-                                                <td style="text-align:right">{{currentBird.layDate }}</td>
+                                                <td style="background-color: rgb(131, 203, 215)">Date</td>
                                             </tr>
-                                                <tr>
-                                                <td>Hatched</td>
-                                                <td style="text-align:right">{{currentBird.birdName }}</td>
+                                            <tr  v-for="visits in currentBird.visitHistory">
+                                                <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
+                                                <td>{{visits.createdAt}}</td>
                                             </tr>
-                                            <tr>
-                                                <td>Hatch Date</td>
-                                                <td style="text-align:right">{{currentBird.hatchDate }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Incubation Days</td>
-                                                <td style="text-align:right">{{currentBird.incubationDays }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Where Laid</td>
-                                                <td style="text-align:right">{{currentBird.birdName }}</td>
-                                            </tr>
+                                               
                                         </table> 
-                                        </div>
+                                </div>
         
                                     
                                     </div>
@@ -310,14 +298,16 @@
         
                     </td>
                     </tr>
+                    
 
             </table>
 
 
 
         <div class="modal-footer flex-row-reverse justify-content-between">
-        <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
-        <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+                <a class="btn btn-info " href="/account">Edit</a> 
+        
+        <button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
         </div>
 
     </modal>
