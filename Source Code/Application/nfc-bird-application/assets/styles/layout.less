@@ -72,6 +72,17 @@ html, body {
   }
 }
 
+.paginateContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+
+  .pageSizeControl {
+    width: auto;
+  }
+}
+
 body.detected-mobile {
   // Above and beyond the media queries below, this selector (which relies on
   // `parasails` automatically attaching this class, if appropriate) contains

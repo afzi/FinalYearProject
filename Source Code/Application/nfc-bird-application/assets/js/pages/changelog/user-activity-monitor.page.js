@@ -66,7 +66,7 @@ parasails.registerPage('user-activity-monitor', {
   },
   mounted: async function() {
     this.refresh();
-    setInterval(this.refresh(), 5000);
+    setInterval(this.refresh, 5000);
   },
 
   watch: {
@@ -84,6 +84,9 @@ parasails.registerPage('user-activity-monitor', {
       this.refresh();
     },
     currentDataFilter: function (_, _) {
+      this.refresh();
+    },
+    pageSize: function (_, _) {
       this.refresh();
     }
     
@@ -141,6 +144,10 @@ parasails.registerPage('user-activity-monitor', {
       this.currentDateFromFilter = null;
       this.currentDateToFilter = null;
       this.refresh();
+    },
+
+    getLinkForUser: function(fullName) {
+      return `/account/manage-users?initialFullNameFilter=${fullName}`;
     }
   }
 });

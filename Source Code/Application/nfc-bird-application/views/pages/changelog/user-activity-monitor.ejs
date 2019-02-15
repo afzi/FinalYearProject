@@ -37,27 +37,45 @@
         <tbody role="rowgroup" id="log-table-body">
             <tr v-for="(log, index) in currentLogs">
                 <td>{{new Date(log.createdAt).toLocaleString()}}</td>
-                <td>{{log.user.fullName}} ({{log.user.username}})</td>
+                <td><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}} ({{log.user.username}})</a></td>
                 <td>{{log.action}}</td>
                 <td>{{log.data}}</td>
             </tr>
         </tbody>
     </table>
-    <paginate
-        :page-count="Math.ceil(logCount / pageSize)"
-        :click-handler="pageClick"
-        :prev-text="'Prev'"
-        :next-text="'Next'"
-        :container-class="'pagination'"
-        :page-class="'page-item'"
-        :page-link-class="'page-link'"
-        :prev-class="'ignore page-item'"
-        :prev-link-class="'page-link'"
-        :next-class="'ignore page-item'"
-        :next-link-class="'page-link'"
-        :disabled-class="'ignore disabled'"
-    >
-    </paginate>
+    <div class="flex-container paginateContainer">
+        <div>
+            <paginate
+                :page-count="Math.ceil(logCount / pageSize)"
+                :click-handler="pageClick"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination'"
+                :page-class="'page-item'"
+                :page-link-class="'page-link'"
+                :prev-class="'ignore page-item'"
+                :prev-link-class="'page-link'"
+                :next-class="'ignore page-item'"
+                :next-link-class="'page-link'"
+                :disabled-class="'ignore disabled'"
+            >
+            </paginate>
+        </div>
+        <div>
+            Showing {{currentLogs.length}} entries out of {{logCount}}
+        </div>
+        <div>
+            Show 
+                    <select class="pageSizeControl custom-select" v-model="pageSize">
+                            <option value="5" >5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option selected value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                        </select> entries per page
+                    </div>
+        </div>
     </div>
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
