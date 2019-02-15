@@ -36,10 +36,12 @@ module.exports.routes = {
 
     'GET /account/password': { action: 'account/view-edit-password' },
     'GET /account/profile': { action: 'account/view-edit-profile' },
+    'GET /account/manage-users': { action: 'account/view-manage-users' },
 
     'GET /rfidtag': { action: 'rfidtag/view-import-rfid' },
 
     'GET /live/view': { action: 'live/view-live-view' },
+    'GET /changelog/user-activity-monitor': { action: 'changelog/view-user-activity-monitor' },
 
 
     //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
@@ -74,18 +76,33 @@ module.exports.routes = {
     'GET   /api/v1/rfidtag': { action: 'rfidtag/get-rfid' },
     'GET   /api/v1/rfidtag/count': { action:  'rfidtag/count-rfid' },
 
+    'DELETE   /api/v1/rfidtag': { action: 'rfidtag/delete-rfid' },
+
     'GET   /api/v1/nestsite/nestsite-exists': { action: 'nestsite/nestsite-exists' },
     'GET   /api/v1/nestsite': { action: 'nestsite/get-nestsite' },
     'GET   /api/v1/nestsite/count': { action: 'nestsite/count-nestsite' },
 
+    
+    'GET   /api/v1/user':       { action: 'account/get-user' },
+    'GET   /api/v1/user/count': { action: 'account/count-user' },
+    'GET   /api/v1/user/username-exists': { action: 'account/username-exists' },
+
+    'DELETE   /api/v1/user': { action: 'account/delete-user' },
+
+    'POST  /api/v1/account/signup': { action: 'account/signup' },
+
+    'PUT  /api/v1/account/edit-user': { action: 'account/edit-user' },
+
+
     'POST  /api/v1/nestsite': { action: 'nestsite/create-nestsite' },
+
     'PUT   /api/v1/nestsite': { action: 'nestsite/edit-nestsite' },
 
     'DELETE   /api/v1/nestsite': { action: 'nestsite/delete-nestsite' },
 
+
     'POST  /api/v1/bird': { action: 'bird/create-bird' },
 
-    'POST  /api/v1/entrance/signup': { action: 'entrance/signup' },
     'POST  /api/v1/entrance/update-password-and-login': { action: 'entrance/update-password-and-login' },
 
     'POST /api/v1/rfidtag': { action: 'rfidtag/import-rfid' },
@@ -93,6 +110,8 @@ module.exports.routes = {
     'GET /api/v1/live': { action: 'live/live-view' },
     'GET /api/v1/live/count-visits': { action: 'live/count-visits' },
 
+    'GET /api/v1/changelog': { action: 'changelog/get-changelog' },
+    'GET /api/v1/changelog/count': { action: 'changelog/count-changelog' },
 
 
 };

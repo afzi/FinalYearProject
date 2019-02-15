@@ -47,6 +47,16 @@ html, body {
   }
 }
 
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
 body.detected-mobile {
   // Above and beyond the media queries below, this selector (which relies on
   // `parasails` automatically attaching this class, if appropriate) contains

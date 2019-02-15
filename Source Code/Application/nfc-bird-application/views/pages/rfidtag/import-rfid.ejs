@@ -10,6 +10,7 @@
                 <th role="columnheader"  style="width: 10%">Assigned</th>
                 <th role="columnheader"  style="width: 10%">Assigned to Bird</th>
                 <th role="columnheader"  style="width: 10%">Assignment Date</th>
+                <th role="columnheader"  style="width: 10%">Actions</th>
             </tr>
         </thead>
 
@@ -21,6 +22,7 @@
                 <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                 <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
                 <td>{{new Date(rfidtag.updatedAt).toLocaleDateString('en-GB')}}</td>
+                <td><i v-if="!rfidtag.birdID" class="fas fa-trash-alt" @click="promptDeleteRing(index)"></i></td>
             </tr>
         </tbody>
         </table>

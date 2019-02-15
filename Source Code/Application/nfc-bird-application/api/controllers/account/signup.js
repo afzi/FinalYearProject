@@ -99,6 +99,9 @@ by modifying its session.`,
     .intercept('E_UNIQUE', 'usernameAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
+
+    inputs.password = "<hidden>"; // do this so the password doesn't appear in the logs
+    await sails.helpers.logActivity(this.req.me.id, 'Created new user account', inputs);
   }
 
 };
