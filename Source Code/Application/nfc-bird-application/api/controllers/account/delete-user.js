@@ -33,9 +33,8 @@ module.exports = {
   
   
     fn: async function (inputs) {
-      var deletedRecord = await User.destroy({id: inputs.id})
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+      var deletedRecord = await User.destroyOne({id: inputs.id})
+          .intercept({name: 'UsageError'}, 'invalid');
 
         inputs.username = deletedRecord.username;
         await sails.helpers.logActivity(this.req.me.id, 'Deleted user account', inputs);

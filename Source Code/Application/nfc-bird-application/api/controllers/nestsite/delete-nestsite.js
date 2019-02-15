@@ -38,9 +38,8 @@ module.exports = {
   
   
     fn: async function (inputs) {
-        var deletedRecord = await Nestsite.destroy({id: inputs.id})
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+        var deletedRecord = await Nestsite.destroyOne({id: inputs.id})
+          .intercept({name: 'UsageError'}, 'invalid');
 
           inputs.nestID = deletedRecord.nestID;
           

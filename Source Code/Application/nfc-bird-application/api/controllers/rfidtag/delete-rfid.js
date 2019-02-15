@@ -33,7 +33,7 @@ module.exports = {
   
   
     fn: async function (inputs) {
-        await RFIDTag.destroy({nfcRFID: inputs.nfcRFID})
+        await RFIDTag.destroyOne({nfcRFID: inputs.nfcRFID})
           .intercept({name: 'UsageError'}, 'invalid');
 
         

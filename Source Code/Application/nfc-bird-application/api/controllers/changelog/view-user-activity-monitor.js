@@ -19,7 +19,7 @@ module.exports = {
   fn: function () {
 
     // Respond with view.
-    return {};
+    return {title: 'User Activity Monitor'};
 
   }
 

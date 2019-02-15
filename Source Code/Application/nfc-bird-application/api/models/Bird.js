@@ -57,6 +57,9 @@ module.exports = {
             type: "ref",
             columnType: "bigint(20)"
         },
+        laidWhere: {
+            model: "nestsite"
+        },
         hatchedWhere: {
             model: "nestsite"
         },

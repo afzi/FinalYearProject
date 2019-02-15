@@ -79,6 +79,7 @@ module.exports = {
       let finalQuery = {where: query}
       if(inputs.skip) finalQuery.skip = inputs.skip;
       if(inputs.limit) finalQuery.limit = inputs.limit;
+      finalQuery.sort = 'createdAt DESC';
 
       var result = await Changelog.find(finalQuery).populate('user');
 
