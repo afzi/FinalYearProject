@@ -54,6 +54,7 @@ module.exports = {
         }
         parsedResult.visitCount = rows.length;
 
+    
         return exits.success(parsedResult);
     }
 };

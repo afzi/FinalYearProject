@@ -6,7 +6,6 @@ parasails.registerPage('live-view', {
         cloudSuccess: false,
 
         visitData: {},
-
         // curVisitCount: 0,
 
         // newVisitCount: 0
