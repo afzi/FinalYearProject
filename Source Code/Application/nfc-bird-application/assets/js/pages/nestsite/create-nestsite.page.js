@@ -33,20 +33,29 @@ parasails.registerPage('create-nestsite', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
-    this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: 0, limit: this.pageSize});
-    this.nestsiteCount = await Cloud.countNestsite();
+    await this.refresh();
+  },
+
+  watch: {
+    // whenever one of the filters changes, this function will run
+    pageSize: function (_, _) {
+      this.refresh();
+    }
+    
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
+    refresh: async function() {
+      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.nestsiteCount = await Cloud.countNestsite();
+    },
 
     submittedForm: async function() {
       this.syncing = true;
-      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
-      this.nestsiteCount = await Cloud.countNestsite();
-
+      await this.refresh();
       $('.modal').modal('hide');
       this.syncing = false;
     },
@@ -108,16 +117,14 @@ parasails.registerPage('create-nestsite', {
     },
 
     pageClick: async function(pageNum) {
-      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
-      this.nestsiteCount = await Cloud.countNestsite();
       this.currentPage = pageNum;
+      await this.refresh();
     },
 
     promptDeleteNestsite: async function(index) {
       if(confirm(`Are you sure you want to delete nestsite ${this.currentNestsites[index].nestID}?`)) {
         await Cloud.deleteNestsite(this.currentNestsites[index].id);
-        this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
-        this.nestsiteCount = await Cloud.countNestsite();
+        await this.refresh();
       }
     }
 

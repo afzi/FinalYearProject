@@ -26,21 +26,39 @@
             </tr>
         </tbody>
         </table>
-    <paginate
-        :page-count="Math.ceil(rfidCount / pageSize)"
-        :click-handler="pageClick"
-        :prev-text="'Prev'"
-        :next-text="'Next'"
-        :container-class="'pagination'"
-        :page-class="'page-item'"
-        :page-link-class="'page-link'"
-        :prev-class="'ignore page-item'"
-        :prev-link-class="'page-link'"
-        :next-class="'ignore page-item'"
-        :next-link-class="'page-link'"
-        :disabled-class="'ignore disabled'"
-    >
-    </paginate>
+        <div class="flex-container paginateContainer">
+                <div>
+                    <paginate
+                        :page-count="Math.ceil(rfidCount / pageSize)"
+                        :click-handler="pageClick"
+                        :prev-text="'Prev'"
+                        :next-text="'Next'"
+                        :container-class="'pagination'"
+                        :page-class="'page-item'"
+                        :page-link-class="'page-link'"
+                        :prev-class="'ignore page-item'"
+                        :prev-link-class="'page-link'"
+                        :next-class="'ignore page-item'"
+                        :next-link-class="'page-link'"
+                        :disabled-class="'ignore disabled'"
+                    >
+                    </paginate>
+                </div>
+                <div>
+                    Showing {{currentRfids.length}} entries out of {{rfidCount}}
+                </div>
+                <div>
+                    Show 
+                            <select class="pageSizeControl custom-select" v-model="pageSize">
+                                    <option value="5" >5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option selected value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                </select> entries per page
+                            </div>
+                </div>
     <div class="import-rfid-form">
             <h1 class="text-center">Import RFID tags from CSV</h1>
     <hr/>

@@ -17,6 +17,7 @@
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.5.5",
     "sails-mysql": "^1.0.1",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {

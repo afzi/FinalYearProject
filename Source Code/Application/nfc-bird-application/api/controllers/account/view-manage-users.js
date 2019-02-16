@@ -6,6 +6,13 @@ module.exports = {
 
   description: 'Display "Manage users" page.',
 
+  inputs: {
+    initialFullNameFilter: {
+      required: false,
+      type: 'string',
+      description: 'The initial filter on the full name'
+    }
+  },
 
   exits: {
 
@@ -16,10 +23,9 @@ module.exports = {
   },
 
 
-  fn: function () {
-
+  fn: function (inputs) {
     // Respond with view.
-    return { title: 'Manage Users' };
+    return { title: 'Manage Users', initialFullNameFilter: inputs.initialFullNameFilter };
 
   }
 

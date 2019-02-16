@@ -29,13 +29,32 @@ parasails.registerPage('user-activity-monitor', {
 
         currentUserFilter: "",
 
-        currentDateFromFilter: null,
+        currentDateFromFilter: "",
 
-        currentDateToFilter: null,
+        currentDateToFilter: "",
 
         currentActionFilter: "",
 
-        currentDataFilter: ""
+        currentDataFilter: "",
+
+        datepickerOptions: {
+          icons: {
+              time: 'far fa-clock',
+              date: 'far fa-calendar',
+              up: 'fas fa-arrow-up',
+              down: 'fas fa-arrow-down',
+              previous: 'fas fa-chevron-left',
+              next: 'fas fa-chevron-right',
+              today: 'fas fa-calendar-check',
+              clear: 'far fa-trash-alt',
+              close: 'far fa-times-circle'
+          },
+          format: 'YYYY/MM/DD HH:mm:ss',
+          maxDate: new Date(),
+          showTodayButton: true,
+          showClear: true,
+          showClose: true,
+      }
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -47,6 +66,30 @@ parasails.registerPage('user-activity-monitor', {
   },
   mounted: async function() {
     this.refresh();
+    setInterval(this.refresh, 5000);
+  },
+
+  watch: {
+    // whenever one of the filters changes, this function will run
+    currentUserFilter: function (_, _) {
+      this.refresh();
+    },
+    currentActionFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDateFromFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDateToFilter: function (_, _) {
+      this.refresh();
+    },
+    currentDataFilter: function (_, _) {
+      this.refresh();
+    },
+    pageSize: function (_, _) {
+      this.refresh();
+    }
+    
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -62,11 +105,11 @@ parasails.registerPage('user-activity-monitor', {
         date.setMonth(date.getMonth() - 12);
         params.dateFrom = date.getTime();
       } else {
-        params.dateFrom = this.currentDateFromFilter;
+        params.dateFrom = new Date(this.currentDateFromFilter).getTime();
       }
 
       if(this.currentDateToFilter != null && this.currentDateToFilter != "") {
-        params.dateTo = this.currentDateToFilter;
+        params.dateTo = new Date(this.currentDateToFilter).getTime();
       }
 
       if(this.currentUserFilter != null && this.currentUserFilter != "") {
@@ -101,6 +144,10 @@ parasails.registerPage('user-activity-monitor', {
       this.currentDateFromFilter = null;
       this.currentDateToFilter = null;
       this.refresh();
+    },
+
+    getLinkForUser: function(fullName) {
+      return `/account/manage-users?initialFullNameFilter=${fullName}`;
     }
   }
 });

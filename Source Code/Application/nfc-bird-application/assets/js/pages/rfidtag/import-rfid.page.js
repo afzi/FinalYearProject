@@ -45,6 +45,14 @@ parasails.registerPage('import-rfid', {
     this.refresh();
   },
 
+  watch: {
+    // whenever one of the filters changes, this function will run
+    pageSize: function (_, _) {
+      this.refresh();
+    }
+    
+  },
+
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
@@ -68,6 +76,7 @@ parasails.registerPage('import-rfid', {
     },
 
     refresh: async function() {
+
       this.currentRfids = await Cloud.getRfid.with({skip:  (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
       this.rfidCount = await Cloud.countRfid();
     },

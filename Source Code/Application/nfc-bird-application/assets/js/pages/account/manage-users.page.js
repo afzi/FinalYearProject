@@ -39,7 +39,17 @@ parasails.registerPage('manage-users', {
   },
   mounted: async function() {
     $('[data-toggle="tooltip"]').tooltip();
+    this.currentFullNameFilter = SAILS_LOCALS.initialFullNameFilter;
+    $("#search-input").val(this.currentFullNameFilter);
     this.refresh();
+  },
+
+  watch: {
+    // whenever one of the filters changes, this function will run
+    pageSize: function (_, _) {
+      this.refresh();
+    }
+    
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
