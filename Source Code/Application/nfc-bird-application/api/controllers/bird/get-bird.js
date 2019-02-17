@@ -242,7 +242,7 @@ module.exports = {
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
 
       
-      var result = await Bird.find(finalQuery).populate('nestsite');
+      var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
 
       // TODO this is horribly inefficient
 
