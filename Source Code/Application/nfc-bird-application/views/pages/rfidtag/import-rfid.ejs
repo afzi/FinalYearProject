@@ -15,7 +15,7 @@
         </thead>
 
         <tbody role="rowgroup" id="rfid-table-body">
-            <tr v-for="rfidtag in currentRfids">
+            <tr v-for="(rfidtag, index) in currentRfids">
                 <td>{{rfidtag.nfcRFID}}</td>
                 <td>{{rfidtag.colour}}</td>
                 <td>{{rfidtag.nfcRFIDInternal}}</td>
