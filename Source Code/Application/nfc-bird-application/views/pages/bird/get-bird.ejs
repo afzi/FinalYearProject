@@ -203,15 +203,15 @@
                                     </tr>
                                     <tr>
                                         <td>Where Hatched</td>
-                                        <td style="text-align:right">{{currentBird.hatchedWhere }}</td>
+                                        <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : ''  }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Fledged</td>
-                                        <td style="text-align:right">{{currentBird.fledgedWhere }}</td>
+                                        <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : ''    }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Released</td>
-                                        <td style="text-align:right">{{currentBird.releasedWhere }}</td>
+                                        <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : ''   }}</td>
                                     </tr>
                                     <tr>
                                         <td>When Released</td>
@@ -219,15 +219,15 @@
                                     </tr>
                                     <tr>
                                         <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Notes</td>
-                                        <td style="text-align:right; height:90px; "> <div style="overflow-y:scroll; height:90px; text-align: left">{{currentBird.researcherNotes }}</div></td>
+                                        <td style="text-align:right; height:90px; "> <div style="overflow-y:scroll; height:90px;">{{currentBird.researcherNotes }}</div></td>
                                     </tr>
                                     <tr>
                                         <td>Created by</td>
