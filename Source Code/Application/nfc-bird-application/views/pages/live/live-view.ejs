@@ -1,16 +1,16 @@
-<div id="live-view">
+<div id="live-view" style="padding: 60px 0;">
     <div class="container" v-if="!cloudSuccess" style="padding-top: 25px;">
         <table id="live-visits" border="1" class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
-                <tr class="font-weight-bold" role="row" style="background-color: #83cbd7">
-                    <th role="columnheader" style="width: 10%">Bird Name</th>
-                    <th role="columnheader" style="width: 20%">Left Ring Colour</th>
-                    <th role="columnheader" style="width: 20%">Right Ring Colour</th>
-                    <th role="columnheader" style="width: 10%">Visit Time</th>
+                <tr class="font-weight-bold" style="background-color: #83cbd7" role="row">
+                    <th role="columnheader">Bird Name</th>
+                    <th role="columnheader">Left Ring Colour</th>
+                    <th role="columnheader">Right Ring Colour</th>
+                    <th role="columnheader">Visit Time</th>
                 </tr>
             </thead>
 
-            <tbody role="rowgroup" id="rfid-table-body">
+            <tbody role="rowgroup">
                 <tr style="cursor:pointer;" class="clickable-row" v-for="visit in visitData" onclick='
                 $(document).ready(function($) {
                     $(".clickable-row").click(function() {
@@ -25,10 +25,25 @@
             </tbody>
         </table>
 
-        <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
-            :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
-        </paginate>
 
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed" style = " height: 65px; width:100%; bottom:0;">
+            <!-- <a class="navbar-brand abs"> -->
+            <paginate
+            :page-count="Math.ceil(visitCount / pageSize)" 
+            :click-handler="pageClick" 
+            :prev-text="'&nbsp Prev'" 
+            :next-text="'Next &nbsp'" 
+            :container-class="'pagination'" 
+            :page-class="'page-item'" 
+            :page-link-class="'page-link'" 
+            :prev-class="'ignore page-item'"
+            :prev-link-class="'page-link'" 
+            :next-class="'ignore page-item'" 
+            :next-link-class="'page-link'" 
+            :disabled-class="'ignore disabled'">
+            </paginate>
+            <!-- </a> -->
+        </footer>
 
 
     </div>

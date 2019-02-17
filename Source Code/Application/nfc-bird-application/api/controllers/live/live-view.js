@@ -32,7 +32,6 @@ module.exports = {
 
 
     fn: async function(inputs, exits) {
-        sails.log("Hola");
         var LIVEVIEWQUERY = `
             SELECT birds.id, birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt
             FROM nfcbirds.bird AS birds
@@ -41,10 +40,10 @@ module.exports = {
             INNER JOIN nfcbirds.visit AS visits
             ON tags.nfcRFIDInternal = visits.nfcRFID
             WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE())
-            ORDER BY visits.createdAt
+            ORDER BY visits.createdAt DESC
             LIMIT $1 OFFSET $2;`;
 
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [inputs.numOfRows, inputs.offset ]);
+        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [inputs.numOfRows, inputs.offset]);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
@@ -54,7 +53,6 @@ module.exports = {
         }
         parsedResult.visitCount = rows.length;
 
-    
         return exits.success(parsedResult);
     }
 };
