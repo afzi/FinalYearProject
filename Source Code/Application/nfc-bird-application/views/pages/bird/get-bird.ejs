@@ -123,12 +123,29 @@
                         <td>Condition</td>
                         <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
                     </tr>
+
                     <tr>
                         <td colspan="2">
                             <div style="padding:5px 0px!important;" class="container">
                                 <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
                                     
-                                    <div class="form-group collapse condition-history">
+
+                                <div class="form-group collapse condition-history"  v-for="condition in currentBird.conditionHistory">
+                                
+                                   <table class="table">
+                                       <tr>
+                                           <td>
+                                            {{new Date(condition.createdAt*1000).toLocaleDateString('en-GB') }}
+                                           </td>
+
+                                           <td>
+                                            {{condition.birdCondition }}
+                                           </td>
+                                       </tr>
+                                   </table>
+                                </div>
+
+                                    <!-- <div class="form-group collapse condition-history">
                                        <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : ' '  }}</div>
                                     </div>
                     
@@ -144,7 +161,7 @@
                                     </div>
                                      <div class="form-group collapse condition-history">
                                        <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : ' '  }}</div>   
-                                    </div>
+                                    </div> -->
                     
                                     </div>
                         </td>
@@ -166,12 +183,12 @@
                                 <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                     <tr>
                                         <td>Lay Date</td>
-                                        <td style="text-align:right">{{currentBird.layDate }}</td>
+                                        <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
                                     </tr>
-                                        <tr>
+                                    <!-- <tr>
                                         <td>Hatched</td>
                                         <td style="text-align:right">{{currentBird.birdName }}</td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>Hatch Date</td>
                                         <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
@@ -182,7 +199,7 @@
                                     </tr>
                                     <tr>
                                         <td>Where Laid</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Where Hatched</td>
@@ -198,15 +215,15 @@
                                     </tr>
                                     <tr>
                                         <td>When Released</td>
-                                        <td style="text-align:right">{{currentBird.releasedWhen }}</td>
+                                        <td style="text-align:right">{{new Date (currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
                                     </tr>
                                     <tr>
                                         <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Notes</td>
@@ -217,8 +234,8 @@
                                         <td style="text-align:right">{{currentBird.createdBy }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Creates on</td>
-                                        <td style="text-align:right">{{currentBird.createdAt }}</td>
+                                        <td>Created on</td>
+                                        <td style="text-align:right">{{new Date (currentBird.createdAt*1000).toLocaleDateString('en-GB') }}</td>
                                     </tr>
                                 </table> 
                                 </div>
@@ -286,7 +303,7 @@
                                             </tr>
                                             <tr  v-for="visits in currentBird.visitHistory">
                                                 <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
-                                                <td>{{visits.createdAt}}</td>
+                                                <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
                                             </tr>
                                                
                                         </table> 

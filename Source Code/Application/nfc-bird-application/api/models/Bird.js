@@ -63,7 +63,7 @@ module.exports = {
         hatchedWhere: {
             model: "nestsite"
         },
-        hatchDate: { //USE THIS TO CALCULATE AGE
+        hatchDate: { //USE THIS TO CALCULATE AGE 
             type: "ref",
             columnType: "bigint(20)"
         },
