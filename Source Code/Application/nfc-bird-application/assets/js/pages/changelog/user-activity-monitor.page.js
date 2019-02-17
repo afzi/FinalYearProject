@@ -89,7 +89,7 @@ parasails.registerPage('user-activity-monitor', {
     pageSize: function (_, _) {
       this.refresh();
     }
-    
+  
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

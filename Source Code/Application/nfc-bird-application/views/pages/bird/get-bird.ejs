@@ -3,7 +3,54 @@
     <h1 class="text-center">Birds Table </h1>
     <hr/>
     
-            
+    <div class="flex-container filterbar">
+    <div class="form-group">
+        <select class="pageSizeControl custom-select " v-model="pageSize">
+            <option disabled selected value>show entries</option>
+            <option value="5" >5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+        </select>
+    </div>
+        <div class="form-group">
+          <input id="birdName" class="form-control" type="text" v-model.trim.lazy="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
+          <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+        </div>
+        <div class="form-group">
+            <input id="studID" class="form-control" type="text" v-model.trim.lazy="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
+            <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
+        </div>
+        <div class="form-group">
+            <input id="sex" class="form-control" type="text" v-model.trim.lazy="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
+            <autocomplete for="sex" action="getBird" params='{"limit": 3}' map="sex" is-async> </autocomplete>
+        </div>
+        <div class="form-group">
+            <input id="fatherName" class="form-control" type="text" v-model.trim.lazy="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
+            <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
+        </div>
+
+        <div class="form-group">
+            <input id="motherName" class="form-control" type="text" v-model.trim.lazy="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
+            <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async> </autocomplete>
+        </div>
+
+        <div class="form-group">
+            <input id="isBreeder" class="form-control" type="text" v-model.trim.lazy="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
+            <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
+        </div>
+        <div class="form-group">
+            <input id="currentNestSite" class="form-control" type="text" v-model.trim.lazy="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
+            <autocomplete for="currentNestSite" action="getBird" params='{"limit": 3}' map="currentNestSite" is-async> </autocomplete>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-secondary" @click="clearFilters">Clear</button>
+        </div>
+      </div>
+
 <table class= "table table-striped">
     <thead role="rowgroup">
         <tr>
@@ -28,7 +75,7 @@
             <td>{{bird.sex}}</td>
             <td>{{bird.fatherName}}</td>
             <td>{{bird.motherName}}</td>
-            <td>{{bird.layDate}}</td>
+            <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
             <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
             <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
             <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
@@ -51,6 +98,7 @@
     :next-link-class="'page-link'"
     :disabled-class="'ignore disabled'"
 >
+                
 </paginate>
 
 <router-view></router-view>

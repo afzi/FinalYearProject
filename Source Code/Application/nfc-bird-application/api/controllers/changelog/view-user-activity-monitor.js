@@ -1,6 +1,5 @@
 module.exports = {
 
-
   friendlyName: 'View user activity monitor',
 
 
