@@ -27,7 +27,7 @@ module.exports = {
         //     throw {redirect: '/'};
         //   }
 
-        return { title: 'Create Bird' };
+        return { title: 'Register New Bird' };
 
     }
 

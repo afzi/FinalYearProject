@@ -10,10 +10,6 @@ parasails.registerPage('get-bird', {
 
         currentBirds: [],
 
-        currentLogs: [],
-    
-        logCount: 0,
-
         BirdCount: 0,
 
         pageSize: 20,
@@ -46,7 +42,7 @@ parasails.registerPage('get-bird', {
     },
     mounted: async function() {
         this.currentBirds = await Cloud.getBird.with({includeConditions: true, includeNestsites: true, includeVisits: true, skip: 0, limit: this.pageSize});
-        this.BirdCount = SAILS_LOCALS.BirdCount;
+        this.BirdCount = this.currentBirds.length;
     },
 
     watch: {
@@ -115,8 +111,7 @@ parasails.registerPage('get-bird', {
   
         if(this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
           params.studID = this.currentBirdIdFilter;
-        }
-      
+        }    
   
         if(this.currentSexFilter != null && this.currentSexFilter != "") {
           params.sex = this.currentSexFilter;
@@ -131,21 +126,24 @@ parasails.registerPage('get-bird', {
         }
         
         if(this.currentBreederFilter != null && this.currentBreederFilter != "") {
-          params.birdName = this.currentBreederFilter;
+          params.isBreeder = this.currentBreederFilter;
         }
 
         if(this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
-          params.birdName = this.currentNestSiteFilter;
+          params.currentNestSite = this.currentNestSiteFilter;
         }
 
+        params.includeConditions = true;
+        params.includeNestsites = true;
+        params.includeVisits = true;
 
   
         params.skip = (this.currentPage - 1) * this.pageSize;
   
         params.limit = this.pageSize;
   
-        this.currentLogs = await Cloud.getChangelog.with(params);
-        this.logCount = await Cloud.countChangelog.with(params);
+        this.currentBirds = await Cloud.getBird.with(params);
+        this.BirdCount = await Cloud.countBird.with(params);
       },
 
         pageClick: async function(pageNum) {
@@ -161,7 +159,6 @@ parasails.registerPage('get-bird', {
             this.currentMotherFilter = "";
             this.currentBreederFilter = "";
             this.currentNestSiteFilter = "";
-            this.refresh();
           },
 
 

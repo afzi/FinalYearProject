@@ -1,13 +1,9 @@
 module.exports = {
 
-    friendlyName: 'Get Birds',
+    friendlyName: 'count Birds',
   
   
-    description: 'List/Filter birds.',
-  
-  
-    extendedDescription:
-  `This lists birds, according to filters (if given).`,
+    description: 'Return a count of birds',
   
   
     inputs: {
@@ -234,9 +230,6 @@ module.exports = {
       if(inputs.incDaysFrom) query.incDays = {'>=': inputs.incDaysFrom};
       if(inputs.incDaysTo) query.incDays['<='] = inputs.incDaysTo;
 
-      if(inputs.isBreeder != undefined) query.isBreeder = inputs.isBreeder;
-
-
       let finalQuery = {where: query}
       if(inputs.skip) finalQuery.skip = inputs.skip;
       if(inputs.limit) finalQuery.limit = inputs.limit;
@@ -245,29 +238,7 @@ module.exports = {
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
 
       
-      var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
-
-      // TODO this is horribly inefficient
-
-      if(inputs.includeConditions || inputs.includeNestsites || inputs.includeVisits) {
-        for(nextBird of result) {
-          if(inputs.includeConditions) {
-            var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
-            nextBird.conditionHistory = conditionHistory;
-          }
-
-          if(inputs.includeNestsites) {
-            var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
-            nextBird.nestsiteHistory = nestsiteHistory;
-            console.log(nestsiteHistory);
-          }
-
-          if(inputs.includeVisits) {
-            var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
-            nextBird.visitHistory = visitHistory;
-          }
-        }
-      }
+      var result = await Bird.count(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
 
       return result;
     }

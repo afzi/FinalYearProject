@@ -42,7 +42,6 @@ module.exports = {
   
     },
   
-  
     fn: async function (inputs) {
         let query = {}
 

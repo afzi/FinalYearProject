@@ -28,7 +28,7 @@ module.exports = {
         //     throw {redirect: '/'};
         //   }
 
-        return { title: 'Get Bird' };
+        return { title: 'Birds Table' };
 
     }
 

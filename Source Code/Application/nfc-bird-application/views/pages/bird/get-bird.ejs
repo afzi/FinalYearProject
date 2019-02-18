@@ -4,29 +4,33 @@
     <hr/>
     
     <div class="flex-container filterbar">
-    <div class="form-group">
-        <select class="pageSizeControl custom-select " v-model="pageSize">
-            <option disabled selected value>show entries</option>
-            <option value="5" >5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-        </select>
-    </div>
+
         <div class="form-group">
           <input id="birdName" class="form-control" type="text" v-model.trim.lazy="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
           <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
         </div>
+        
         <div class="form-group">
             <input id="studID" class="form-control" type="text" v-model.trim.lazy="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
             <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
         </div>
+
+
         <div class="form-group">
+         <select id="sex" class="form-control" type="text" v-model.trim.lazy="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
+                <option disabled selected value="">Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="unknown">Unknown</option>
+            </select>
+        </div>
+
+        <!-- <div class="form-group">
             <input id="sex" class="form-control" type="text" v-model.trim.lazy="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
             <autocomplete for="sex" action="getBird" params='{"limit": 3}' map="sex" is-async> </autocomplete>
-        </div>
+        </div> -->
+        
+
         <div class="form-group">
             <input id="fatherName" class="form-control" type="text" v-model.trim.lazy="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
             <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
@@ -38,16 +42,27 @@
         </div>
 
         <div class="form-group">
+            <select id="isBreeder" class="form-control" type="text" v-model.trim.lazy="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
+                    <option disabled selected value="">Breeder</option>
+                    <option value="0">No</option>
+                    <option value="1">yes</option>
+                    <option value="Unknown">Unknown</option>
+                </select>
+        </div>
+
+        <!-- <div class="form-group">
             <input id="isBreeder" class="form-control" type="text" v-model.trim.lazy="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
             <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
-        </div>
+        </div> -->
+
+
         <div class="form-group">
             <input id="currentNestSite" class="form-control" type="text" v-model.trim.lazy="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
             <autocomplete for="currentNestSite" action="getBird" params='{"limit": 3}' map="currentNestSite" is-async> </autocomplete>
         </div>
 
         <div class="form-group">
-            <button class="btn btn-secondary" @click="clearFilters">Clear</button>
+            <button class="btn btn-info" @click="clearFilters">Clear</button>
         </div>
       </div>
 
@@ -77,29 +92,49 @@
             <td>{{bird.motherName}}</td>
             <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
             <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
-            <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
-            <td>{{bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
-            <td>{{bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
+            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
+            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
+            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
         </tr>
     </tbody>
     </table>
+    <div class="flex-container paginateContainer">
+        <div>
+            <paginate
+                :page-count="Math.ceil(BirdCount / pageSize)"
+                :click-handler="pageClick"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination'"
+                :page-class="'page-item'"
+                :page-link-class="'page-link'"
+                :prev-class="'ignore page-item'"
+                :prev-link-class="'page-link'"
+                :next-class="'ignore page-item'"
+                :next-link-class="'page-link'"
+                :disabled-class="'ignore disabled'" >
+            </paginate>         
+        </div>
 
-    <paginate
-    :page-count="Math.ceil(BirdCount / pageSize)"
-    :click-handler="pageClick"
-    :prev-text="'Prev'"
-    :next-text="'Next'"
-    :container-class="'pagination'"
-    :page-class="'page-item'"
-    :page-link-class="'page-link'"
-    :prev-class="'ignore page-item'"
-    :prev-link-class="'page-link'"
-    :next-class="'ignore page-item'"
-    :next-link-class="'page-link'"
-    :disabled-class="'ignore disabled'"
->
-                
-</paginate>
+        <div>
+            Showing {{currentBirds.length}} entries out of {{BirdCount}}
+        </div>
+
+        <div>
+            Show 
+                <select class="pageSizeControl custom-select" v-model="pageSize">
+                        <option value="5" >5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option selected value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                </select> entries per page
+        </div>
+    </div>
+
+
+
 
 <router-view></router-view>
 
@@ -169,7 +204,7 @@
                     </tr>
                     <tr>
                         <td>Condition</td>
-                        <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
+                        <td style="text-align:right">{{currentBird.coconditionHistory && currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
                     </tr>
 
                     <tr>
@@ -267,11 +302,11 @@
                                     </tr>
                                     <tr>
                                         <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Previous Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
+                                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
                                     </tr>
                                     <tr>
                                         <td>Notes</td>

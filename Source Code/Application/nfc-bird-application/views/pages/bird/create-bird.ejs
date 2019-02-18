@@ -1,7 +1,6 @@
  <div id="create-bird">
 <!-- this    -->
     <div class="container" v-if="!cloudSuccess">
-        <h1 class="text-center">Register New Bird</h1>
         <div class="create-bird-form">
         <hr/>
         <ajax-form action="createBird" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm" autocomplete="off">
