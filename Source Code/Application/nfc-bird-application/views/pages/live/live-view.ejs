@@ -1,9 +1,21 @@
 <div id="live-view" style="padding: 60px 0;">
     <div class="container" v-if="!cloudSuccess" style="padding-top: 25px;">
 
-        <input id="searchText" type="text" v-model="search" class="form-control" placeholder="Search" />
-        <autocomplete for="searchText" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+        <table style="margin-bottom:10px;">
+            <tr>
+                <td style="width:200px;"><input id="searchText" type="text" v-model="search" class="form-control" placeholder="Search" /></td>
+                <td style="width:100px; white-space: nowrap; padding-left:10px;">
+                    Show <select class="pageSizeControl custom-select" v-model="pageSize">
+                                <option value="5" >5</option>
+                                <option value="10">10</option>
+                                <option selected value="15">15</option>
+                                <option value="10000">All</option>
+                            </select> entries
+                </td>
+                <td style="width:100px; white-space: nowrap; padding-left:300px;">TIME FILTER PLACEHOLDER</td>
+            </tr>
 
+        </table>
 
 
 
@@ -19,7 +31,7 @@
             </thead>
 
             <tbody role="rowgroup">
-                <tr style="cursor:pointer;" class="clickable-row" v-for="{visit} in filteredVisitData(search)" @click="clickOpenExampleModalButton3(index)">
+                <tr style="cursor:pointer;" class="clickable-row" v-for="visit in visitData" @click="clickOpenExampleModalButton3(index)">
                     <td class="font-weight-bold" style="background-color:#D6D6D6">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>

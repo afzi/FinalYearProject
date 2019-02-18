@@ -7,9 +7,11 @@ parasails.registerPage('live-view', {
 
         visitData: [],
 
+        filteredData: [],
+
         visitCount: 0,
 
-        pageSize: 20,
+        pageSize: 15,
 
         currentPage: 1,
 
@@ -26,6 +28,13 @@ parasails.registerPage('live-view', {
     mounted: async function() {
         this.visitData = await Cloud.liveView.with({ offset: 0, numOfRows: this.pageSize });
     },
+    watch: {
+        // whenever one of the filters changes, this function will run
+        pageSize: function(_, _) {
+            this.refresh();
+        }
+
+    },
 
     //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
@@ -39,11 +48,13 @@ parasails.registerPage('live-view', {
 
         filteredVisitData: async function(search) {
             this.visitData = await Cloud.liveView.with({ offset: 0, numOfRows: this.pageSize });
-            console.log(this.visitData);
-            console.log("hello");
-            console.log(this.visitData.filter(visit => visit.birdName.indexOf(search) > -1));
-            return this.visitData.filter(visit => visit.birdName.indexOf(search) > -1)
-        }
+            this.filteredData = this.visitData.filter(visit => visit.birdName.indexOf(search) > -1);
+        },
+
+        refresh: async function() {
+
+            this.visitData = await Cloud.liveView.with({ offset: (this.currentPage - 1) * this.pageSize, limit: numOfRows.pageSize });
+        },
 
     }
 });
