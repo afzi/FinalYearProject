@@ -182,20 +182,7 @@ module.exports = {
           required: false,
           type: 'boolean',
           description: 'Whether to include the nest site history of the bird'
-        },
-
-        skip: {
-            required: false,
-            type: 'number',
-            description: 'How many records to skip (if used in pagination - where does the page begin)'
-        },
-
-        limit: {
-            required: false,
-            type: 'number',
-            description: 'How many records to return (if used in pagination - what is the page size)'
         }
-  
     },
   
   
@@ -231,14 +218,12 @@ module.exports = {
       if(inputs.incDaysTo) query.incDays['<='] = inputs.incDaysTo;
 
       let finalQuery = {where: query}
-      if(inputs.skip) finalQuery.skip = inputs.skip;
-      if(inputs.limit) finalQuery.limit = inputs.limit;
 
     //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
 
       
-      var result = await Bird.count(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
+      var result = await Bird.count(finalQuery);
 
       return result;
     }

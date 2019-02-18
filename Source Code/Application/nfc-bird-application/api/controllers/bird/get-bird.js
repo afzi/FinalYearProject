@@ -167,7 +167,7 @@ module.exports = {
         currentCondition: { // TODO
             required: false,
             type: 'string',
-            description: 'The current condition of the bird'
+          description: 'The current condition of the bird'
         },
 
         includeConditions: {
