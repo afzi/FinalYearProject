@@ -5,13 +5,15 @@ parasails.registerPage('live-view', {
     data: {
         cloudSuccess: false,
 
-        visitData: {},
+        visitData: [],
 
         visitCount: 0,
 
         pageSize: 20,
 
-        currentPage: 1
+        currentPage: 1,
+
+        search: ''
     },
 
     //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -34,6 +36,14 @@ parasails.registerPage('live-view', {
             //this.visitCount = this.visitData.visitCount;
             this.currentPage = pageNum;
         },
+
+        filteredVisitData: async function(search) {
+            this.visitData = await Cloud.liveView.with({ offset: 0, numOfRows: this.pageSize });
+            console.log(this.visitData);
+            console.log("hello");
+            console.log(this.visitData.filter(visit => visit.birdName.indexOf(search) > -1));
+            return this.visitData.filter(visit => visit.birdName.indexOf(search) > -1)
+        }
 
     }
 });

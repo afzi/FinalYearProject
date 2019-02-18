@@ -1,5 +1,13 @@
 <div id="live-view" style="padding: 60px 0;">
     <div class="container" v-if="!cloudSuccess" style="padding-top: 25px;">
+
+        <input id="searchText" type="text" v-model="search" class="form-control" placeholder="Search" />
+        <autocomplete for="searchText" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+
+
+
+
+
         <table id="live-visits" border="1" class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
                 <tr class="font-weight-bold" style="background-color: #83cbd7" role="row">
@@ -11,12 +19,7 @@
             </thead>
 
             <tbody role="rowgroup">
-                <tr style="cursor:pointer;" class="clickable-row" v-for="visit in visitData" onclick='
-                $(document).ready(function($) {
-                    $(".clickable-row").click(function() {
-                        window.document.location = "/birds"; // TODO: Make this link to single bird modal
-                    });
-                });'>
+                <tr style="cursor:pointer;" class="clickable-row" v-for="{visit} in filteredVisitData(search)" @click="clickOpenExampleModalButton3(index)">
                     <td class="font-weight-bold" style="background-color:#D6D6D6">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>
@@ -26,21 +29,10 @@
         </table>
 
 
-        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed" style = " height: 65px; width:100%; bottom:0;">
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed" style=" height: 65px; width:100%; bottom:0;">
             <!-- <a class="navbar-brand abs"> -->
-            <paginate
-            :page-count="Math.ceil(visitCount / pageSize)" 
-            :click-handler="pageClick" 
-            :prev-text="'&nbsp Prev'" 
-            :next-text="'Next &nbsp'" 
-            :container-class="'pagination'" 
-            :page-class="'page-item'" 
-            :page-link-class="'page-link'" 
-            :prev-class="'ignore page-item'"
-            :prev-link-class="'page-link'" 
-            :next-class="'ignore page-item'" 
-            :next-link-class="'page-link'" 
-            :disabled-class="'ignore disabled'">
+            <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
             </paginate>
             <!-- </a> -->
         </footer>

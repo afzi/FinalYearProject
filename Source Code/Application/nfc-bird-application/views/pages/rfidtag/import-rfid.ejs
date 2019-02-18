@@ -1,55 +1,43 @@
-<div id="import-rfid" v-cloak>
+<div id="import-rfid" style="padding: 60px 0;">
 
-  <div class="container" v-if="!cloudSuccess">
-    <table id="all-rfids" border="1">
-        <thead role="rowgroup">
-            <tr role="row">
-                <th role="columnheader"  style="width: 10%">Printed Ring ID</th>
-                <th role="columnheader"  style="width: 10%">Ring colour</th>
-                <th role="columnheader"  style="width: 20%">System ID</th>
-                <th role="columnheader"  style="width: 10%">Assigned</th>
-                <th role="columnheader"  style="width: 10%">Assigned to Bird</th>
-                <th role="columnheader"  style="width: 10%">Assignment Date</th>
-                <th role="columnheader"  style="width: 10%">Actions</th>
-            </tr>
-        </thead>
+    <div class="container" v-if="!cloudSuccess">
+        <table id="all-rfids" border="1">
+            <thead role="rowgroup">
+                <tr role="row">
+                    <th role="columnheader" style="width: 10%">Printed Ring ID</th>
+                    <th role="columnheader" style="width: 10%">Ring colour</th>
+                    <th role="columnheader" style="width: 20%">System ID</th>
+                    <th role="columnheader" style="width: 10%">Assigned</th>
+                    <th role="columnheader" style="width: 10%">Assigned to Bird</th>
+                    <th role="columnheader" style="width: 10%">Assignment Date</th>
+                    <th role="columnheader" style="width: 10%">Actions</th>
+                </tr>
+            </thead>
 
-        <tbody role="rowgroup" id="rfid-table-body">
-            <tr v-for="(rfidtag, index) in currentRfids">
-                <td>{{rfidtag.nfcRFID}}</td>
-                <td>{{rfidtag.colour}}</td>
-                <td>{{rfidtag.nfcRFIDInternal}}</td>
-                <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
-                <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
-                <td>{{new Date(rfidtag.updatedAt).toLocaleDateString('en-GB')}}</td>
-                <td><i v-if="!rfidtag.birdID" class="fas fa-trash-alt" @click="promptDeleteRing(index)"></i></td>
-            </tr>
-        </tbody>
+            <tbody role="rowgroup" id="rfid-table-body">
+                <tr v-for="(rfidtag, index) in currentRfids">
+                    <td>{{rfidtag.nfcRFID}}</td>
+                    <td>{{rfidtag.colour}}</td>
+                    <td>{{rfidtag.nfcRFIDInternal}}</td>
+                    <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
+                    <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
+                    <td>{{new Date(rfidtag.updatedAt).toLocaleDateString('en-GB')}}</td>
+                    <td><i v-if="!rfidtag.birdID" class="fas fa-trash-alt" @click="promptDeleteRing(index)"></i></td>
+                </tr>
+            </tbody>
         </table>
         <div class="flex-container paginateContainer">
-                <div>
-                    <paginate
-                        :page-count="Math.ceil(rfidCount / pageSize)"
-                        :click-handler="pageClick"
-                        :prev-text="'Prev'"
-                        :next-text="'Next'"
-                        :container-class="'pagination'"
-                        :page-class="'page-item'"
-                        :page-link-class="'page-link'"
-                        :prev-class="'ignore page-item'"
-                        :prev-link-class="'page-link'"
-                        :next-class="'ignore page-item'"
-                        :next-link-class="'page-link'"
-                        :disabled-class="'ignore disabled'"
-                    >
-                    </paginate>
-                </div>
-                <div>
-                    Showing {{currentRfids.length}} entries out of {{rfidCount}}
-                </div>
-                <div>
-                    Show 
-                            <select class="pageSizeControl custom-select" v-model="pageSize">
+            <div>
+                <paginate :page-count="Math.ceil(rfidCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                    :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                </paginate>
+            </div>
+            <div>
+                Showing {{currentRfids.length}} entries out of {{rfidCount}}
+            </div>
+            <div>
+                Show
+                <select class="pageSizeControl custom-select" v-model="pageSize">
                                     <option value="5" >5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
@@ -57,29 +45,29 @@
                                     <option value="25">25</option>
                                     <option value="30">30</option>
                                 </select> entries per page
-                            </div>
-                </div>
-    <div class="import-rfid-form">
+            </div>
+        </div>
+        <div class="import-rfid-form">
             <h1 class="text-center">Import RFID tags from CSV</h1>
-    <hr/>
-    <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
-        
-        <div class="form-group">
-            <!-- <label for="password">Stud ID</label> -->
-            <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="parseCsv" accept=".csv" focus-first>
-            <div class="invalid-feedback" v-if="formErrors.csvUpload">Please upload a valid file. See tooltip for help.</div>
-            <div class="valid-feedback" v-else-if="csvValid">File is valid, you may proceed</div>
-        </div>
-    
-        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
-        <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
+            <hr/>
+            <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
 
-        <div class="form-group">
-            <ajax-button type="submit" :syncing="syncing" :disabled="!csvValid" class="btn-dark btn-lg btn-block">Import</ajax-button>
+                <div class="form-group">
+                    <!-- <label for="password">Stud ID</label> -->
+                    <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="parseCsv" accept=".csv" focus-first>
+                    <div class="invalid-feedback" v-if="formErrors.csvUpload">Please upload a valid file. See tooltip for help.</div>
+                    <div class="valid-feedback" v-else-if="csvValid">File is valid, you may proceed</div>
+                </div>
+
+                <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+                <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
+
+                <div class="form-group">
+                    <ajax-button type="submit" :syncing="syncing" :disabled="!csvValid" class="btn-dark btn-lg btn-block">Import</ajax-button>
+                </div>
+            </ajax-form>
         </div>
-    </ajax-form>
     </div>
-</div>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
