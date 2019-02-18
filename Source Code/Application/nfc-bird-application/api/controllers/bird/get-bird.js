@@ -238,8 +238,8 @@ module.exports = {
 
 
       let finalQuery = {where: query}
-      if(inputs.skip) finalQuery.skip = inputs.skip;
-      if(inputs.limit) finalQuery.limit = inputs.limit;
+      // if(inputs.skip) finalQuery.skip = inputs.skip;
+      // if(inputs.limit) finalQuery.limit = inputs.limit;
 
     //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
@@ -247,29 +247,60 @@ module.exports = {
       
       var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
 
-      // TODO this is horribly inefficient
+      var finalResult = [];
 
       if(inputs.includeConditions || inputs.includeNestsites || inputs.includeVisits) {
-        for(nextBird of result) {
+        for(let nextBird of result) {
+          var allConditionsMatch = true;
+
           if(inputs.includeConditions) {
             var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
-            nextBird.conditionHistory = conditionHistory;
+            if(inputs.currentCondition) {
+              if(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition)) {
+                nextBird.conditionHistory = conditionHistory;
+              } else {
+                allConditionsMatch = false;
+              }
+            } else {
+              nextBird.conditionHistory = conditionHistory;
+            }
           }
 
-          if(inputs.includeNestsites) {
+          if(inputs.includeNestsites && allConditionsMatch) {
             var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
-            nextBird.nestsiteHistory = nestsiteHistory;
-            console.log(nestsiteHistory);
+            if(inputs.currentNestSite) {
+              if(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite)) {
+                nextBird.nestsiteHistory = nestsiteHistory;
+              } else {
+                allConditionsMatch = false;
+              }
+            } else {
+              nextBird.nestsiteHistory = nestsiteHistory;
+            }
           }
 
-          if(inputs.includeVisits) {
+          if(inputs.includeVisits && allConditionsMatch) {
             var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
             nextBird.visitHistory = visitHistory;
           }
+
+          if(allConditionsMatch) finalResult.push(nextBird);
         }
+      } else {
+        finalResult = result;
       }
 
-      return result;
+      if(inputs.skip) {
+          finalResult = finalResult.slice(inputs.skip);
+      }
+
+      if(inputs.limit) {
+        finalResult = finalResult.slice(0, inputs.limit);
+      }
+
+      // TODO rewrite this whole fucking controller to be more efficient
+
+      return finalResult;
     }
   
   };

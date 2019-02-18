@@ -115,7 +115,7 @@ parasails.registerComponent('autocomplete', {
             // we want to make sure we only do this when it's an async request
             if (this.isAsync) {
                 this.results = value;
-                if(this.results && this.results.length) {
+                if(this.results && this.results.length > 0) {
                   this.isOpen = true;
                 } else {
                   this.isOpen = false;

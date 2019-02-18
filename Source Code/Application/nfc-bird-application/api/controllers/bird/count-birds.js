@@ -155,33 +155,15 @@ module.exports = {
         description: 'Researcher notes.'
       },
 
-      currentNestSite: { // TODO
+      currentNestSite: {
         required: false,
         type: 'string',
         description: 'Where is the bird currently nesting'      },
 
-        currentCondition: { // TODO
+        currentCondition: {
             required: false,
             type: 'string',
             description: 'The current condition of the bird'
-        },
-
-        includeConditions: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the condition history of the bird'
-        },
-
-        includeVisits: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the visit history of the bird'
-        },
-
-        includeNestsites: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the nest site history of the bird'
         }
     },
   
@@ -195,7 +177,7 @@ module.exports = {
   
   
     fn: async function (inputs) {
-      console.log("Received request to list/filter birds")
+      console.debug("Received request to list/filter birds")
 
       let query = {}
       if(inputs.studId) query.studId = {'contains': inputs.studId}
@@ -219,13 +201,44 @@ module.exports = {
 
       let finalQuery = {where: query}
 
-    //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
-    //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+      if(!inputs.currentNestSite && !inputs.currentCondition) {
+        var result = await Bird.count(finalQuery);
 
+        return result;
+      } else {
+        var result = await Bird.find(finalQuery);
+
+        var finalResult = [];
+
+        for(let nextBird of result) {
+          var allConditionsMatch = true;
+          
+            if(inputs.currentCondition) {
+              var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+              if(!(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition))) {
+                allConditionsMatch = false;
+              }
+            }
+          
+
+            if(inputs.currentNestSite && allConditionsMatch) {
+              var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
+              if(!(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite))) {
+                allConditionsMatch = false;
+              }
+            } 
+
+          if(allConditionsMatch) finalResult.push(nextBird);
+        }
+
+      // TODO rewrite this whole fucking controller to be more efficient
+
+
+        return finalResult.length;
+        
+      }
       
-      var result = await Bird.count(finalQuery);
 
-      return result;
     }
   
   };

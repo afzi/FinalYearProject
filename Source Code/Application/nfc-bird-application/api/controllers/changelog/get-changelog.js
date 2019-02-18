@@ -76,17 +76,30 @@ module.exports = {
         if (inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
         let finalQuery = { where: query }
-        if (inputs.skip) finalQuery.skip = inputs.skip;
-        if (inputs.limit) finalQuery.limit = inputs.limit;
         finalQuery.sort = 'createdAt DESC';
 
         var result = await Changelog.find(finalQuery).populate('user');
 
-        if (inputs.username) {
-            result = result.filter(nextResult => nextResult.user.username == inputs.username);
-        } // TODO don't do this as it fucks up pagination
+        var finalResult = [];
 
-        return result;
+        if (inputs.username) {
+            finalResult = result.filter(nextResult => nextResult.user.username === inputs.username);
+        } else {
+            finalResult = result;
+        }
+
+        if(inputs.skip) {
+            finalResult = finalResult.slice(inputs.skip);
+        }
+  
+        if(inputs.limit) {
+          finalResult = finalResult.slice(0, inputs.limit);
+        }
+
+      // TODO rewrite this whole fucking controller to be more efficient
+
+
+        return finalResult;
     }
 
 };
