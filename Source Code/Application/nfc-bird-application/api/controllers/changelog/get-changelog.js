@@ -1,46 +1,45 @@
 module.exports = {
 
     friendlyName: 'Get Changelog',
-  
-  
+
+
     description: 'List/Filter changelog.',
-  
-  
-    extendedDescription:
-  `This retrieves log entries, according to filters (if given).`,
-  
-  
+
+
+    extendedDescription: `This retrieves log entries, according to filters (if given).`,
+
+
     inputs: {
-  
-      username: {
-        required: false,
-        type: 'string',
-        description: 'The username'
-      },
 
-      action: {
-        required: false,
-        type: 'string',
-        description: 'The action (or part of it)'
-      },
-  
-      dateFrom:  {
-        required: false,
-        type: 'number',
-        description: 'The starting date from which to filter logs',
-      },
+        username: {
+            required: false,
+            type: 'string',
+            description: 'The username'
+        },
 
-      dateTo: {
-        required: false,
-        type: 'string',
-        description: 'The end date to which to filter logs',
-      },
+        action: {
+            required: false,
+            type: 'string',
+            description: 'The action (or part of it)'
+        },
 
-      data: {
-        required: false,
-        type: 'string',
-        description: 'The data (or part of it).'
-      },
+        dateFrom: {
+            required: false,
+            type: 'number',
+            description: 'The starting date from which to filter logs',
+        },
+
+        dateTo: {
+            required: false,
+            type: 'string',
+            description: 'The end date to which to filter logs',
+        },
+
+        data: {
+            required: false,
+            type: 'string',
+            description: 'The data (or part of it).'
+        },
 
 
         skip: {
@@ -54,41 +53,40 @@ module.exports = {
             type: 'number',
             description: 'How many records to return (if used in pagination - what is the page size)'
         }
-  
+
     },
-  
-  
+
+
     exits: {
-  
-      success: {
-        description: 'All good dawg.'
-      }
+
+        success: {
+            description: 'All good dawg.'
+        }
     },
-  
-  
-    fn: async function (inputs) {
-      console.log("Received request to list/filter birds")
 
-      let query = {}
-      if(inputs.data) query.data = {'contains': inputs.data}
-      if(inputs.action) query.action = {'contains': inputs.action}
-      
-      if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
-      if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
-      let finalQuery = {where: query}
-      if(inputs.skip) finalQuery.skip = inputs.skip;
-      if(inputs.limit) finalQuery.limit = inputs.limit;
-      finalQuery.sort = 'createdAt DESC';
+    fn: async function(inputs) {
+        console.log("Received request to list/filter birds")
 
-      var result = await Changelog.find(finalQuery).populate('user');
+        let query = {}
+        if (inputs.data) query.data = { 'contains': inputs.data }
+        if (inputs.action) query.action = { 'contains': inputs.action }
 
-      if(inputs.username) {
-        result = result.filter(nextResult => nextResult.user.username == inputs.username);
-      }
+        if (inputs.dateFrom) query.createdAt = { '>=': inputs.dateFrom }
+        if (inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
-      return result;
+        let finalQuery = { where: query }
+        if (inputs.skip) finalQuery.skip = inputs.skip;
+        if (inputs.limit) finalQuery.limit = inputs.limit;
+        finalQuery.sort = 'createdAt DESC';
+
+        var result = await Changelog.find(finalQuery).populate('user');
+
+        if (inputs.username) {
+            result = result.filter(nextResult => nextResult.user.username == inputs.username);
+        } // TODO don't do this as it fucks up pagination
+
+        return result;
     }
-  
-  };
-  
+
+};

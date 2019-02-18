@@ -6,6 +6,12 @@ module.exports = {
     description: 'gets information on birds that have recently visited',
 
     inputs: {
+        searchTerm: {
+            required: false,
+            type: 'string',
+            description: 'term to search on',
+            default: ""
+        },
         offset: {
             required: false,
             type: 'number',
@@ -39,11 +45,12 @@ module.exports = {
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
             ON tags.nfcRFIDInternal = visits.nfcRFID
-            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE())
-            ORDER BY visits.createdAt DESC
-            LIMIT $1 OFFSET $2;`;
+            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE()) `;
+        if (inputs.searchTerm != null) { LIVEVIEWQUERY += " AND birds.birdName LIKE $1 "; }
+        LIVEVIEWQUERY += `ORDER BY visits.createdAt DESC
+            LIMIT $2 OFFSET $3;`;
 
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [inputs.numOfRows, inputs.offset]);
+        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, ["%" + inputs.searchTerm + "%", inputs.numOfRows, inputs.offset]);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
@@ -52,7 +59,6 @@ module.exports = {
             parsedResult.push(row)
         }
         parsedResult.visitCount = rows.length;
-
         return exits.success(parsedResult);
     }
 };
