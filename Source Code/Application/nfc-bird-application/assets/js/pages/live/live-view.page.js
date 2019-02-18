@@ -17,7 +17,7 @@ parasails.registerPage('live-view', {
 
         timeFrom: '00:00',
 
-        timeTo: '',
+        timeTo: '23:59',
 
         timepickerOptions: {
             icons: {
@@ -32,10 +32,9 @@ parasails.registerPage('live-view', {
                 close: 'far fa-times-circle'
             },
             format: 'HH:mm',
-            maxDate: new Date().getTime(),
             minDate: new Date().setHours(0, 0, 0, 0),
-            showTodayButton: true,
-            showClear: true,
+            showTodayButton: false,
+            showClear: false,
             showClose: true,
         }
     },
@@ -48,7 +47,7 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.visitData = await Cloud.liveView.with({ offset: 0, numOfRows: this.pageSize });
+        this.visitData = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
     },
     watch: {
         // whenever one of the filters changes, this function will run
@@ -56,6 +55,12 @@ parasails.registerPage('live-view', {
             this.refresh();
         },
         search: function(_, _) {
+            this.refresh();
+        },
+        timeFrom: function(_, _) {
+            this.refresh();
+        },
+        timeTo: function(_, _) {
             this.refresh();
         }
 
@@ -81,14 +86,24 @@ parasails.registerPage('live-view', {
 
         refresh: async function() {
             if (this.search == null || this.search == "") {
-                this.visitData = await Cloud.liveView.with({ offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
             } else {
-                this.visitData = await Cloud.liveView.with({ searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
             }
+            // if(this.search == null && (this.timeFrom == "00:00" && this.timeTo == "23:59")){
+            //     this.visitCount = await Visit.count();
+            // } else if(fromPageClick){
+            //     this.visitCount = await Visit.count();
+            // }
+            // if(vCount == -1){
+            //     var temp = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: Number.MAX_SAFE_INTEGER });
+            //     this.visitCount = temp.length;}
         },
 
         clearFilters: async function() {
             this.search = "";
+            this.timeFrom="00:00";
+            this.timeTo="23:59";
             this.refresh();
         },
 

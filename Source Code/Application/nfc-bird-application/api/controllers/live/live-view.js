@@ -22,6 +22,16 @@ module.exports = {
             required: false,
             type: 'number',
             description: 'How many records to return (if used in pagination - what is the page size)'
+        },
+        timeFrom:{
+            required:false,
+            type:'string',
+            description:'Time from which visits should be displayed for that date'
+        },
+        timeTo:{
+            required:false,
+            type:'string',
+            description:'Time to which visits should be displayed for that date'
         }
     },
 
@@ -45,12 +55,13 @@ module.exports = {
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
             ON tags.nfcRFIDInternal = visits.nfcRFID
-            WHERE visits.createdAt >= UNIX_TIMESTAMP(CURDATE()) `;
-        if (inputs.searchTerm != null) { LIVEVIEWQUERY += " AND birds.birdName LIKE $1 "; }
+            WHERE visits.createdAt >= UNIX_TIMESTAMP(concat(curdate(), $1))
+            AND visits.createdAt <= UNIX_TIMESTAMP(concat(curdate(), $2)) `;
+        if (inputs.searchTerm != null) { LIVEVIEWQUERY += " AND birds.birdName LIKE $3 "; }
         LIVEVIEWQUERY += `ORDER BY visits.createdAt DESC
-            LIMIT $2 OFFSET $3;`;
+            LIMIT $4 OFFSET $5;`;
 
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, ["%" + inputs.searchTerm + "%", inputs.numOfRows, inputs.offset]);
+        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [" "+inputs.timeFrom+":00"," "+inputs.timeTo+":00","%" + inputs.searchTerm + "%", inputs.numOfRows, inputs.offset]);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
@@ -58,7 +69,6 @@ module.exports = {
             row.createdAt = TimeUtil.unixToDate(row.createdAt);
             parsedResult.push(row)
         }
-        parsedResult.visitCount = rows.length;
         return exits.success(parsedResult);
     }
 };
