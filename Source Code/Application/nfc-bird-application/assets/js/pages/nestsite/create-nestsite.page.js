@@ -20,7 +20,7 @@ parasails.registerPage('create-nestsite', {
 
     nestsiteCount: 0,
 
-    pageSize: 20,
+    pageSize: 15,
 
     currentPage: 1
   },

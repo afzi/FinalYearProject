@@ -1,23 +1,34 @@
-<div id="import-rfid" style="padding: 60px 0;">
+<div id="import-rfid">
 
     <div class="container" v-if="!cloudSuccess">
-        <table id="all-rfids" border="1">
+            <div class="flex-container filterbar" style="white-space: nowrap;">
+                                        <div class="form-group col-xs-6 ">
+                        <span style="padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
+                                    <option value="5" >5</option>
+                                    <option value="10">10</option>
+                                    <option selected value="15">15</option>
+                                    <option value="10000">All</option>
+                                </select> <span style="padding-right:5px">entries</span>
+                    </div>
+                </div>
+
+        <table id="all-rfids" border="1"  class="table table-bordered table-condensed">
             <thead role="rowgroup">
-                <tr role="row">
-                    <th role="columnheader" style="width: 10%">Printed Ring ID</th>
-                    <th role="columnheader" style="width: 10%">Ring colour</th>
-                    <th role="columnheader" style="width: 20%">System ID</th>
-                    <th role="columnheader" style="width: 10%">Assigned</th>
-                    <th role="columnheader" style="width: 10%">Assigned to Bird</th>
-                    <th role="columnheader" style="width: 10%">Assignment Date</th>
-                    <th role="columnheader" style="width: 10%">Actions</th>
+                <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
+                    <th role="columnheader">Printed Ring ID</th>
+                    <th role="columnheader">Ring colour</th>
+                    <th role="columnheader">System ID</th>
+                    <th role="columnheader">Assigned</th>
+                    <th role="columnheader">Assigned to Bird</th>
+                    <th role="columnheader">Assignment Date</th>
+                    <th role="columnheader">Actions</th>
                 </tr>
             </thead>
 
             <tbody role="rowgroup" id="rfid-table-body">
                 <tr v-for="(rfidtag, index) in currentRfids">
-                    <td>{{rfidtag.nfcRFID}}</td>
-                    <td>{{rfidtag.colour}}</td>
+                    <td class="birdJustifyColumn">{{rfidtag.nfcRFID}}</td>
+                    <td class="birdJustifyColumn">{{rfidtag.colour}}</td>
                     <td>{{rfidtag.nfcRFIDInternal}}</td>
                     <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                     <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
@@ -26,27 +37,18 @@
                 </tr>
             </tbody>
         </table>
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
         <div class="flex-container paginateContainer">
             <div>
                 <paginate :page-count="Math.ceil(rfidCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                     :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                 </paginate>
             </div>
-            <div>
+            <div style="color:#fff;">
                 Showing {{currentRfids.length}} entries out of {{rfidCount}}
             </div>
-            <div>
-                Show
-                <select class="pageSizeControl custom-select" v-model="pageSize">
-                                    <option value="5" >5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option selected value="20">20</option>
-                                    <option value="25">25</option>
-                                    <option value="30">30</option>
-                                </select> entries per page
-            </div>
         </div>
+    </footer>
         <div class="import-rfid-form">
             <h1 class="text-center">Import RFID tags from CSV</h1>
             <hr/>
@@ -62,8 +64,8 @@
                 <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
                 <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
 
-                <div class="form-group">
-                    <ajax-button type="submit" :syncing="syncing" :disabled="!csvValid" class="btn-dark btn-lg btn-block">Import</ajax-button>
+                 <div class="form-group"> <!--removed :disabled="!csvValid" -->
+                    <ajax-button type="submit" :syncing="syncing"  class="btn-dark btn-lg btn-block">Import</ajax-button>
                 </div>
             </ajax-form>
         </div>

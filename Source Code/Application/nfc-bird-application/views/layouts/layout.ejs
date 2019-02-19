@@ -63,7 +63,7 @@
 
     <body>
         <div id="page-wrap">
-            <header id="page-header" class="navbar text-center navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed" style = "width:100%; top:0; height: 65px;">
+            <header id="page-header" class="navbar text-center navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed headernav">
 
                 <!-- <a class="navbar-brand mr-0" href="/"><img class="logo" alt="NEW_APP_NAME logo" src="/images/logo.png"/></a> -->
 
@@ -104,36 +104,17 @@
                                 <a class="dropdown-item" href="/logout">Log out</a>
                             </div>
                         </div>
-
-
-
-                        <!-- Only in mobile nav -->
-                        <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account">Account Settings</a>
-                        <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/logout">Sign out</a>
                         <% } else { %>
                             <!-- LOGGED-OUT NAVIGATION -->
                             <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/faq">FAQ</a>
-                            <a href="#"></a><a href="#"></a>
-                            <!-- <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/login">Log in please</a> -->
-                            <!-- Only in desktop nav -->
-                            <!-- <div class="form-inline d-none ml-2 d-md-block">
-                                <a class="btn btn-outline-info" href="/signup">Sign up</a>
-                            </div> -->
-                            <!-- Only in mobile nav -->
-                            <!-- <a class="nav-item nav-link text-info ml-2 d-block d-md-none" href="/signup">Sign up</a> -->
                             <% } %>
                 </div>
             </header>
 
-            <%- body %>
-
-                <!-- <footer id="page-footer" class="navbar navbar-dark bg-dark justify-content-between flex-row-reverse">
-                    <div class="nav">
-                        <% if(me) { %>
-                            <small class="nav-item"><a class="nav-link text-info" href="/logout">Sign out</a></small>
-                            <% } %>
-                    </div>
-                </footer> -->
+            <div class="bodypad">
+                <%- body %>
+            </div>
+            
         </div>
         </div>
 
