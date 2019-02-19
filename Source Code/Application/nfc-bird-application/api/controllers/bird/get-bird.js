@@ -176,6 +176,12 @@ module.exports = {
           description: 'Whether to include the condition history of the bird'
         },
 
+        isBreeder: {
+          required: false,
+          type: 'boolean',
+          description: 'Whether th ebird is breeder or not'
+        },
+
         includeVisits: {
           required: false,
           type: 'boolean',
