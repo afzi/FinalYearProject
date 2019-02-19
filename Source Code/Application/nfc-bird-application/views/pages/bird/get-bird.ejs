@@ -1,234 +1,221 @@
 <div id="get-bird">
-<div class="container" v-if="!cloudSuccess">
-    <h1 class="text-center">Birds Table </h1>
-    <hr/>
-    
-    <div class="flex-container filterbar">
+    <div class="container" v-if="!cloudSuccess">
+        <h1 class="text-center">Birds Table </h1>
+        <hr/>
 
-        <div class="form-group">
-          <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
-          <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-        </div>
-        
-        <div class="form-group">
-            <input id="studID" class="form-control" type="text" v-model.trim="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
-            <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
-        </div>
+        <div class="flex-container filterbar">
+                <div>
+                        Show
+                        <select class="pageSizeControl custom-select" v-model="pageSize">
+                                <option value="5" >5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option selected value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                        </select> entries per page
+                    </div>
+
+            <div class="form-group">
+                <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
+                <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+            </div>
+
+            <div class="form-group">
+                <input id="studID" class="form-control" type="text" v-model.trim="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
+                <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
+            </div>
 
 
-        <div class="form-group">
-         <select id="sex" class="form-control" type="text" v-model="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
+            <div class="form-group">
+                <select id="sex" class="form-control" type="text" v-model="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
                 <option disabled selected value="">Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="unknown">Unknown</option>
             </select>
-        </div>
+            </div>
 
-        <!-- <div class="form-group">
+            <!-- <div class="form-group">
             <input id="sex" class="form-control" type="text" v-model.trim="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
             <autocomplete for="sex" action="getBird" params='{"limit": 3}' map="sex" is-async> </autocomplete>
         </div> -->
-        
 
-        <div class="form-group">
-            <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
-            <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
-        </div>
 
-        <div class="form-group">
-            <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
-            <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async> </autocomplete>
-        </div>
+            <div class="form-group">
+                <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
+                <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
+            </div>
 
-        <div class="form-group">
-            <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
+            <div class="form-group">
+                <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
+                <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async> </autocomplete>
+            </div>
+
+            <div class="form-group">
+                <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
                     <option disabled selected value="">Breeder</option>
                     <option value="0">No</option>
                     <option value="1">yes</option>
                     <option value="Unknown">Unknown</option>
                 </select>
-        </div>
+            </div>
 
-        <!-- <div class="form-group">
+            <!-- <div class="form-group">
             <input id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
             <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
         </div> -->
 
 
-        <div class="form-group">
-            <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
-            <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async> </autocomplete>
+            <div class="form-group">
+                <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
+                <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async> </autocomplete>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-info" @click="clearFilters">Clear</button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <button class="btn btn-info" @click="clearFilters">Clear</button>
+        <table class="table table-bordered table-condensed table-hover">
+            <thead role="rowgroup">
+                <tr class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;" role="row">
+                    <th role="columnheader">Echo Name</th>
+                    <th role="columnheader">Bird ID</th>
+                    <th role="columnheader">Sex</th>
+                    <th role="columnheader">Male Parent</th>
+                    <th role="columnheader">Female Parent</th>
+                    <th role="columnheader">Age</th>
+                    <th role="columnheader">Breeder</th>
+                    <th role="columnheader">Current Nest</th>
+                    <th role="columnheader">Distance To Hopper</th>
+                    <th role="columnheader">Previous Nest</th>
+
+                </tr>
+            </thead>
+
+            <tbody role="rowgroup">
+                <tr style="cursor:pointer;" class="clickable-row" @click="clickOpenExampleModalButton3(index)" v-for="(bird, index) in currentBirds">
+                    <td class="birdJustifyColumn">{{bird.birdName}}</td>
+                    <td>{{bird.id}}</td>
+                    <td>{{bird.sex}}</td>
+                    <td>{{bird.fatherName}}</td>
+                    <td>{{bird.motherName}}</td>
+                    <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
+                    <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <div class="flex-container paginateContainer">
+            <div>
+                <paginate :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                    :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                </paginate>
+            </div>
         </div>
-      </div>
-
-<table class= "table table-striped">
-    <thead role="rowgroup">
-        <tr>
-            <th style="width: 10%">Echo Name</th>
-            <th style="width: 10%">Bird ID</th>
-            <th style="width: 10%">Sex</th>
-            <th style="width: 10%">Male Parent</th>
-            <th style="width: 10%">Female Parent</th>
-            <th style="width: 10%">Age</th>
-            <th style="width: 10%">Breeder</th>
-            <th style="width: 10%">Current Nest</th>
-            <th style="width: 10%">Distance To Hopper</th>
-            <th style="width: 10%">Previous Nest</th>
-
-        </tr>
-    </thead>
-
-    <tbody role="rowgroup" id="warnings-table-body">
-        <tr style="cursor:pointer;" class="clickable-row" @click="clickOpenExampleModalButton3(index)" v-for="(bird, index) in currentBirds">
-            <td>{{bird.birdName}}</td>
-            <td>{{bird.id}}</td>
-            <td>{{bird.sex}}</td>
-            <td>{{bird.fatherName}}</td>
-            <td>{{bird.motherName}}</td>
-            <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
-            <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
-            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
-            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
-            <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
-        </tr>
-    </tbody>
-    </table>
-    <div class="flex-container paginateContainer">
-        <div>
-            <paginate
-                :page-count="Math.ceil(BirdCount / pageSize)"
-                :click-handler="pageClick"
-                :prev-text="'Prev'"
-                :next-text="'Next'"
-                :container-class="'pagination'"
-                :page-class="'page-item'"
-                :page-link-class="'page-link'"
-                :prev-class="'ignore page-item'"
-                :prev-link-class="'page-link'"
-                :next-class="'ignore page-item'"
-                :next-link-class="'page-link'"
-                :disabled-class="'ignore disabled'" >
-            </paginate>         
-        </div>
-
-        <div>
-            Showing {{currentBirds.length}} entries out of {{BirdCount}}
-        </div>
-
-        <div>
-            Show 
-                <select class="pageSizeControl custom-select" v-model="pageSize">
-                        <option value="5" >5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option selected value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="30">30</option>
-                </select> entries per page
-        </div>
-    </div>
+        </footer>
+            <!-- <div>
+                Showing {{currentBirds.length}} entries out of {{BirdCount}}
+            </div> -->
 
 
+        <router-view></router-view>
 
+        <modal class="example-modal" v-if="modal==='example3'" @close="closeExampleModal3()" v-cloak>
+            <div class="modal-header">
+                <h2 class="modal-title">Bird view - {{currentBird.birdName}}</h2>
+                <hr/>
+                <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-<router-view></router-view>
+            <table class="table">
+                <tr>
+                    <td style="width:50%;">
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <h4>Main Information</h4>
+                                    </div>
+                                </div>
 
-<modal class="example-modal" v-if="modal==='example3'" @close="closeExampleModal3()" v-cloak>
-    <div class="modal-header">
-        <h2 class="modal-title">Bird view - {{currentBird.birdName}}</h2>
-        <hr/>
-        <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
-    </div>
-
-    <table class="table">
-    <tr>
-        <td style="width:50%;">
-        <div class="modal-body">
-            <div class="container">
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                    <h4>Main Information</h4>
-                    </div>
-                </div>
-
-            <div class="row mb-3">
-                <table style="max-width: 90% !important;" class="col-sm-6">
-                    <tr>
-                        <td>Echo Name</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
-                    </tr>
-                    <!-- <tr>
+                                <div class="row mb-3">
+                                    <table style="max-width: 90% !important;" class="col-sm-6">
+                                        <tr>
+                                            <td>Echo Name</td>
+                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        </tr>
+                                        <!-- <tr>
                         <td>Status</td>
                         <td style="text-align:right">{{currentBird.status }}</td>
                     </tr> -->
-                    <tr>
-                        <td>Last Seen Date</td>
-                        <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Age</td>
-                        <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
-                    </tr>
-                    <tr>
-                        <td>Bird ID</td>
-                        <td style="text-align:right">{{currentBird.id }}</td>
-                    </tr>
-                    <tr>
-                        <td>Stud ID</td>
-                        <td style="text-align:right">{{ currentBird.studID }}</td>
-                    </tr>
-                    <tr>
-                        <td>New Stud ID</td>
-                        <td style="text-align:right">{{currentBird.newStudID }}</td>
-                    </tr>
-                    <tr>
-                        <td>Right Ring ID</td>
-                        <td style="text-align:right">{{currentBird.rightRingID }}</td>
-                    </tr>
-                    <tr>
-                        <td>Left Ring ID</td>
-                        <td style="text-align:right">{{currentBird.leftRingID }}</td>
-                    </tr>
-                    <tr>
-                        <td>Group Name</td>
-                        <td style="text-align:right">{{currentBird.groupName }}</td>
-                    </tr>
-                    <tr>
-                        <td>Sex</td>
-                        <td style="text-align:right">{{currentBird.sex}}</td>
-                    </tr>
-                    <tr>
-                        <td>Condition</td>
-                        <td style="text-align:right">{{currentBird.coconditionHistory && currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
-                    </tr>
+                                        <tr>
+                                            <td>Last Seen Date</td>
+                                            <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Age</td>
+                                            <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bird ID</td>
+                                            <td style="text-align:right">{{currentBird.id }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Stud ID</td>
+                                            <td style="text-align:right">{{ currentBird.studID }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>New Stud ID</td>
+                                            <td style="text-align:right">{{currentBird.newStudID }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Right Ring ID</td>
+                                            <td style="text-align:right">{{currentBird.rightRingID }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Left Ring ID</td>
+                                            <td style="text-align:right">{{currentBird.leftRingID }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Group Name</td>
+                                            <td style="text-align:right">{{currentBird.groupName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sex</td>
+                                            <td style="text-align:right">{{currentBird.sex}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Condition</td>
+                                            <td style="text-align:right">{{currentBird.coconditionHistory && currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' ' }}</td>
+                                        </tr>
 
-                    <tr>
-                        <td colspan="2">
-                            <div style="padding:5px 0px!important;" class="container">
-                                <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
-                                    
+                                        <tr>
+                                            <td colspan="2">
+                                                <div style="padding:5px 0px!important;" class="container">
+                                                    <button style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
 
-                                <div class="form-group collapse condition-history"  v-for="condition in currentBird.conditionHistory">
-                                
-                                   <table class="table">
-                                       <tr>
-                                           <td>
-                                            {{new Date(condition.createdAt*1000).toLocaleDateString('en-GB') }}
-                                           </td>
 
-                                           <td>
-                                            {{condition.birdCondition }}
-                                           </td>
-                                       </tr>
-                                   </table>
-                                </div>
+                                                    <div class="form-group collapse condition-history" v-for="condition in currentBird.conditionHistory">
 
-                                    <!-- <div class="form-group collapse condition-history">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td>
+                                                                    {{new Date(condition.createdAt*1000).toLocaleDateString('en-GB') }}
+                                                                </td>
+
+                                                                <td>
+                                                                    {{condition.birdCondition }}
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <!-- <div class="form-group collapse condition-history">
                                        <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : ' '  }}</div>
                                     </div>
                     
@@ -245,175 +232,177 @@
                                      <div class="form-group collapse condition-history">
                                        <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : ' '  }}</div>   
                                     </div> -->
-                    
-                                    </div>
-                        </td>
-                    </tr>
-                </table> 
-                </div>
-                    </div>
-                    </div>
-            </td>
-            <td>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                            <h4>More Information</h4>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                                <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                                    <tr>
-                                        <td>Lay Date</td>
-                                        <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td>Hatched</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
-                                    </tr> -->
-                                    <tr>
-                                        <td>Hatch Date</td>
-                                        <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Incubation Days</td>
-                                        <td style="text-align:right">{{currentBird.incubationDays }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Where Laid</td>
-                                        <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Where Hatched</td>
-                                        <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : ''  }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Where Fledged</td>
-                                        <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : ''    }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Where Released</td>
-                                        <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : ''   }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>When Released</td>
-                                        <td style="text-align:right">{{new Date (currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Current Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Previous Nest Site</td>
-                                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Notes</td>
-                                        <td style="text-align:right; height:90px; "> <div style="overflow-y:scroll; height:90px;">{{currentBird.researcherNotes }}</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Created by</td>
-                                        <td style="text-align:right">{{currentBird.createdBy }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Created on</td>
-                                        <td style="text-align:right">{{new Date (currentBird.createdAt*1000).toLocaleDateString('en-GB') }}</td>
-                                    </tr>
-                                </table> 
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-
-                            
                             </div>
                         </div>
-
-            </td>
-            </tr>
-            
-            <tr>
-                <td style="width:50%;">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
-                            <h4>Parents</h4>
-                            </div>
-                        </div>
-        
-                    <div class="row mb-3">
-                        <table style="max-width: 90% !important;" class="col-sm-6">
-                            <tr>
-                                <td>Female Parent</td>
-                                <td style="text-align:right">{{currentBird.motherName }}</td>
-                            </tr>
-                            <tr>
-                                <td>Female Stud ID</td>
-                                <td style="text-align:right">{{currentBird.birdName }}</td>
-                            </tr>
-                            <tr>
-                                <td>Male Parent</td>
-                                <td style="text-align:right">{{currentBird.fatherName}}</td>
-                            </tr>
-                            <tr>
-                                <td>Male Stud ID</td>
-                                <td style="text-align:right">{{currentBird.birdName }}</td>
-                            </tr>
-                            <tr>
-                                <td>2nd Potential Male</td>
-                                <td style="text-align:right">{{currentBird.secondFatherName }}</td>
-                            </tr>
-                            <tr>
-                                <td>2nd Male ID</td>
-                                <td style="text-align:right">{{ currentBird.birdName }}</td>
-                            </tr>
-                        </table> 
-                        </div>
-                            </div>
-                            </div>
                     </td>
                     <td>
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row mb-3">
                                     <div class="col-sm-6">
-                                    <h4>Past Visits</h4>
+                                        <h4>More Information</h4>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                        <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                                            <tr>
-                                                <td style="background-color: rgb(131, 203, 215)">Date</td>
-                                            </tr>
-                                            <tr  v-for="visits in currentBird.visitHistory">
-                                                <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
-                                                <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
-                                            </tr>
-                                               
-                                        </table> 
+                                    <table align="center" style="max-width: 90% !important;" class="col-sm-6">
+                                        <tr>
+                                            <td>Lay Date</td>
+                                            <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
+                                        </tr>
+                                        <!-- <tr>
+                                        <td>Hatched</td>
+                                        <td style="text-align:right">{{currentBird.birdName }}</td>
+                                    </tr> -->
+                                        <tr>
+                                            <td>Hatch Date</td>
+                                            <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Incubation Days</td>
+                                            <td style="text-align:right">{{currentBird.incubationDays }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Where Laid</td>
+                                            <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Where Hatched</td>
+                                            <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Where Fledged</td>
+                                            <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Where Released</td>
+                                            <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>When Released</td>
+                                            <td style="text-align:right">{{new Date (currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Current Nest Site</td>
+                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Previous Nest Site</td>
+                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notes</td>
+                                            <td style="text-align:right; height:90px; ">
+                                                <div style="overflow-y:scroll; height:90px;">{{currentBird.researcherNotes }}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Created by</td>
+                                            <td style="text-align:right">{{currentBird.createdBy }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Created on</td>
+                                            <td style="text-align:right">{{new Date (currentBird.createdAt*1000).toLocaleDateString('en-GB') }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
-        
-                                    
+
+
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="width:50%;">
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <h4>Parents</h4>
                                     </div>
                                 </div>
-        
+
+                                <div class="row mb-3">
+                                    <table style="max-width: 90% !important;" class="col-sm-6">
+                                        <tr>
+                                            <td>Female Parent</td>
+                                            <td style="text-align:right">{{currentBird.motherName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Female Stud ID</td>
+                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Male Parent</td>
+                                            <td style="text-align:right">{{currentBird.fatherName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Male Stud ID</td>
+                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2nd Potential Male</td>
+                                            <td style="text-align:right">{{currentBird.secondFatherName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2nd Male ID</td>
+                                            <td style="text-align:right">{{ currentBird.birdName }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </td>
-                    </tr>
-                    
+                    <td>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <h4>Past Visits</h4>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <table align="center" style="max-width: 90% !important;" class="col-sm-6">
+                                        <tr>
+                                            <td style="background-color: rgb(131, 203, 215)">Date</td>
+                                        </tr>
+                                        <tr v-for="visits in currentBird.visitHistory">
+                                            <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
+                                            <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
 
             </table>
 
 
 
-        <div class="modal-footer flex-row-reverse justify-content-between">
-                <a class="btn btn-info " href="/account">Edit</a> 
-        
-        <button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
-        </div>
+            <div class="modal-footer flex-row-reverse justify-content-between">
+                <a class="btn btn-info " href="/account">Edit</a>
 
-    </modal>
+                <button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
+            </div>
+
+        </modal>
 
 
-</div>
+    </div>
 </div>
 
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

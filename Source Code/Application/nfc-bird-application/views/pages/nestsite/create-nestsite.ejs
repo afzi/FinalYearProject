@@ -1,9 +1,20 @@
 <div id="create-nestsite">
+    
   <div class="container" v-if="!cloudSuccess">
-      
+        <div class="flex-container filterbar" style="white-space: nowrap;">
+                <div class="form-group col-xs-6 ">
+                    <span style="padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
+                                <option value="5" >5</option>
+                                <option value="10">10</option>
+                                <option selected value="15">15</option>
+                                <option value="10000">All</option>
+                            </select> <span style="padding-right:5px">entries</span>
+                </div>
+            </div>    
+
       <table id="all-nestsites" border="1">
         <thead role="rowgroup">
-            <tr role="row">
+            <tr role="row"class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
                 <th role="columnheader"  style="width: 15%">Nestsite ID</th>
                 <th role="columnheader"  style="width: 20%">Description</th>
                 <th role="columnheader"  style="width: 15%">Coordinates</th>
@@ -29,7 +40,9 @@
             </tr>
         </tbody>
     </table>
-    <div class="flex-container paginateContainer">
+
+    <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+    <div class="flex-container paginateContainer nav-item">
         <div>
             <paginate
                 :page-count="Math.ceil(nestsiteCount / pageSize)"
@@ -47,22 +60,11 @@
             >
             </paginate>
         </div>
-        <div>
+        <div style="color:#fff;" class="nav-item">
             Showing {{currentNestsites.length}} entries out of {{nestsiteCount}}
         </div>
-        <div>
-            Show 
-                    <select class="pageSizeControl custom-select" v-model="pageSize">
-                            <option value="5" >5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option selected value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                        </select> entries per page
-                    </div>
-        </div>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button>
+    <button class="btn btn-primary nav-item" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button>
+    </footer>
 
     <div class="modal fade" id="editNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="editNestsiteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
