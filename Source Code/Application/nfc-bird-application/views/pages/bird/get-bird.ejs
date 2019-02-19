@@ -142,258 +142,6 @@
                                     </div>
                                 </div>
 
-<<<<<<< HEAD
-<table class="table">
-<tr>
-    <td style="width:50%;">
-    <div class="modal-body">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                <h4>Main Information</h4>
-                </div>
-            </div>
-
-<div class="row mb-3">
-    <table style="max-width: 90% !important;" class="col-sm-6">
-        <tr>
-            <td>Echo Name</td>
-            <td style="text-align:right">{{currentBird.birdName }}</td>
-        </tr>
-        <!-- <tr>
-            <td>Status</td>
-            <td style="text-align:right">{{currentBird.status }}</td>
-        </tr> -->
-        <tr>
-            <td>Last Seen Date</td>
-            <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td>
-        </tr>
-        <tr>
-            <td>Age</td>
-            <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
-        </tr>
-        <tr>
-            <td>Bird ID</td>
-            <td style="text-align:right">{{currentBird.id }}</td>
-        </tr>
-        <tr>
-            <td>Stud ID</td>
-            <td style="text-align:right">{{ currentBird.studID }}</td>
-        </tr>
-        <tr>
-            <td>New Stud ID</td>
-            <td style="text-align:right">{{currentBird.newStudID }}</td>
-        </tr>
-        <tr>
-            <td>Right Ring ID</td>
-            <td style="text-align:right">{{currentBird.rightRingID }}</td>
-        </tr>
-        <tr>
-            <td>Left Ring ID</td>
-            <td style="text-align:right">{{currentBird.leftRingID }}</td>
-        </tr>
-        <tr>
-            <td>Group Name</td>
-            <td style="text-align:right">{{currentBird.groupName }}</td>
-        </tr>
-        <tr>
-            <td>Sex</td>
-            <td style="text-align:right">{{currentBird.sex}}</td>
-        </tr>
-        <tr>
-            <td>Condition</td>
-            <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' '  }}</td>
-        </tr>
-
-        <tr>
-            <td colspan="2">
-                <div style="padding:5px 0px!important;" class="container">
-                    <button  style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
-                        
-
-                    <div class="form-group collapse condition-history"  v-for="condition in currentBird.conditionHistory">
-                    
-                        <table class="table">
-                            <tr>
-                                <td>
-                                {{new Date(condition.createdAt*1000).toLocaleDateString('en-GB') }}
-                                </td>
-
-                                <td>
-                                {{condition.birdCondition }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                        <!-- <div class="form-group collapse condition-history">
-                            <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : ' '  }}</div>
-                        </div>
-        
-                        <div class="form-group collapse condition-history">
-                            <div>{{currentBird.conditionHistory[2] ? currentBird.conditionHistory[2].birdCondition : ' '  }}</div>
-                        </div>
-                
-                        <div class="form-group collapse condition-history">
-                            <div>{{currentBird.conditionHistory[3] ? currentBird.conditionHistory[3].birdCondition : ' '  }}</div>   
-                        </div>
-                        <div class="form-group collapse condition-history">
-                            <div>{{currentBird.conditionHistory[4] ? currentBird.conditionHistory[4].birdCondition : ' '  }}</div>   
-                        </div>
-                            <div class="form-group collapse condition-history">
-                            <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : ' '  }}</div>   
-                        </div> -->
-        
-                        </div>
-            </td>
-        </tr>
-    </table> 
-    </div>
-        </div>
-        </div>
-</td>
-<td>
-    <div class="modal-body">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                <h4>More Information</h4>
-                </div>
-            </div>
-        <div class="row mb-3">
-                <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                    <tr>
-                        <td>Lay Date</td>
-                        <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
-                    </tr>
-                    <!-- <tr>
-                        <td>Hatched</td>
-                        <td style="text-align:right">{{currentBird.birdName }}</td>
-                    </tr> -->
-                    <tr>
-                        <td>Hatch Date</td>
-                        <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
-                    </tr>
-                    <tr>
-                        <td>Incubation Days</td>
-                        <td style="text-align:right">{{currentBird.incubationDays }}</td>
-                    </tr>
-                    <tr>
-                        <td>Where Laid</td>
-                        <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Where Hatched</td>
-                        <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : ''  }}</td>
-                    </tr>
-                    <tr>
-                        <td>Where Fledged</td>
-                        <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : ''    }}</td>
-                    </tr>
-                    <tr>
-                        <td>Where Released</td>
-                        <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : ''   }}</td>
-                    </tr>
-                    <tr>
-                        <td>When Released</td>
-                        <td style="text-align:right">{{new Date (currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
-                    </tr>
-                    <tr>
-                        <td>Current Nest Site</td>
-                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Previous Nest Site</td>
-                        <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
-                    </tr>
-                    <tr>
-                        <td>Notes</td>
-                        <td style="text-align:right; height:90px; "> <div style="overflow-y:scroll; height:90px;">{{currentBird.researcherNotes }}</div></td>
-                    </tr>
-                    <tr>
-                        <td>Created by</td>
-                        <td style="text-align:right">{{currentBird.createdBy }}</td>
-                    </tr>
-                    <tr>
-                        <td>Created on</td>
-                        <td style="text-align:right">{{new Date (currentBird.createdAt*1000).toLocaleDateString('en-GB') }}</td>
-                    </tr>
-                </table> 
-                </div>
-
-            
-            </div>
-        </div>
-
-</td>
-</tr>
-
-<tr>
-<td style="width:50%;">
-<div class="modal-body">
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-sm-6">
-            <h4>Parents</h4>
-            </div>
-        </div>
-
-    <div class="row mb-3">
-        <table style="max-width: 90% !important;" class="col-sm-6">
-            <tr>
-                <td>Female Parent</td>
-                <td style="text-align:right">{{currentBird.motherName }}</td>
-            </tr>
-            <tr>
-                <td>Female Stud ID</td>
-                <td style="text-align:right">{{currentBird.birdName }}</td>
-            </tr>
-            <tr>
-                <td>Male Parent</td>
-                <td style="text-align:right">{{currentBird.fatherName}}</td>
-            </tr>
-            <tr>
-                <td>Male Stud ID</td>
-                <td style="text-align:right">{{currentBird.birdName }}</td>
-            </tr>
-            <tr>
-                <td>2nd Potential Male</td>
-                <td style="text-align:right">{{currentBird.secondFatherName }}</td>
-            </tr>
-            <tr>
-                <td>2nd Male ID</td>
-                <td style="text-align:right">{{ currentBird.birdName }}</td>
-            </tr>
-        </table> 
-        </div>
-            </div>
-            </div>
-    </td>
-    <td>
-        <div class="modal-body">
-            <div class="container">
-                <div class="row mb-3">
-                    <div class="col-sm-6">
-                    <h4>Past Visits</h4>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                        <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                            <tr>
-                                <td style="background-color: rgb(131, 203, 215)">Date</td>
-                            </tr>
-                            <tr  v-for="visits in currentBird.visitHistory">
-                                <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
-                                <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
-                            </tr>
-                                
-                        </table> 
-                </div>
-
-                    
-                    </div>
-                </div>
-=======
                                 <div class="row mb-3">
                                     <table style="max-width: 90% !important;" class="col-sm-6">
                                         <tr>
@@ -442,7 +190,7 @@
                                         </tr>
                                         <tr>
                                             <td>Condition</td>
-                                            <td style="text-align:right">{{currentBird.coconditionHistory && currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' ' }}</td>
+                                            <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' ' }}</td>
                                         </tr>
 
                                         <tr>
@@ -639,7 +387,6 @@
                     </td>
                 </tr>
 
->>>>>>> 58d26c07e182cb9c35d80684d49cd3b9e1241e97
 
         </td>
         </tr>
@@ -648,22 +395,11 @@
 </table>
 
 
-<<<<<<< HEAD
-
-<div class="modal-footer flex-row-reverse justify-content-between">
-    <a class="btn btn-info " href="/account">Edit</a> 
-
-<button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
-</div>
-
-</modal>
-=======
             <div class="modal-footer flex-row-reverse justify-content-between">
                 <a class="btn btn-info " href="/account">Edit</a>
 
                 <button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
             </div>
->>>>>>> 58d26c07e182cb9c35d80684d49cd3b9e1241e97
 
         </modal>
 
