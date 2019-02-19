@@ -72,7 +72,9 @@ parasails.registerPage('user-activity-monitor', {
   watch: {
     // whenever one of the filters changes, this function will run
     currentUserFilter: function (_, _) {
-      this.refresh();
+      if($("#username").data('locked') != 1) {
+        this.refresh();
+      }
     },
     currentActionFilter: function (_, _) {
       this.refresh();

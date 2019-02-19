@@ -65,8 +65,8 @@ module.exports = {
 
       var result;
       if(inputs.username) {
-        result = await Changelog.find(query);
-        result = result.filter(nextResult => nextResult.user.username == inputs.username);
+        result = await Changelog.find(query).populate('user');
+        result = result.filter(nextResult => nextResult.user.username === inputs.username);
         return result.length;
       } else {
         result = await Changelog.count(query);

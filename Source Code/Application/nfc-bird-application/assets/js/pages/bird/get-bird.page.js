@@ -41,32 +41,41 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.currentBirds = await Cloud.getBird.with({includeConditions: true, includeNestsites: true, includeVisits: true, skip: 0, limit: this.pageSize});
-        this.BirdCount = this.currentBirds.length;
+        this.refresh();
     },
 
     watch: {
       // whenever one of the filters changes, this function will run
       currentBirdFilter: function (_, _) {
-        this.refresh();
+        if($("#birdName").data('locked') != 1) {
+          this.refresh();
+        }
       },
       currentSexFilter: function (_, _) {
         this.refresh();
       },
       currentBirdIdFilter: function (_, _) {
-        this.refresh();
+        if($("#studID").data('locked') != 1) {
+          this.refresh();
+        }
       },
       currentFatherFilter: function (_, _) {
-        this.refresh();
+        if($("#fatherName").data('locked') != 1) {
+          this.refresh();
+        }
       },
       currentMotherFilter: function (_, _) {
-        this.refresh();
+        if($("#motherName").data('locked') != 1) {
+          this.refresh();
+        }
       },
       currentBreederFilter: function (_, _) {
         this.refresh();
       },
       currentNestSiteFilter: function (_, _) {
-        this.refresh();
+        if($("#currentNestSite").data('locked') != 1) {
+          this.refresh();
+        }
       },
       pageSize: function (_, _) {
         this.refresh();
@@ -143,13 +152,12 @@ parasails.registerPage('get-bird', {
         params.limit = this.pageSize;
   
         this.currentBirds = await Cloud.getBird.with(params);
-        this.BirdCount = await Cloud.countBird.with(params);
+        this.BirdCount = await Cloud.countBirds.with(params);
       },
 
         pageClick: async function(pageNum) {
-            this.currentBirds = await Cloud.getBird.with({includeConditions: true, includeNestsites: true, includeVisits: true, skip: (pageNum - 1) * this.pageSize, limit: this.pageSize});
-            this.BirdCount = await Cloud.countBird();
             this.currentPage = pageNum;
+            this.refresh();
           },
           clearFilters: async function() {
             this.currentBirdFilter = "";

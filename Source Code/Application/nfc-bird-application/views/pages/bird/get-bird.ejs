@@ -6,18 +6,18 @@
     <div class="flex-container filterbar">
 
         <div class="form-group">
-          <input id="birdName" class="form-control" type="text" v-model.trim.lazy="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
+          <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
           <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
         </div>
         
         <div class="form-group">
-            <input id="studID" class="form-control" type="text" v-model.trim.lazy="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
+            <input id="studID" class="form-control" type="text" v-model.trim="currentBirdIdFilter" placeholder="studID" title="studID" autocomplete="off">
             <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
         </div>
 
 
         <div class="form-group">
-         <select id="sex" class="form-control" type="text" v-model.trim.lazy="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
+         <select id="sex" class="form-control" type="text" v-model="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
                 <option disabled selected value="">Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -26,23 +26,23 @@
         </div>
 
         <!-- <div class="form-group">
-            <input id="sex" class="form-control" type="text" v-model.trim.lazy="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
+            <input id="sex" class="form-control" type="text" v-model.trim="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
             <autocomplete for="sex" action="getBird" params='{"limit": 3}' map="sex" is-async> </autocomplete>
         </div> -->
         
 
         <div class="form-group">
-            <input id="fatherName" class="form-control" type="text" v-model.trim.lazy="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
+            <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
             <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
         </div>
 
         <div class="form-group">
-            <input id="motherName" class="form-control" type="text" v-model.trim.lazy="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
+            <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
             <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async> </autocomplete>
         </div>
 
         <div class="form-group">
-            <select id="isBreeder" class="form-control" type="text" v-model.trim.lazy="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
+            <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
                     <option disabled selected value="">Breeder</option>
                     <option value="0">No</option>
                     <option value="1">yes</option>
@@ -51,14 +51,14 @@
         </div>
 
         <!-- <div class="form-group">
-            <input id="isBreeder" class="form-control" type="text" v-model.trim.lazy="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
+            <input id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
             <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
         </div> -->
 
 
         <div class="form-group">
-            <input id="currentNestSite" class="form-control" type="text" v-model.trim.lazy="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
-            <autocomplete for="currentNestSite" action="getBird" params='{"limit": 3}' map="currentNestSite" is-async> </autocomplete>
+            <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
+            <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async> </autocomplete>
         </div>
 
         <div class="form-group">

@@ -155,47 +155,16 @@ module.exports = {
         description: 'Researcher notes.'
       },
 
-      currentNestSite: { // TODO
+      currentNestSite: {
         required: false,
         type: 'string',
         description: 'Where is the bird currently nesting'      },
 
-        currentCondition: { // TODO
+        currentCondition: {
             required: false,
             type: 'string',
             description: 'The current condition of the bird'
-        },
-
-        includeConditions: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the condition history of the bird'
-        },
-
-        includeVisits: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the visit history of the bird'
-        },
-
-        includeNestsites: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether to include the nest site history of the bird'
-        },
-
-        skip: {
-            required: false,
-            type: 'number',
-            description: 'How many records to skip (if used in pagination - where does the page begin)'
-        },
-
-        limit: {
-            required: false,
-            type: 'number',
-            description: 'How many records to return (if used in pagination - what is the page size)'
         }
-  
     },
   
   
@@ -208,7 +177,7 @@ module.exports = {
   
   
     fn: async function (inputs) {
-      console.log("Received request to list/filter birds")
+      console.debug("Received request to list/filter birds")
 
       let query = {}
       if(inputs.studId) query.studId = {'contains': inputs.studId}
@@ -231,16 +200,45 @@ module.exports = {
       if(inputs.incDaysTo) query.incDays['<='] = inputs.incDaysTo;
 
       let finalQuery = {where: query}
-      if(inputs.skip) finalQuery.skip = inputs.skip;
-      if(inputs.limit) finalQuery.limit = inputs.limit;
 
-    //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
-    //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+      if(!inputs.currentNestSite && !inputs.currentCondition) {
+        var result = await Bird.count(finalQuery);
 
+        return result;
+      } else {
+        var result = await Bird.find(finalQuery);
+
+        var finalResult = [];
+
+        for(let nextBird of result) {
+          var allConditionsMatch = true;
+          
+            if(inputs.currentCondition) {
+              var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+              if(!(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition))) {
+                allConditionsMatch = false;
+              }
+            }
+          
+
+            if(inputs.currentNestSite && allConditionsMatch) {
+              var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
+              if(!(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite))) {
+                allConditionsMatch = false;
+              }
+            } 
+
+          if(allConditionsMatch) finalResult.push(nextBird);
+        }
+
+      // TODO rewrite this whole fucking controller to be more efficient
+
+
+        return finalResult.length;
+        
+      }
       
-      var result = await Bird.count(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
 
-      return result;
     }
   
   };

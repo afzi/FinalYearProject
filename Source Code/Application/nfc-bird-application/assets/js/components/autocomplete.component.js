@@ -115,10 +115,13 @@ parasails.registerComponent('autocomplete', {
             // we want to make sure we only do this when it's an async request
             if (this.isAsync) {
                 this.results = value;
-                if(this.results && this.results.length) this.isOpen = true;
+                if(this.results && this.results.length > 0) {
+                  this.isOpen = true;
+                } else {
+                  this.isOpen = false;
+                }
                 this.isLoading = false;
             }
-            
         }
     },
   
@@ -156,8 +159,12 @@ parasails.registerComponent('autocomplete', {
         },
 
         setResult(result) {
+            $(`#${this.for}`).off('input', this.onChange);
+            $(`#${this.for}`).data('locked', 1);
             $(`#${this.for}`).val(result);
-            $(`#${this.for}`)[0].dispatchEvent(new Event('change'));
+            $(`#${this.for}`).data('locked', 0);
+            $(`#${this.for}`)[0].dispatchEvent(new Event('input'));
+            $(`#${this.for}`).on('input', this.onChange);
             this.close();
         },
 
@@ -175,14 +182,16 @@ parasails.registerComponent('autocomplete', {
 
         handleClickOutside(evt) {
             if (!this.$el.contains(evt.target)) {
-              this.isOpen = false;
               this.arrowCounter = -1;
+              $(`#${this.for}`).data('locked', 0);
+              this.close();
             }
         },
 
         onEnter() {
             $(`#${this.for}`).val(this.results[this.arrowCounter]);
-            this.isOpen = false;
+            $(`#${this.for}`).data('locked', 0);
+            this.close();
             this.arrowCounter = -1;
         }
   

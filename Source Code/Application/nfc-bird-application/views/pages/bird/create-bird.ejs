@@ -45,18 +45,18 @@
                 <div class="invalid-feedback" v-if="formErrors.gender">Female</div> -->
             </div>
             <div class="form-group">
-                <input id="groupName" type="text" class="form-control" placeholder="Group Name" title="Group Name" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim.lazy="formData.groupName" autocomplete="groupName">
+                <input id="groupName" type="text" class="form-control" placeholder="Group Name" title="Group Name" :class="[formErrors.groupName ? 'is-invalid' : '']" v-model.trim="formData.groupName" autocomplete="groupName">
                 <autocomplete for="groupName" action="getBird" params='{"limit": 1}' is-async> </autocomplete>
                 <div class="invalid-feedback" v-if="formErrors.groupName">Please provide groupName.</div>
             </div>
             <div class="form-group">
-                <input id="nfcRingId" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim.lazy="formData.nfcRingId" @blur="liveValidate(validateRFID, 1000)">
+                <input id="nfcRingId" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[formErrors.nfcRingId ? 'is-invalid' : '']" v-model.trim="formData.nfcRingId" @blur="liveValidate(validateRFID, 1000)">
                 <autocomplete for="nfcRingId" action="getRfid" params='{"isAssigned": false, "limit": 5}' map="nfcRFID" is-async> </autocomplete>
                 <div class="invalid-feedback" v-if="formErrors.nfcRingId">Please provide nfc RingId.</div>
             </div>
 
             <div id="group-nestsite" class="form-group">
-                <input type="text" id="currentNestSite" class="form-control" placeholder="Current nest site" title="Current nest site" :class="[formErrors.currentNestSite ? 'is-invalid' : '']" v-model.trim.lazy="formData.currentNestSite" @blur="liveValidate(validateNestsite, 1000)">
+                <input type="text" id="currentNestSite" class="form-control" placeholder="Current nest site" title="Current nest site" :class="[formErrors.currentNestSite ? 'is-invalid' : '']" v-model.trim="formData.currentNestSite" @blur="liveValidate(validateNestsite, 1000)">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
                 <div class="invalid-feedback" v-if="formErrors.currentNestSite">Please provide a valid nest-site. <a target="_blank" href="/nestsite/register">Create new</a></div>
                 <div v-if="formData.currentNestSite != null && formData.currentNestSite != ''" class="create-bird-history">
@@ -74,7 +74,7 @@
                 </div> -->
                 
                 <div class="form-group collapse create-bird-family">
-                    <input id="motherName" type="text" class="form-control" placeholder="Name of mother" title="Name of mother" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.motherName" autocomplete="motherName">
+                    <input id="motherName" type="text" class="form-control" placeholder="Name of mother" title="Name of mother" :class="[formErrors.motherName ? 'is-invalid' : '']" v-model.trim="formData.motherName" autocomplete="motherName">
                     <autocomplete for="motherName" action="getBird" params='{"limit": 5, "gender": "female"}' map="birdName" is-async> </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.motherName">Please provide motherName.</div>
                 </div>
@@ -85,7 +85,7 @@
                 </div> -->
 
                 <div class="form-group collapse create-bird-family">
-                    <input id="fatherName" type="text" class="form-control" placeholder="Name of father" title="Name of father" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.fatherName" autocomplete="fatherName">
+                    <input id="fatherName" type="text" class="form-control" placeholder="Name of father" title="Name of father" :class="[formErrors.fatherName ? 'is-invalid' : '']" v-model.trim="formData.fatherName" autocomplete="fatherName">
                     <autocomplete for="fatherName" action="getBird" params='{"limit": 5, "gender": "male"}' map="birdName" is-async> </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.fatherName">Please provide father Name.</div>
                 </div>
@@ -96,7 +96,7 @@
                 </div> -->
         
                 <div class="form-group collapse create-bird-family">
-                    <input id="secondFatherName" type="text" class="form-control" placeholder="Name of second father" title="Name of second father" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim.lazy="formData.secondFatherName" autocomplete="secondFatherName">
+                    <input id="secondFatherName" type="text" class="form-control" placeholder="Name of second father" title="Name of second father" :class="[formErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="formData.secondFatherName" autocomplete="secondFatherName">
                     <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async > </autocomplete>
                     <div class="invalid-feedback" v-if="formErrors.secondFatherName">Please provide second Father Name.</div>
                     

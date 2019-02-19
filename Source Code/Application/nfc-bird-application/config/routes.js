@@ -102,6 +102,7 @@ module.exports.routes = {
 
 
     'POST  /api/v1/bird': { action: 'bird/create-bird' },
+    'GET /api/v1/bird/count': { action: 'bird/count-birds' },
 
     'POST  /api/v1/entrance/update-password-and-login': { action: 'entrance/update-password-and-login' },
 
