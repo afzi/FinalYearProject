@@ -94,7 +94,7 @@ parasails.registerPage('get-bird', {
     // corresponds with `:unused?` in the server-side route for this page.
     switch (virtualPageSlug) {
 
-        case'hello3':
+        case'SingleBird':
         this.modal = 'example3';
         break;
 
@@ -173,7 +173,7 @@ parasails.registerPage('get-bird', {
 
         clickOpenExampleModalButton3: async function(index) {
             this.currentBird = this.currentBirds[index];
-            this.goto('/birds/hello3');
+            this.goto('/birds/SingleBird');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';

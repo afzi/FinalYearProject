@@ -589,7 +589,7 @@ pre code {
 
 .row {
   display: -ms-flexbox;
-  display: flex;
+  /* display: flex; */
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin-right: -15px;
@@ -868,7 +868,7 @@ pre code {
   .col-sm-6 {
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
-    max-width: 50%;
+    /* max-width: 50%; */
   }
   .col-sm-7 {
     -ms-flex: 0 0 58.333333%;
