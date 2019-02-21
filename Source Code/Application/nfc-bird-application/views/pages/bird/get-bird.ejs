@@ -4,9 +4,9 @@
         <hr/>
 
         <div class="flex-container filterbar">
-                <div>
-                        Show
-                        <select class="pageSizeControl custom-select" v-model="pageSize">
+            <div>
+                Show
+                <select class="pageSizeControl custom-select" v-model="pageSize">
                                 <option value="5" >5</option>
                                 <option value="10">10</option>
                                 <option value="15">15</option>
@@ -14,7 +14,7 @@
                                 <option value="25">25</option>
                                 <option value="30">30</option>
                         </select> entries per page
-                    </div>
+            </div>
 
             <div class="form-group">
                 <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="birdName" title="birdName" autocomplete="off">
@@ -102,22 +102,22 @@
                     <td>{{bird.motherName}}</td>
                     <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
                     <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : ' ' }}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : ' ' }}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : ' ' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
                 </tr>
             </tbody>
         </table>
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
-        <div class="flex-container paginateContainer">
-            <div>
-                <paginate :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
-                    :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
-                </paginate>
+            <div class="flex-container paginateContainer">
+                <div>
+                    <paginate :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                        :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                    </paginate>
+                </div>
             </div>
-        </div>
         </footer>
-            <!-- <div>
+        <!-- <div>
                 Showing {{currentBirds.length}} entries out of {{BirdCount}}
             </div> -->
 
@@ -143,9 +143,9 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <table style="max-width: 90% !important;" class="col-sm-6">
+                                    <table class="col-sm-6 text-nowrap">
                                         <tr>
-                                            <td>Echo Name</td>
+                                            <td style="white-space: nowrap">Echo Name</td>
                                             <td style="text-align:right">{{currentBird.birdName }}</td>
                                         </tr>
                                         <!-- <tr>
@@ -154,7 +154,7 @@
                     </tr> -->
                                         <tr>
                                             <td>Last Seen Date</td>
-                                            <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Age</td>
@@ -190,7 +190,7 @@
                                         </tr>
                                         <tr>
                                             <td>Condition</td>
-                                            <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : ' ' }}</td>
+                                            <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : 'N/A' }}</td>
                                         </tr>
 
                                         <tr>
@@ -215,21 +215,21 @@
                                                     </div>
 
                                                     <!-- <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : ' '  }}</div>
+                                       <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : 'N/A'  }}</div>
                                     </div>
                     
                                     <div class="form-group collapse condition-history">
-                                        <div>{{currentBird.conditionHistory[2] ? currentBird.conditionHistory[2].birdCondition : ' '  }}</div>
+                                        <div>{{currentBird.conditionHistory[2] ? currentBird.conditionHistory[2].birdCondition : 'N/A'  }}</div>
                                     </div>
                             
                                     <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[3] ? currentBird.conditionHistory[3].birdCondition : ' '  }}</div>   
+                                       <div>{{currentBird.conditionHistory[3] ? currentBird.conditionHistory[3].birdCondition : 'N/A'  }}</div>   
                                     </div>
                                     <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[4] ? currentBird.conditionHistory[4].birdCondition : ' '  }}</div>   
+                                       <div>{{currentBird.conditionHistory[4] ? currentBird.conditionHistory[4].birdCondition : 'N/A'  }}</div>   
                                     </div>
                                      <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : ' '  }}</div>   
+                                       <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : 'N/A'  }}</div>   
                                     </div> -->
 
                                                 </div>
@@ -251,7 +251,7 @@
                                 <div class="row mb-3">
                                     <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                         <tr>
-                                            <td>Lay Date</td>
+                                            <td class="text-nowrap">Lay Date</td>
                                             <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
                                         </tr>
                                         <!-- <tr>
@@ -263,24 +263,24 @@
                                             <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Incubation Days</td>
+                                            <td style="white-space: nowrap">Incubation Days</td>
                                             <td style="text-align:right">{{currentBird.incubationDays }}</td>
                                         </tr>
                                         <tr>
                                             <td>Where Laid</td>
-                                            <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Where Hatched</td>
-                                            <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Where Fledged</td>
-                                            <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Where Released</td>
-                                            <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>When Released</td>
@@ -288,11 +288,11 @@
                                         </tr>
                                         <tr>
                                             <td>Current Nest Site</td>
-                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestDescription : '' }}</td>
+                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Previous Nest Site</td>
-                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestDescription : '' }}</td>
+                                            <td style="white-space: nowrap">Previous Nest Site</td>
+                                            <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Notes</td>
@@ -373,7 +373,7 @@
                                             <td style="background-color: rgb(131, 203, 215)">Date</td>
                                         </tr>
                                         <tr v-for="visits in currentBird.visitHistory">
-                                            <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : '' }}</td> -->
+                                            <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : 'N/A' }}</td> -->
                                             <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
                                         </tr>
 
@@ -388,11 +388,11 @@
                 </tr>
 
 
-        </td>
-        </tr>
-        
+                </td>
+                </tr>
 
-</table>
+
+            </table>
 
 
             <div class="modal-footer flex-row-reverse justify-content-between">
