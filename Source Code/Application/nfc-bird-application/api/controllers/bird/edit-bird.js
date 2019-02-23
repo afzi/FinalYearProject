@@ -324,12 +324,19 @@ module.exports = {
 
         let nestId = nest.id;
 
-        await Birdnest.create({
+        let newNest = await Birdnest.create({
           birdID: inputs.id,
           nestID: nestId,
           dateEntered: inputs.newBreedingSiteDate || new Date().getTime()
         })
-        .usingConnection(db);
+        .usingConnection(db)
+        .fetch();
+
+        var previousNestsite = await Birdnest.findOne({where: {birdID: bird.id}, sort: 'dateEntered DESC'}).usingConnection(db);
+
+        if(previousNestsite && previousNestsite.dateEntered <= newNest.dateEntered) {
+          await Birdnest.update({id: previousNestsite.id}).set({dateLeft: previousNestsite.dateEntered}).usingConnection(db);
+        }
       }
 
       if(inputs.newCondition) {

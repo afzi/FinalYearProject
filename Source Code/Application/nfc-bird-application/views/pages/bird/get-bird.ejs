@@ -111,7 +111,7 @@
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
             <div class="flex-container paginateContainer">
                 <div>
-                    <paginate :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                    <paginate ref="paginate" :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                         :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                     </paginate>
                 </div>
@@ -497,7 +497,7 @@
                                         </tr>
                                         <tr>
                                             <td>Female Parent Stud ID</td>
-                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherStudId}}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherStudID}}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <input id="motherStudID" type="text" class="form-control" placeholder="Female Parent Stud ID" title="Female Parent Stud ID" :class="[editBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.motherStudID">
@@ -518,7 +518,7 @@
                                         </tr>
                                         <tr>
                                             <td>Male Parent Stud ID</td>
-                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherStudId}}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherStudID}}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <input id="fatherStudID" type="text" class="form-control" placeholder="Male Parent Stud ID" title="Male Parent Stud ID" :class="[editBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherStudID">
@@ -539,7 +539,7 @@
                                         </tr>
                                         <tr>
                                             <td>2nd Potential Male Stud ID</td>
-                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherStudId}}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherStudID}}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <input id="secondFatherStudID" type="text" class="form-control" placeholder="2nd Potential Male Parent Stud ID" title="2nd Potential Male Parent Stud ID" :class="[editBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherStudID">

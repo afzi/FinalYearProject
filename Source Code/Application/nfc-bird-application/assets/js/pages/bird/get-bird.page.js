@@ -91,36 +91,52 @@ parasails.registerPage('get-bird', {
       // whenever one of the filters changes, this function will run
       currentBirdFilter: function (_, _) {
         if($("#birdName").data('locked') != 1) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },
       currentSexFilter: function (_, _) {
+        this.currentPage = 1;
+        this.$refs.paginate.selected = 0;
         this.refresh();
       },
       currentBirdIdFilter: function (_, _) {
         if($("#studID").data('locked') != 1) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },
       currentFatherFilter: function (_, _) {
         if($("#fatherName").data('locked') != 1) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 0;
           this.refresh();
         }
       },
       currentMotherFilter: function (_, _) {
         if($("#motherName").data('locked') != 1) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },
       currentBreederFilter: function (_, _) {
+        this.currentPage = 1;
+        this.$refs.paginate.selected = 1;
         this.refresh();
       },
       currentNestSiteFilter: function (_, _) {
         if($("#currentNestSite").data('locked') != 1) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },
       pageSize: function (_, _) {
+        this.currentPage = 1;
+        this.$refs.paginate.selected = 1;
         this.refresh();
       },
 
