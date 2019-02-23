@@ -122,16 +122,17 @@
 
         <router-view></router-view>
 
-        <modal class="example-modal" v-if="modal==='example3'" @close="closeExampleModal3()" v-cloak>
+        <modal class="example-modal" v-if="modal==='example3'" v-cloak>
             <div class="modal-header">
                 <h2 class="modal-title">Bird view - {{currentBird.birdName}}</h2>
                 <hr/>
-                <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="modal-close-button" @click="closeSingleViewModal" aria-label="Close"></button>
             </div>
 
             <table class="table">
                 <tr>
                     <td style="width:50%;">
+                        <ajax-form id="edit-bird-form" action="editBird" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormEdit" autocomplete="off">
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row mb-3">
@@ -143,8 +144,14 @@
                                 <div class="row mb-3">
                                     <table class="col-sm-6 text-nowrap">
                                         <tr>
-                                            <td style="white-space: nowrap">Echo Name</td>
-                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                            <td style="white-space: nowrap">Bird Name</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.birdName }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="birdNameEdit" type="text" class="form-control" placeholder="Bird Name" title="Bird Name" :class="[editBirdErrors.birdName ? 'is-invalid' : '']" v-model.trim="editBirdData.birdName">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.birdName">Please provide a valid Bird Name.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <!-- <tr>
                         <td>Status</td>
@@ -159,42 +166,135 @@
                                             <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Bird ID</td>
-                                            <td style="text-align:right">{{currentBird.id }}</td>
+                                            <td>NFC Ring ID</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.nfcRingID ? currentBird.nfcRingID : 'N/A' }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="nfcRingIDEdit" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[editBirdErrors.nfcRingID ? 'is-invalid' : '']" v-model.trim="editBirdData.nfcRingID">
+                                                    <autocomplete for="nfcRingIDEdit" action="getRfid" params='{"isAssigned": false, "limit": 5}' map="nfcRFID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.nfcRingID">Please provide a valid NFC Ring ID.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Stud ID</td>
-                                            <td style="text-align:right">{{ currentBird.studID }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.studID }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <!-- <label for="password">Stud ID</label> -->
+                                                    <input id="studIdEdit" type="text" class="form-control" placeholder="Stud Id" title="Stud Id" :class="[editBirdErrors.studID ? 'is-invalid' : '']" v-model.trim="editBirdData.studID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.studID">Please provide a valid studId.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>New Stud ID</td>
-                                            <td style="text-align:right">{{currentBird.newStudID }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.newStudID }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <!-- <label for="password">Stud ID</label> -->
+                                                    <input id="newStudIdEdit" type="text" class="form-control" placeholder="New Stud Id" title="New Stud Id" :class="[editBirdErrors.newStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.newStudID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.newStudID">Please provide a valid New Stud Id.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Right Ring ID</td>
-                                            <td style="text-align:right">{{currentBird.rightRingID }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.rightRingID }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <!-- <label for="password">Stud ID</label> -->
+                                                    <input id="rightRingIdEdit" type="text" class="form-control" placeholder="Right Ring ID" title="Right Ring ID" :class="[editBirdErrors.rightRingID ? 'is-invalid' : '']" v-model.trim="editBirdData.rightRingID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.rightRingID">Please provide a valid Right Ring Id.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Left Ring ID</td>
-                                            <td style="text-align:right">{{currentBird.leftRingID }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.leftRingID }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="leftRingIDEdit" type="text" class="form-control" placeholder="Left Ring ID" title="Left Ring ID" :class="[editBirdErrors.leftRingID? 'is-invalid' : '']" v-model.trim="editBirdData.leftRingID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.leftRingID">Please provide a valid Left Ring Id.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Group Name</td>
-                                            <td style="text-align:right">{{currentBird.groupName }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.groupName }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="groupNameEdit" type="text" class="form-control" placeholder="Group Name" title="Group Name" :class="[editBirdErrors.groupName ? 'is-invalid' : '']" v-model.trim="editBirdData.groupName">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.groupName">Please provide a valid Group Name.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Sex</td>
-                                            <td style="text-align:right">{{currentBird.sex}}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.sex }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <select id="sexEdit"  class="form-control" :class= "[editBirdErrors.sex ? 'is-invalid' : '']" v-model.trim="editBirdData.sex">
+                                                        <option value="male" >Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option selected value="unknown">Unknown</option>
+                                                    </select>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Is breeder?</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.isBreeder }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <select id="isBreederEdit"  class="form-control" :class= "[editBirdErrors.isBreeder ? 'is-invalid' : '']" v-model.trim="editBirdData.isBreeder">
+                                                        <option value="yes" >Yes</option>
+                                                        <option value="no">No</option>
+                                                        <option selected value="unknown">Unknown</option>
+                                                    </select>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.status }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <select id="statusEdit"  class="form-control" :class= "[editBirdErrors.status ? 'is-invalid' : '']" v-model.trim="editBirdData.status">
+                                                        <option selected value="alive" >Alive</option>
+                                                        <option value="dead">Dead</option>
+                                                        <option value="missing">Missing</option>
+                                                    </select>
+                                                    </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Condition</td>
                                             <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : 'N/A' }}</td>
                                         </tr>
+                                        <tr v-if="isEditMode">
+                                            <td>New Condition</td>
+                                            <td style="text-align:right">
+                                                <div class="form-group">
+                                                        <input id="newCondition" type="text" class="form-control" placeholder="New Condition" title="New Condition" :class="[editBirdErrors.newCondition ? 'is-invalid' : '']" v-model.trim="editBirdData.newCondition">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.newCondition">Please provide a valid New Condition.</div>
+                                                    </div>
+                                                </td>
+                                        </tr>
+                                        <tr v-if="isEditMode && editBirdData.newCondition !== ''">
+                                                <td>Date of Condition</td>
+                                                <td style="text-align:right">
+                                                <div class="form-group datepicker-group">
+                                                        <datepicker id="newConditionDate" class="form-control" v-model="editBirdData.newConditionDate" placeholder="Date of Condition" title="Date of Condition" :config="datepickerOptions">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.newConditionDate">Please provide a valid New Condition Date.</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
 
                                         <tr>
                                             <td colspan="2">
                                                 <div style="padding:5px 0px!important;" class="container">
-                                                    <button style="margin-bottom: 5px;" type="button" class="btn btn-info" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
+                                                    <button style="margin-bottom: 5px;" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target=".condition-history">+ Condition History</button>
 
 
                                                     <div class="form-group collapse condition-history" v-for="condition in currentBird.conditionHistory">
@@ -211,24 +311,6 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-
-                                                    <!-- <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[1] ? currentBird.conditionHistory[1].birdCondition : 'N/A'  }}</div>
-                                    </div>
-                    
-                                    <div class="form-group collapse condition-history">
-                                        <div>{{currentBird.conditionHistory[2] ? currentBird.conditionHistory[2].birdCondition : 'N/A'  }}</div>
-                                    </div>
-                            
-                                    <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[3] ? currentBird.conditionHistory[3].birdCondition : 'N/A'  }}</div>   
-                                    </div>
-                                    <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[4] ? currentBird.conditionHistory[4].birdCondition : 'N/A'  }}</div>   
-                                    </div>
-                                     <div class="form-group collapse condition-history">
-                                       <div>{{currentBird.conditionHistory[5] ? currentBird.conditionHistory[5].birdCondition : 'N/A'  }}</div>   
-                                    </div> -->
 
                                                 </div>
                                             </td>
@@ -249,58 +331,139 @@
                                 <div class="row mb-3">
                                     <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                         <tr>
-                                            <td class="text-nowrap">Lay Date</td>
-                                            <td style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
-                                        </tr>
-                                        <!-- <tr>
-                                        <td>Hatched</td>
-                                        <td style="text-align:right">{{currentBird.birdName }}</td>
-                                    </tr> -->
-                                        <tr>
-                                            <td>Hatch Date</td>
-                                            <td style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB')}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="white-space: nowrap">Incubation Days</td>
-                                            <td style="text-align:right">{{currentBird.incubationDays }}</td>
-                                        </tr>
-                                        <tr>
                                             <td>Where Laid</td>
-                                            <td style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : 'N/A' }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.laidWhere ? currentBird.laidWhere.nestID : 'N/A' }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="laidWhereEdit" type="text" class="form-control" placeholder="Where Laid" title="Where Laid" :class="[editBirdErrors.laidWhere ? 'is-invalid' : '']" v-model.trim="editBirdData.laidWhere">
+                                                    <autocomplete for="laidWhereEdit" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.laidWhere">Please provide a valid value for Where Laid.</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lay Date</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{new Date(currentBird.layDate*1000).toLocaleDateString('en-GB') }}</td>
+                                            <td v-else>
+                                                <div class="form-group datepicker-group">
+                                                    <datepicker id="layDate" class="form-control" v-model="editBirdData.layDate" placeholder="Lay date" title="Lay date" :config="datepickerOptions">
+                                                    <!-- <datepicker id="layDate" class="form-control" placeholder="Lay date" v-model="test" title="Lay date" :config="datepickerOptions"> -->
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Where Hatched</td>
-                                            <td style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : 'N/A' }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.hatchedWhere ? currentBird.hatchedWhere.nestID : 'N/A' }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="hatchedWhereEdit" type="text" class="form-control" placeholder="Where Hatched" title="Where Hatched" :class="[editBirdErrors.hatchedWhere ? 'is-invalid' : '']" v-model.trim="editBirdData.hatchedWhere">
+                                                    <autocomplete for="hatchedWhereEdit" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.hatchedWhere">Please provide a valid value for Where Hatched.</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hatch Date</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{new Date(currentBird.hatchDate*1000).toLocaleDateString('en-GB') }}</td>
+                                            <td v-else>
+                                                <div class="form-group datepicker-group">
+                                                    <datepicker id="hatchDate" class="form-control" v-model="editBirdData.hatchDate" placeholder="Hatch date" title="Hatch date" :config="datepickerOptions">
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Where Fledged</td>
-                                            <td style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : 'N/A' }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.fledgedWhere ? currentBird.fledgedWhere.nestID : 'N/A' }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="fledgedWhereEdit" type="text" class="form-control" placeholder="Where Fledged" title="Where Fledged" :class="[editBirdErrors.fledgedWhere ? 'is-invalid' : '']" v-model.trim="editBirdData.fledgedWhere">
+                                                    <autocomplete for="fledgedWhereEdit" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.fledgedWhere">Please provide a valid value for Where Fledged.</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fledge Date</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{new Date(currentBird.fledgeDate*1000).toLocaleDateString('en-GB') }}</td>
+                                            <td v-else>
+                                                <div class="form-group datepicker-group">
+                                                    <datepicker id="fledgeDate" class="form-control" v-model="editBirdData.fledgeDate" placeholder="Fledge date" title="Fledge date" :config="datepickerOptions">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap">Incubation Days</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.incubationDays }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="incubationDays" type="number" class="form-control" placeholder="Incubation days" title="Incubation days" :class="[editBirdErrors.incubationDays ? 'is-invalid' : '']" v-model.trim="editBirdData.incubationDays">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.incubationDays">Please provide a valid value for Incubation Days.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Where Released</td>
-                                            <td style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : 'N/A' }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.releasedWhere ? currentBird.releasedWhere.nestID : 'N/A' }}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="releasedWhereEdit" type="text" class="form-control" placeholder="Where Released" title="Where Released" :class="[editBirdErrors.releasedWhere ? 'is-invalid' : '']" v-model.trim="editBirdData.releasedWhere">
+                                                    <autocomplete for="releasedWhereEdit" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.releasedWhere">Please provide a valid value for Where Released.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>When Released</td>
-                                            <td style="text-align:right">{{new Date (currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
+                                            <td>Release Date</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{new Date(currentBird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
+                                            <td v-else>
+                                                <div class="form-group datepicker-group">
+                                                    <datepicker id="releasedWhen" class="form-control" v-model="editBirdData.releasedWhen" placeholder="Release Date" title="Release Date" :config="datepickerOptions">
+                                                    <!-- <datepicker id="releasedWhen" class="form-control" placeholder="When released" v-model="test" title="When released" :config="datepickerOptions"> -->
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Current Nest Site</td>
+                                            <td>Current Breeding Site</td>
                                             <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
                                         </tr>
                                         <tr>
-                                            <td style="white-space: nowrap">Previous Nest Site</td>
+                                            <td style="white-space: nowrap">Previous Breeding Site</td>
                                             <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[1] ? currentBird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
                                         </tr>
+                                        <tr v-if="isEditMode">
+                                                <td>New Breeding Site</td>
+                                                <td style="text-align:right">
+                                                    <div class="form-group">
+                                                            <input id="newBreedingSite" type="text" class="form-control" placeholder="New Breeding Site" title="New Breeding Site" :class="[editBirdErrors.newBreedingSite ? 'is-invalid' : '']" v-model.trim="editBirdData.newBreedingSite">
+                                                            <autocomplete for="newBreedingSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+                                                            <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSite">Please provide a valid New Breeding Site.</div>
+                                                        </div>
+                                                    </td>
+                                            </tr>
+                                            <tr v-if="isEditMode && editBirdData.newBreedingSite !== ''">
+                                                    <td>Date New Breeding Site Registered</td>
+                                                    <td style="text-align:right">
+                                                    <div class="form-group datepicker-group">
+                                                            <datepicker id="newBreedingSiteDate" class="form-control" v-model="editBirdData.newBreedingSiteDate" placeholder="Date New Breeding Site Registered" title="Date New Breeding Site Registered" :config="datepickerOptions">
+                                                            <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSiteDate">Please provide a valid New Breeding Site Date.</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                         <tr>
                                             <td>Notes</td>
-                                            <td style="text-align:right; height:90px; ">
+                                            <td style="text-align:right; height:90px; " v-if="!isEditMode">
                                                 <div style="overflow-y:scroll; height:90px;">{{currentBird.researcherNotes }}</div>
+                                            </td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <textarea id="researcherNotes" class="form-control" placeholder="Researcher Notes" title="Researcher Notes" :class="[editBirdErrors.researcherNotes ? 'is-invalid' : '']" v-model.trim="editBirdData.researcherNotes"></textarea>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.researcherNotes">Please provide valid Researcher Notes.</div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Created by</td>
-                                            <td style="text-align:right">{{currentBird.createdBy }}</td>
+                                            <td style="text-align:right">{{ currentBird.createdBy.fullName }}</td>
                                         </tr>
                                         <tr>
                                             <td>Created on</td>
@@ -330,27 +493,66 @@
                                     <table style="max-width: 90% !important;" class="col-sm-6">
                                         <tr>
                                             <td>Female Parent</td>
-                                            <td style="text-align:right">{{currentBird.motherName }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherName}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="motherName" type="text" class="form-control" placeholder="Female Parent" title="Female Parent" :class="[editBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="editBirdData.motherName">
+                                                    <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.motherName">Please provide a valid value for Mother Name.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Female Stud ID</td>
-                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                            <td>Female Parent Stud ID</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherStudId}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="motherStudID" type="text" class="form-control" placeholder="Female Parent Stud ID" title="Female Parent Stud ID" :class="[editBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.motherStudID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.motherStudID">Please provide a valid value for Female Parent Stud ID.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Male Parent</td>
-                                            <td style="text-align:right">{{currentBird.fatherName}}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherName}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="fatherName" type="text" class="form-control" placeholder="Male Parent" title="Male Parent" :class="[editBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherName">
+                                                    <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.fatherName">Please provide a valid value for Father Name.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Male Stud ID</td>
-                                            <td style="text-align:right">{{currentBird.birdName }}</td>
+                                            <td>Male Parent Stud ID</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherStudId}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="fatherStudID" type="text" class="form-control" placeholder="Male Parent Stud ID" title="Male Parent Stud ID" :class="[editBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherStudID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.fatherStudID">Please provide a valid value for Male Parent Stud ID.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>2nd Potential Male</td>
-                                            <td style="text-align:right">{{currentBird.secondFatherName }}</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherName}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="secondFatherName" type="text" class="form-control" placeholder="2nd Potential Male Parent" title="2nd Potential Male Parent" :class="[editBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherName">
+                                                    <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Male Parent.</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>2nd Male ID</td>
-                                            <td style="text-align:right">{{ currentBird.birdName }}</td>
+                                            <td>2nd Potential Male Stud ID</td>
+                                            <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherStudId}}</td>
+                                            <td style="text-align:right" v-else>
+                                                <div class="form-group">
+                                                    <input id="secondFatherStudID" type="text" class="form-control" placeholder="2nd Potential Male Parent Stud ID" title="2nd Potential Male Parent Stud ID" :class="[editBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherStudID">
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.secondFatherStudID">Please provide a valid value for 2nd Potential Male Stud ID.</div>
+                                            </div>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -394,10 +596,19 @@
 
 
             <div class="modal-footer flex-row-reverse justify-content-between">
-                <a class="btn btn-info " href="/account">Edit</a>
+                <a class="btn btn-info " v-if="!isEditMode" @click="enterEditMode">Edit</a>
 
-                <button type="button" data-dismiss="modal" class="btn btn-outline-info" href="/account">Cancel</button>
+                <div id="editControls flex-row-reverse">
+                    <a class="btn btn-info " v-if="isEditMode" @click="exitEditMode">Discard changes</a>
+                    <ajax-button type="submit" v-if="isEditMode" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
+                </div>
+                
+
+
+
+                <button type="button" @click="closeSingleViewModal()" class="btn btn-outline-info">Cancel</button>
             </div>
+        </ajax-form>
 
         </modal>
 

@@ -45,7 +45,7 @@ module.exports = {
 
       let query = {};
 
-      if(birdIdConstraint) query.birdId = birdIdConstraint;
+      if(birdIdConstraint) query.birdID = birdIdConstraint;
       query.nfcRFID = inputs.nfcFriendlyName;
   
       result = await RFIDTag.count(
