@@ -148,15 +148,8 @@ parasails.registerPage('get-bird', {
         }
       },
 
-      'editBirdData.newCondition': function(_, newValue) {
-        if(this.isEditMode) {
-          this.validateNewCondition();
-        }
-      },
-
       'editBirdData.newBreedingSite': function(_, newValue) {
         if(this.isEditMode) {
-          this.validateNewBreedingSite();
           this.validateNestsite('newBreedingSite');
         }
       },
@@ -356,7 +349,7 @@ parasails.registerPage('get-bird', {
                 this.editValidationCounter ++;
               }
               else {
-                result = Cloud.rfidTagExists.with({nfcFriendlyName: this.editBirdData.nfcRingID}).then(result => {
+                result = Cloud.rfidTagExists.with({nfcFriendlyName: this.editBirdData.nfcRingID, assignedStatus: false, excludeBirdId: this.editBirdData.id}).then(result => {
                   Vue.set(this.editBirdErrors, 'nfcRingID', !result);
                   this.editValidationCounter ++;
                 })
@@ -381,10 +374,10 @@ parasails.registerPage('get-bird', {
           validateNewCondition: function() {
             if(this.isEditMode) {
               if(this.editBirdData.newCondition && this.editBirdData.newCondition != "" && (!this.editBirdData.newConditionDate || this.editBirdData.newConditionDate == '')) {
-                Vue.set(this.editBirdErrors, 'newConditionDate', true);
+                Vue.set(this.editBirdErrors, 'conditionDate', true);
                 this.editValidationCounter ++;
               } else {
-                Vue.set(this.editBirdErrors, 'newConditionDate', false);
+                Vue.set(this.editBirdErrors, 'conditionDate', false);
                 this.editValidationCounter ++;
               }
             }

@@ -168,8 +168,8 @@
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <input id="nfcRingIDEdit" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[editBirdErrors.nfcRingID ? 'is-invalid' : '']" v-model.trim="editBirdData.nfcRingID">
-                                                    <autocomplete for="nfcRingIDEdit" action="getRfid" params='{"isAssigned": false, "limit": 5}' map="nfcRFID" is-async> </autocomplete>
-                                                    <div class="invalid-feedback" v-if="editBirdErrors.nfcRingID">Please provide a valid NFC Ring ID.</div>
+                                                    <autocomplete for="nfcRingIDEdit" action="getRfid" params='{"limit": 5}' map="nfcRFID" is-async> </autocomplete>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.nfcRingID">This ring either doesn't exist or has already been assigned.</div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -178,7 +178,6 @@
                                             <td style="text-align:right" v-if="!isEditMode">{{ currentBird.studID }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
-                                                    <!-- <label for="password">Stud ID</label> -->
                                                     <input id="studIdEdit" type="text" class="form-control" placeholder="Stud Id" title="Stud Id" :class="[editBirdErrors.studID ? 'is-invalid' : '']" v-model.trim="editBirdData.studID">
                                                     <div class="invalid-feedback" v-if="editBirdErrors.studID">Please provide a valid studId.</div>
                                                 </div>
@@ -271,20 +270,19 @@
                                             <td>New Condition</td>
                                             <td style="text-align:right">
                                                 <div class="form-group">
-                                                        <input id="newCondition" type="text" class="form-control" placeholder="New Condition" title="New Condition" :class="[editBirdErrors.newCondition ? 'is-invalid' : '']" v-model.trim="editBirdData.newCondition">
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.newCondition">Please provide a valid New Condition.</div>
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.newConditionDate">Please provide a valid New Condition Date.</div>
+                                                        <input id="newCondition" type="text" class="form-control" placeholder="New Condition" title="New Condition" :class="[(editBirdErrors.newCondition || editBirdErrors.conditionDate) ? 'is-invalid' : '']" v-model.trim="editBirdData.newCondition">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.conditionDate">Please provide a valid date for the New Condition.</div>
                                                     </div>
                                                 </td>
                                         </tr>
                                         <tr v-if="isEditMode && editBirdData.newCondition && editBirdData.newCondition !== ''">
-                                                <td>Date of Condition</td>
-                                                <td style="text-align:right">
-                                                <div class="form-group datepicker-group">
-                                                        <datepicker id="newConditionDate" class="form-control" v-model="editBirdData.newConditionDate" placeholder="Date of Condition" title="Date of Condition" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <td>Date of Condition</td>
+                                            <td style="text-align:right">
+                                            <div class="form-group datepicker-group">
+                                                    <datepicker id="newConditionDate" class="form-control" v-model="editBirdData.newConditionDate" :class="[editBirdErrors.conditionDate ? 'is-invalid' : '']" placeholder="Date of Condition" title="Date of Condition" :config="datepickerOptions">
+                                                </div>
+                                            </td>
+                                        </tr>
 
                                         <tr>
                                             <td colspan="2">
@@ -427,7 +425,7 @@
                                                 <td>New Breeding Site</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                            <input id="newBreedingSite" type="text" class="form-control" placeholder="New Breeding Site" title="New Breeding Site" :class="[editBirdErrors.newBreedingSite ? 'is-invalid' : '']" v-model.trim="editBirdData.newBreedingSite">
+                                                            <input id="newBreedingSite" type="text" class="form-control" placeholder="New Breeding Site" title="New Breeding Site" :class="[(editBirdErrors.newBreedingSite || editBirdErrors.newBreedingSiteDate) ? 'is-invalid' : '']" v-model.trim="editBirdData.newBreedingSite">
                                                             <autocomplete for="newBreedingSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
                                                             <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSite">Please provide a valid New Breeding Site.</div>
                                                             <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSiteDate">Please provide a valid New Breeding Site Date.</div>
@@ -438,7 +436,7 @@
                                                     <td>Date New Breeding Site Registered</td>
                                                     <td style="text-align:right">
                                                     <div class="form-group datepicker-group">
-                                                            <datepicker id="newBreedingSiteDate" class="form-control" v-model="editBirdData.newBreedingSiteDate" placeholder="Date New Breeding Site Registered" title="Date New Breeding Site Registered" :config="datepickerOptions">
+                                                            <datepicker id="newBreedingSiteDate" class="form-control" v-model="editBirdData.newBreedingSiteDate" :class="[editBirdErrors.newBreedingSiteDate ? 'is-invalid' : '']" placeholder="Date New Breeding Site Registered" title="Date New Breeding Site Registered" :config="datepickerOptions">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -587,7 +585,7 @@
 
             </table>
 
-
+            <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
             <div class="modal-footer flex-row-reverse justify-content-between">
                 <a class="btn btn-info " v-if="!isEditMode" @click="enterEditMode">Edit</a>
 

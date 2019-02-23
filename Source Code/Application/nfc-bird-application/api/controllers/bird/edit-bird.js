@@ -310,10 +310,9 @@ module.exports = {
 
       if(inputs.nfcRingID) {
         await RFIDTag.update({
-          nfcRFID: inputs.nfcRingID,
-          birdID: null
+          nfcRFID: inputs.nfcRingID
         }).set({
-          birdID: bird.id
+          birdID: inputs.id
         })
         .usingConnection(db)
       }
@@ -325,7 +324,7 @@ module.exports = {
         .id;
 
         await Birdnest.create({
-          birdID: bird.id,
+          birdID: inputs.id,
           nestID: nestId,
           dateEntered: inputs.newBreedingSiteDate || new Date()
         })
@@ -334,15 +333,15 @@ module.exports = {
 
       if(inputs.newCondition) {
         await Birdcondition.create({
-          birdID: bird.id,
+          birdID: inputs.id,
           dateNoted: inputs.newConditionDate || new Date()
         })
         .usingConnection(db);
       }
 
       })
-      // .intercept('E_UNIQUE', 'alreadyInUse')
-      // .intercept({name: 'UsageError'}, 'invalid')
+      .intercept('E_UNIQUE', 'alreadyInUse')
+      .intercept({name: 'UsageError'}, 'invalid')
 
       await sails.helpers.logActivity(this.req.me.id, 'Edited a bird', inputs);
 
