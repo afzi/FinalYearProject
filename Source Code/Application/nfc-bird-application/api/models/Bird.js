@@ -4,7 +4,7 @@
 */
 
 module.exports = {
-    
+
     attributes: {
         //BirdID provided by sails ID
         //createdOn provided by sails
@@ -51,7 +51,13 @@ module.exports = {
         },
         isBreeder: {
             type: "ref",
-            columnType: "boolean"
+            columnType: "varchar",
+            isIn: ["yes", "no", "unknown"]
+        },
+        status: {
+            type: "ref",
+            columnType: "varchar",
+            isIn: ["alive", "dead", "missing"]
         },
         layDate: {
             type: "ref",
