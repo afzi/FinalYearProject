@@ -160,29 +160,29 @@ INSERT INTO user
 
 INSERT INTO birdnest 
 (id,dateEntered,dateLeft,birdID,nestID) VALUES
-(1,'2019-01-17 00:00:00','2019-02-10 00:00:00',1,1),
-(2,'2019-02-12 00:00:00',null,1,1),
-(3,'2019-02-01 00:00:00',null,2,3),
-(4,'2019-02-01 00:00:00',null,3,3),
-(5,'2019-01-17 00:00:00','2019-02-10 00:00:00',4,5),
-(6,'2019-01-17 00:00:00',null,6,6),
-(7,'2019-01-17 00:00:00','2019-02-10 00:00:00',7,7),
-(8,'2019-01-17 00:00:00',null,9,8),
-(9,'2019-01-17 00:00:00',null,2,9),
-(10,'2019-01-17 00:00:00','2019-01-31 00:00:00',3,2);
+(1,1536908299,1536921299,1,1),
+(2,1536918299,null,1,1),
+(3,1536928299,null,2,3),
+(4,1536938299,null,3,3),
+(5,1536948299,1536922299,4,5),
+(6,1536958299,null,6,6),
+(7,1536968299,1536923299,7,7),
+(8,1536978299,null,9,8),
+(9,1536988299,null,2,9),
+(10,1536928299,1536924299,3,2);
 
 
 INSERT INTO birdcondition 
 (createdAt,updatedAt,id,birdCondition,birdID,dateNoted) VALUES
-(1549094046,1550275200,1,'Broken Right Wing, claiming bridifits.',3,'2019-01-13 00:00:00'),
-(1549094046,0,2,'Seems to be possessed with the sprit of the ghost rider.',2,'2019-01-11 00:00:00'),
-(1549097646,1550275200,3,'all good.',1,'2017-01-17 00:00:00'),
-(1549097646,0,4,'wearing an eyepatch.',30,'2016-05-17 00:00:00'),
-(1549097646,0,5,'bit a researcher, it was funny.',3,'2019-01-11 00:00:00'),
-(1549097646,0,6,'second toe on left foot appears injured.',26,'2019-01-12 00:00:00'),
-(1549529646,1550275200,7,'had a fight with a pigeon, the pigeon did not survive. this bird is now know as the punisher amoung it\'s peers.',12,'2019-01-14 00:00:00'),
-(1549238400,0,8,'has a bit of a drinking problem.',11,'2019-01-19 00:00:00'),
-(1549529646,0,9,'been eating a lot of seeds, struggling to fly. Suggesting a membership to PureGym.',11,'2019-01-10 00:00:00'),
-(1549875246,1550275200,10,'Much Health. Such Wow.',4,'2019-02-17 00:00:00'),
-(1549529646,0,11,'running out of ideas',6,'2015-01-17 00:00:00'),
-(1549875246,0,12,'upon further inspection it might actually be pregnant.',11,'2011-01-17 00:00:00');
+(1549094046,1550275200,1,'Broken Right Wing, claiming bridifits.',3,1536328299),
+(1549094046,0,2,'Seems to be possessed with the sprit of the ghost rider.',2,1536528299),
+(1549097646,1550275200,3,'all good.',1,1536921299),
+(1549097646,0,4,'wearing an eyepatch.',30,1532548299),
+(1549097646,0,5,'bit a researcher, it was funny.',3,1536921444),
+(1549097646,0,6,'second toe on left foot appears injured.',26,1536228299),
+(1549529646,1550275200,7,'had a fight with a pigeon, the pigeon did not survive. this bird is now know as the punisher amoung it\'s peers.',12,1536921339),
+(1549238400,0,8,'has a bit of a drinking problem.',11,1536928144),
+(1549529646,0,9,'been eating a lot of seeds, struggling to fly. Suggesting a membership to PureGym.',11,1536108299),
+(1549875246,1550275200,10,'Much Health. Such Wow.',4,1536920299),
+(1549529646,0,11,'running out of ideas',6,1536920000),
+(1549875246,0,12,'upon further inspection it might actually be pregnant.',11,1536910399);

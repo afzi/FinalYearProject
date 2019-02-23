@@ -319,14 +319,15 @@ module.exports = {
 
 
       if(inputs.newBreedingSite) {
-        var nestId = await Nestsite.findOne({nestID: inputs.newBreedingSite})
-        .usingConnection(db)
-        .id;
+        let nest = await Nestsite.findOne({nestID: inputs.newBreedingSite})
+        .usingConnection(db);
+
+        let nestId = nest.id;
 
         await Birdnest.create({
           birdID: inputs.id,
           nestID: nestId,
-          dateEntered: inputs.newBreedingSiteDate || new Date()
+          dateEntered: inputs.newBreedingSiteDate || new Date().getTime()
         })
         .usingConnection(db);
       }
@@ -334,7 +335,8 @@ module.exports = {
       if(inputs.newCondition) {
         await Birdcondition.create({
           birdID: inputs.id,
-          dateNoted: inputs.newConditionDate || new Date()
+          dateNoted: inputs.newConditionDate || new Date().getTime(),
+          birdCondition: inputs.newCondition
         })
         .usingConnection(db);
       }

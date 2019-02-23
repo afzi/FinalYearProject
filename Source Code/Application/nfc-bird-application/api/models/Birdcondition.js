@@ -19,7 +19,7 @@ module.exports = {
         },
         dateNoted: {
             type: "ref",
-            columnType: "datetime",
+            columnType: "bigint(20)",
             required: true
         }
         
