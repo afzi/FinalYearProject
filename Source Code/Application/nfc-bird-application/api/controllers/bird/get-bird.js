@@ -11,7 +11,12 @@ module.exports = {
   
   
     inputs: {
-  
+      id: {
+        required: false,
+        type: 'string',
+        description: 'ID of the bird to retrieve'
+      },
+
       studId: {
         required: false,
         type: 'string',
@@ -221,6 +226,7 @@ module.exports = {
       console.log("Received request to list/filter birds")
 
       let query = {}
+      if(inputs.id) query.id = inputs.id;
       if(inputs.studId) query.studId = {'contains': inputs.studId}
       if(inputs.newStudId) query.newStudId = {'contains': inputs.newStudId}
       if(inputs.leftRingId) query.leftRingId = {'contains': inputs.leftRingId}

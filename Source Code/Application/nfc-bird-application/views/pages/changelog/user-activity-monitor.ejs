@@ -34,41 +34,6 @@
                 </tr>
             </thead>
 
-<<<<<<< HEAD
-        <tbody role="rowgroup" id="log-table-body">
-            <tr v-for="(log, index) in currentLogs">
-                <td class="birdJustifyColumn">{{new Date(log.createdAt).toLocaleString()}}</td>
-                <td class="birdJustifyColumn"><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}} ({{log.user.username}})</a></td>
-                <td>{{log.action}}</td>
-                <td>{{log.data}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
-        <div class="flex-container paginateContainer">
-            <div>
-                <paginate
-                    :page-count="Math.ceil(logCount / pageSize)"
-                    :click-handler="pageClick"
-                    :prev-text="'Prev'"
-                    :next-text="'Next'"
-                    :container-class="'pagination'"
-                    :page-class="'page-item'"
-                    :page-link-class="'page-link'"
-                    :prev-class="'ignore page-item'"
-                    :prev-link-class="'page-link'"
-                    :next-class="'ignore page-item'"
-                    :next-link-class="'page-link'"
-                    :disabled-class="'ignore disabled'"
-                >
-                </paginate>
-            </div>
-            <div style="color:#fff;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Showing {{currentLogs.length}} entries out of {{logCount}}
-            </div>
-        </div>
-</footer>
-=======
             <tbody role="rowgroup" id="log-table-body">
                 <tr v-for="(log, index) in currentLogs">
                     <td>{{new Date(log.createdAt).toLocaleString()}}</td>
@@ -100,6 +65,5 @@
             </div>
         </div>
     </div>
->>>>>>> 0d0dd67664c63905f3b3a4061a1690a86d5da117
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

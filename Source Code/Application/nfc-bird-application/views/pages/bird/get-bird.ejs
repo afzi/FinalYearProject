@@ -124,15 +124,16 @@
 
         <modal class="example-modal" v-if="modal==='example3'" v-cloak>
             <div class="modal-header">
-                <h2 class="modal-title">Bird view - {{currentBird.birdName}}</h2>
+                <h2 v-if="!isEditMode" class="modal-title">View Bird - {{currentBird.birdName}}</h2>
+                <h2 v-else class="modal-title">Edit Bird - {{currentBird.birdName}}</h2>
                 <hr/>
                 <button type="button" class="modal-close-button" @click="closeSingleViewModal" aria-label="Close"></button>
             </div>
 
+            <ajax-form action="editBird" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormEdit" autocomplete="off">
             <table class="table">
                 <tr>
                     <td style="width:50%;">
-                        <ajax-form id="edit-bird-form" action="editBird" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormEdit" autocomplete="off">
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row mb-3">
@@ -142,21 +143,17 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <table class="col-sm-6 text-nowrap">
+                                    <table class="col-sm-6">
                                         <tr>
                                             <td style="white-space: nowrap">Bird Name</td>
                                             <td style="text-align:right" v-if="!isEditMode">{{ currentBird.birdName }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <input id="birdNameEdit" type="text" class="form-control" placeholder="Bird Name" title="Bird Name" :class="[editBirdErrors.birdName ? 'is-invalid' : '']" v-model.trim="editBirdData.birdName">
-                                                    <div class="invalid-feedback" v-if="editBirdErrors.birdName">Please provide a valid Bird Name.</div>
+                                                    <div class="invalid-feedback" v-if="editBirdErrors.birdName">Please provide a valid & unique Bird Name.</div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- <tr>
-                        <td>Status</td>
-                        <td style="text-align:right">{{currentBird.status }}</td>
-                    </tr> -->
                                         <tr>
                                             <td>Last Seen Date</td>
                                             <td style="text-align:right">{{currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
@@ -192,7 +189,6 @@
                                             <td style="text-align:right" v-if="!isEditMode">{{ currentBird.newStudID }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
-                                                    <!-- <label for="password">Stud ID</label> -->
                                                     <input id="newStudIdEdit" type="text" class="form-control" placeholder="New Stud Id" title="New Stud Id" :class="[editBirdErrors.newStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.newStudID">
                                                     <div class="invalid-feedback" v-if="editBirdErrors.newStudID">Please provide a valid New Stud Id.</div>
                                                 </div>
@@ -203,7 +199,6 @@
                                             <td style="text-align:right" v-if="!isEditMode">{{ currentBird.rightRingID }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
-                                                    <!-- <label for="password">Stud ID</label> -->
                                                     <input id="rightRingIdEdit" type="text" class="form-control" placeholder="Right Ring ID" title="Right Ring ID" :class="[editBirdErrors.rightRingID ? 'is-invalid' : '']" v-model.trim="editBirdData.rightRingID">
                                                     <div class="invalid-feedback" v-if="editBirdErrors.rightRingID">Please provide a valid Right Ring Id.</div>
                                                 </div>
@@ -244,7 +239,7 @@
                                         </tr>
                                         <tr>
                                             <td>Is breeder?</td>
-                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.isBreeder }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.isBreeder ? currentBird.isBreeder : 'Unknown' }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <select id="isBreederEdit"  class="form-control" :class= "[editBirdErrors.isBreeder ? 'is-invalid' : '']" v-model.trim="editBirdData.isBreeder">
@@ -257,7 +252,7 @@
                                         </tr>
                                         <tr>
                                             <td>Status</td>
-                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.status }}</td>
+                                            <td style="text-align:right" v-if="!isEditMode">{{ currentBird.status ? currentBird.status : 'Unknown' }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
                                                     <select id="statusEdit"  class="form-control" :class= "[editBirdErrors.status ? 'is-invalid' : '']" v-model.trim="editBirdData.status">
@@ -278,15 +273,15 @@
                                                 <div class="form-group">
                                                         <input id="newCondition" type="text" class="form-control" placeholder="New Condition" title="New Condition" :class="[editBirdErrors.newCondition ? 'is-invalid' : '']" v-model.trim="editBirdData.newCondition">
                                                         <div class="invalid-feedback" v-if="editBirdErrors.newCondition">Please provide a valid New Condition.</div>
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.newConditionDate">Please provide a valid New Condition Date.</div>
                                                     </div>
                                                 </td>
                                         </tr>
-                                        <tr v-if="isEditMode && editBirdData.newCondition !== ''">
+                                        <tr v-if="isEditMode && editBirdData.newCondition && editBirdData.newCondition !== ''">
                                                 <td>Date of Condition</td>
                                                 <td style="text-align:right">
                                                 <div class="form-group datepicker-group">
                                                         <datepicker id="newConditionDate" class="form-control" v-model="editBirdData.newConditionDate" placeholder="Date of Condition" title="Date of Condition" :config="datepickerOptions">
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.newConditionDate">Please provide a valid New Condition Date.</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -347,7 +342,6 @@
                                             <td v-else>
                                                 <div class="form-group datepicker-group">
                                                     <datepicker id="layDate" class="form-control" v-model="editBirdData.layDate" placeholder="Lay date" title="Lay date" :config="datepickerOptions">
-                                                    <!-- <datepicker id="layDate" class="form-control" placeholder="Lay date" v-model="test" title="Lay date" :config="datepickerOptions"> -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -418,7 +412,6 @@
                                             <td v-else>
                                                 <div class="form-group datepicker-group">
                                                     <datepicker id="releasedWhen" class="form-control" v-model="editBirdData.releasedWhen" placeholder="Release Date" title="Release Date" :config="datepickerOptions">
-                                                    <!-- <datepicker id="releasedWhen" class="form-control" placeholder="When released" v-model="test" title="When released" :config="datepickerOptions"> -->
                                                 </div>
                                             </td>
                                         </tr>
@@ -437,15 +430,15 @@
                                                             <input id="newBreedingSite" type="text" class="form-control" placeholder="New Breeding Site" title="New Breeding Site" :class="[editBirdErrors.newBreedingSite ? 'is-invalid' : '']" v-model.trim="editBirdData.newBreedingSite">
                                                             <autocomplete for="newBreedingSite" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
                                                             <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSite">Please provide a valid New Breeding Site.</div>
+                                                            <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSiteDate">Please provide a valid New Breeding Site Date.</div>
                                                         </div>
                                                     </td>
                                             </tr>
-                                            <tr v-if="isEditMode && editBirdData.newBreedingSite !== ''">
+                                            <tr v-if="isEditMode && editBirdData.newBreedingSite && editBirdData.newBreedingSite !== ''">
                                                     <td>Date New Breeding Site Registered</td>
                                                     <td style="text-align:right">
                                                     <div class="form-group datepicker-group">
                                                             <datepicker id="newBreedingSiteDate" class="form-control" v-model="editBirdData.newBreedingSiteDate" placeholder="Date New Breeding Site Registered" title="Date New Breeding Site Registered" :config="datepickerOptions">
-                                                            <div class="invalid-feedback" v-if="editBirdErrors.newBreedingSiteDate">Please provide a valid New Breeding Site Date.</div>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -598,7 +591,7 @@
             <div class="modal-footer flex-row-reverse justify-content-between">
                 <a class="btn btn-info " v-if="!isEditMode" @click="enterEditMode">Edit</a>
 
-                <div id="editControls flex-row-reverse">
+                <div id="editControls" class="flex-row-reverse form-group">
                     <a class="btn btn-info " v-if="isEditMode" @click="exitEditMode">Discard changes</a>
                     <ajax-button type="submit" v-if="isEditMode" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
                 </div>

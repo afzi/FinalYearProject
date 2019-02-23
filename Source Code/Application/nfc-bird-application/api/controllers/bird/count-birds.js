@@ -214,7 +214,7 @@ module.exports = {
           var allConditionsMatch = true;
           
             if(inputs.currentCondition) {
-              var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+              var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'dateNoted DESC'});
               if(!(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition))) {
                 allConditionsMatch = false;
               }

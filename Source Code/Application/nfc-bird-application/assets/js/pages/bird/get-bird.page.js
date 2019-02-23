@@ -120,31 +120,31 @@ parasails.registerPage('get-bird', {
 
       'editBirdData.fledgedWhere': function (_, newValue) {
         if(this.isEditMode && $("#fledgedWhereEdit").data('locked') != 1) {
-          this.validateNestsite(newValue, 'fledgedWhere');
+          this.validateNestsite('fledgedWhere');
         }
       },
 
       'editBirdData.laidWhere': function (_, newValue) {
         if(this.isEditMode && $("#laidWhereEdit").data('locked') != 1) {
-          this.validateNestsite(newValue, 'laidWhere');
+          this.validateNestsite('laidWhere');
         }
       },
 
       'editBirdData.hatchedWhere': function (_, newValue) {
         if(this.isEditMode && $("#hatchedWhereEdit").data('locked') != 1) {
-          this.validateNestsite(newValue, 'hatchedWhere');
+          this.validateNestsite('hatchedWhere');
         }
       },
 
       'editBirdData.releasedWhere': function (_, newValue) {
         if(this.isEditMode && $("#releasedWhereEdit").data('locked') != 1) {
-          this.validateNestsite(newValue, 'releasedWhere');
+          this.validateNestsite('releasedWhere');
         }
       },
 
-      'editBirdData.birdName': function (_, newValue) {
+      'editBirdData.birdName': function (_, _) {
         if(this.isEditMode) {
-          this.validateUniqueBirdName(newValue, this.editBirdData.id);
+          this.validateUniqueBirdName(this.editBirdData.id);
         }
       },
 
@@ -157,6 +157,7 @@ parasails.registerPage('get-bird', {
       'editBirdData.newBreedingSite': function(_, newValue) {
         if(this.isEditMode) {
           this.validateNewBreedingSite();
+          this.validateNestsite('newBreedingSite');
         }
       },
 
@@ -196,35 +197,78 @@ parasails.registerPage('get-bird', {
       submittedForm: async function() {
         this.syncing = true;
         await this.refresh();
+        if(this.isEditMode) {
+          this.currentBird = (await Cloud.getBird.with({id: this.editBirdData.id, includeVisits: true, includeNestsites: true, includeConditions: true}))[0]
+          this.exitEditMode();
+        }
         this.syncing = false;
-        this.exitEditMode();
       },
 
       handleParsingFormEdit: function() {
         // Clear out any pre-existing error messages.
-        this.formErrors = {};
-        this.editValidationCounter = 0;
+        // this.formErrors = {};
+        // this.editValidationCounter = 0;
   
   
-        var argins = this.editBirdData;
+        var argins =  $.extend({}, this.editBirdData);
 
-        this.validateNestsite(this.editBirdData.fledgedWhere);
-        this.validateNestsite(this.editBirdData.releasedWhere);
-        this.validateNestsite(this.editBirdData.laidWhere);
-        this.validateNestsite(this.editBirdData.hatchedWhere);
-        this.validateUniqueBirdName(this.editBirdData.birdName, this.editBirdData.id);
-        this.validateNewCondition();
-        this.validateNewBreedingSite();
-        this.validateRFID();
+        if(this.editBirdData.hatchDate != null && this.hatchDate != "") {
+          argins.hatchDate = moment(this.editBirdData.hatchDate, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.hatchDate = undefined;
+        }
+        if(this.editBirdData.newConditionDate != null && this.newConditionDate != "") {
+          argins.newConditionDate = moment(this.editBirdData.newConditionDate, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.newConditionDate = undefined;
+        }
+        if(this.editBirdData.layDate != null && this.editBirdData.layDate != "") {
+          argins.layDate = moment(this.editBirdData.layDate, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.layDate = undefined;
+        }
+        if(this.editBirdData.fledgeDate != null && this.editBirdData.fledgeDate != "") {
+          argins.fledgeDate = moment(this.editBirdData.fledgeDate, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.fledgeDate = undefined;
+        }
+        if(this.editBirdData.releasedWhen != null && this.editBirdData.releasedWhen != "") {
+          argins.releasedWhen = moment(this.editBirdData.releasedWhen, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.releasedWhen = undefined;
+        }
+        if(this.editBirdData.newBreedingSiteDate != null && this.editBirdData.newBreedingSiteDate != "") {
+          argins.newBreedingSiteDate = moment(this.editBirdData.newBreedingSiteDate, 'DD/MM/YYYY').format("X");
+        } else {
+          argins.newBreedingSiteDate = undefined;
+        }
 
-        while(this.editValidationCounter < 8); // wait until validation has finished on all fields
+        // to be safe, we should also do validation on form submit, however it should be done asynchronously, and ajax-form doesn't work with async parse function...
+
+        // this.validateNestsite('fledgedWhere');
+        // this.validateNestsite('releasedWhere');
+        // this.validateNestsite('laidWhere');
+        // this.validateNestsite('hatchedWhere');
+        // this.validateNestsite('newBreedingSite');
+        // this.validateUniqueBirdName(this.editBirdData.id);
+        // this.validateNewCondition();
+        // this.validateNewBreedingSite();
+        // this.validateRFID();
+
+        // while(this.editValidationCounter < 9) {
+        //   console.log(this.editValidationCounter);
+        // } // wait until validation has finished on all fields
 
   
         // If there were any issues, they've already now been communicated to the user,
         // so simply return undefined.  (This signifies that the submission should be
         // cancelled.)
-        if (Object.keys(this.formErrors).length > 0) {
-          return;
+
+        for (var nextValidationField in this.editBirdErrors) {
+          if(this.editBirdErrors[nextValidationField] == true) {
+            this.syncing = false;
+            return;
+          }
         }
   
         return argins;
@@ -291,39 +335,43 @@ parasails.registerPage('get-bird', {
             this.currentNestSiteFilter = "";
           },
 
-          validateNestsite: function(nestName, fieldName) {
+          validateNestsite: function(fieldName) {
             if(this.isEditMode) {
-              if(!nestName || nestName === "") {
-                this.editBirdErrors['fieldName'] = false;
+              if(!this.editBirdData[fieldName] || this.editBirdData[fieldName] === "") {
+                Vue.set(this.editBirdErrors, fieldName, false);
+                this.editValidationCounter ++;
               } else {
-                Cloud.nestsiteExists.with({nestID: nestName}).then(result => {
-                  this.editBirdErrors[fieldName] = !result;
-                  });
+                Cloud.nestsiteExists.with({nestID: this.editBirdData[fieldName]}).then(result => {
+                  Vue.set(this.editBirdErrors, fieldName, !result);
                   this.editValidationCounter ++;
+                  });
               }
             }
-
           },
 
           validateRFID: function() {
             if(this.isEditMode) {
-              if(!this.editBirdData.nfcRingID || this.editBirdData.nfcRingID == "") this.editBirdErrors.nfcRingID = false;
+              if(!this.editBirdData.nfcRingID || this.editBirdData.nfcRingID == "") {
+                Vue.set(this.editBirdErrors, 'nfcRingID', false);
+                this.editValidationCounter ++;
+              }
               else {
                 result = Cloud.rfidTagExists.with({nfcFriendlyName: this.editBirdData.nfcRingID}).then(result => {
-                  this.editBirdErrors.nfcRingID = !result;
+                  Vue.set(this.editBirdErrors, 'nfcRingID', !result);
                   this.editValidationCounter ++;
                 })
               }
             }
           },
 
-          validateUniqueBirdName: function(birdName, thisBirdId) {
+          validateUniqueBirdName: function(thisBirdId) {
             if(this.isEditMode) {
-              if(!birdName || birdName === "") {
-                this.editBirdErrors.birdName = true;
+              if(!this.editBirdData.birdName || this.editBirdData.birdName === "") {
+                Vue.set(this.editBirdErrors, 'birdName', true);
+                this.editValidationCounter ++;
               } else {
-                result = Cloud.uniqueBirdName.with({echoName: birdName, excludeId: thisBirdId}).then(result => {
-                  this.editBirdErrors.birdName = !result;
+                result = Cloud.uniqueBirdName.with({echoName: this.editBirdData.birdName, excludeId: thisBirdId}).then(result => {
+                  Vue.set(this.editBirdErrors, 'birdName', !result);
                   this.editValidationCounter ++;
                 })
               }
@@ -333,9 +381,10 @@ parasails.registerPage('get-bird', {
           validateNewCondition: function() {
             if(this.isEditMode) {
               if(this.editBirdData.newCondition && this.editBirdData.newCondition != "" && (!this.editBirdData.newConditionDate || this.editBirdData.newConditionDate == '')) {
-                this.editBirdErrors.newConditionDate = true;
+                Vue.set(this.editBirdErrors, 'newConditionDate', true);
+                this.editValidationCounter ++;
               } else {
-                this.editBirdErrors.newConditionDate = false;
+                Vue.set(this.editBirdErrors, 'newConditionDate', false);
                 this.editValidationCounter ++;
               }
             }
@@ -344,9 +393,10 @@ parasails.registerPage('get-bird', {
           validateNewBreedingSite: function() {
             if(this.isEditMode) {
               if(this.editBirdData.newBreedingSite && this.editBirdData.newBreedingSite != "" && (!this.editBirdData.newBreedingSiteDate || this.editBirdData.newBreedingSiteDate == '')) {
-                this.editBirdErrors.newBreedingSiteDate = true;
+                Vue.set(this.editBirdErrors, 'newBreedingSiteDate', true);
+                this.editValidationCounter ++;
               } else {
-                this.editBirdErrors.newBreedingSiteDate = false;
+                Vue.set(this.editBirdErrors, 'newBreedingSiteDate', false);
                 this.editValidationCounter ++;
               }
             }
@@ -376,8 +426,9 @@ parasails.registerPage('get-bird', {
       enterEditMode: async function() {
         this.editBirdData = $.extend({}, this.currentBird),
         this.editBirdData.hatchDate = this.currentBird.hatchDate ? new Date(this.currentBird.hatchDate * 1000) : null;
-        this.editBirdData.layDate = this.currentBird.layDate ? new Date(this.currentBird.layDate * 1000) : null;
-        this.editBirdData.releasedWhen = this.currentBird.releasedWhen ? new Date(this.currentBird.releasedWhen * 1000) : null;
+        this.editBirdData.layDate = this.currentBird.layDate ? new Date(this.currentBird.layDate * 1000 ) : null;
+        this.editBirdData.fledgeDate = this.currentBird.fledgeDate ? new Date(this.currentBird.fledgeDate * 1000 ) : null;
+        this.editBirdData.releasedWhen = this.currentBird.releasedWhen ? new Date(this.currentBird.releasedWhen * 1000 ) : null;
         this.editBirdData.hatchedWhere = this.currentBird.hatchedWhere ? this.currentBird.hatchedWhere.nestID : "";
         this.editBirdData.fledgedWhere = this.currentBird.fledgedWhere ? this.currentBird.fledgedWhere.nestID : "";
         this.editBirdData.releasedWhere = this.currentBird.releasedWhere ? this.currentBird.releasedWhere.nestID : "";
@@ -389,9 +440,9 @@ parasails.registerPage('get-bird', {
       },
 
       exitEditMode: function() {
-        this.editBirdData = {}
-        this.editBirdErrors = {},
         this.isEditMode = false;
+        this.editBirdData = {}
+        this.editBirdErrors = {}
       },
 
       promptExitEditMode: function() {
