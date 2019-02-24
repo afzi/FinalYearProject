@@ -54,6 +54,12 @@ module.exports = {
         description: 'The sex (male / female / unknown)',
         extendedDescription: 'Must be one of male / female / unknown'
       },
+      
+      isBreeder: {
+        required: false,
+        type: 'string',
+        description: 'Whether th ebird is(breeder / not breeder / unknown)'
+      },
 
       fatherName: {
         required: false,
@@ -181,12 +187,6 @@ module.exports = {
           description: 'Whether to include the condition history of the bird'
         },
 
-        isBreeder: {
-          required: false,
-          type: 'boolean',
-          description: 'Whether th ebird is breeder or not'
-        },
-
         includeVisits: {
           required: false,
           type: 'boolean',
@@ -233,6 +233,8 @@ module.exports = {
       if(inputs.rightRingId) query.rightRingId = {'contains': inputs.rightRingId}
       if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
       if(inputs.sex) query.sex = inputs.sex
+      // if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
+      
       if(inputs.fatherName) query.fatherName = {'contains': inputs.fatherName}
       if(inputs.motherName) query.motherName = {'contains': inputs.motherName}
       if(inputs.secondFatherName) query.secondFatherName = {'contains': inputs.secondFatherName}

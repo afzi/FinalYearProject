@@ -37,8 +37,9 @@
             <div class="form-group search-box">
                 <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
                     <option disabled selected value=""> Is Breeder</option>
-                    <option value="0">No</option>
-                    <option value="1">yes</option>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                    <option value="unknown">unknown</option>
                 </select>
             </div>
 
@@ -85,7 +86,7 @@
                     <td>{{bird.fatherName}}</td>
                     <td>{{bird.motherName}}</td>
                     <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
-                    <td>{{bird.isBreeder==null ? 'Unkown' : bird.isBreeder ? 'Yes' : 'No' }}</td>
+                    <td>{{bird.isBreeder}}</td>
                     <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
                     <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
                     <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
