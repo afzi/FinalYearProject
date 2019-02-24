@@ -12,31 +12,29 @@ module.exports = {
     fullName: {
       type: 'string'
     }
-
   },
 
 
   exits: {
-
-    emailAlreadyInUse: {
-      statusCode: 409,
-      description: 'The provided email address is already in use.',
-    },
-
+    success: {
+      description: 'All good dawg.'
+    }
   },
 
 
   fn: async function (inputs) {
     // Start building the values to set in the db.
     // (We always set the fullName if provided.)
-    var valuesToSet = {
-      fullName: inputs.fullName,
-      username: inputs.username,
-    };
 
+    var query = {}
 
-    // Save to the db
-    await User.updateOne({id: this.req.me.id })
-    .set(valuesToSet);
+    if(inputs.fullName) {
+      query.fullName = inputs.fullName;
+      // Save to the db
+      await User.updateOne({id: this.req.me.id })
+      .set(query);
+
+      await sails.helpers.logActivity(this.req.me.id, 'Updated their Full Name', inputs);
+    } 
   }
 };

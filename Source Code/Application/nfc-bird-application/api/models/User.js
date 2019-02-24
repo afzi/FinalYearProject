@@ -7,8 +7,6 @@ module.exports = {
 
     attributes: {
         //UserID provided by sails ID
-        updatedAt: false,
-        createdAt: false,
 
         username: {
             type: "string",

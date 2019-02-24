@@ -17,6 +17,7 @@ module.exports.policies = {
   'account/logout': true,
   'view-homepage-or-redirect': true,
 
-  'account/update-password/*': 'is-super-admin'
+  // 'account/update-password/*': 'is-super-admin'
+  'account/update-password/*': true,
 
 };

@@ -227,10 +227,10 @@ module.exports = {
 
       let query = {}
       if(inputs.id) query.id = inputs.id;
-      if(inputs.studId) query.studId = {'contains': inputs.studId}
-      if(inputs.newStudId) query.newStudId = {'contains': inputs.newStudId}
-      if(inputs.leftRingId) query.leftRingId = {'contains': inputs.leftRingId}
-      if(inputs.rightRingId) query.rightRingId = {'contains': inputs.rightRingId}
+      if(inputs.studId) query.studID = {'contains': inputs.studId}
+      if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
+      if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
+      if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
       if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
       if(inputs.sex) query.sex = inputs.sex
       // if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
@@ -245,10 +245,10 @@ module.exports = {
       if(inputs.layDateTo) query.layDate['<='] = inputs.layDateTo;
       if(inputs.hatchDateFrom) query.hatchDate = {'>=': inputs.hatchDateFrom}
       if(inputs.hatchDateTo) query.hatchDate['<='] = inputs.hatchDateTo;
-      if(inputs.incDaysFrom) query.incDays = {'>=': inputs.incDaysFrom};
-      if(inputs.incDaysTo) query.incDays['<='] = inputs.incDaysTo;
+      if(inputs.incDaysFrom) query.incubationDays = {'>=': inputs.incDaysFrom};
+      if(inputs.incDaysTo) query.incubationDays['<='] = inputs.incDaysTo;
 
-      if(inputs.isBreeder != undefined) query.isBreeder = inputs.isBreeder;
+      if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
 
 
       let finalQuery = {where: query}
@@ -313,7 +313,7 @@ module.exports = {
         finalResult = finalResult.slice(0, inputs.limit);
       }
 
-      // TODO rewrite this whole fucking controller to be more efficient
+      // TODO rewrite this whole fucking controller to be more efficient. No, seriously, it's horrible.
 
       return finalResult;
     }
