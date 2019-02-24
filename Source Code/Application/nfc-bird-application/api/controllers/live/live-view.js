@@ -48,19 +48,24 @@ module.exports = {
 
 
     fn: async function(inputs, exits) {
-        var LIVEVIEWQUERY = `
-            SELECT birds.id, birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt
-            FROM nfcbirds.bird AS birds
+        var VISITCOUNTQUERY = `SELECT COUNT(*) AS cnt `;
+        var LIVEVIEWQUERY = `SELECT birds.id, birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt `;
+        var FILTERING = `FROM nfcbirds.bird AS birds
             INNER JOIN nfcbirds.rfidtag AS tags
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
             ON tags.nfcRFIDInternal = visits.nfcRFID
             WHERE visits.createdAt >= UNIX_TIMESTAMP(concat(curdate(), $1))
             AND visits.createdAt <= UNIX_TIMESTAMP(concat(curdate(), $2)) `;
-        if (inputs.searchTerm != null) { LIVEVIEWQUERY += " AND birds.birdName LIKE $3 "; }
-        LIVEVIEWQUERY += `ORDER BY visits.createdAt DESC
-            LIMIT $4 OFFSET $5;`;
+        if (inputs.searchTerm != null) { FILTERING += " AND birds.birdName LIKE $3 "; }
+        VISITCOUNTQUERY += FILTERING;
+        LIVEVIEWQUERY += FILTERING;
+        LIVEVIEWQUERY += `ORDER BY visits.createdAt DESC LIMIT $4 OFFSET $5;`;
 
+        // GET COUNT FOR PAGINATION
+        var rawCount = await sails.sendNativeQuery(VISITCOUNTQUERY,[" "+inputs.timeFrom+":00"," "+inputs.timeTo+":00","%" + inputs.searchTerm + "%"]);
+
+        // GET DATA FOR TABLE
         var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [" "+inputs.timeFrom+":00"," "+inputs.timeTo+":00","%" + inputs.searchTerm + "%", inputs.numOfRows, inputs.offset]);
         var parsedResult = [];
         var rows = rawResult.rows;
@@ -69,6 +74,6 @@ module.exports = {
             row.createdAt = TimeUtil.unixToDate(row.createdAt);
             parsedResult.push(row)
         }
-        return exits.success(parsedResult);
+        return exits.success({visits: parsedResult, count: rawCount.rows[0].cnt});
     }
 };

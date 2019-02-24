@@ -9,7 +9,6 @@ TRUNCATE TABLE bird;
 
 /*Populates all the above tables with designed testing data*/
 
-TRUNCATE TABLE bird;
 INSERT INTO bird 
 (createdAt, updatedAt, id, birdName, studID, newStudID, leftRingID, rightRingID, sex, isBreeder, status, layDate, hatchDate, incubationDays, fledgeDate, releasedWhen, groupName, motherName, fatherName, secondFatherName, researcherNotes, createdBy, editedBy, laidWhere, hatchedWhere, fledgedWhere, releasedWhere) VALUES 
 (1546884006,1543047022,1,'bryan','262988','39lgf4','violet, green: stripe','green: solid','unknown','unknown','alive',1536928299,1546748413,18,1546288320,1552651158,'sierra','veronika','cullin',NULL,'morbi non lectus. aliquam sit amet diam in magna bibendum imperdiet.',3,3,1,2,3,4),

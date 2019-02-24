@@ -47,7 +47,10 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.visitData = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
+        var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
+        this.visitData = raw.visits;
+        this.visitCount = raw.count;
+        console.log(raw);
     },
     watch: {
         // whenever one of the filters changes, this function will run
@@ -86,9 +89,15 @@ parasails.registerPage('live-view', {
 
         refresh: async function() {
             if (this.search == null || this.search == "") {
-                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.currentPage = 1;
+                this.visitData = raw.visits;
+                this.visitCount = raw.count;
             } else {
-                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.currentPage = 1;
+                this.visitData = raw.visits;
+                this.visitCount = raw.count;
             }
             // if(this.search == null && (this.timeFrom == "00:00" && this.timeTo == "23:59")){
             //     this.visitCount = await Visit.count();
