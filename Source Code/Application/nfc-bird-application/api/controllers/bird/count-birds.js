@@ -203,8 +203,8 @@ module.exports = {
       if(inputs.layDateTo) query.layDate['<='] = inputs.layDateTo;
       if(inputs.hatchDateFrom) query.hatchDate = {'>=': inputs.hatchDateFrom}
       if(inputs.hatchDateTo) query.hatchDate['<='] = inputs.hatchDateTo;
-      if(inputs.incDaysFrom) query.incDays = {'>=': inputs.incDaysFrom};
-      if(inputs.incDaysTo) query.incDays['<='] = inputs.incDaysTo;
+      if(inputs.incDaysFrom) query.incubationDays = {'>=': inputs.incDaysFrom};
+      if(inputs.incDaysTo) query.incubationDays['<='] = inputs.incDaysTo;
 
       let finalQuery = {where: query}
 
