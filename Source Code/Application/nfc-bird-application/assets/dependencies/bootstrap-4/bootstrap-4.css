@@ -2047,8 +2047,12 @@ textarea.form-control {
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin: 0.5rem 0.2rem;
 }
+.search-box{
+    width: 13%;
+}
+
 
 .form-text {
     display: block;
