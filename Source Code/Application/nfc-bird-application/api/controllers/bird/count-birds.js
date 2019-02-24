@@ -186,10 +186,10 @@ module.exports = {
       console.debug("Received request to list/filter birds")
 
       let query = {}
-      if(inputs.studId) query.studId = {'contains': inputs.studId}
-      if(inputs.newStudId) query.newStudId = {'contains': inputs.newStudId}
-      if(inputs.leftRingId) query.leftRingId = {'contains': inputs.leftRingId}
-      if(inputs.rightRingId) query.rightRingId = {'contains': inputs.rightRingId}
+      if(inputs.studId) query.studID = {'contains': inputs.studId}
+      if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
+      if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
+      if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
       if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
       if(inputs.sex) query.sex = inputs.sex
       if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
