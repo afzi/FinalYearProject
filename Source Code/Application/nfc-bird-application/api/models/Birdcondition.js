@@ -16,6 +16,11 @@ module.exports = {
             type: "string",
             columnType: "varchar",
             maxLength: 200
+        },
+        dateNoted: {
+            type: "ref",
+            columnType: "bigint(20)",
+            required: true
         }
         
     }

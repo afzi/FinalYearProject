@@ -18,6 +18,12 @@ module.exports = {
         required: false,
         type: 'boolean',
         description: 'Whether this tag has been assigned to a bird'
+      },
+
+      excludeBirdId: {
+        required: false,
+        type: 'string',
+        description: "If we're filtering on assigned = false, exclude this bird ID"
       }
     },
   
@@ -34,19 +40,33 @@ module.exports = {
     fn: async function (inputs) {
       if(!inputs.nfcFriendlyName) return false;
 
-      let birdIdConstraint;
-      if(inputs.isAssigned) {
-          birdIdConstraint = {
-              '!=': null
+      let query = {}
+
+      if(inputs.assignedStatus) {
+        query.birdID = {
+            '!=': null
+        }
+        query.nfcRFID = inputs.nfcFriendlyName;
+
+      } else if(inputs.assignedStatus === false) {
+        if(inputs.excludeBirdId) {
+          query = {
+            or: [
+              {
+                birdID: null,
+                nfcRFID: inputs.nfcFriendlyName
+              },
+              {
+                birdID: inputs.excludeBirdId,
+                nfcRFID: inputs.nfcFriendlyName
+              }
+            ]
           }
-      } else if(inputs.isAssigned === false) {
-          birdIdConstraint = null;
+        } else {
+          query.birdID = null,
+          query.nfcRFID = inputs.nfcFriendlyName
+        }
       }
-
-      let query = {};
-
-      if(birdIdConstraint) query.birdId = birdIdConstraint;
-      query.nfcRFID = inputs.nfcFriendlyName;
   
       result = await RFIDTag.count(
         query

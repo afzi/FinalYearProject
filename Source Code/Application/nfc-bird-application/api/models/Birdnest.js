@@ -20,12 +20,12 @@ module.exports = {
         },
         dateEntered: {
             type: "ref",
-            columnType: "datetime",
+            columnType: "bigint(20)",
             required: true
         },
         dateLeft: {
             type: "ref",
-            columnType: "datetime"
+            columnType: "bigint(20)"
         }
     }
 };

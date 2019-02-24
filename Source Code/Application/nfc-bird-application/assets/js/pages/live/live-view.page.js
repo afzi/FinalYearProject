@@ -9,6 +9,10 @@ parasails.registerPage('live-view', {
 
         visitCount: 0,
 
+        dayInitalVisitCount:0,
+
+        dayUpdatedVisitCount:0,
+
         pageSize: 15,
 
         currentPage: 1,
@@ -47,10 +51,23 @@ parasails.registerPage('live-view', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
-        this.visitData = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
+        var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
+        this.visitData = raw.visits;
+        this.visitCount = raw.count;
+        this.dayInitalVisitCount = raw.count;
+        setInterval(async function() {
+            var temp = await Cloud.liveView.with({ timeFrom: '00:00', timeTo: '23:59', offset: 0, numOfRows: 0 });
+            this.dayUpdatedVisitCount = temp.count;
+          },60000); //1 min is 60000
     },
     watch: {
         // whenever one of the filters changes, this function will run
+        dayUpdatedVisitCount: function(_,_){
+            if(this.dayUpdatedVisitCount > this.dayInitalVisitCount){
+                //TODO: notify user that new records exisit
+                console.log('hola');
+            }
+        },
         pageSize: function(_, _) {
             this.refresh();
         },
@@ -70,6 +87,9 @@ parasails.registerPage('live-view', {
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
+        checkNew: async function() {
+            console.log("testIntervaling");
+        },
         pageClick: async function(pageNum) {
             this.currentPage = pageNum;
             this.refresh();
@@ -86,9 +106,15 @@ parasails.registerPage('live-view', {
 
         refresh: async function() {
             if (this.search == null || this.search == "") {
-                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.currentPage = 1;
+                this.visitData = raw.visits;
+                this.visitCount = raw.count;
             } else {
-                this.visitData = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                this.currentPage = 1;
+                this.visitData = raw.visits;
+                this.visitCount = raw.count;
             }
             // if(this.search == null && (this.timeFrom == "00:00" && this.timeTo == "23:59")){
             //     this.visitCount = await Visit.count();
@@ -107,5 +133,16 @@ parasails.registerPage('live-view', {
             this.refresh();
         },
 
+        exportToExcel: async function() {
+            console.log(this.res);
+           var file =  await Cloud.exportToExcel.with({res: this.res});;
+
+                if(!file) { throw 'notFound'; }
+              
+                this.res.attachment(file.downloadName);
+                var downloading = await sails.startDownload(file.uploadFd);
+                return exits.success(downloading);
+        
     }
+}
 });

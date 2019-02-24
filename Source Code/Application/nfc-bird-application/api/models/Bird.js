@@ -110,6 +110,21 @@ module.exports = {
             columnType: "varchar",
             maxLength: 20
         },
+        motherStudID: {
+            type: "ref",
+            columnType: "varchar",
+            maxLength: 20
+        },
+        fatherStudID: {
+            type: "ref",
+            columnType: "varchar",
+            maxLength: 20
+        },
+        secondFatherStudID: {
+            type: "ref",
+            columnType: "varchar",
+            maxLength: 20
+        },
         researcherNotes: {
             type: "ref",
             columnType: "varchar",

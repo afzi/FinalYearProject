@@ -11,7 +11,12 @@ module.exports = {
   
   
     inputs: {
-  
+      id: {
+        required: false,
+        type: 'string',
+        description: 'ID of the bird to retrieve'
+      },
+
       studId: {
         required: false,
         type: 'string',
@@ -221,6 +226,7 @@ module.exports = {
       console.log("Received request to list/filter birds")
 
       let query = {}
+      if(inputs.id) query.id = inputs.id;
       if(inputs.studId) query.studId = {'contains': inputs.studId}
       if(inputs.newStudId) query.newStudId = {'contains': inputs.newStudId}
       if(inputs.leftRingId) query.leftRingId = {'contains': inputs.leftRingId}
@@ -250,51 +256,52 @@ module.exports = {
     //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
     //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
 
-      
-      var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere');
+  
+      var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere').populate('createdBy');
 
       var finalResult = [];
 
-      if(inputs.includeConditions || inputs.includeNestsites || inputs.includeVisits) {
-        for(let nextBird of result) {
-          var allConditionsMatch = true;
+      for(let nextBird of result) {
+        var rfid = await RFIDTag.findOne({birdID: nextBird.id});
 
-          if(inputs.includeConditions) {
-            var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
-            if(inputs.currentCondition) {
-              if(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition)) {
-                nextBird.conditionHistory = conditionHistory;
-              } else {
-                allConditionsMatch = false;
-              }
-            } else {
+        if(rfid) nextBird.nfcRingID = rfid.nfcRFID;
+
+        var allConditionsMatch = true;
+
+        if(inputs.includeConditions) {
+          var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'dateNoted DESC'});
+          if(inputs.currentCondition) {
+            if(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition)) {
               nextBird.conditionHistory = conditionHistory;
-            }
-          }
-
-          if(inputs.includeNestsites && allConditionsMatch) {
-            var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
-            if(inputs.currentNestSite) {
-              if(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite)) {
-                nextBird.nestsiteHistory = nestsiteHistory;
-              } else {
-                allConditionsMatch = false;
-              }
             } else {
-              nextBird.nestsiteHistory = nestsiteHistory;
+              allConditionsMatch = false;
             }
+          } else {
+            nextBird.conditionHistory = conditionHistory;
           }
-
-          if(inputs.includeVisits && allConditionsMatch) {
-            var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
-            nextBird.visitHistory = visitHistory;
-          }
-
-          if(allConditionsMatch) finalResult.push(nextBird);
         }
-      } else {
-        finalResult = result;
+
+        if(inputs.includeNestsites && allConditionsMatch) {
+          var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
+          if(inputs.currentNestSite) {
+            if(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite)) {
+              nextBird.nestsiteHistory = nestsiteHistory;
+            } else {
+              allConditionsMatch = false;
+            }
+          } else {
+            nextBird.nestsiteHistory = nestsiteHistory;
+          }
+        }
+
+        if(inputs.includeVisits && allConditionsMatch) {
+          var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
+          nextBird.visitHistory = visitHistory;
+        }
+
+        if(allConditionsMatch) finalResult.push(nextBird);
       }
+      
 
       if(inputs.skip) {
           finalResult = finalResult.slice(inputs.skip);

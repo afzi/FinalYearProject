@@ -1,244 +1,346 @@
 module.exports = {
 
 
-    friendlyName: 'Register New Bird',
-  
-  
-    description: 'Register a new bird.',
-  
-  
-    extendedDescription:
-  `This creates a new bird record in the database.`,
-  
-  
-    inputs: {
-  
-      studId: {
-        required: false,
-        type: 'string',
-        description: 'The STUD ID (legacy)'
-      },
+  friendlyName: 'Create Bird',
 
-      newStudId: {
-        required: false,
-        type: 'string',
-        description: 'The NEW STUD ID (legacy)'
-      },
-  
-      leftRingId:  {
-        required: false,
-        type: 'string',
-        description: 'The left ring ID (legacy)',
-      },
 
-      rightRingId: {
-        required: false,
-        type: 'string',
-        description: 'The left ring ID (legacy)',
-      },
+  description: 'Create a bird.',
 
-      echoName: {
-        required: true,
-        type: 'string',
-        description: 'The friendly name to assign to this bird.',
-        extendedDescription: 'Must be unique'
-      },
 
-      sex: {
-        required: true,
-        type: 'string',
-        description: 'The sex (male / female / unknown)',
-        extendedDescription: 'Must be one of MALE / FEMALE / UNKNOWN'
-      },
+  extendedDescription:
+`This creates a bird record in the database.`,
 
-      fatherName: {
-        required: false,
-        type: 'string',
-        description: 'The name of the father bird.'
-      },
 
-      secondFatherName: {
-        required: false,
-        type: 'string',
-        description: 'The name of the second father bird.'
-      },
-
-      groupName: {
-        required: false,
-        type: 'string',
-        description: 'The group to assign this bird to.'
-      },
-
-      motherName: {
-        required: false,
-        type: 'string',
-        description: 'The name of the mother bird.'
-      },
-
-      nfcRingId: {
-        required: true,
-        type: 'string',
-        description: 'The RFID of the NFC ring attached to this bird.'
-      },
-
-      layDate: {
-        required: false,
-        type: 'number',
-        description: 'The date this bird was laid.',
-        extendedDescription: 'Must be a valid timestamp'
-      },
-
-      hatchDate: {
-        required: false,
-        type: 'number',
-        description: 'The date this bird was hatched.',
-        extendedDescription: 'Must be a valid timestamp'
-      },
-
-      incDays: {
-        required: false,
-        type: 'number',
-        description: 'The number of days this bird spent in incubation.'
-      },
-
-      whereHatched: {
-        required: false,
-        type: 'string',
-        description: 'The location where the bird hatched.'
-      },
-
-      whereFledged: {
-        required: false,
-        type: 'string',
-        description: 'The location where this bird fledged.'
-      },
-
-      whenFledged: {
-        required: false,
-        type: 'number',
-        description: 'The date when this bird fledged.',
-        extendedDescription: 'Must be a valid timestamp'
-      },
-
-      whereReleased: {
-        required: false,
-        type: 'string',
-        description: 'The location where this bird was released.'
-      },
-
-      whenReleased: {
-        required: false,
-        type: 'number',
-        description: 'The date when this bird was released.',
-        extendedDescription: 'Must be a valid timestamp'
-      },
-
-      notes: {
-        required: false,
-        type: 'string',
-        description: 'Researcher notes.'
-      },
-
-      currentNestSite: {
-        required: false,
-        type: 'string',
-        description: 'Where is the bird currently nesting'
-      },
-
-      currentNestSiteSince: {
-        required: false,
-        type: 'number',
-        description: 'How long has this bird been in its current nest-site'
-      }
-  
+  inputs: {
+    studID: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The STUD ID (legacy)'
     },
-  
-  
-    exits: {
-  
-      success: {
-        description: 'New bird record was created successfully.'
-      },
-  
-      invalid: {
-        responseType: 'badRequest',
-        description: 'The provided input is invalid.',
-        extendedDescription: 'If this request was sent from a graphical user interface, the request '+
-        'parameters should have been validated/coerced _before_ they were sent.'
-      },
-  
-      alreadyInUse: {
-        statusCode: 409,
-        description: 'One or more of the provided fields are already in use.',
-      }
+
+    newStudID: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The NEW STUD ID (legacy)'
     },
-  
-  
-    fn: async function (inputs) {
-      console.log("Received request to register bird")
 
-      // todo validate RFID exists before creating bird record
+    leftRingID:  {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The left ring ID (legacy)',
+    },
 
-      // Build up data for the new bird record and save it to the database.
+    rightRingID: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The left ring ID (legacy)',
+    },
+
+    birdName: {
+      required: true,
+      type: 'string',
+      description: 'The friendly name to assign to this bird.',
+      extendedDescription: 'Must be unique'
+    },
+
+    sex: {
+      required: true,
+      type: 'string',
+      description: 'The sex (male / female / unknown)',
+      extendedDescription: 'Must be one of MALE / FEMALE / UNKNOWN'
+    },
+
+    status: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The status (alive / dead / unknown)',
+      extendedDescription: 'Must be one of ALIVE / DEAD / UNKNOWN'
+    },
+
+    isBreeder: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'Is this guy a breeder (yes / no / unknown)',
+      extendedDescription: 'Must be one of YES / NO / UNKNOWN'
+    },
+
+    fatherName: {
+      required: false,
+      type: 'string',
+      allowNull: true,
+      description: 'The name of the father bird.'
+    },
+
+    fatherStudID: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The stud ID of the father bird.'
+    },
+
+    secondFatherName: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The name of the second father bird.'
+    },
+
+    secondFatherStudID: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The stud ID of the second father bird.'
+    },
+
+    groupName: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The group to assign this bird to.'
+    },
+
+    motherName: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The name of the mother bird.'
+    },
+
+    motherStudID: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The Stud ID of the mother bird.'
+    },
+
+    nfcRingID: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The RFID of the NFC ring attached to this bird.'
+    },
+
+    laidWhere: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The nestsite this bird was laid in.',
+      extendedDescription: 'Must be a valid Nestsite'
+    },
+
+    layDate: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'The date this bird was laid.',
+      extendedDescription: 'Must be a valid timestamp'
+    },
+
+    hatchDate: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'The date this bird was hatched.',
+      extendedDescription: 'Must be a valid timestamp'
+    },
+
+    incubationDays: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'The number of days this bird spent in incubation.'
+    },
+
+    hatchedWhere: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The location where the bird hatched.'
+    },
+
+    fledgedWhere: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The location where this bird fledged.'
+    },
+
+    fledgeDate: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'The date when this bird fledged.',
+      extendedDescription: 'Must be a valid timestamp'
+    },
+
+    releasedWhere: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'The location where this bird was released.'
+    },
+
+    releasedWhen: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'The date when this bird was released.',
+      extendedDescription: 'Must be a valid timestamp'
+    },
+
+    researcherNotes: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'Researcher notes.'
+    },
+
+    newBreedingSite: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: 'Where is the bird currently nesting'
+    },
+
+    newBreedingSiteDate: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'How long has this bird been in its current nest-site'
+    },
+
+    newCondition: {
+      required: false,
+      allowNull: true,
+      type: 'string',
+      description: "What is the bird's new condition"
+    },
+
+    newConditionDate: {
+      required: false,
+      allowNull: true,
+      type: 'number',
+      description: 'When was this new condition observed'
+    },
+
+  },
 
 
-      
-      await sails.getDatastore().transaction(async db => {
-        let bird = await Bird.create({
-          birdName: inputs.echoName,
-          createdBy: this.req.session.userId,
-          editedBy: this.req.session.userId,
-          studID: inputs.studId,
-          newStudID: inputs.newStudId,
-          leftRingID: inputs.leftRingId,
-          rightRingID: inputs.rightRingId,
-          sex: inputs.sex,
-          motherName: inputs.motherName,
-          fatherName: inputs.fatherName,
-          secondFatherName: inputs.secondFatherName,
-          researcherNotes: inputs.notes,
-          layDate: inputs.layDate,
-          hatchDate: inputs.hatchDate || null,
-          incubationDays: inputs.incDays,
-          hatchedWhere: inputs.whereHatched,
-          whereFledged: inputs.whereFledged,
-          fledgeDate: inputs.whenFledged || null,
-          releasedWhere: inputs.whereReleased,
-          releasedWhen: inputs.whenReleased || null,
-          groupName: inputs.groupName
-        })
-        .usingConnection(db)
-        .fetch();
+  exits: {
 
-      if(inputs.nfcRingId) {
-        await RFIDTag.update({
-          nfcRFID: inputs.nfcRingId
-        }).set({
-          birdID: bird.id
-        })
-        .usingConnection(db)
-      }
+    success: {
+      description: 'New bird record was created successfully.'
+    },
 
+    invalid: {
+      responseType: 'badRequest',
+      description: 'The provided input is invalid.',
+      extendedDescription: 'If this request was sent from a graphical user interface, the request '+
+      'parameters should have been validated/coerced _before_ they were sent.'
+    },
 
-      if(inputs.currentNestSite) {
-        var nestId = await Nestsite.findOne({nestID: inputs.currentNestSite})
-        .usingConnection(db)
-        .id;
-
-        await Birdnest.create({
-          birdID: bird.id,
-          nestID: nestId,
-          dateEntered: inputs.currentNestSiteSince || new Date()
-        })
-        .usingConnection(db);
-      }
-
-      })
-      .intercept('E_UNIQUE', 'alreadyInUse')
-      .intercept({name: 'UsageError'}, 'invalid')
-
-      await sails.helpers.logActivity(this.req.me.id, 'Registered new bird', inputs);
-
+    alreadyInUse: {
+      statusCode: 409,
+      description: 'One or more of the provided fields are already in use.',
     }
-  };
-  
+  },
+
+
+  fn: async function (inputs) {
+    console.log("Received request to register bird")
+
+    // Build up data for the new bird record and save it to the database.
+
+    await sails.getDatastore().transaction(async db => {
+      var laidWhereNestsite = null;
+      if(inputs.laidWhere) laidWhereNestsite = (await Nestsite.findOne({nestID: inputs.laidWhere}).usingConnection(db)).id;
+
+      var releasedWhereNestsite = null;
+      if(inputs.releasedWhere) releasedWhereNestsite = (await Nestsite.findOne({nestID: inputs.releasedWhere}).usingConnection(db)).id;
+
+      var hatchedWhereNestsite = null;
+      if(inputs.hatchedWhere) hatchedWhereNestsite = (await Nestsite.findOne({nestID: inputs.hatchedWhere}).usingConnection(db)).id;
+
+      var fledgedWhereNestsite = null;
+      if(inputs.fledgedWhere) fledgedWhereNestsite = (await Nestsite.findOne({nestID: inputs.fledgedWhere}).usingConnection(db)).id;
+
+      let bird = await Bird.create({
+        birdName: inputs.birdName,
+        createdBy: this.req.session.userId,
+        editedBy: this.req.session.userId,
+        studID: inputs.studID,
+        newStudID: inputs.newStudID,
+        leftRingID: inputs.leftRingID,
+        rightRingID: inputs.rightRingID,
+        sex: inputs.sex,
+        motherName: inputs.motherName,
+        fatherName: inputs.fatherName,
+        secondFatherName: inputs.secondFatherName,
+        motherStudID: inputs.motherStudID,
+        fatherStudID: inputs.fatherStudID,
+        secondFatherStudID: inputs.secondFatherStudID,
+        researcherNotes: inputs.researcherNotes,
+        laidWhere: laidWhereNestsite,
+        layDate: inputs.layDate || null,
+        hatchDate: inputs.hatchDate || null,
+        incubationDays: inputs.incubationDays,
+        hatchedWhere: hatchedWhereNestsite,
+        fledgedWhere: fledgedWhereNestsite,
+        fledgeDate: inputs.fledgeDate || null,
+        releasedWhere: releasedWhereNestsite,
+        releasedWhen: inputs.releasedWhen || null,
+        groupName: inputs.groupName,
+        status: inputs.status
+      })
+      .usingConnection(db)
+      .fetch();
+
+    if(inputs.nfcRingID) {
+      await RFIDTag.update({
+        nfcRFID: inputs.nfcRingID
+      }).set({
+        birdID: bird.id
+      })
+      .usingConnection(db)
+    }
+
+
+    if(inputs.newBreedingSite) {
+      let nest = await Nestsite.findOne({nestID: inputs.newBreedingSite})
+      .usingConnection(db);
+
+      if(!nest) throw 'invalid'; 
+
+      let nestId = nest.id;
+
+      await Birdnest.create({
+        birdID: bird.id,
+        nestID: nestId,
+        dateEntered: inputs.newBreedingSiteDate || new Date().getTime()
+      })
+      .usingConnection(db);
+    }
+
+    if(inputs.newCondition) {
+      await Birdcondition.create({
+        birdID: bird.id,
+        dateNoted: inputs.newConditionDate || new Date().getTime(),
+        birdCondition: inputs.newCondition
+      })
+      .usingConnection(db);
+    }
+
+    })
+    .intercept('E_UNIQUE', 'alreadyInUse')
+    .intercept({name: 'UsageError'}, 'invalid')
+
+    await sails.helpers.logActivity(this.req.me.id, 'Created a bird', inputs);
+
+  }
+};

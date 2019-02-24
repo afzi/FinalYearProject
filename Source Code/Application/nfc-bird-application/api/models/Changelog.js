@@ -20,7 +20,7 @@ module.exports = {
         },
         data: {
             type: "ref",
-            columnType: "varchar"
+            columnType: "text"
         }
     }
 };

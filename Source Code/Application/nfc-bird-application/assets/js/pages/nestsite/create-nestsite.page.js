@@ -80,10 +80,6 @@ parasails.registerPage('create-nestsite', {
     },
 
     handleParsingFormEdit: function() {
-      // Clear out any pre-existing error messages.
-      this.formErrors = {};
-
-
       var argins = this.formData;
 
       // If there were any issues, they've already now been communicated to the user,
