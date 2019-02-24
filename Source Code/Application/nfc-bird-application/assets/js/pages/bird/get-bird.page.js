@@ -102,7 +102,7 @@ parasails.registerPage('get-bird', {
       },
       currentSexFilter: function (_, _) {
         this.currentPage = 1;
-        this.$refs.paginate.selected = 0;
+        this.$refs.paginate.selected = 1;
         this.refresh();
       },
       currentBirdIdFilter: function (_, _) {
@@ -115,7 +115,7 @@ parasails.registerPage('get-bird', {
       currentFatherFilter: function (_, _) {
         if($("#fatherName").data('locked') != 1) {
           this.currentPage = 1;
-          this.$refs.paginate.selected = 0;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },

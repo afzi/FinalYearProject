@@ -10,6 +10,11 @@ module.exports = {
         required: false,
         type: 'string',
         description: 'The username to test'
+      },
+      excludeId: {
+        required: false,
+        type: 'string',
+        decsiption: 'whether to exclude a user ID from this check'
       }
     },
   
@@ -26,9 +31,11 @@ module.exports = {
     fn: async function (inputs, exits) {
       if(!inputs.username) return exits.success(false);
   
-      result = await User.count({
-        username: inputs.username
-      })
+      var query = {}
+      query.username = inputs.username;
+      if(inputs.excludeId) query.id = {'!=': inputs.excludeId}
+
+      result = await User.count(query);
   
       return exits.success(result > 0)
     }

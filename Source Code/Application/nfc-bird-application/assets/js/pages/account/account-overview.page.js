@@ -118,7 +118,6 @@ parasails.registerPage('account-overview', {
 
     validatePassword: function() {
       if(!this.passwordFormData.password || this.passwordFormData.password.length<6) {
-        this.passwordFormErrors.password = true;
         Vue.set(this.passwordFormErrors, 'password', true);
       } else {
         Vue.set(this.passwordFormErrors, 'password', false);

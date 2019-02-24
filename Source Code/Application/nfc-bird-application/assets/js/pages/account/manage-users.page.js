@@ -27,7 +27,9 @@ parasails.registerPage('manage-users', {
     
         currentPage: 1,
 
-        currentFullNameFilter: ""
+        currentFullNameFilter: "",
+
+        isEditMode: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -48,7 +50,41 @@ parasails.registerPage('manage-users', {
     // whenever one of the filters changes, this function will run
     pageSize: function (_, _) {
       this.refresh();
-    }
+    },
+
+    'formData.hasCreateEdit': function(newValue,_) {
+      if(newValue === true) {
+        Vue.set(this.formData, 'hasRead', true);
+      }
+    },
+    'formData.hasEditFull': function(newValue,_) {
+      if(newValue === true) {
+        Vue.set(this.formData, 'hasRead', true);
+        Vue.set(this.formData, 'hasCreateEdit', true);
+      }
+    },
+    'formData.hasExport': function(newValue,_) {
+      if(newValue === true) {
+        Vue.set(this.formData, 'hasRead', true);
+      }
+    },
+    'formData.hasAdmin': function(newValue,_) {
+      if(newValue === true) {
+        Vue.set(this.formData, 'hasRead', true);
+        Vue.set(this.formData, 'hasCreateEdit', true);
+        Vue.set(this.formData, 'hasExport', true);
+        Vue.set(this.formData, 'hasEditFull', true);
+      }
+    },
+    'formData.username': function() {
+      this.validateUsername();
+    },
+    'formData.password': function() {
+      this.validatePassword();
+    },
+    'formData.confirmPassword': function() {
+      this.validateConfirmPassword();
+    },
     
   },
 
@@ -61,42 +97,21 @@ parasails.registerPage('manage-users', {
       this.refresh();
       $('.modal').modal('hide');
       this.syncing = false;
+      this.isEditMode = false;
+      this.formData = {};
+      this.formErrors = {};
     },
 
     handleParsingFormCreate: function() {
-      // Clear out any pre-existing error messages.
-      this.formErrors = {};
-
-
-      var argins = this.formData;
-
-      // Validate full name:
-      if(!argins.fullName) {
-        this.formErrors.fullName = true;
-      }
-
-      // Validate email:
-      if(!argins.username || argins.username.length < 4 || argins.username.length > 20) {
-        this.formErrors.username = true;
-      }
-
-      // Validate password:
-      if(!argins.password || argins.password.length<6) {
-        this.formErrors.password = true;
-      }
-
-      // Validate password confirmation:
-      if(argins.password && argins.password !== argins.confirmPassword) {
-        this.formErrors.confirmPassword = true;
-      }
       
-      this.validateUsername();
-
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
       // cancelled.)
-      if (Object.keys(this.formErrors).length > 0) {
-        return;
+      for (var nextValidationField in this.formErrors) {
+        if(this.formErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
       }
 
       return argins;
@@ -113,37 +128,11 @@ parasails.registerPage('manage-users', {
     },
 
     handleParsingFormEdit: function() {
-      // Clear out any pre-existing error messages.
-      this.formErrors = {};
-
-
-      var argins = this.formData;
-
-      // Validate full name:
-      if(!argins.fullName) {
-        this.formErrors.fullName = true;
-      }
-
-      // Validate email:
-      if(!argins.username || argins.username.length < 4 || argins.username.length > 20) {
-        this.formErrors.username = true;
-      }
-
-      // Validate password:
-      if(argins.password && argins.password.length<6) {
-        this.formErrors.password = true;
-      }
-
-      // Validate password confirmation:
-      if((argins.password || argins.confirmPassword) && argins.password !== argins.confirmPassword) {
-        this.formErrors.confirmPassword = true;
-      }
-
-      // If there were any issues, they've already now been communicated to the user,
-      // so simply return undefined.  (This signifies that the submission should be
-      // cancelled.)
-      if (Object.keys(this.formErrors).length > 0) {
-        return;
+      for (var nextValidationField in this.profileFormErrors) {
+        if(this.profileFormErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
       }
 
       return argins;
@@ -151,22 +140,62 @@ parasails.registerPage('manage-users', {
 
     validateUsername: function() {
       if(!this.formData.username || this.formData.username == "") {
-        this.formErrors.username = true;
+        Vue.set(this.formErrors, 'username', true);
       } else {
-        Cloud.usernameExists.with({username: this.formData.username}).then(result => {
-          this.formErrors.username = result;
-         });
+        if(this.isEditMode) {
+          Cloud.usernameExists.with({username: this.formData.username, excludeId: this.formData.id}).then(result => {
+            Vue.set(this.formErrors, 'username', result);
+           });
+        } else {
+          Cloud.usernameExists.with({username: this.formData.username}).then(result => {
+            Vue.set(this.formErrors, 'username', result);
+           });
+        }
+      }
+    },
+
+    validatePassword: function() {
+      if((this.isEditMode && this.formData.password && this.formData.password.length<6) || (!this.isEditMode && (!this.formData.password || this.formData.password.length < 6))) {
+        Vue.set(this.formErrors, 'password', true);
+      } else {
+        Vue.set(this.formErrors, 'password', false);
+      }
+    },
+
+    validateConfirmPassword: function() {
+      // Validate password confirmation:
+      if(this.formData.password !== this.formData.confirmPassword) {
+        Vue.set(this.formErrors, 'confirmPassword', true);
+      } else {
+        Vue.set(this.formErrors, 'confirmPassword', false);
+      }
+    },
+
+    validateFullName: function() {
+      if(!this.formData.fullName || this.formData.fullName === "") {
+        Vue.set(this.formErrors, 'fullName', true);
+      } else {
+        Vue.set(this.formErrors, 'fullName', false);
       }
     },
 
     selectIndexFormData: async function(index) {
       this.formErrors = {};
       this.formData = this.currentUsers[index];
+      this.isEditMode = true;
     },
 
     resetFormData: async function() {
       this.formErrors = {};
       this.formData = {};
+      this.isEditMode = false;
+    },
+
+    exitEditMode: async function() {
+      this.formErrors = {};
+      this.formData = {};
+      this.isEditMode = false;
+      $('.modal').modal('hide');
     },
 
     pageClick: async function(pageNum) {
@@ -183,6 +212,7 @@ parasails.registerPage('manage-users', {
 
     filter: async function(data) {
       this.currentFullNameFilter = data;
+      this.$refs.paginate.selected = 1;
       this.refresh();
     }
   }
