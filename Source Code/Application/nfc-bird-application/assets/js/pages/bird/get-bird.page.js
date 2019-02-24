@@ -16,7 +16,7 @@ parasails.registerPage('get-bird', {
 
         visitCount: 0,
 
-        visitSize: 5,
+        visitSize: 3,
 
         currentPage: 1,
 
@@ -456,20 +456,18 @@ parasails.registerPage('get-bird', {
 
   
         params.skip = (this.currentPage - 1) * this.pageSize;
-  
         params.limit = this.pageSize;
   
         this.currentBirds = await Cloud.getBird.with(params);
         this.BirdCount = await Cloud.countBirds.with(params);
 
 
-
+        
 
         params.skip = (this.currentPage - 1) * this.visitSize;
-  
         params.limit = this.visitSize;
 
-        // this.visitCount = await Cloud.countvisits.with(params);
+        this.visitCount = await Cloud.visitCount.with(params);
       },
 
       
