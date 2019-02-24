@@ -78,7 +78,7 @@
             <thead role="rowgroup">
                 <tr class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;" role="row">
                     <th role="columnheader">Echo Name</th>
-                    <th role="columnheader">Bird ID</th>
+                    <th role="columnheader">Stud ID</th>
                     <th role="columnheader">Sex</th>
                     <th role="columnheader">Male Parent</th>
                     <th role="columnheader">Female Parent</th>
@@ -94,7 +94,7 @@
             <tbody role="rowgroup">
                 <tr style="cursor:pointer;" class="clickable-row" @click="clickOpenExampleModalButton3(index)" v-for="(bird, index) in currentBirds">
                     <td class="birdJustifyColumn">{{bird.birdName}}</td>
-                    <td>{{bird.id}}</td>
+                    <td>{{bird.studID}}</td>
                     <td>{{bird.sex}}</td>
                     <td>{{bird.fatherName}}</td>
                     <td>{{bird.motherName}}</td>
@@ -188,7 +188,9 @@
                                         </tr>
                                         <tr>
                                             <td>Condition</td>
-                                            <td style="text-align:right">{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : 'N/A' }}</td>
+                                            <td style="text-align:right;">
+                                                <div>{{currentBird.conditionHistory[0] ? currentBird.conditionHistory[0].birdCondition : 'N/A' }}</div>
+                                            </td>
                                         </tr>
 
                                         <tr>
@@ -376,6 +378,11 @@
                                         </tr>
 
                                     </table>
+                                    <div>
+                                        <paginate :page-count="Math.ceil(visitCount / visitSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                                            :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                                        </paginate>
+                                    </div>
                                 </div>
 
 
