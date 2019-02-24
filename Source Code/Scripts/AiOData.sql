@@ -149,13 +149,13 @@ INSERT INTO nestsite
 ('kaer morhen','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum bibum rutrum.',1,-24.348404,57.552151,3,null);
 
 INSERT INTO user 
-(id,username,fullName,password,hasRead,hasCreateEdit,hasEditFull,hasExport,hasAdmin) VALUES
-(1,'noprivs','Nia NoPrivs','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',0,0,0,0,0),
-(2,'reader','John Reader','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,0,0,0,0),
-(3,'creator','Bayley Creator','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,0,0,0),
-(4,'editor','Seth Editior','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,0,0),
-(5,'exporter','Alexa Exporter','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,0,0,1,0),
-(6,'admin','Vince Admin','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,1,1);
+(id,username,fullName,password,hasRead,hasCreateEdit,hasEditFull,hasExport,hasAdmin, createdAt, updatedAt) VALUES
+(1,'noprivs','Nia NoPrivs','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',0,0,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(2,'reader','John Reader','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,0,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(3,'creator','Bayley Creator','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(4,'editor','Seth Editior','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(5,'exporter','Alexa Exporter','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,0,0,1,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(6,'admin','Vince Admin','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,1,1,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')));
 
 INSERT INTO birdnest 
 (id,dateEntered,dateLeft,birdID,nestID) VALUES

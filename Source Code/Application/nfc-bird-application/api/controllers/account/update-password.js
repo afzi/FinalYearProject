@@ -34,5 +34,7 @@ module.exports = {
       password: hashed,
       passwordChangedBy: this.req.me.id
     });
+
+    await sails.helpers.logActivity(this.req.me.id, 'Updated their password', {});
   }
 };

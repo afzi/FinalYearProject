@@ -3,26 +3,25 @@ parasails.registerPage('account-overview', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    isBillingEnabled: false,
-
-    hasBillingCard: false,
-
-    // Syncing/loading states for this page.
-    syncingOpenCheckout: false,
-    syncingUpdateCard: false,
-    syncingRemoveCard: false,
-
     // Form data
-    formData: { /* … */ },
+    profileFormData: { /* … */ },
+
+    passwordFormData: {},
+
+    profileFormErrors: {},
+
+    passwordFormErrors: {},
 
     // Server error state for the form
     cloudError: '',
 
-    // For the Stripe checkout window
-    checkoutHandler: undefined,
+    syncing: false,
 
-    // For the confirmation modal:
-    removeCardModalVisible: false,
+    cloudSuccess: false,
+
+    isEditProfileMode: false,
+
+    isEditPasswordMode: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -30,92 +29,144 @@ parasails.registerPage('account-overview', {
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
   beforeMount: function (){
     _.extend(this, window.SAILS_LOCALS);
-
-    this.isBillingEnabled = !!this.stripePublishableKey;
-
-    // Determine whether there is billing info for this user.
-    this.me.hasBillingCard = (
-      this.me.billingCardBrand &&
-      this.me.billingCardLast4 &&
-      this.me.billingCardExpMonth &&
-      this.me.billingCardExpYear
-    );
   },
   mounted: async function() {
-    //…
+    $('[data-toggle="tooltip"]').tooltip();
+  },
+
+  watch: {
+    'passwordFormData.password': function(_,_) {
+      if(this.isEditPasswordMode) {
+        this.validatePassword();
+      }
+    },
+    'passwordFormData.confirmPassword': function(_,_) {
+      if(this.isEditPasswordMode) {
+        this.validateConfirmPassword();
+      }
+    },
+    'profileFormData.fullName': function(_,_) {
+      if(this.isEditProfileMode) {
+        this.validateFullName();
+      }
+    }
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
+    submittedFormProfile: async function() {
+      this.syncing = true;
+      
+      this.me.fullName = this.profileFormData.fullName;
+      this.exitEditProfileMode();
+      this.syncing = false;
+    },
 
-    clickStripeCheckoutButton: async function() {
+    submittedFormPassword: async function() {
+      this.syncing = true;
+      
+      this.exitEditPasswordMode();
+      this.syncing = false;
+    },    
 
-      // Prevent double-posting if it's still loading.
-      if(this.syncingUpdateCard) { return; }
+    handleParsingFormProfile: function() {
+      // Clear out any pre-existing error messages.
+      this.profileFormErrors = {};
 
-      // Show syncing state for opening checkout.
-      this.syncingOpenCheckout = true;
 
-      // Clear out error states.
-      this.cloudError = false;
+      var argins = this.profileFormData;
 
-      // Open Stripe Checkout.
-      var billingCardInfo = await parasails.util.openStripeCheckout(this.stripePublishableKey, this.me.emailAddress);
-      // Clear the loading state for opening checkout.
-      this.syncingOpenCheckout = false;
-      if (!billingCardInfo) {
-        // (if the user canceled the dialog, avast)
-        return;
+      this.validateFullName();
+
+      // If there were any issues, they've already now been communicated to the user,
+      // so simply return undefined.  (This signifies that the submission should be
+      // cancelled.)
+      for (var nextValidationField in this.profileFormErrors) {
+        if(this.profileFormErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
       }
 
-      // Now that payment info has been successfully added, update the billing
-      // info for this user in our backend.
-      this.syncingUpdateCard = true;
-      await Cloud.updateBillingCard.with(billingCardInfo)
-      .tolerate(()=>{
-        this.cloudError = true;
-      });
-      this.syncingUpdateCard = false;
+      return argins;
+    },
 
-      // Upon success, update billing info in the UI.
-      if (!this.cloudError) {
-        Object.assign(this.me, _.pick(billingCardInfo, ['billingCardLast4', 'billingCardBrand', 'billingCardExpMonth', 'billingCardExpYear']));
-        this.me.hasBillingCard = true;
+    handleParsingFormPassword: function() {
+      // Clear out any pre-existing error messages.
+      this.passwordFormErrors = {};
+
+
+      var argins = this.passwordFormData;
+
+      this.validatePassword();
+      this.validateConfirmPassword();
+
+      // If there were any issues, they've already now been communicated to the user,
+      // so simply return undefined.  (This signifies that the submission should be
+      // cancelled.)
+      for (var nextValidationField in this.passwordFormErrors) {
+        if(this.passwordFormErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
+      }
+
+      return argins;
+    },
+
+    validatePassword: function() {
+      if(!this.passwordFormData.password || this.passwordFormData.password.length<6) {
+        this.passwordFormErrors.password = true;
+        Vue.set(this.passwordFormErrors, 'password', true);
+      } else {
+        Vue.set(this.passwordFormErrors, 'password', false);
       }
     },
 
-    clickRemoveCardButton: async function() {
-      this.removeCardModalVisible = true;
+    validateConfirmPassword: function() {
+      // Validate password confirmation:
+      if(this.passwordFormData.password !== this.passwordFormData.confirmPassword) {
+        Vue.set(this.passwordFormErrors, 'confirmPassword', true);
+      } else {
+        Vue.set(this.passwordFormErrors, 'confirmPassword', false);
+      }
     },
 
-    closeRemoveCardModal: async function() {
-      this.removeCardModalVisible = false;
-      this.cloudError = false;
+    validateFullName: function() {
+      if(!this.profileFormData.fullName || this.profileFormData.fullName === "") {
+        Vue.set(this.profileFormErrors, 'fullName', true);
+      } else {
+        Vue.set(this.profileFormErrors, 'fullName', false);
+      }
     },
 
-    submittedRemoveCardForm: async function() {
-
-      // Update billing info on success.
-      this.me.billingCardLast4 = undefined;
-      this.me.billingCardBrand = undefined;
-      this.me.billingCardExpMonth = undefined;
-      this.me.billingCardExpYear = undefined;
-      this.me.hasBillingCard = false;
-
-      // Close the modal and clear it out.
-      this.closeRemoveCardModal();
-
+    enterEditProfileMode: async function() {
+      this.profileFormData = this.me;
+      this.profileFormErrors = {};
+      this.isEditProfileMode = true;
     },
 
-    handleParsingRemoveCardForm: function() {
-      return {
-        // Set to empty string to indicate the default payment source
-        // for this customer is being completely removed.
-        stripeToken: ''
+    exitEditProfileMode: async function() {
+      this.profileFormData = {};
+      this.profileFormErrors = {};
+      this.isEditProfileMode = false;
+    },
+
+    enterEditPasswordMode: async function() {
+      this.passwordFormData = {
+        password: '',
+        confirmPassword: ''
       };
+      this.passwordFormErrors = {};
+      this.isEditPasswordMode = true;
     },
 
+    exitEditPasswordMode: async function() {
+      this.passwordFormData = {};
+      this.passwordFormErrors = {};
+      this.isEditPasswordMode = false;
+    }
   }
 });
