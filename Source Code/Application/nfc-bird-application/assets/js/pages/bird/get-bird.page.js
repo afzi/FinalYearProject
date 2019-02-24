@@ -427,7 +427,7 @@ parasails.registerPage('get-bird', {
         }
   
         if(this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
-          params.studID = this.currentBirdIdFilter;
+          params.studId = this.currentBirdIdFilter;
         }    
   
         if(this.currentSexFilter != null && this.currentSexFilter != "") {
