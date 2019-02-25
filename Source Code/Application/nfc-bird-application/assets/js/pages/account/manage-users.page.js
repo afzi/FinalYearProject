@@ -40,6 +40,7 @@ parasails.registerPage('manage-users', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
+    $("#editUserModal").on("hidden.bs.modal", this.exitEditMode);
     $('[data-toggle="tooltip"]').tooltip();
     this.currentFullNameFilter = SAILS_LOCALS.initialFullNameFilter;
     $("#search-input").val(this.currentFullNameFilter);
@@ -103,6 +104,7 @@ parasails.registerPage('manage-users', {
     },
 
     handleParsingFormCreate: function() {
+      var argins = this.formData;
       
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
@@ -128,6 +130,8 @@ parasails.registerPage('manage-users', {
     },
 
     handleParsingFormEdit: function() {
+      var argins = this.formData;
+
       for (var nextValidationField in this.profileFormErrors) {
         if(this.profileFormErrors[nextValidationField] === true) {
           this.syncing = false;
@@ -214,6 +218,10 @@ parasails.registerPage('manage-users', {
       this.currentFullNameFilter = data;
       this.$refs.paginate.selected = 1;
       this.refresh();
+    },
+
+    reload: function() {
+      location.reload();
     }
   }
 });

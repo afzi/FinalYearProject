@@ -588,7 +588,7 @@
 
 
             </table>
-
+            <lock :user="me.id" v-if="isEditMode" :action="'editBird'+currentBird.id" :run-on-failed="exitEditMode"> </lock>
             <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
             <div class="modal-footer flex-row-reverse justify-content-between">
                 <a class="btn btn-info " v-if="!isEditMode" @click="enterEditMode">Edit</a>

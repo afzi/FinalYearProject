@@ -69,6 +69,7 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register new user</button>
 
     <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <lock :user="me.id" v-if="isEditMode" :action="'editUser'+formData.id" :run-on-failed="reload"> </lock>
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -126,7 +127,7 @@
                         <td>
                             <div class="form-group">
                                 <input class="form-control" id="confirmPassword" type="password"  :class="[formErrors.confirmPassword ? 'is-invalid' : '']" v-model.trim="formData.confirmPassword" placeholder="Confirm Password" title="Confirm Password" autocomplete="new-password">
-                                <div class="invalid-feedback" v-if="formErrors.confirmPassword">Your password and confirmation do not match.</div>
+                                <div class="invalid-feedback" v-if="formErrors.confirmPassword">The password and confirmation do not match.</div>
                               </div>
                         </td>
                         <td>&nbsp;</td>

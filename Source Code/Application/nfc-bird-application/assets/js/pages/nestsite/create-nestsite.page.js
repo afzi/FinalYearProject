@@ -22,7 +22,9 @@ parasails.registerPage('create-nestsite', {
 
     pageSize: 15,
 
-    currentPage: 1
+    currentPage: 1,
+
+    isEditMode: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -33,6 +35,7 @@ parasails.registerPage('create-nestsite', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
+    $("#editNestsiteModal").on("hidden.bs.modal", this.exitEditMode);
     await this.refresh();
   },
 
@@ -40,6 +43,12 @@ parasails.registerPage('create-nestsite', {
     // whenever one of the filters changes, this function will run
     pageSize: function (_, _) {
       this.refresh();
+    },
+
+    'formData.nestID': function(_,_) {
+      if($("#nestID").data('locked') != 1) {
+        this.validateNestName();
+      }
     }
     
   },
@@ -56,24 +65,18 @@ parasails.registerPage('create-nestsite', {
     submittedForm: async function() {
       this.syncing = true;
       await this.refresh();
-      $('.modal').modal('hide');
+      this.exitEditMode();
       this.syncing = false;
     },
 
     handleParsingFormCreate: function() {
-      // Clear out any pre-existing error messages.
-      this.formErrors = {};
-
-
       var argins = this.formData;
       
-      this.validateNestName();
-
-      // If there were any issues, they've already now been communicated to the user,
-      // so simply return undefined.  (This signifies that the submission should be
-      // cancelled.)
-      if (Object.keys(this.formErrors).length > 0) {
-        return;
+      for (var nextValidationField in this.formErrors) {
+        if(this.formErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
       }
 
       return argins;
@@ -85,8 +88,11 @@ parasails.registerPage('create-nestsite', {
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
       // cancelled.)
-      if (Object.keys(this.formErrors).length > 0) {
-        return;
+      for (var nextValidationField in this.formErrors) {
+        if(this.formErrors[nextValidationField] === true) {
+          this.syncing = false;
+          return;
+        }
       }
 
       return argins;
@@ -94,17 +100,19 @@ parasails.registerPage('create-nestsite', {
 
     validateNestName: function() {
       if(!this.formData.nestID || this.formData.nestID == "") {
-        this.formErrors.nestID = true;
+        Vue.set(this.formErrors, 'nestID', true);
       } else {
         Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
-          this.formErrors.nestID = result;
+          Vue.set(this.formErrors, 'nestID', result);
          });
       }
     },
 
     selectIndexFormData: async function(index) {
+      $('#editNestsiteModal').modal('show');
       this.formErrors = {};
       this.formData = this.currentNestsites[index];
+      this.isEditMode = true;
     },
 
     resetFormData: async function() {
@@ -117,11 +125,22 @@ parasails.registerPage('create-nestsite', {
       await this.refresh();
     },
 
+    exitEditMode: async function() {
+      this.formErrors = {};
+      this.formData = {};
+      this.isEditMode = false;
+      $('#editNestsiteModal').modal('hide');
+    },
+
     promptDeleteNestsite: async function(index) {
       if(confirm(`Are you sure you want to delete nestsite ${this.currentNestsites[index].nestID}?`)) {
         await Cloud.deleteNestsite(this.currentNestsites[index].id);
         await this.refresh();
       }
+    },
+
+    reload: function() {
+      location.reload();
     }
 
   }
