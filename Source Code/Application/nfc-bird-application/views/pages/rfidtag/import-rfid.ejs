@@ -11,7 +11,7 @@
                                 </select> <span style="padding-right:5px">entries</span>
             </div>
         </div>
-        
+
         <table id="all-rfids" border="1" class="table table-bordered table-condensed">
             <thead role="rowgroup">
                 <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
@@ -63,8 +63,7 @@
                 <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
 
                 <div class="form-group">
-                    <!--removed :disabled="!csvValid" -->
-                    <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Import</ajax-button>
+                    <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block" :disabled="!csvValid">Import</ajax-button>
                 </div>
             </ajax-form>
         </div>

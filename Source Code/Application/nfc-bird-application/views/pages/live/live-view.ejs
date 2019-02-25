@@ -5,14 +5,13 @@
             <div class="form-group col-xs-6">
                 <input id="searchText " type="text " v-model="search" class="form-control " placeholder="Search " />
             </div>
-            <span style="padding-left: 150px; padding-right:10px"> Time Filter:</span>
-            <div class="form-group">
-                Start:
-                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 60%; display: inline-block;"></datepicker>
-            </div>
-            <div class="form-group">
-                End:
-                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 60%; display: inline-block;"></datepicker>
+
+            <div class="form-group col-xs-6">
+                <span style="padding-left: 150px;"> Start Time:</span>
+                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 30%; display: inline-block;"></datepicker>
+
+                <span style="padding-left: 15px;">End Time:</span>
+                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 30%; display: inline-block;"></datepicker>
             </div>
             <div class="form-group col-xs-6">
                 <button class="btn btn-secondary" @click="clearFilters">Clear Filters</button>
@@ -43,25 +42,42 @@
 
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
             <div class="nav-item dropdown d-none d-sm-block">
-            <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
-                :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
-            </paginate>
-        </div>
-            <div class="nav-item dropdown d-none d-sm-block">
-                <a style="color:white" class="nav-link ml-2" id="header-account-menu-link">Showing {{visitData.length}} entries out of {{visitCount}}</a>
+                <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                    :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                </paginate>
             </div>
+
             <div class="nav-item dropdown d-none d-sm-block">
-            <button class="btn btn-secondary" @click="exportToExcel">Export Test</button>
-        </div>
-        
-        <div class="nav-item dropdown d-none d-sm-block ">
-            <span style="color:white; padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
-                        <option value="5" >5</option>
-                        <option value="10">10</option>
-                        <option selected value="15">15</option>
-                        <option value="10000">All</option>
-                    </select> <span style="color:white; padding-right:5px">entries</span>
-        </div>
+                <a style="color:white" class="nav-link ml-2" id="header-account-menu-link">Showing {{visitData.length}} entries
+          out of {{visitCount}}</a>
+            </div>
+
+            <div class="nav-item dropdown d-none d-sm-block">
+                <template v-if="newVisits">
+          <div class="alert alert-info">
+            {{diff}} new visits found, refresh page to see.
+          </div>
+          <button class="btn btn-secondary" @click="clearFilters">Refresh</button>
+        </template>
+                <template v-else>
+          <button class="btn btn-secondary" disabled>Refresh</button>
+        </template>
+            </div>
+
+            <!-- <div class="nav-item dropdown d-none d-sm-block">
+                <button class="btn btn-secondary" @click="exportToExcel">Export Test</button>
+            </div> -->
+
+
+
+            <div class="nav-item dropdown d-none d-sm-block ">
+                <span style="color:white; padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option selected value="15">15</option>
+          <option value="10000">All</option>
+        </select> <span style="color:white; padding-right:5px">entries</span>
+            </div>
         </footer>
 
 
