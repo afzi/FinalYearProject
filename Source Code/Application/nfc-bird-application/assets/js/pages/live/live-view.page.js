@@ -9,9 +9,9 @@ parasails.registerPage('live-view', {
 
         visitCount: 0,
 
-        dayInitalVisitCount:0,
+        diff: 0,
 
-        dayUpdatedVisitCount:0,
+        newVisits: false,
 
         pageSize: 15,
 
@@ -54,20 +54,10 @@ parasails.registerPage('live-view', {
         var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
         this.visitData = raw.visits;
         this.visitCount = raw.count;
-        this.dayInitalVisitCount = raw.count;
-        setInterval(async function() {
-            var temp = await Cloud.liveView.with({ timeFrom: '00:00', timeTo: '23:59', offset: 0, numOfRows: 0 });
-            this.dayUpdatedVisitCount = temp.count;
-          },60000); //1 min is 60000
+        this.checkNew(raw.count);
     },
     watch: {
         // whenever one of the filters changes, this function will run
-        dayUpdatedVisitCount: function(_,_){
-            if(this.dayUpdatedVisitCount > this.dayInitalVisitCount){
-                //TODO: notify user that new records exisit
-                console.log('hola');
-            }
-        },
         pageSize: function(_, _) {
             this.refresh();
         },
@@ -79,7 +69,13 @@ parasails.registerPage('live-view', {
         },
         timeTo: function(_, _) {
             this.refresh();
-        }
+        },
+        newVisits: function(_, _) {
+            console.log("hello");
+        },
+        diff: function(_, _) {
+            console.log("hello2");
+        },
 
     },
 
@@ -87,9 +83,6 @@ parasails.registerPage('live-view', {
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
-        checkNew: async function() {
-            console.log("testIntervaling");
-        },
         pageClick: async function(pageNum) {
             this.currentPage = pageNum;
             this.refresh();
@@ -106,12 +99,12 @@ parasails.registerPage('live-view', {
 
         refresh: async function() {
             if (this.search == null || this.search == "") {
-                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
                 this.currentPage = 1;
                 this.visitData = raw.visits;
                 this.visitCount = raw.count;
             } else {
-                var raw = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
+                var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: this.pageSize });
                 this.currentPage = 1;
                 this.visitData = raw.visits;
                 this.visitCount = raw.count;
@@ -128,21 +121,36 @@ parasails.registerPage('live-view', {
 
         clearFilters: async function() {
             this.search = "";
-            this.timeFrom="00:00";
-            this.timeTo="23:59";
+            this.timeFrom = "00:00";
+            this.timeTo = "23:59";
             this.refresh();
+        },
+
+        checkNew: async function(dayInitalVisitCount) {
+            setInterval(async function(dayInitalVisitCount) {
+                var temp = await Cloud.liveView.with({ timeFrom: '00:00', timeTo: '23:59', offset: 0, numOfRows: 0 });
+                dayUpdatedVisitCount = temp.count;
+                if (this.dayUpdatedVisitCount > dayInitalVisitCount) {
+                    //TODO: notify user that new records exisit and make it work
+                    this.diff = dayUpdatedVisitCount - dayInitalVisitCount;
+                    this.newVisits = true;
+                }
+            }, 5000, dayInitalVisitCount); //1 min is 60000 
+
+
+
         },
 
         exportToExcel: async function() {
             console.log(this.res);
-           var file =  await Cloud.exportToExcel.with({res: this.res});;
+            var file = await Cloud.exportToExcel.with({ res: this.res });;
 
-                if(!file) { throw 'notFound'; }
-              
-                this.res.attachment(file.downloadName);
-                var downloading = await sails.startDownload(file.uploadFd);
-                return exits.success(downloading);
-        
+            if (!file) { throw 'notFound'; }
+
+            this.res.attachment(file.downloadName);
+            var downloading = await sails.startDownload(file.uploadFd);
+            return exits.success(downloading);
+
+        }
     }
-}
 });

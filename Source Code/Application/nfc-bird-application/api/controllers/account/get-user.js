@@ -43,6 +43,11 @@ module.exports = {
         type: 'boolean',
         description: 'Can this guy admin?'
     },
+    isSuperAdmin: {
+      required: false,
+      type: 'boolean',
+      description: 'Can this guy SUPER admin?'
+  },
 
       skip: {
           required: false,

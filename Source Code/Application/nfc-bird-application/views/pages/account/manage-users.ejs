@@ -22,11 +22,12 @@
                     <li v-if="user.hasEditFull">Edit</li>
                     <li v-if="user.hasExport">Export</li>
                     <li v-if="user.hasAdmin">Admin</li>
+                    <li v-if="user.isSuperAdmin">Super Admin</li>
                   </ul>
                 </td>
                 <td>
-                    <i class="fas fa-edit" data-toggle="modal" data-target="#editUserModal" @click="selectIndexFormData(index)"></i>
-                    <i class="fas fa-trash-alt" @click="promptDeleteUser(index)"></i>
+                    <i v-show="!user.isSuperAdmin" class="fas fa-edit" data-toggle="modal" data-target="#editUserModal" @click="selectIndexFormData(index)"></i>
+                    <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt" @click="promptDeleteUser(index)"></i>
                 </td>
             </tr>
         </tbody>
@@ -34,6 +35,7 @@
     <div class="flex-container paginateContainer">
         <div>
             <paginate
+                ref="paginate"
                 :page-count="Math.ceil(userCount / pageSize)"
                 :click-handler="pageClick"
                 :prev-text="'Prev'"
@@ -67,11 +69,12 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register new user</button>
 
     <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <lock :user="me.id" v-if="isEditMode" :action="'editUser'+formData.id" :run-on-failed="reload"> </lock>
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="editUserModalLabel">Edit user</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close" @click="exitEditMode" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -124,7 +127,7 @@
                         <td>
                             <div class="form-group">
                                 <input class="form-control" id="confirmPassword" type="password"  :class="[formErrors.confirmPassword ? 'is-invalid' : '']" v-model.trim="formData.confirmPassword" placeholder="Confirm Password" title="Confirm Password" autocomplete="new-password">
-                                <div class="invalid-feedback" v-if="formErrors.confirmPassword">Your password and confirmation do not match.</div>
+                                <div class="invalid-feedback" v-if="formErrors.confirmPassword">The password and confirmation do not match.</div>
                               </div>
                         </td>
                         <td>&nbsp;</td>
@@ -139,28 +142,28 @@
                           <td colspan="2"><label for="Privileges">Privileges</label><br></td>
                           </tr>
                           <tr>
-                          <td><input id="hasRead" type="checkbox"  name="hasRead" value="hasRead" v-model="formData.hasRead"> Read</td>
+                          <td><input id="hasRead" type="checkbox"  name="hasRead" value="hasRead" v-model="formData.hasRead" :disabled="formData.hasExport || formData.hasCreateEdit || formData.hasAdmin || formData.hasEditFull"> Read</td>
                           <td><a data-toggle="tooltip" data-placement="right" title="Allows user to view bird entries">
                                 <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                               </a>
                             </td>
                           </tr>
                           <tr>
-                          <td><input id="hasCreateEdit" type="checkbox" name="hasCreateEdit" value="hasCreateEdit" v-model="formData.hasCreateEdit"> Create</td>
+                          <td><input id="hasCreateEdit" type="checkbox" name="hasCreateEdit" value="hasCreateEdit" v-model="formData.hasCreateEdit" :disabled="formData.hasEditFull || formData.hasAdmin"> Create</td>
                           <td><a data-toggle="tooltip" data-placement="right" title="Allows user to make new birds (and nest sites)">
                               <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                               </a>
                             </td>
                           </tr>
                           <tr>
-                          <td> <input id="hasEditFull" type="checkbox" name="hasEditFull" value="hasEditFull" v-model="formData.hasEditFull"> Edit</td>
+                          <td> <input id="hasEditFull" type="checkbox" name="hasEditFull" value="hasEditFull" v-model="formData.hasEditFull" :disabled="formData.hasAdmin"> Edit</td>
                           <td><a data-toggle="tooltip" data-placement="right" title="Allows user to edit information on the system">
                                <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                               </a>
                             </td>
                           </tr>
                           <tr>
-                          <td><input id="hasExport" type="checkbox" name="hasExport" value="hasExport" v-model="formData.hasExport"> Export</td>
+                          <td><input id="hasExport" type="checkbox" name="hasExport" value="hasExport" v-model="formData.hasExport" :disabled="formData.hasAdmin"> Export</td>
                           <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export a limited set of data using pre-created filters, suitable for upper management">
                               <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
                             </a>
@@ -195,9 +198,9 @@
                   <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" @click="exitEditMode">Cancel</button>
                         <div class="form-group">
-                                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Save</ajax-button>
+                                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
                         </div>
                     </div>
                 </ajax-form>
@@ -278,40 +281,33 @@
                           <td colspan="2"><label for="Privileges">Privileges</label><br></td>
                           </tr>
                           <tr>
-                          <td><input id="hasRead" type="checkbox"  name="hasRead" value="hasRead" v-model="formData.hasRead"> Read</td>
-                          <td><a data-toggle="tooltip" data-placement="right" title="Allows user to view bird entries">
-                                <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                          <td><input id="hasCreateEdit" type="checkbox" name="hasCreateEdit" value="hasCreateEdit" v-model="formData.hasCreateEdit"> Create</td>
-                          <td><a data-toggle="tooltip" data-placement="right" title="Allows user to make new birds (and nest sites)">
-                              <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                          <td> <input id="hasEditFull" type="checkbox" name="hasEditFull" value="hasEditFull" v-model="formData.hasEditFull"> Edit</td>
-                          <td><a data-toggle="tooltip" data-placement="right" title="Allows user to edit information on the system">
-                               <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                          <td><input id="hasExport" type="checkbox" name="hasExport" value="hasExport" v-model="formData.hasExport"> Export</td>
-                          <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export a limited set of data using pre-created filters, suitable for upper management">
-                              <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
-                            </a>
-                          </td>
-                          </tr>
-                          <!-- <tr>
-                          <td><input id="hasExportFull" type="checkbox" name="hasExportFull" value="hasExportFull" v-model="formData.hasExportFull"> Export Full</td>
-                          <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export all data in the system and gives the option for custom filters, suitable for researchers">
-                                <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
-                              </a>
-                            </td>
-                          </tr> -->
+                              <td><input id="hasRead" type="checkbox"  name="hasRead" value="hasRead" v-model="formData.hasRead" :disabled="formData.hasExport || formData.hasCreateEdit || formData.hasAdmin || formData.hasEditFull"> Read</td>
+                              <td><a data-toggle="tooltip" data-placement="right" title="Allows user to view bird entries">
+                                    <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                              <td><input id="hasCreateEdit" type="checkbox" name="hasCreateEdit" value="hasCreateEdit" v-model="formData.hasCreateEdit" :disabled="formData.hasEditFull || formData.hasAdmin"> Create</td>
+                              <td><a data-toggle="tooltip" data-placement="right" title="Allows user to make new birds (and nest sites)">
+                                  <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                              <td> <input id="hasEditFull" type="checkbox" name="hasEditFull" value="hasEditFull" v-model="formData.hasEditFull" :disabled="formData.hasAdmin"> Edit</td>
+                              <td><a data-toggle="tooltip" data-placement="right" title="Allows user to edit information on the system">
+                                   <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                              <td><input id="hasExport" type="checkbox" name="hasExport" value="hasExport" v-model="formData.hasExport" :disabled="formData.hasAdmin"> Export</td>
+                              <td><a data-toggle="tooltip" data-placement="right" title="Allows user to export a limited set of data using pre-created filters, suitable for upper management">
+                                  <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                                </a>
+                              </td>
+                              </tr>
                           <tr>
                           <td> <input id="hasAdmin" type="checkbox" name="hasAdmin" value="hasAdmin" v-model="formData.hasAdmin"> Admin</td>
                           <td><a data-toggle="tooltip" data-placement="right" title="Allows user to do everything above as well as register new users and feeders.">

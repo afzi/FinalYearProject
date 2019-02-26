@@ -93,8 +93,8 @@ by modifying its session.`,
       hasCreateEdit: inputs.hasCreateEdit,
       hasEditFull: inputs.hasEditFull,
       hasExport: inputs.hasExport,
-      hasAdmin: inputs.hasAdmin
-
+      hasAdmin: inputs.hasAdmin,
+      isSuperAdmin: false
     }))
     .intercept('E_UNIQUE', 'usernameAlreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')

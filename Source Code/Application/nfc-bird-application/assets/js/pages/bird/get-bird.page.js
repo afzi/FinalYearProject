@@ -102,7 +102,7 @@ parasails.registerPage('get-bird', {
       },
       currentSexFilter: function (_, _) {
         this.currentPage = 1;
-        this.$refs.paginate.selected = 0;
+        this.$refs.paginate.selected = 1;
         this.refresh();
       },
       currentBirdIdFilter: function (_, _) {
@@ -115,7 +115,7 @@ parasails.registerPage('get-bird', {
       currentFatherFilter: function (_, _) {
         if($("#fatherName").data('locked') != 1) {
           this.currentPage = 1;
-          this.$refs.paginate.selected = 0;
+          this.$refs.paginate.selected = 1;
           this.refresh();
         }
       },
@@ -316,27 +316,6 @@ parasails.registerPage('get-bird', {
           argins.newBreedingSiteDate = undefined;
         }
 
-        // to be safe, we should also do validation on form submit, however it should be done asynchronously, and ajax-form doesn't work with async parse function...
-
-        // this.validateNestsite('fledgedWhere');
-        // this.validateNestsite('releasedWhere');
-        // this.validateNestsite('laidWhere');
-        // this.validateNestsite('hatchedWhere');
-        // this.validateNestsite('newBreedingSite');
-        // this.validateUniqueBirdName(this.editBirdData.id);
-        // this.validateNewCondition();
-        // this.validateNewBreedingSite();
-        // this.validateRFID();
-
-        // while(this.editValidationCounter < 9) {
-        //   console.log(this.editValidationCounter);
-        // } // wait until validation has finished on all fields
-
-  
-        // If there were any issues, they've already now been communicated to the user,
-        // so simply return undefined.  (This signifies that the submission should be
-        // cancelled.)
-
         for (var nextValidationField in this.editBirdErrors) {
           if(this.editBirdErrors[nextValidationField] == true) {
             this.syncing = false;
@@ -385,27 +364,6 @@ parasails.registerPage('get-bird', {
         } else {
           argins.newBreedingSiteDate = undefined;
         }
-
-        // to be safe, we should also do validation on form submit, however it should be done asynchronously, and ajax-form doesn't work with async parse function...
-
-        // this.validateNestsite('fledgedWhere');
-        // this.validateNestsite('releasedWhere');
-        // this.validateNestsite('laidWhere');
-        // this.validateNestsite('hatchedWhere');
-        // this.validateNestsite('newBreedingSite');
-        // this.validateUniqueBirdName(this.createBirdData.id);
-        // this.validateNewCondition();
-        // this.validateNewBreedingSite();
-        // this.validateRFID();
-
-        // while(this.createValidationCounter < 9) {
-        //   console.log(this.createValidationCounter);
-        // } // wait until validation has finished on all fields
-
-  
-        // If there were any issues, they've already now been communicated to the user,
-        // so simply return undefined.  (This signifies that the submission should be
-        // cancelled.)
 
         for (var nextValidationField in this.createBirdErrors) {
           if(this.createBirdErrors[nextValidationField] == true) {

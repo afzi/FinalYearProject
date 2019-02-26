@@ -41,6 +41,9 @@ module.exports = {
         },
         hasAdmin: { //implies all = user creation
             type: "boolean"
+        },
+        isSuperAdmin: {
+            type: "boolean" // super admins are essentially undeletable, and can only be created via db script
         }
     }
 };

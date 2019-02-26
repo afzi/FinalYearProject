@@ -115,5 +115,7 @@ module.exports.routes = {
     'GET /api/v1/changelog': { action: 'changelog/get-changelog' },
     'GET /api/v1/changelog/count': { action: 'changelog/count-changelog' },
 
+    'PUT /api/v1/lock': { action: 'lock/try-acquire-renew-lock' }
+
 
 };
