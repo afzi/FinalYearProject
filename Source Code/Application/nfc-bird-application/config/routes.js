@@ -32,7 +32,7 @@ module.exports.routes = {
 
     'GET /birds': { action: 'bird/view-get-bird' },
 
-    'GET /birds/single': { action: 'live/view-live-view' },
+    'GET /birds/single': { action: 'bird/view-get-bird' },
 
     'GET /account/password': { action: 'account/view-edit-password' },
     'GET /account/profile': { action: 'account/view-edit-profile' },
@@ -110,7 +110,7 @@ module.exports.routes = {
     'POST /api/v1/rfidtag': { action: 'rfidtag/import-rfid' },
 
     'GET /api/v1/live': { action: 'live/live-view' },
-    'GET /api/v1/live/count-visits': { action: 'live/count-visits' },
+    'GET /api/v1/bird/count-visits': { action: 'bird/count-visits' },
 
     'GET /api/v1/changelog': { action: 'changelog/get-changelog' },
     'GET /api/v1/changelog/count': { action: 'changelog/count-changelog' },

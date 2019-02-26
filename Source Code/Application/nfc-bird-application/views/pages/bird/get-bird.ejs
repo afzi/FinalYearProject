@@ -563,13 +563,14 @@
                                             <td style="background-color: rgb(131, 203, 215)">Date</td>
                                         </tr>
                                         <tr v-for="visits in currentBird.visitHistory">
-                                            <!-- <td>{{ currentBird.visitHistory[0] ? new Date(currentBird.visitHistory[0].createdAt).toLocaleDateString('en-GB') : 'N/A' }}</td> -->
+
                                             <td>{{new Date(visits.createdAt*1000).toLocaleDateString('en-GB') }}</td>
+
                                         </tr>
 
                                     </table>
                                     <div>
-                                        <paginate :page-count="Math.ceil(visitCount / visitSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                                        <paginate :page-count="Math.ceil(visitCount / visitPageSize)" :click-handler="visitPageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                                             :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                                         </paginate>
                                     </div>
