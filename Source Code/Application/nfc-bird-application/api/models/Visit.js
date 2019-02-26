@@ -10,12 +10,6 @@ module.exports = {
         //CreatedOn (i.e. visit time) Auto made by sails
         updatedAt: false,
 
-        feederID: {
-            type: "string",
-            columnType: "varchar",
-            maxLength: 20,
-            required: true
-        },
         birdID: {
             model: "bird"
         },
