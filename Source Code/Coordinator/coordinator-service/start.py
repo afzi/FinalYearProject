@@ -126,12 +126,45 @@ class SerialReader:
 
         return True
 
+    # tries to extract a single packet from the raw data we received
+    # the raw data should have at most one packet of length 13, starting with 0xAA and ending with 0xBB
+    # if no valid packet found in the data, return None
+    def __try_extract_and_validate_packet(self, incoming_bytes):
+        if len(incoming_bytes) < 13:
+            return None # this shouldn't ever happen
+        else:
+            logging.debug("Received packet with more than 13 bytes, attempting to extract")
+            start_index = 0
+            end_index = 12
+
+            while end_index < len(incoming_bytes):
+                start_byte = incoming_bytes[start_index]
+                end_byte = incoming_bytes[end_index]
+
+                if start_byte == 0xAA and end_byte == 0xBB:
+                    supposed_packet = incoming_bytes[start_index:end_index+1]
+                    logging.debug("Extracted something that looks like a packet: %s, validating...", supposed_packet.hex())
+                    if(self.__validate_packet(supposed_packet)):
+                        logging.debug("Validation succeeded, we've found a packet in our data")
+                        return supposed_packet
+                    else:
+                        logging.debug("Validation failed, continuing search for packet")
+
+                start_index += 1
+                end_index += 1 # if we've reached this point, we either didn't manage to extract a packet, or it failed validation, so keep searching
+
+            return None # if we've reached this point, our loop failed to extract a valid packet, so signal to the caller that we've failed by returning None
+
+
+
     def __handle_read(self, incoming_bytes, visit_datetime):
         logging.debug("Read raw data: %s", incoming_bytes.hex())
 
-        if self.__validate_packet(incoming_bytes):
+        packet = self.__try_extract_and_validate_packet(incoming_bytes)
+
+        if packet is not None:
             logging.debug("Packet validated successfully, attempting to write data to DB")
-            bird_tag_raw = incoming_bytes[4:11].hex()
+            bird_tag_raw = packet[4:11].hex()
             logging.debug("Tag data: %s", bird_tag_raw)
             self.db_service.handle_new_visit(bird_tag_raw, visit_datetime)
         else:
@@ -147,7 +180,7 @@ class SerialReader:
 
             if read == 0xBB and len(buffer) >= 12:
                 # we've read the end byte and the buffer is at least as big as the expected packet size,
-                #  so construct a packet from what we have
+                #  so parse what we have (async)
                 buffer.append(read)
                 threading.Thread(target=self.__handle_read, args=(buffer,datetime.datetime.now())).start()
                 buffer = bytearray()

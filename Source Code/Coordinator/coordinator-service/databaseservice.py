@@ -56,7 +56,7 @@ class DatabaseService:
                         "Visit from RFID %s has already been recorded within the past %d minutes, so ignoring this visit",
                         rfid, self.cutoff_minutes)
                 else:
-                    logging.debug("Writing visit from %s at datetime %s to DB", rfid, visit_datetime.isoformat())
+                    logging.info("Writing visit from %s at datetime %s to DB", rfid, visit_datetime.isoformat())
                     self.__write_visit(cursor, rfid_record[self.RFID_SHORT_COL_NAME], rfid_record[self.BIRD_COL_NAME],
                                        visit_datetime)
 
