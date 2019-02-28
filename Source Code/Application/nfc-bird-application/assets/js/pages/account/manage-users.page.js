@@ -53,6 +53,14 @@ parasails.registerPage('manage-users', {
       this.refresh();
     },
 
+    currentFullNameFilter: function (_, _) {
+      if($("#fullName").data('locked') != 1) {
+        this.currentPage = 1;
+        this.$refs.paginate.selected = 1;
+        this.refresh();
+      }
+    },
+
     'formData.hasCreateEdit': function(newValue,_) {
       if(newValue === true) {
         Vue.set(this.formData, 'hasRead', true);
@@ -206,6 +214,10 @@ parasails.registerPage('manage-users', {
       this.currentPage = pageNum;
       this.refresh();
     },
+    clearFilters: async function() {
+      this.currentFullNameFilter = "";
+ 
+    },
 
     promptDeleteUser: async function(index) {
       if(confirm(`Are you sure you want to delete user ${this.currentUsers[index].fullName}?`)) {
@@ -214,11 +226,11 @@ parasails.registerPage('manage-users', {
       }
     },
 
-    filter: async function(data) {
-      this.currentFullNameFilter = data;
-      this.$refs.paginate.selected = 1;
-      this.refresh();
-    },
+    // filter: async function(data) {
+    //   this.currentFullNameFilter = data;
+    //   this.$refs.paginate.selected = 1;
+    //   this.refresh();
+    // },
 
     reload: function() {
       location.reload();
