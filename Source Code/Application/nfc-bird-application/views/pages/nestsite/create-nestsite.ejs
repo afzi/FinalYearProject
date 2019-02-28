@@ -1,16 +1,6 @@
 <div id="create-nestsite">
 
     <div class="container" v-if="!cloudSuccess">
-        <div class="flex-container filterbar" style="white-space: nowrap;">
-            <div class="form-group col-xs-6 ">
-                <span style="padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
-                                <option value="5" >5</option>
-                                <option value="10">10</option>
-                                <option selected value="15">15</option>
-                                <option value="10000">All</option>
-                            </select> <span style="padding-right:5px">entries</span>
-            </div>
-        </div>
 
         <table id="all-nestsites" border="1" class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
@@ -44,14 +34,26 @@
         <button class="btn btn-primary nav-item" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button>
 
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <div class="flex-container filterbar" style="white-space: nowrap;">
             <div>
                 <paginate :page-count="Math.ceil(nestsiteCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                     :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                 </paginate>
             </div>
-            <div class="nav-item dropdown d-none d-sm-block">
-                <a style="color:white" class="nav-link ml-2" id="header-account-menu-link">Showing {{currentNestsites.length}} entries out of {{nestsiteCount}}</a>
-            </div>
+        </div>
+            <div class="font-white">Showing {{currentNestsites.length}} entries out of {{nestsiteCount}}</div>
+
+            <div class="nav-item dropdown d-none d-sm-block font-white">Show 
+                    <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto; margin: 0px 5px;">
+                                  <option value="5" >5</option>
+                                  <option value="10">10</option>
+                                  <option selected value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                  <option value="30">30</option>
+                              </select> entries
+                </div>
+
         </footer>
 
         <div class="modal fade" id="editNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="editNestsiteModalLabel" aria-hidden="true">
