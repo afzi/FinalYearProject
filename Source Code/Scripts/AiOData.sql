@@ -65,7 +65,7 @@ INSERT INTO rfidtag (createdAt, updatedAt, nfcRFID, nfcRFIDInternal, colour, bir
 (1486425600,0,'kv808', '80d69413-be92-4245-84d1-1a17af7414ba', 'green, red : stripe', 10),
 (1486425600,0,'ba104', '8630bbde-7273-46a3-8919-2cd5484552ad', 'blue, red : stripe', 11),
 (1486425600,0,'dp550', '358403b2-47c5-4f20-b071-462f316e48ed', 'green, red : stripe', 12),
-(1486425600,0,'ah714', '5f456152-069f-4b3c-90fb-81c29f5b2618', 'green, red : stripe', 13),
+(1486425600,0,'ah714', '03e70000000688', 'green, red : stripe', 13),
 (1486425600,0,'vc268', '529bd19c-c425-4ad8-8f8e-a94b0e60979d', 'green, cyan : stripe', 14),
 (1486425600,0,'tb066', '02e2ce0f-1605-484c-81e1-2d4471cf181b', 'green, red : stripe', 15),
 (1486425600,0,'gr418', 'aef1910a-457d-4cde-bb04-c62cdfaeae4e', 'green, blue : stripe', 16),

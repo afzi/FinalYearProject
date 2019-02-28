@@ -99,7 +99,10 @@ parasails.registerPage('create-nestsite', {
     },
 
     validateNestName: function() {
-      if(!this.formData.nestID || this.formData.nestID == "") {
+      if(this.isEditMode) {
+        Vue.set(this.formErrors, 'nestID', false);
+      }
+      else if(!this.formData.nestID || this.formData.nestID == "") {
         Vue.set(this.formErrors, 'nestID', true);
       } else {
         Cloud.nestsiteExists.with({nestID: this.formData.nestID}).then(result => {
