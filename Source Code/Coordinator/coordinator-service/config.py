@@ -8,4 +8,4 @@ db_password="7a&9WW$kASAsN-q7" # REQUIRED
 db_port=3306 # REQUIRED
 db_name="nfcbirds" # REQUIRED
 
-same_visit_frequency_minutes = 60 # default 60
+same_visit_frequency_minutes = 0 # default 60

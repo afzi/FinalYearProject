@@ -54,7 +54,7 @@ module.exports = {
             INNER JOIN nfcbirds.rfidtag AS tags
             ON birds.id = tags.birdID
             INNER JOIN nfcbirds.visit AS visits
-            ON tags.nfcRFIDInternal = visits.nfcRFID
+            ON tags.nfcRFID = visits.nfcRFID
             WHERE visits.createdAt >= UNIX_TIMESTAMP(concat(curdate(), $1))
             AND visits.createdAt <= UNIX_TIMESTAMP(concat(curdate(), $2)) `;
         if (inputs.searchTerm != null) { FILTERING += " AND birds.birdName LIKE $3 "; }
