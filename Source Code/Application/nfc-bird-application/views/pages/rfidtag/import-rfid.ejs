@@ -1,16 +1,9 @@
 <div id="import-rfid">
 
     <div class="container" v-if="!cloudSuccess">
-        <div class="flex-container filterbar" style="white-space: nowrap;">
+
+            <div class="flex-container filterbar" style="white-space: nowrap;">
             <div class="form-group col-xs-6 ">
-                <span style="padding-left: 20px; padding-right:5px">Show </span> <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
-                                    <option value="5" >5</option>
-                                    <option value="10">10</option>
-                                    <option selected value="15">15</option>
-                                    <option value="10000">All</option>
-                                </select> <span style="padding-right:5px">entries</span>
-            </div>
-        </div>
 
         <table id="all-rfids" border="1" class="table table-bordered table-condensed">
             <thead role="rowgroup">
@@ -28,7 +21,7 @@
             <tbody role="rowgroup" id="rfid-table-body">
                 <tr v-for="(rfidtag, index) in currentRfids">
                     <td class="birdJustifyColumn">{{rfidtag.nfcRFID}}</td>
-                    <td class="birdJustifyColumn">{{rfidtag.colour}}</td>
+                    <td>{{rfidtag.colour}}</td>
                     <td>{{rfidtag.nfcRFIDInternal}}</td>
                     <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                     <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
@@ -38,15 +31,28 @@
             </tbody>
         </table>
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <div class="flex-container paginateContainer">
             <div>
                 <paginate :page-count="Math.ceil(rfidCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                     :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                 </paginate>
             </div>
-            <div class="nav-item dropdown d-none d-sm-block">
-                <a style="color:white" class="nav-link ml-2" id="header-account-menu-link">Showing {{currentRfids.length}} entries out of {{rfidCount}}</a>
+        </div>
+             <div class="font-white">Showing {{currentRfids.length}} entries out of {{rfidCount}}</div>
+             <div class="nav-item dropdown d-none d-sm-block font-white">Show 
+                    <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
+                        <option value="5" >5</option>
+                        <option value="10">10</option>
+                        <option selected value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="10000">All</option>
+                    </select>entries
             </div>
+        
         </footer>
+    </div>
+    </div>
+
         <div class="import-rfid-form">
             <h1 class="text-center">Import RFID tags from CSV</h1>
             <hr/>

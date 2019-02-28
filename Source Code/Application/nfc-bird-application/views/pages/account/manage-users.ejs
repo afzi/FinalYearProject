@@ -1,13 +1,21 @@
 <div id="manage-users">
   <div class="container" v-if="!cloudSuccess">
+
+      <div class="form-group search-box">
+          <input id="fullName" class="form-control" type="text" v-model.trim="currentFullNameFilter" placeholder="Full Name" title="fullName" autocomplete="off">
+          <autocomplete for="fullName" action="getUser" params='{"limit": 5}' map="fullName" is-async> </autocomplete>
+      </div>
+    
       <searchbar v-bind:on-search="filter" placeHolder="Search by full name..."></searchbar>
-      <table id="all-users" border="1">
+
+
+      <table id="all-users" class="table table-bordered table-condensed table-hover">
         <thead role="rowgroup">
-            <tr role="row">
-                <th role="columnheader"  style="width: 15%">Full name</th>
-                <th role="columnheader"  style="width: 20%">Username</th>
-                <th role="columnheader"  style="width: 15%">Privileges</th>
-                <th role="columnheader"  style="width: 15%">Actions</th>
+            <tr role="row" class="back-green">
+                <th role="columnheader">Full name</th>
+                <th role="columnheader">Username</th>
+                <th role="columnheader">Privileges</th>
+                <th role="columnheader">Actions</th>
             </tr>
         </thead>
 
@@ -32,6 +40,10 @@
             </tr>
         </tbody>
     </table>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register new user</button>
+
+    <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
     <div class="flex-container paginateContainer">
         <div>
             <paginate
@@ -51,22 +63,23 @@
             >
             </paginate>
         </div>
-        <div>
-            Showing {{currentUsers.length}} entries out of {{userCount}}
-        </div>
-        <div>
-            Show 
-                    <select class="pageSizeControl custom-select" v-model="pageSize">
-                            <option value="5" >5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option selected value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                        </select> entries per page
-                    </div>
-        </div>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register new user</button>
+      </div>
+      
+        <div class="font-white">Showing {{currentUsers.length}} entries out of {{userCount}} </div>
+
+         <div class="nav-item dropdown d-none d-sm-block font-white">Show 
+                <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
+                              <option value="5" >5</option>
+                              <option value="10">10</option>
+                              <option selected value="15">15</option>
+                              <option value="20">20</option>
+                              <option value="25">25</option>
+                              <option value="30">30</option>
+                          </select> entries
+            </div>
+  
+      </footer>
+
 
     <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <lock :user="me.id" v-if="isEditMode" :action="'editUser'+formData.id" :run-on-failed="reload"> </lock>

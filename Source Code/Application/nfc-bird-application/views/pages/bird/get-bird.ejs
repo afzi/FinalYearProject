@@ -25,18 +25,18 @@
             </div>
 
             <div class="form-group search-box">
-                <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="fatherName" title="fatherName" autocomplete="off">
+                <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="Male Parent" title="fatherName" autocomplete="off">
                 <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async> </autocomplete>
             </div>
 
             <div class="form-group search-box">
-                <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="motherName" title="motherName" autocomplete="off">
+                <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="Female Parent" title="motherName" autocomplete="off">
                 <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async> </autocomplete>
             </div>
 
             <div class="form-group search-box">
-                <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
-                    <option disabled selected value=""> Is Breeder</option>
+                <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="Breeder" title="isBreeder" autocomplete="off">
+                    <option disabled selected value="">Breeder</option>
                     <option value="no">No</option>
                     <option value="yes">Yes</option>
                     <option value="unknown">unknown</option>
@@ -63,17 +63,17 @@
 
         <table class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
-                <tr class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;" role="row">
-                    <th role="columnheader">Echo Name</th>
+                <tr class="birdheader back-green" role="row">
+                    <th role="columnheader">Bird Name</th>
                     <th role="columnheader">Stud ID</th>
-                    <th role="columnheader">Sex</th>
+                    <th role="columnheader">Gender</th>
                     <th role="columnheader">Male Parent</th>
                     <th role="columnheader">Female Parent</th>
                     <th role="columnheader">Age</th>
                     <th role="columnheader">Breeder</th>
-                    <th role="columnheader">Current Nest</th>
+                    <th role="columnheader">Current Breeding</th>
                     <th role="columnheader">Distance To Hopper</th>
-                    <th role="columnheader">Previous Nest</th>
+                    <th role="columnheader">Previous Breeding</th>
 
                 </tr>
             </thead>
@@ -101,17 +101,19 @@
                     </paginate>
                 </div>
             </div>
-            <div style="color:white">Showing {{currentBirds.length}} entries out of {{BirdCount}}</div>
-            <div class="nav-item dropdown d-none d-sm-block ">
-                <span style="color:white; padding-left: 20px; padding-right:5px">Show </span>
+
+            <div class="font-white">Showing {{currentBirds.length}} entries out of {{BirdCount}}</div>
+
+            <div class="nav-item dropdown d-none d-sm-block font-white">
+                Show
                 <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;">
                                 <option value="5" >5</option>
                                 <option value="10">10</option>
                                 <option value="15">15</option>
-                                <option selected value="20">20</option>
+                                <optionselected value="20">20</option>
                                 <option value="25">25</option>
                                 <option value="30">30</option>
-                        </select> <span style="color:white; padding-right:5px">entries</span>
+                        </select> entries
             </div>
         </footer>
         
@@ -221,7 +223,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Sex</td>
+                                            <td>Gender</td>
                                             <td style="text-align:right" v-if="!isEditMode">{{ currentBird.sex }}</td>
                                             <td style="text-align:right" v-else>
                                                 <div class="form-group">
@@ -610,7 +612,7 @@
 
         <modal id="createBirdModal" class="example-modal" v-if="modal==='createBirdModal'" v-cloak>
                 <div class="modal-header">
-                    <h2 class="modal-title">Create New Bird</h2>
+                    <h2 class="modal-title">Register New Bird</h2>
                     <hr/>
                     <button type="button" class="modal-close-button" @click="closeCreateBirdModal(true)" aria-label="Close"></button>
                 </div>
@@ -694,7 +696,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Sex</td>
+                                                <td>Gender</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
                                                         <select id="sexCreate"  class="form-control" :class= "[createBirdErrors.sex ? 'is-invalid' : '']" v-model.trim="createBirdData.sex">
