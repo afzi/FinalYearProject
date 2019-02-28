@@ -208,7 +208,7 @@ parasails.registerPage('manage-users', {
     },
 
     promptDeleteUser: async function(index) {
-      if(confirm(`Are you sure you want to delete user ${this.currentUsers[index].username}?`)) {
+      if(confirm(`Are you sure you want to delete user ${this.currentUsers[index].fullName}?`)) {
         await Cloud.deleteUser(this.currentUsers[index].id);
         this.refresh();
       }
