@@ -133,7 +133,7 @@ class SerialReader:
         if len(incoming_bytes) < 13:
             return None # this shouldn't ever happen
         else:
-            logging.debug("Received packet with more than 13 bytes, attempting to extract")
+            logging.debug("Received a data buffer with 13 or more bytes, attempting to extract packet")
             start_index = 0
             end_index = 12
 
