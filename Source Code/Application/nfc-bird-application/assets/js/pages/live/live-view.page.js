@@ -133,11 +133,11 @@ parasails.registerPage('live-view', {
                 var temp = await Cloud.liveView.with({ timeFrom: '00:00', timeTo: '23:59', offset: 0, numOfRows: 0 });
                 self.dayUpdatedVisitCount = temp.count;
                 if (self.dayUpdatedVisitCount > self.dayInitalVisitCount) {
-                    self.$nextTick(function(){
-                    self.diff = self.dayUpdatedVisitCount - self.dayInitalVisitCount;
-                    self.newVisits = true;
+                    self.$nextTick(function() {
+                        self.diff = self.dayUpdatedVisitCount - self.dayInitalVisitCount;
+                        self.newVisits = true;
                     })
-                    
+
                 }
             }, 5000, dayInitalVisitCount); //TODO: change to 1 min for production : 60000 
 
@@ -147,36 +147,20 @@ parasails.registerPage('live-view', {
 
         goToBird: function(birdName) {
             this.goto(`/birds?initialBirdNameFilter=${birdName}`);
-          },
+        },
 
         exportToExcel: async function() {
-        var fs = window.fs;
-
-        fs.mkdir('/home', function() {
-            fs.writeFile('/home/hello-world.txt', 'Hello world!\n', function() {
-                fs.readFile('/home/hello-world.txt', 'utf-8', function(err, data) {
-                    console.log(data);
-                });
-            });
-        });
-            // var Readable = window.readable;
-            // var s = new Readable();
-            // s._read = function noop() {}; // redundant? see update below
-            // s.push("your text here\r\n")
-            // s.push("next line text\r\n");
-            // // s.push(null);
-
-            // // res.attachment('test.csv');
-            // // -> response header will contain:
-            // //   Content-Disposition: attachment
-            // s.pipe(SAILS_LOCALS.res.attachment('file.txt'))
-            // // res.download(data,'fileName.csv');
-            // SAILS_LOCALS.res.send()
-
-            // // console.log(SAILS_LOCALS.res);
-            // // console.log(res);
-            // // console.log(this.res);
-
+            var data = this.visitData;
+            var spec = {
+                    birdName: {
+                        displayName: 'Bird Name'
+                    },
+                    leftRingID: { displayName: 'Left Ring' },
+                    rightRingID: { displayName: 'Right Ring' },
+                    createdAt: { displayName: 'Visit Time' }
+                }
+                // await Cloud.exportData.with({ reportSpec: spec, reportData: data }); //DOESNT WORK
+            this.goto(`/export`); //THIS DOES BUT HOW TO PASS DATA NOT VIA URL LIKE METHOD ABOVE?
         }
     }
 });

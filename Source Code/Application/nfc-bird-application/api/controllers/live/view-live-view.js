@@ -20,16 +20,12 @@ module.exports = {
 
     },
 
-
-    fn: async function(res,req) {
+    fn: async function() {
         var numVisits = await Visit.count();
-        console.log(res);
-        return { 
+
+        return {
             visitCount: numVisits,
-            title: "Live View",
-            res: res
+            title: "Live View"
         };
     }
-
-
 };

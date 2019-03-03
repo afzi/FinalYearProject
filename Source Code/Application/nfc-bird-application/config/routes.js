@@ -43,6 +43,8 @@ module.exports.routes = {
     'GET /live/view': { action: 'live/view-live-view' },
     'GET /changelog/user-activity-monitor': { action: 'changelog/view-user-activity-monitor' },
 
+    'GET /export': { action: 'export-data' },
+
 
     //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
     //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -74,7 +76,7 @@ module.exports.routes = {
 
     'GET   /api/v1/rfidtag/rfid-tag-exists': { action: 'rfidtag/rfid-tag-exists' },
     'GET   /api/v1/rfidtag': { action: 'rfidtag/get-rfid' },
-    'GET   /api/v1/rfidtag/count': { action:  'rfidtag/count-rfid' },
+    'GET   /api/v1/rfidtag/count': { action: 'rfidtag/count-rfid' },
 
     'DELETE   /api/v1/rfidtag': { action: 'rfidtag/delete-rfid' },
 
@@ -82,8 +84,8 @@ module.exports.routes = {
     'GET   /api/v1/nestsite': { action: 'nestsite/get-nestsite' },
     'GET   /api/v1/nestsite/count': { action: 'nestsite/count-nestsite' },
 
-    
-    'GET   /api/v1/user':       { action: 'account/get-user' },
+
+    'GET   /api/v1/user': { action: 'account/get-user' },
     'GET   /api/v1/user/count': { action: 'account/count-user' },
     'GET   /api/v1/user/username-exists': { action: 'account/username-exists' },
 
@@ -115,7 +117,9 @@ module.exports.routes = {
     'GET /api/v1/changelog': { action: 'changelog/get-changelog' },
     'GET /api/v1/changelog/count': { action: 'changelog/count-changelog' },
 
-    'PUT /api/v1/lock': { action: 'lock/try-acquire-renew-lock' }
+    'PUT /api/v1/lock': { action: 'lock/try-acquire-renew-lock' },
+
+    'GET /api/v1/export': { action: 'export-data' },
 
 
 };
