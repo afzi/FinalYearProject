@@ -90,6 +90,7 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
+      this.currentBirdFilter = SAILS_LOCALS.initialBirdNameFilter;
         this.refresh();
     },
 
@@ -539,14 +540,11 @@ parasails.registerPage('get-bird', {
           },
 
         clickOpenExampleModalButton3: async function(index) {
-            this.goto('/birds/single');
-            console.log("hi  plz work");
             this.currentBird = this.currentBirds[index];
-            var temp = await Cloud.countVisits.with({birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
-           
+            var temp = await Cloud.getSingleBirdVisit.with({birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
             this.currentBird.visitHistory = temp.visits;
             this.visitCount = temp.count;
-            
+            this.goto('/birds/single');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';
@@ -555,7 +553,7 @@ parasails.registerPage('get-bird', {
 
           visitPageClick: async function(pageNum) {
             this.visitCurrentPage = pageNum;
-            var temp = await Cloud.countVisits.with({birdName: this.currentBird.birdName, offset: (this.visitCurrentPage - 1) * this.visitPageSize, numOfRows: this.visitPageSize });
+            var temp = await Cloud.getSingleBirdVisit.with({birdName: this.currentBird.birdName, offset: (this.visitCurrentPage - 1) * this.visitPageSize, numOfRows: this.visitPageSize });
             this.currentBird.visitHistory = temp.visits;
             this.visitCount = temp.count;
           },

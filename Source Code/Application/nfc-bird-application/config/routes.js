@@ -110,7 +110,7 @@ module.exports.routes = {
     'POST /api/v1/rfidtag': { action: 'rfidtag/import-rfid' },
 
     'GET /api/v1/live': { action: 'live/live-view' },
-    'GET /api/v1/bird/count-visits': { action: 'bird/count-visits' },
+    'GET /api/v1/bird/get-single-bird-visit': { action: 'bird/get-single-bird-visit' },
 
     'GET /api/v1/changelog': { action: 'changelog/get-changelog' },
     'GET /api/v1/changelog/count': { action: 'changelog/count-changelog' },

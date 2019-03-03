@@ -56,7 +56,7 @@ module.exports = {
         console.log("we are here");
 
         // GET DATA FOR TABLE
-        var rawResult = await sails.sendNativeQuery(LIVEVIEWQUERY, [inputs.birdName, inputs.numOfRows, inputs.offset]);
+        var rawResult = await sails.sendNativeQuery(DATAQUERY, [inputs.birdName, inputs.numOfRows, inputs.offset]);
         var parsedResult = [];
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {

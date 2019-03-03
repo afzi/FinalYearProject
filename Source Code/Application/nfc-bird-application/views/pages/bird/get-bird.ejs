@@ -572,7 +572,7 @@
 
                                     </table>
                                     <div>
-                                        <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="visitPageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                                        <paginate :page-count="Math.ceil(visitCount / visitPageSize)" :click-handler="visitPageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                                             :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                                         </paginate>
                                     </div>

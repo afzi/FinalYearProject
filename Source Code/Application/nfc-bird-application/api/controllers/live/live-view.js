@@ -50,12 +50,10 @@ module.exports = {
     fn: async function(inputs, exits) {
         var VISITCOUNTQUERY = `SELECT COUNT(*) AS cnt `;
         var LIVEVIEWQUERY = `SELECT birds.id, birds.birdName, birds.leftRingID, birds.rightRingID, visits.createdAt `;
-        var FILTERING = `FROM nfcbirds.bird AS birds
-            INNER JOIN nfcbirds.rfidtag AS tags
-            ON birds.id = tags.birdID
-            INNER JOIN nfcbirds.visit AS visits
-            ON tags.nfcRFID = visits.nfcRFID
-            WHERE visits.createdAt >= UNIX_TIMESTAMP(concat(curdate(), $1))
+        var FILTERING = `FROM nfcbirds.bird AS birds 
+            INNER JOIN nfcbirds.visit AS visits 
+            ON birds.id = visits.birdID 
+            WHERE visits.createdAt >= UNIX_TIMESTAMP(concat(curdate(), $1)) 
             AND visits.createdAt <= UNIX_TIMESTAMP(concat(curdate(), $2)) `;
         if (inputs.searchTerm != null) { FILTERING += " AND birds.birdName LIKE $3 "; }
         VISITCOUNTQUERY += FILTERING;

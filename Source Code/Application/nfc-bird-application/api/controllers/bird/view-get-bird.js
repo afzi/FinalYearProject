@@ -6,6 +6,13 @@ module.exports = {
 
     description: 'Display "get-bird" page.',
 
+    inputs: {
+        initialBirdNameFilter: {
+          required: false,
+          type: 'string',
+          description: 'The initial filter on the bird name'
+        }
+      },
 
     exits: {
 
@@ -21,12 +28,12 @@ module.exports = {
     },
 
 
-    fn: async function(req, res) {
+    fn: async function(inputs) {
         //   if (this.req.me) {
         //     throw {redirect: '/'};
         //   }
 
-        return { title: 'Birds Table' };
+        return { title: 'Birds Table', initialBirdNameFilter: inputs.initialBirdNameFilter  };
 
     }
 

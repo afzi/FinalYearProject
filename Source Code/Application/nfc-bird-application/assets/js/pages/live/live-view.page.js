@@ -141,6 +141,10 @@ parasails.registerPage('live-view', {
 
         },
 
+        goToBird: function(birdName) {
+            this.goto(`/birds?initialBirdNameFilter=${birdName}`);
+          },
+
         exportToExcel: async function() {
             console.log(this.res);
             var file = await Cloud.exportToExcel.with({ res: this.res });;

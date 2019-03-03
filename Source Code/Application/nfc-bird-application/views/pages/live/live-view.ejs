@@ -29,7 +29,7 @@
             </thead>
 
             <tbody role="rowgroup">
-                <tr style="cursor:pointer;" class="clickable-row" v-for="visit in visitData" @click="echo(index)">
+                <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)" v-for="visit in visitData" >
                     <td class="birdJustifyColumn">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>
