@@ -8,10 +8,12 @@
 
             <div class="form-group col-xs-6">
                 <span style="padding-left: 150px;"> Start Time:</span>
-                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 30%; display: inline-block;"></datepicker>
+                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 30%; display: inline-block;">
+                </datepicker>
 
                 <span style="padding-left: 15px;">End Time:</span>
-                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 30%; display: inline-block;"></datepicker>
+                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 30%; display: inline-block;">
+                </datepicker>
             </div>
             <div class="form-group col-xs-6">
                 <button class="btn btn-secondary" @click="clearFilters">Clear</button>
@@ -29,7 +31,8 @@
             </thead>
 
             <tbody role="rowgroup">
-                <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)" v-for="visit in visitData" >
+                <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)"
+                    v-for="visit in visitData">
                     <td class="birdJustifyColumn">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>
@@ -40,35 +43,41 @@
 
         <!-- FOOTER BAR -->
 
-        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <footer id="page-footer"
+            class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
             <div class="nav-item dropdown d-none d-sm-block">
-                <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
-                    :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
+                <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick"
+                    :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'"
+                    :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                    :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'"
+                    :disabled-class="'ignore disabled'">
                 </paginate>
             </div>
 
             <div class="nav-item dropdown d-none d-sm-block font-white">
                 <a class="nav-link ml-2" id="header-account-menu-link">Showing {{visitData.length}} entries
-          out of {{visitCount}}</a>
+                    out of {{visitCount}}</a>
             </div>
 
-            <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block font-white">last refresh: <%-new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(); %></div>
-            <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page to see.</div>
+            <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block font-white">last refresh:
+                <%-new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(); %></div>
+            <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page
+                to see.</div>
 
-            <!-- <div class="nav-item dropdown d-none d-sm-block">
+            <div class="nav-item dropdown d-none d-sm-block">
                 <button class="btn btn-secondary" @click="exportToExcel">Export Test</button>
-            </div> -->
+            </div>
 
 
 
             <div class="nav-item dropdown d-none d-sm-block font-white">
-               Show
+                Show
                 <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;margin: 0px 5px;">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option selected value="15">15</option>
                     <option value="10000">All</option>
-                </select> 
+                </select>
                 entries
             </div>
         </footer>

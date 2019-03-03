@@ -150,14 +150,9 @@ parasails.registerPage('live-view', {
           },
 
         exportToExcel: async function() {
+            console.log(SAILS_LOCALS.res);
+            console.log(res);
             console.log(this.res);
-            var file = await Cloud.exportToExcel.with({ res: this.res });;
-
-            if (!file) { throw 'notFound'; }
-
-            this.res.attachment(file.downloadName);
-            var downloading = await sails.startDownload(file.uploadFd);
-            return exits.success(downloading);
 
         }
     }
