@@ -9,6 +9,10 @@ parasails.registerPage('live-view', {
 
         visitCount: 0,
 
+        dayUpdatedVisitCount: 0,
+
+        dayInitalVisitCount: 0,
+
         diff: 0,
 
         newVisits: false,
@@ -54,7 +58,8 @@ parasails.registerPage('live-view', {
         var raw = await Cloud.liveView.with({ timeFrom: this.timeFrom, timeTo: this.timeTo, offset: 0, numOfRows: this.pageSize });
         this.visitData = raw.visits;
         this.visitCount = raw.count;
-        this.checkNew(raw.count);
+        this.dayInitalVisitCount = raw.count;
+        this.checkNew();
     },
     watch: {
         // whenever one of the filters changes, this function will run
@@ -85,6 +90,8 @@ parasails.registerPage('live-view', {
     methods: {
         pageClick: async function(pageNum) {
             this.currentPage = pageNum;
+            this.newVisits = false;
+            this.dayInitalVisitCount = this.dayUpdatedVisitCount;
             this.refresh();
         },
 
@@ -109,14 +116,8 @@ parasails.registerPage('live-view', {
                 this.visitData = raw.visits;
                 this.visitCount = raw.count;
             }
-            // if(this.search == null && (this.timeFrom == "00:00" && this.timeTo == "23:59")){
-            //     this.visitCount = await Visit.count();
-            // } else if(fromPageClick){
-            //     this.visitCount = await Visit.count();
-            // }
-            // if(vCount == -1){
-            //     var temp = await Cloud.liveView.with({timeFrom: this.timeFrom, timeTo: this.timeTo, searchTerm: this.search, offset: (this.currentPage - 1) * this.pageSize, numOfRows: Number.MAX_SAFE_INTEGER });
-            //     this.visitCount = temp.length;}
+            this.newVisits = false;
+            this.dayInitalVisitCount = this.dayUpdatedVisitCount;
         },
 
         clearFilters: async function() {
@@ -127,15 +128,18 @@ parasails.registerPage('live-view', {
         },
 
         checkNew: async function(dayInitalVisitCount) {
+            var self = this;
             setInterval(async function(dayInitalVisitCount) {
                 var temp = await Cloud.liveView.with({ timeFrom: '00:00', timeTo: '23:59', offset: 0, numOfRows: 0 });
-                dayUpdatedVisitCount = temp.count;
-                if (this.dayUpdatedVisitCount > dayInitalVisitCount) {
-                    //TODO: notify user that new records exisit and make it work
-                    this.diff = dayUpdatedVisitCount - dayInitalVisitCount;
-                    this.newVisits = true;
+                self.dayUpdatedVisitCount = temp.count;
+                if (self.dayUpdatedVisitCount > self.dayInitalVisitCount) {
+                    self.$nextTick(function(){
+                    self.diff = self.dayUpdatedVisitCount - self.dayInitalVisitCount;
+                    self.newVisits = true;
+                    })
+                    
                 }
-            }, 5000, dayInitalVisitCount); //1 min is 60000 
+            }, 5000, dayInitalVisitCount); //TODO: change to 1 min for production : 60000 
 
 
 

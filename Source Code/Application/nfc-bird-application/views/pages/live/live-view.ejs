@@ -52,17 +52,8 @@
           out of {{visitCount}}</a>
             </div>
 
-            <div class="nav-item dropdown d-none d-sm-block">
-                <template v-if="newVisits">
-          <div class="alert alert-info">
-            {{diff}} new visits found, refresh page to see.
-          </div>
-          <button class="btn btn-secondary" @click="clearFilters">Refresh</button>
-        </template>
-                <template v-else>
-          <button class="btn btn-secondary" disabled>Refresh</button>
-        </template>
-            </div>
+            <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block font-white">last refresh: <%-new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(); %></div>
+            <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page to see.</div>
 
             <!-- <div class="nav-item dropdown d-none d-sm-block">
                 <button class="btn btn-secondary" @click="exportToExcel">Export Test</button>
