@@ -150,9 +150,32 @@ parasails.registerPage('live-view', {
           },
 
         exportToExcel: async function() {
-            console.log(SAILS_LOCALS.res);
-            console.log(res);
-            console.log(this.res);
+        var fs = window.fs;
+
+        fs.mkdir('/home', function() {
+            fs.writeFile('/home/hello-world.txt', 'Hello world!\n', function() {
+                fs.readFile('/home/hello-world.txt', 'utf-8', function(err, data) {
+                    console.log(data);
+                });
+            });
+        });
+            // var Readable = window.readable;
+            // var s = new Readable();
+            // s._read = function noop() {}; // redundant? see update below
+            // s.push("your text here\r\n")
+            // s.push("next line text\r\n");
+            // // s.push(null);
+
+            // // res.attachment('test.csv');
+            // // -> response header will contain:
+            // //   Content-Disposition: attachment
+            // s.pipe(SAILS_LOCALS.res.attachment('file.txt'))
+            // // res.download(data,'fileName.csv');
+            // SAILS_LOCALS.res.send()
+
+            // // console.log(SAILS_LOCALS.res);
+            // // console.log(res);
+            // // console.log(this.res);
 
         }
     }

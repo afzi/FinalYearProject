@@ -21,12 +21,13 @@ module.exports = {
     },
 
 
-    fn: async function() {
+    fn: async function(res,req) {
         var numVisits = await Visit.count();
-
+        console.log(res);
         return { 
             visitCount: numVisits,
-            title: "Live View" 
+            title: "Live View",
+            res: res
         };
     }
 
