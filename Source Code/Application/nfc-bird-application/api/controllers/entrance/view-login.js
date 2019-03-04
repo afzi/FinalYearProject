@@ -27,7 +27,7 @@ module.exports = {
             throw { redirect: '/' };
         }
 
-        return { title: 'Echo Population Database' };
+        return { title: 'EchoBook' };
 
     }
 

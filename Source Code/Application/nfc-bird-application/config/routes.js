@@ -44,6 +44,7 @@ module.exports.routes = {
     'GET /changelog/user-activity-monitor': { action: 'changelog/view-user-activity-monitor' },
 
     'GET /export': { action: 'export-data' },
+    'GET /birds/export': { action: 'bird/export-data-bird-simple' },
 
 
     //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
@@ -120,6 +121,7 @@ module.exports.routes = {
     'PUT /api/v1/lock': { action: 'lock/try-acquire-renew-lock' },
 
     'GET /api/v1/export': { action: 'export-data' },
+    'GET /api/v1/bird/export': { action: 'bird/export-data-bird-simple' },
 
 
 };
