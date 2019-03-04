@@ -34,7 +34,7 @@
                     <li v-if="user.hasAdmin">Admin</li>
                     <li v-if="user.isSuperAdmin">Super Admin</li>
                   </ul>
-                </td>
+                </td> 
                 <td>
                     <i v-show="!user.isSuperAdmin" class="fas fa-edit" data-toggle="modal" data-target="#editUserModal" @click="selectIndexFormData(index)"></i>
                     <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt" @click="promptDeleteUser(index)"></i>
