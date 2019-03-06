@@ -23,6 +23,8 @@ parasails.registerPage('import-rfid', {
 
     statusText: '',
 
+    ringidFilter: "",
+
     csvParsed: [],
 
     currentRfids: [],
@@ -49,7 +51,17 @@ parasails.registerPage('import-rfid', {
     // whenever one of the filters changes, this function will run
     pageSize: function (_, _) {
       this.refresh();
-    }
+    },
+
+    ringidFilter: function(_, _) {
+          this.currentPage = 1;
+          this.$refs.paginate.selected = 1;
+          this.refresh();
+  },
+
+//   ringidFilter: function(_, _) {
+//     this.refresh();
+// },
     
   },
 
@@ -74,6 +86,10 @@ parasails.registerPage('import-rfid', {
       this.currentPage = pageNum;
       this.refresh();
     },
+
+    clearFilters: async function() {
+      this.ringidFilter = "";
+  },
 
     refresh: async function() {
 

@@ -6,6 +6,7 @@
         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal">More Filters</button>
 
         <button class="btn btn-dark" @click="exportToExcel">Export</button>
+    </br>
 
 
         <div class="flex-container filterbar">
@@ -508,6 +509,10 @@
                                             <tr>
                                                 <td>Current Breeding Site</td>
                                                 <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="white-space: nowrap">Distance To Hopper</td>
+                                                <td style="text-align:right">{{currentBird.nestsiteHistory && currentBird.nestsiteHistory[0] ? currentBird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="white-space: nowrap">Previous Breeding Site</td>

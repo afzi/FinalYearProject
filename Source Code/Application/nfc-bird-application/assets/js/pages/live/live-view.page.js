@@ -24,7 +24,6 @@ parasails.registerPage('live-view', {
         search: '',
 
         timeFrom: '00:00',
-
         timeTo: '23:59',
 
         timepickerOptions: {

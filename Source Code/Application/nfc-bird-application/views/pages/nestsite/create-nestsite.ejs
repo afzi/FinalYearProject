@@ -1,6 +1,8 @@
 <div id="create-nestsite">
 
     <div class="container" v-if="!cloudSuccess">
+        <div class="form-group"><button class="btn btn-dark" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button></div>
+
 
         <table id="all-nestsites" border="1" class="table table-bordered table-condensed table-hover">
             <thead role="rowgroup">
@@ -30,8 +32,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <button class="btn btn-primary nav-item" data-toggle="modal" data-target="#createNestsiteModal" @click="resetFormData">Add New</button>
 
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
         <div class="flex-container filterbar" style="white-space: nowrap;">
