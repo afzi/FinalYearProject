@@ -60,6 +60,7 @@ parasails.registerPage('manage-users', {
         this.refresh();
       }
     },
+    
 
     'formData.hasCreateEdit': function(newValue,_) {
       if(newValue === true) {

@@ -593,6 +593,12 @@ parasails.registerPage('get-bird', {
             // ```
         },
 
+        selectIndexFormData: async function(index) {
+            this.formErrors = {};
+            this.formData = this.currentBirds[index];
+          },
+
+
         visitPageClick: async function(pageNum) {
             this.visitCurrentPage = pageNum;
             var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: (this.visitCurrentPage - 1) * this.visitPageSize, numOfRows: this.visitPageSize });
