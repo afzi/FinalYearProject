@@ -54,8 +54,6 @@ parasails.registerPage('import-rfid', {
     },
 
     ringidFilter: function(_, _) {
-          this.currentPage = 1;
-          this.$refs.paginate.selected = 1;
           this.refresh();
   },
 

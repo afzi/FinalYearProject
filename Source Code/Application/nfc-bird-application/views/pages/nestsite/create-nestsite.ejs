@@ -95,11 +95,12 @@
                             <lock :user="me.id" v-if="isEditMode" :action="'editNestsite'+formData.id" :run-on-failed="reload"> </lock>
                             <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="exitEditMode">Close</button>
+
+                        <div class="modal-footer flex-row-reverse justify-content-between">
                             <div class="form-group">
-                                <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
+                                <ajax-button type="submit" :syncing="syncing" class=" btn-dark btn">Save</ajax-button>
                             </div>
+                            <button type="button" class="btn btn-outline-info" data-dismiss="modal" @click="exitEditMode">Close</button>
                         </div>
                     </ajax-form>
                 </div>
