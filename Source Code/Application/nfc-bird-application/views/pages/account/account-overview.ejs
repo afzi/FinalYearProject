@@ -21,9 +21,9 @@
               <input class="form-control" id="fullName" type="text"  :class="[profileFormErrors.fullName ? 'is-invalid' : '']" v-model.trim="profileFormData.fullName" placeholder="Full Name" title="Full Name" autocomplete="name" focus-first>
               <div class="invalid-feedback" v-if="profileFormData.fullName">Please enter your full name.</div>
           </div>
-          <div class="flex-row-reverse form-group editControls">
-              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
+          <div class="flex-row-reverse form-group editControls">  
               <a class="btn btn-info" @click="exitEditProfileMode">Cancel</a>
+              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
             </div>
         </ajax-form>
       </template>
@@ -81,8 +81,9 @@
               </tbody>
               </table>
           <div class="flex-row-reverse form-group editControls">
+              <a class="btn btn-info" @click="exitEditPasswordMode">Cancel</a>
             <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
-            <a class="btn btn-info" @click="exitEditPasswordMode">Cancel</a>
+            
           </div>
         </ajax-form>
       </template>
