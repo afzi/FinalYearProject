@@ -73,7 +73,7 @@ module.exports = {
         if(inputs.skip) finalQuery.skip = inputs.skip;
         if(inputs.limit) finalQuery.limit = inputs.limit;
 
-        var result = await RFIDTag.find(finalQuery).populate('birdID');
+        var result = await RFIDTag.find(finalQuery).populate('birdID').populate('createdBy');
   
         return result;
     }

@@ -15,7 +15,8 @@ module.exports = {
             unique: true
         },
         createdBy: {
-            model: "user"
+            model: "user",
+            required: true
         },
         editedBy: {
             model: "user"

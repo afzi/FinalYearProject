@@ -32,7 +32,8 @@ module.exports = {
             columnType: "varchar"
         },
         createdBy: {
-            model: "user"
+            model: "user",
+            required: true
         }
     }
 };

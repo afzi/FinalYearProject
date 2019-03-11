@@ -39,14 +39,14 @@
                     <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                     <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
                     <td>{{new Date(rfidtag.updatedAt).toLocaleDateString('en-GB')}}</td>
-                    <td><i v-if="!rfidtag.birdID" class="fas fa-trash-alt" @click="promptDeleteRing(index)"></i></td>
+                    <td><i v-if="!rfidtag.birdID && canEditThisRfid(index)" class="fas fa-trash-alt" @click="promptDeleteRing(index)"></i></td>
                 </tr>
             </tbody>
         </table>
 
     </div>
 
-        <div class="import-rfid-form">
+        <div class="import-rfid-form" v-show="me.hasCreateEdit">
             <h1 class="text-center">Import RFID tags from CSV</h1>
             <hr/>
             <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">

@@ -268,7 +268,7 @@ module.exports = {
       console.log("Received request to edit bird")
 
       if(!this.req.me.hasEditFull) {
-        var editBird = await sails.findOne({id: inputs.id})
+        var editBird = await Bird.findOne({id: inputs.id})
 
         if(editBird.createdBy != this.req.me.id) {
           throw 'forbidden'

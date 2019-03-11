@@ -169,6 +169,17 @@ parasails.registerPage('import-rfid', {
         await Cloud.deleteRfid(this.currentRfids[index].nfcRFID);
         this.refresh();
       }
+    },
+
+    canEditThisRfid: function(index) {
+      if(this.me.hasEditFull) return true;
+
+      if(this.me.hasCreateEdit) {
+        var editRfid = this.currentRfids[index];
+        return editRfid.createdBy.id == this.me.id;
+      }
+
+      return false;
     }
   }
 });

@@ -17,7 +17,6 @@ module.exports.policies = {
   'bird/get-single-bird-visit': 'has-read',
   'bird/get-bird': 'has-read',
   'bird/view-get-bird': 'has-read',
-  'live/*': 'has-read',
   'nestsite/count-nestsite': 'has-read',
   'nestsite/get-nestsite': 'has-read',
   'nestsite/view-create-nestsite': 'has-read',

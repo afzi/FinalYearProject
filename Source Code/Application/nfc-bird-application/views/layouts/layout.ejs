@@ -83,19 +83,23 @@
                             <a class="nav-link dropdown-toggle btn btn-outline-info2 ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Task Manager</a>
                             <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
                                 <a class="dropdown-item" href="/live/view">Live View</a>
-                                <a class="dropdown-item" href="/birds">Birds Table</a>
-                                <a class="dropdown-item" href="/rfidtag">Manage Rings</a>
-                                <a class="dropdown-item" href="/nestsites">Manage Nest Sites</a>
+                                <% if(me.hasRead) { %>
+                                    <a class="dropdown-item" href="/birds">Birds Table</a>
+                                    <a class="dropdown-item" href="/rfidtag">Manage Rings</a>
+                                    <a class="dropdown-item" href="/nestsites">Manage Nest Sites</a>
+                                <% } %>
                             </div>
                         </div>
 
-                        <div class="nav-item dropdown d-none d-sm-block">
-                            <a class="nav-link dropdown-toggle btn btn-outline-info2 ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
-                                <a class="dropdown-item" href="/account/manage-users">Manage Users</a>
-                                <a class="dropdown-item" href="/changelog/user-activity-monitor">User Activity Monitor</a>
+                        <% if(me.hasAdmin || me.isSuperAdmin) { %>
+                            <div class="nav-item dropdown d-none d-sm-block">
+                                <a class="nav-link dropdown-toggle btn btn-outline-info2 ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu nav-menu" aria-labelledby="header-account-menu-link">
+                                    <a class="dropdown-item" href="/account/manage-users">Manage Users</a>
+                                    <a class="dropdown-item" href="/changelog/user-activity-monitor">User Activity Monitor</a>
+                                </div>
                             </div>
-                        </div>
+                        <% } %>
 
                         <div class="nav-item dropdown d-none d-sm-block">
                             <a class="nav-link dropdown-toggle btn btn-outline-info2 ml-2" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
@@ -554,19 +558,12 @@
                         <script src="/js/browserify-include.js"></script>
                         <script src="/js/pages/498.page.js"></script>
                         <script src="/js/pages/account/account-overview.page.js"></script>
-                        <script src="/js/pages/account/edit-password.page.js"></script>
-                        <script src="/js/pages/account/edit-profile.page.js"></script>
                         <script src="/js/pages/account/manage-users.page.js"></script>
-                        <script src="/js/pages/bird/create-bird.page.js"></script>
                         <script src="/js/pages/bird/full-bird.page.js"></script>
                         <script src="/js/pages/bird/get-bird.page.js"></script>
                         <script src="/js/pages/changelog/user-activity-monitor.page.js"></script>
                         <script src="/js/pages/contact.page.js"></script>
-                        <script src="/js/pages/dashboard/welcome.page.js"></script>
-                        <script src="/js/pages/entrance/forgot-password.page.js"></script>
                         <script src="/js/pages/entrance/login.page.js"></script>
-                        <script src="/js/pages/entrance/new-password.page.js"></script>
-                        <script src="/js/pages/entrance/signup.page.js"></script>
                         <script src="/js/pages/faq.page.js"></script>
                         <script src="/js/pages/homepage.page.js"></script>
                         <script src="/js/pages/legal/privacy.page.js"></script>

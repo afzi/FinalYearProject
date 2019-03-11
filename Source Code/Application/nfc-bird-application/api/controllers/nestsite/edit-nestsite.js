@@ -62,7 +62,7 @@ module.exports = {
   
     fn: async function (inputs) {
       if(!this.req.me.hasEditFull) {
-        var editNestsite = await sails.findOne({id: inputs.id})
+        var editNestsite = await Nestsite.findOne({id: inputs.id})
 
         if(editNestsite.createdBy != this.req.me.id) {
           throw 'forbidden'

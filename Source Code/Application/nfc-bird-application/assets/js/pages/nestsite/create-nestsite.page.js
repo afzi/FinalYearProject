@@ -66,6 +66,7 @@ parasails.registerPage('create-nestsite', {
       this.syncing = true;
       await this.refresh();
       this.exitEditMode();
+      this.exitCreateMode();
       this.syncing = false;
     },
 
@@ -135,6 +136,12 @@ parasails.registerPage('create-nestsite', {
       $('#editNestsiteModal').modal('hide');
     },
 
+    exitCreateMode: async function() {
+      this.formErrors = {};
+      this.formData = {};
+      $('#createNestsiteModal').modal('hide');
+    },
+
     promptDeleteNestsite: async function(index) {
       if(confirm(`Are you sure you want to delete nestsite ${this.currentNestsites[index].nestID}?`)) {
         await Cloud.deleteNestsite(this.currentNestsites[index].id);
@@ -144,6 +151,17 @@ parasails.registerPage('create-nestsite', {
 
     reload: function() {
       location.reload();
+    },
+
+    canEditThisNestsite: function(index) {
+      if(this.me.hasEditFull) return true;
+
+      if(this.me.hasCreateEdit) {
+        var editNestsite = this.currentNestsites[index];
+        return editNestsite.createdBy.id == this.me.id;
+      }
+
+      return false;
     }
 
   }

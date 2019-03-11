@@ -337,9 +337,8 @@ parasails.registerPage('get-bird', {
         submittedFormCreate: async function() {
             this.syncing = true;
             await this.refresh();
-            if (this.isEditMode) {
-                this.closeCreateBirdModal(false);
-            }
+            this.closeCreateBirdModal(false);
+            this.exitCreateMode();
             this.syncing = false;
         },
 
@@ -726,6 +725,15 @@ parasails.registerPage('get-bird', {
                 this.exitCreateMode();
                 return true;
             } else return false;
+        },
+
+        canEditThisBird: function() {
+            if(this.me.hasEditFull) return true;
+            if(this.me.hasCreateEdit) {
+                return this.currentBird.createdBy.id == this.me.id;
+            }
+            return false;
+
         }
 
 

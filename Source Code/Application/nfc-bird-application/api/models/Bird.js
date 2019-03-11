@@ -11,7 +11,8 @@ module.exports = {
         //updatedOn provided by sails
 
         createdBy: {
-            model: "user"
+            model: "user",
+            required: true
         },
         editedBy: {
             model: "user"

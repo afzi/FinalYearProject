@@ -2,9 +2,9 @@
     <div class="container" v-if="!cloudSuccess">
 
         <div class="flex-container">
-        <button class="btn btn-dark" @click="openCreateBirdModal">Register New Bird</button>
+        <button class="btn btn-dark" @click="openCreateBirdModal" v-if="me.hasCreateEdit || me.hasEditFull">Register New Bird</button>
         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal">More Filters</button>
-        <button class="btn btn-dark" @click="exportToExcel">Export</button>
+        <button class="btn btn-dark" @click="exportToExcel" v-if="me.hasExport">Export</button>
         </div>
 
 
@@ -706,7 +706,7 @@
                 <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/support">contact support</a> if the error persists.</small></p>
                 <div class="modal-footer flex-row-reverse justify-content-between">
                     
-                    <a class="btn btn-info " v-if="!isEditMode" @click="enterEditMode">Edit</a>
+                    <a class="btn btn-info " v-if="!isEditMode && canEditThisBird()" @click="enterEditMode">Edit</a>
 
                     <div id="editControls" class="flex-row-reverse form-group">
                         <a class="btn btn-info " v-if="isEditMode" @click="exitEditMode">Discard changes</a>

@@ -145,7 +145,9 @@ parasails.registerPage('live-view', {
         },
 
         goToBird: function(birdName) {
-            this.goto(`/birds?initialBirdNameFilter=${birdName}`);
+            if(this.me.hasRead) {
+                this.goto(`/birds?initialBirdNameFilter=${birdName}`);
+            }
         },
 
         exportToExcel: async function() {

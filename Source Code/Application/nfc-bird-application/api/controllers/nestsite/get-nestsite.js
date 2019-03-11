@@ -73,7 +73,7 @@ module.exports = {
         if(inputs.skip) finalQuery.skip = inputs.skip;
         if(inputs.limit) finalQuery.limit = inputs.limit;
 
-        var result = await Nestsite.find(finalQuery);
+        var result = await Nestsite.find(finalQuery).populate('createdBy');
 
         if(inputs.includeBirds) {
           for(nextNestsite of result) {
