@@ -26,7 +26,9 @@ parasails.registerPage('get-bird', {
 
         visitCurrentPage: 1,
 
-        currentBirdFilter: "",
+        currentBirdFilter: "", 
+
+        currentStatusFilter:"",
 
         currentBirdIdFilter: "",
 
@@ -105,6 +107,14 @@ parasails.registerPage('get-bird', {
         // whenever one of the filters changes, this function will run
         currentBirdFilter: function(_, _) {
             if ($("#birdName").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
+        currentStatusFilter: function(_, _) {
+            if ($("#status").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
                 this.refresh();
@@ -440,6 +450,10 @@ parasails.registerPage('get-bird', {
                 params.birdName = this.currentBirdFilter;
             }
 
+            if (this.currentStatusFilter != null && this.currentStatusFilter != "") {
+                params.status = this.currentStatusFilter;
+            }
+
             if (this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
                 params.studId = this.currentBirdIdFilter;
             }
@@ -490,6 +504,7 @@ parasails.registerPage('get-bird', {
 
         clearFilters: async function() {
             this.currentBirdFilter = "";
+            this.currentStatusFilter="";
             this.currentBirdIdFilter = "";
             this.currentSexFilter = "";
             this.currentFatherFilter = "";

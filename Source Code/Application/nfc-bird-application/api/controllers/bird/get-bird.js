@@ -164,6 +164,12 @@ module.exports = {
         extendedDescription: 'Must be a valid timestamp'
       },
 
+      status: {
+        required: false,
+        type: 'string',
+        description: 'status of bird'
+      },
+
       researcherNotes: {
         required: false,
         type: 'string',
@@ -227,6 +233,7 @@ module.exports = {
       let query = {}
       if(inputs.id) query.id = inputs.id;
       if(inputs.studId) query.studID = {'contains': inputs.studId}
+      if(inputs.status) query.status = {'contains': inputs.status}
       if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
       if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
       if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
