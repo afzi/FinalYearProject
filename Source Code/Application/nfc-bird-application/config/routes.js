@@ -20,12 +20,8 @@ module.exports.routes = {
     'GET /legal/terms': { view: 'pages/legal/terms' },
     'GET /legal/privacy': { view: 'pages/legal/privacy' },
 
-    'GET /signup': { action: 'entrance/view-signup' },
-
     'GET /login': { action: 'entrance/view-login' },
-    'GET /password/new': { action: 'entrance/view-new-password' },
 
-    'GET /bird/register': { action: 'bird/view-create-bird' },
     'GET /nestsites': { action: 'nestsite/view-create-nestsite' },
 
     'GET /account': { action: 'account/view-account-overview' },
@@ -36,8 +32,6 @@ module.exports.routes = {
 
     'GET /birds/full': { action: 'bird/view-full-bird' },
 
-    'GET /account/password': { action: 'account/view-edit-password' },
-    'GET /account/profile': { action: 'account/view-edit-profile' },
     'GET /account/manage-users': { action: 'account/view-manage-users' },
 
     'GET /rfidtag': { action: 'rfidtag/view-import-rfid' },
@@ -110,8 +104,6 @@ module.exports.routes = {
     'POST  /api/v1/bird': { action: 'bird/create-bird' },
     'PUT  /api/v1/bird': { action: 'bird/edit-bird' },
     'GET /api/v1/bird/count': { action: 'bird/count-birds' },
-
-    'POST  /api/v1/entrance/update-password-and-login': { action: 'entrance/update-password-and-login' },
 
     'POST /api/v1/rfidtag': { action: 'rfidtag/import-rfid' },
 

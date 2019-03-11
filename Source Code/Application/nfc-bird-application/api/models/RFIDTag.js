@@ -10,6 +10,7 @@ module.exports = {
     
     attributes: {
         id: false,
+        editedBy: false,
 
         birdID: {
             model: "bird"
@@ -29,6 +30,9 @@ module.exports = {
         colour: {
             type: "ref",
             columnType: "varchar"
+        },
+        createdBy: {
+            model: "user"
         }
     }
 };

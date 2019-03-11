@@ -32,12 +32,25 @@ module.exports = {
       alreadyInUse: {
         statusCode: 409,
         description: 'One or more of the provided fields are already in use.'
+      },
+
+      forbidden: {
+        statusCode: 403,
+        description: 'You are not allowed to take this action'
       }
   
     },
   
   
     fn: async function (inputs) {
+      if(!this.req.me.hasEditFull) {
+        var deleteNestsite = await sails.findOne({id: inputs.id})
+
+        if(deleteNestsite.createdBy != this.req.me.id) {
+          throw 'forbidden'
+        }
+      }
+
         var deletedRecord = await Nestsite.destroyOne({id: inputs.id})
           .intercept({name: 'UsageError'}, 'invalid');
 

@@ -50,18 +50,30 @@ module.exports = {
       alreadyInUse: {
         statusCode: 409,
         description: 'One or more of the provided fields are already in use.'
+      },
+
+      forbidden: {
+        statusCode: 403,
+        description: 'You are not allowed to take this action'
       }
   
     },
   
   
     fn: async function (inputs) {
+      if(!this.req.me.hasEditFull) {
+        var editNestsite = await sails.findOne({id: inputs.id})
+
+        if(editNestsite.createdBy != this.req.me.id) {
+          throw 'forbidden'
+        }
+      }
+
         await Nestsite.update({id: inputs.id})
         .set({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
             distanceToHoppersKm: inputs.distanceToHoppersKm,
-            createdBy: this.req.session.userId,
             editedBy: this.req.session.userId
           })
           .intercept('E_UNIQUE', 'alreadyInUse')

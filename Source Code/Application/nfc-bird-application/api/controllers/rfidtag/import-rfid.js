@@ -36,7 +36,6 @@ module.exports = {
   
     },
   
-  
     fn: async function (inputs, exits) {
         let numSkipped = 0;
         let numSuccess = 0;
@@ -58,7 +57,8 @@ module.exports = {
               await RFIDTag.create({
                 nfcRFID: nextValue.short,
                 nfcRFIDInternal: nextValue.long,
-                colour: nextValue.colour
+                colour: nextValue.colour,
+                createdBy: this.req.session.userId
               })
               .intercept({name: 'UsageError'}, 'invalid');
 
