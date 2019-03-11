@@ -34,6 +34,8 @@ module.exports.routes = {
 
     'GET /birds/single': { action: 'bird/view-get-bird' },
 
+    'GET /birds/full': { action: 'bird/view-full-bird' },
+
     'GET /account/password': { action: 'account/view-edit-password' },
     'GET /account/profile': { action: 'account/view-edit-profile' },
     'GET /account/manage-users': { action: 'account/view-manage-users' },
@@ -74,6 +76,7 @@ module.exports.routes = {
 
     'GET   /api/v1/bird/unique-bird-name': { action: 'bird/unique-bird-name' },
     'GET   /api/v1/bird': { action: 'bird/get-bird' },
+     'GET   /api/v1/bird/full': { action: 'bird/full-bird' },
 
     'GET   /api/v1/rfidtag/rfid-tag-exists': { action: 'rfidtag/rfid-tag-exists' },
     'GET   /api/v1/rfidtag': { action: 'rfidtag/get-rfid' },

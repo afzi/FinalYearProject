@@ -69,6 +69,8 @@
             <thead role="rowgroup">
                 <tr class="birdheader back-green" role="row">
                     <th role="columnheader">Bird Name</th>
+                    <th role="columnheader" v-if="formData.status">Status</th>
+                    <th role="columnheader" v-if="formData.lastSeenDate">Last Seen Date</th>
                     <th role="columnheader">Stud ID</th>
                     <th role="columnheader">Gender</th>
                     <th role="columnheader">Male Parent</th>
@@ -84,7 +86,9 @@
 
             <tbody role="rowgroup">
                 <tr style="cursor:pointer;" class="clickable-row" @click="clickOpenExampleModalButton3(index)" v-for="(bird, index) in currentBirds">
-                    <td class="birdJustifyColumn">{{bird.birdName}}</td>
+                    <td class="birdJustifyColumn" >{{bird.birdName}}</td>
+                    <td v-if="formData.status">{{bird.status}}</td>
+                    <td v-if="formData.lastSeenDate">{{bird.visitHistory[0] ? new Date(bird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
                     <td>{{bird.studID}}</td>
                     <td>{{bird.sex}}</td>
                     <td>{{bird.fatherName}}</td>
@@ -129,88 +133,93 @@
 
 <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-            <h5 class="modal-title" id="createUserModalLabel">Select Fields To Export</h5>
-            <hr>
-            </br>
-            <div class="form-group">
-                <table style="text-align:left;" id="privilege" width="100%">
-                <tbody>
-                    <tr>
-                        <td><input id="birdName" type="checkbox" checked="checked" name="birdName" value="birdName" v-model="formData.birdName"> bird Name</td>
-                        <td><input id="groupName" type="checkbox" checked="checked"  name="groupName" value="groupName" v-model="formData.groupName"> group Name</td>
-                        <td><input id="layDate" type="checkbox" checked="checked" name="layDate" value="layDate" v-model="formData.layDate"> lay Date</td>
-                    </tr>
-                    <tr>
-                        <td><input id="status" type="checkbox" checked="checked" name="status" value="status" v-model="formData.status"> Status</td>
-                        <td><input id="sex" type="checkbox"checked="checked" name="sex" value="sex" v-model="formData.sex"> sex</td>
-                        <td><input id="hatchDate" type="checkbox" checked="checked" name="hatchDate" value="hatchDate" v-model="formData.hatchDate"> hatch Date</td>
-                    </tr>
-                    <tr>
-                        <td><input id="deathDate" type="checkbox"checked="checked" name="deathDate" value="deathDate" v-model="formData.deathDate"> death Date</td>
-                        <td><input id="currentCondition" type="checkbox" checked="checked" name="currentCondition" value="currentCondition" v-model="formData.currentCondition"> current Condition</td>
-                        <td><input id="incubationDays" type="checkbox" checked="checked" name="incubationDays" value="incubationDays" v-model="formData.incubationDays"> incubation Days</td>
-                    </tr>
-                    <tr>
-                        <td><input id="lastSeenDate" type="checkbox" checked="checked" name="lastSeenDate" value="lastSeenDate" v-model="formData.lastSeenDate"> last Seen Date</td>
-                        <td><input id="motherName" type="checkbox" checked="checked" name="motherName" value="motherName" v-model="formData.motherName"> mother Name</td>
-                        <td><input id="laidWhere" type="checkbox" checked="checked" name="laidWhere" value="laidWhere" v-model="formData.laidWhere"> laid Where</td>
-                    </tr>
-                    <tr>
-                        <td><input id="currentNestSite" type="checkbox" checked="checked" name="currentNestSite" value="currentNestSite" v-model="formData.currentNestSite"> current Nest Site</td>
-                        <td><input id="motherStudID" type="checkbox" checked="checked" name="motherStudID" value="motherStudID" v-model="formData.motherStudID"> mother Stud ID</td>
-                        <td><input id="whereFledged" type="checkbox" checked="checked" name="whereFledged" value="whereFledged" v-model="formData.whereFledged"> where Fledged</td>
-                    </tr>
-                    <tr>
-                        <td><input id="birdID" type="checkbox" checked="checked" name="birdID" value="birdID" v-model="formData.birdID"> birdID</td>
-                        <td><input id="fatherName" type="checkbox" checked="checked" name="fatherName" value="fatherName" v-model="formData.fatherName"> father Name</td>
-                        <td><input id="whereReleased" type="checkbox" checked="checked" name="whereReleased" value="whereReleased" v-model="formData.whereReleased"> where Released</td>
-                    </tr>
-                    <tr>
-                        <td><input id="studId" type="checkbox" checked="checked" name="studId" value="studId" v-model="formData.studId"> studId</td>
-                        <td><input id="fatherStudID" type="checkbox" checked="checked" name="fatherStudID" value="fatherStudID" v-model="formData.fatherStudID"> father StudID</td>
-                        <td><input id="whenReleased" type="checkbox" checked="checked" name="whenReleased" value="whenReleased" v-model="formData.whenReleased"> when Released</td>
-                    </tr>
-                    <tr>
-                        <td><input id="newStudId" type="checkbox" checked="checked" name="newStudId" value="newStudId" v-model="formData.newStudId"> newStudId</td>
-                        <td><input id="secondFatherName" type="checkbox" checked="checked" name="secondFatherName" value="secondFatherName" v-model="formData.secondFatherName"> second FatherName</td>
-                        <td><input id="birdName" type="checkbox" checked="checked" name="birdName" value="birdName" v-model="formData.birdName"> bird Name</td>
-                    </tr>
-                    <tr>
-                        <td><input id="rightRingId" type="checkbox" checked="checked" name="rightRingId" value="rightRingId" v-model="formData.rightRingId"> right Ring Id</td>
-                        <td><input id="secondFatherStudID" type="checkbox" checked="checked" name="secondFatherStudID" value="secondFatherStudID" v-model="formData.secondFatherStudID"> secondFatherStudID</td>
-                        <td><input id="researcherNotes" type="checkbox" checked="checked" name="researcherNotes" value="researcherNotes" v-model="formData.researcherNotes"> Notes</td>
-                    </tr>
-                    <tr>
-                        <td><input id="leftRingId" type="checkbox" checked="checked" name="leftRingId" value="leftRingId" v-model="formData.leftRingId"> left Ring Id</td>
-                        <td><input id="createdOn" type="checkbox" checked="checked" name="createdOn" value="createdOn" v-model="formData.createdOn"> created On</td>
-                        <td><input id="createdBy" type="checkbox" checked="checked" name="createdBy" value="createdBy" v-model="formData.createdBy"> created By</td>
-                    </tr>
-                    <tr>
-                        <td><input id="DistanceToHopper" type="checkbox" checked="checked" name="DistanceToHopper" value="DistanceToHopper" v-model="formData.DistanceToHopper"> Distance To Hopper</td>
-                    </tr>
-                </tbody>
-                </table>
+<div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+        <h5 class="modal-title" id="createUserModalLabel">Select Fields To Export</h5>
+        <hr>
+        </br>
+        <div class="form-group">
+            <table style="text-align:left;" id="privilege" width="100%">
+            <tbody>
+                <tr>
+                    <td><input id="birdID" type="checkbox" checked="checked" name="birdID" value="birdID" v-model="formData.birdID"> birdID</td>
+                </tr>
+                    
+                <tr>
+                    <td><input id="birdName" type="checkbox" name="birdName" value="birdName" v-model="formData.birdName"> bird Name</td>
+                    <td><input id="groupName" type="checkbox" checked="checked"  name="groupName" value="groupName" v-model="formData.groupName"> group Name</td>
+                    <td><input id="layDate" type="checkbox" checked="checked" name="layDate" value="layDate" v-model="formData.layDate"> lay Date</td>
+                </tr>
+                <tr>
+                    <td><input id="status" type="checkbox" name="status" value="status" v-model="formData.status"> Status</td>
+                    <td><input id="sex" type="checkbox"checked="checked" name="sex" value="sex" v-model="formData.sex"> sex</td>
+                    <td><input id="hatchDate" type="checkbox" checked="checked" name="hatchDate" value="hatchDate" v-model="formData.hatchDate"> hatch Date</td>
+                </tr>
+                <tr>
+                    <td><input id="deathDate" type="checkbox"checked="checked" name="deathDate" value="deathDate" v-model="formData.deathDate"> death Date</td>
+                    <td><input id="currentCondition" type="checkbox" checked="checked" name="currentCondition" value="currentCondition" v-model="formData.currentCondition"> current Condition</td>
+                    <td><input id="incubationDays" type="checkbox" checked="checked" name="incubationDays" value="incubationDays" v-model="formData.incubationDays"> incubation Days</td>
+                </tr>
+                <tr>
+                    <td><input id="lastSeenDate" type="checkbox" checked="checked" name="lastSeenDate" value="lastSeenDate" v-model="formData.lastSeenDate"> last Seen Date</td>
+                    <td><input id="motherName" type="checkbox" checked="checked" name="motherName" value="motherName" v-model="formData.motherName"> mother Name</td>
+                    <td><input id="laidWhere" type="checkbox" checked="checked" name="laidWhere" value="laidWhere" v-model="formData.laidWhere"> laid Where</td>
+                </tr>
+                <tr>
+                    <td><input id="currentNestSite" type="checkbox" checked="checked" name="currentNestSite" value="currentNestSite" v-model="formData.currentNestSite"> current Breeding</td>
+                    <td><input id="motherStudID" type="checkbox" checked="checked" name="motherStudID" value="motherStudID" v-model="formData.motherStudID"> mother Stud ID</td>
+                    <td><input id="whereFledged" type="checkbox" checked="checked" name="whereFledged" value="whereFledged" v-model="formData.whereFledged"> where Fledged</td>
+                </tr>
+                <tr>
+                    <td><input id="PreviousNestSite" type="checkbox" checked="checked" name="PreviousNestSite" value="PreviousNestSite" v-model="formData.PreviousNestSite"> Previous Breeding</td>
+                    <td><input id="fatherName" type="checkbox" checked="checked" name="fatherName" value="fatherName" v-model="formData.fatherName"> father Name</td>
+                    <td><input id="whereReleased" type="checkbox" checked="checked" name="whereReleased" value="whereReleased" v-model="formData.whereReleased"> where Released</td>
+                </tr>
+                <tr>
+                    <td><input id="studId" type="checkbox" checked="checked" name="studId" value="studId" v-model="formData.studId"> studId</td>
+                    <td><input id="fatherStudID" type="checkbox" checked="checked" name="fatherStudID" value="fatherStudID" v-model="formData.fatherStudID"> father StudID</td>
+                    <td><input id="whenReleased" type="checkbox" checked="checked" name="whenReleased" value="whenReleased" v-model="formData.whenReleased"> when Released</td>
+                </tr>
+                <tr>
+                    <td><input id="newStudId" type="checkbox" checked="checked" name="newStudId" value="newStudId" v-model="formData.newStudId"> newStudId</td>
+                    <td><input id="secondFatherName" type="checkbox" checked="checked" name="secondFatherName" value="secondFatherName" v-model="formData.secondFatherName"> second FatherName</td>
+                    <td><input id="DistanceToHopper" type="checkbox" checked="checked" name="DistanceToHopper" value="DistanceToHopper" v-model="formData.DistanceToHopper"> Distance To Hopper</td>
+                </tr>
+                <tr>
+                    <td><input id="rightRingId" type="checkbox" checked="checked" name="rightRingId" value="rightRingId" v-model="formData.rightRingId"> right Ring Id</td>
+                    <td><input id="secondFatherStudID" type="checkbox" checked="checked" name="secondFatherStudID" value="secondFatherStudID" v-model="formData.secondFatherStudID"> secondFatherStudID</td>
+                    <td><input id="researcherNotes" type="checkbox" checked="checked" name="researcherNotes" value="researcherNotes" v-model="formData.researcherNotes"> Notes</td>
+                </tr>
+                <tr>
+                    <td><input id="leftRingId" type="checkbox" checked="checked" name="leftRingId" value="leftRingId" v-model="formData.leftRingId"> left Ring Id</td>
+                    <td><input id="createdOn" type="checkbox" checked="checked" name="createdOn" value="createdOn" v-model="formData.createdOn"> created On</td>
+                    <td><input id="createdBy" type="checkbox" checked="checked" name="createdBy" value="createdBy" v-model="formData.createdBy"> created By</td>
+                </tr>
+            </tbody>
+            </table>
 
+        </div>
+
+        <div class="modal-footer flex-row-reverse justify-content-between">
+            <div id="createControls" class="flex-row-reverse form-group">
+                
+            <a type="submit" class="btn-dark btn" data-toggle="modal" data-target="#editUserModal"> Testing </a>
+
+            <!-- <i class="fas fa-edit" data-toggle="modal" data-target="#editUserModal" @click="selectIndexFormData(index)"></i> -->
+
+            <a type="submit" class="btn-dark btn" href="birds/full">Save</a>
             </div>
-
-            <div class="modal-footer flex-row-reverse justify-content-between">
-                <div id="createControls" class="flex-row-reverse form-group">
-                <button type="submit" class="btn-dark btn" data-toggle="modal">Save</button>
-                </div>
-                <button type="button" data-dismiss="modal" @click="exitEditMode" class="btn btn-outline-info">Cancel</button>
-            </div>
+            <button type="button" data-dismiss="modal" @click="exitEditMode" class="btn btn-outline-info">Cancel</button>
+        </div>
 
 
-            </div>
         </div>
     </div>
 </div>
-
+</div>
 
         <modal id="singleViewModal" class="example-modal" v-if="modal==='example3'" v-cloak>
             <div class="modal-header">
@@ -1097,6 +1106,77 @@
             </ajax-form>
 
         </modal>
+
+        <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
+                      <div class="modal-content" style="overflow-x: scroll;overflow-y: hidden;width: 100% ;white-space: nowrap;">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="editUserModalLabel">All Birds</h5>
+                          <button type="button" class="close" @click="exitEditMode" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <table class="table table-bordered table-condensed table-hover">
+                                <thead role="rowgroup">
+                                    <tr class="birdheader back-green" role="row">
+                                        <th role="columnheader" v-if="formData.birdName">Bird Name</th>
+                                        <th role="columnheader" v-if="formData.status">Status</th>
+                                        <th role="columnheader" v-if="formData.lastSeenDate">Last Seen Date</td>
+                                        <th role="columnheader" v-if="formData.currentNestSite">Current Breeding</th>
+                                        <th role="columnheader" v-if="formData.PreviousNestSite">Previous Breeding</th>
+                                        <th role="columnheader" v-if="formData.birdID">Bird ID</th>
+                                        <th role="columnheader" v-if="formData.studId">Stud ID</th>
+                                        <th role="columnheader" v-if="formData.newStudId">New Stud ID</th>
+                                        <th role="columnheader" v-if="formData.rightRingId">Right Ring ID</th>
+                                        <th role="columnheader" v-if="formData.leftRingId">Left Ring ID</th>
+                                        <th role="columnheader" v-if="formData.groupName">Group Name</th>
+                                        <th role="columnheader" v-if="formData.sex">Gender</th>
+                                        <th role="columnheader" v-if="formData.currentCondition">Current Condition</th>
+                                        <th role="columnheader" v-if="formData.motherName">Female Parent</th>
+                                        <th role="columnheader" v-if="formData.fatherName">Male Parent</th>
+                                        <th role="columnheader" v-if="formData.secondFatherName">Second Potential Male</th>
+                                        
+                                        <th role="columnheader" v-if="formData.age">Age</th>
+                                        <th role="columnheader">Breeder</th>
+                                        
+                                        <th role="columnheader" v-if="formData.DistanceToHopper">Distance To Hopper</th>
+                                        
+                    
+                                    </tr>
+                                </thead>
+                    
+                                <tbody role="rowgroup">
+                                    <tr v-for="(bird, index) in currentBirds">
+                                        <td class="birdJustifyColumn" v-if="formData.birdName">{{bird.birdName}}</td>
+                                        <td v-if="formData.status">{{bird.status ? bird.status : 'Unknown' }}</td>
+                                        <td v-if="formData.lastSeenDate">{{bird.visitHistory[0] ? new Date(bird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
+                                        <td v-if="formData.currentNestSite">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
+                                        <td v-if="formData.PreviousNestSite">{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
+                                        <td v-if="formData.birdID">{{bird.id}}</td>
+                                        <td v-if="formData.studId">{{bird.studID}}</td>
+                                        <td v-if="formData.newStudId">{{bird.newStudID}}</td>
+                                        <td v-if="formData.rightRingId">{{bird.rightRingID}}</td>
+                                        <td v-if="formData.leftRingId">{{bird.leftRingID}}</td>
+                                        <td v-if="formData.groupName">{{bird.groupName}}</td>
+                                        <td v-if="formData.sex">{{bird.sex}}</td>
+                                        <td v-if="formData.currentCondition">{{bird.conditionHistory[0] ? bird.conditionHistory[0].birdCondition : 'N/A' }}</td>
+                                        <td v-if="formData.motherName">{{bird.motherName}}</td>
+                                        <td v-if="formData.fatherName">{{bird.fatherName}}</td>
+                                        <td v-if="formData.secondFatherName">{{bird.secondFatherName}}</td>
+                                        
+                                        <td v-if="formData.age">{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
+                                        <td>{{bird.isBreeder}}</td>
+                                        
+                                        <td v-if="formData.DistanceToHopper">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+        
+                      </div>
+                    </div>
+            </div>
 
 
     </div>

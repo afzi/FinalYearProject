@@ -10,7 +10,9 @@ parasails.registerPage('get-bird', {
 
         currentBirds: [],
 
-        formData: { /* … */ },
+        formData: {
+             birdName: true
+            },
 
         BirdCount: 0,
 
@@ -37,6 +39,9 @@ parasails.registerPage('get-bird', {
         currentBreederFilter: "",
 
         currentNestSiteFilter: "",
+
+    //    'formData.birdName': true,
+        
 
         currentBird: {},
 
@@ -232,6 +237,10 @@ parasails.registerPage('get-bird', {
                 this.validateRFID();
             }
         },
+
+        //  'formData.birdName':function(newValue,_) {
+        //     Vue.set(this.formData, 'birdName', true);
+        //  }
 
     },
 
@@ -596,6 +605,11 @@ parasails.registerPage('get-bird', {
         selectIndexFormData: async function(index) {
             this.formErrors = {};
             this.formData = this.currentBirds[index];
+          },
+
+          resetFormData: async function() {
+            this.formErrors = {};
+            this.formData = {};
           },
 
 

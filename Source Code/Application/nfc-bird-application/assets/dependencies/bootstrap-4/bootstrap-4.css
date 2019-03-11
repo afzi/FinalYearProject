@@ -2733,13 +2733,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-dark {
-    color: #fff;
+    color: #fff !important;
     background-color: #343a40;
     border-color: #343a40;
 }
 
 .btn-dark:hover {
-    color: #fff;
+    color: #fff !important;
     background-color: #23272b;
     border-color: #1d2124;
 }
@@ -2751,7 +2751,7 @@ fieldset:disabled a.btn {
 
 .btn-dark.disabled,
 .btn-dark:disabled {
-    color: #fff;
+    color: #fff !important;
     background-color: #343a40;
     border-color: #343a40;
 }
