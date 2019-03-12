@@ -44,6 +44,7 @@ parasails.registerPage('import-rfid', {
     _.extend(this, SAILS_LOCALS);
   },
   mounted: async function() {
+    $('[data-toggle="tooltip"]').tooltip();
     this.refresh();
   },
 

@@ -51,12 +51,27 @@
             <hr/>
             <ajax-form action="importRfid" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm($event)" @update:syncing="startSubmit" :handle-parsing="handleParsingForm" autocomplete="off">
 
-                <div class="form-group">
-                    <!-- <label for="password">Stud ID</label> -->
-                    <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="parseCsv" accept=".csv" focus-first>
-                    <div class="invalid-feedback" v-if="formErrors.csvUpload">Please upload a valid file. See tooltip for help.</div>
-                    <div class="valid-feedback" v-else-if="csvValid">File is valid, you may proceed</div>
-                </div>
+                <table>
+                    <tr> 
+                        <div class="form-group">
+                            <td id="upload-area">
+                                <input id="csvUpload" type="file" class="form-control" title="Choose a file..." :class="[formErrors.csvUpload ? 'is-invalid' : '']" @change="parseCsv" accept=".csv" focus-first>
+                            </td>
+                            <td>
+                                <a href="#" data-toggle="tooltip" data-placement="right" title="CSV file must have columns comma-separated and rows newline-separated. It should have exactly three columns in the following order with the following headings: 'short' (corresponding to Printed Ring ID), 'long' (corresponding to System ID) and 'colour' (corresponding to Ring Colour)">
+                                        <img alt="tooltip" height="20px" width="20px" src="/images/tooltip.png"/>
+                                </a>
+                            </td>
+                        
+                        </div>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="invalid-feedback" v-if="formErrors.csvUpload">Please upload a valid file. See tooltip for help.</div>
+                            <div class="valid-feedback" v-else-if="csvValid">File is valid, you may proceed</div>
+                        </td>
+                    </tr>
+                </table>
 
                 <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
                 <p class="text-primary" id="statusField"><small>{{ statusText }}</small></p>
