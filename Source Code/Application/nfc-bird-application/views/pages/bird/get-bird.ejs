@@ -57,34 +57,91 @@
            <table class="table table-bordered table-condensed table-hover text-nowrap">
               <thead role="rowgroup">
                  <tr class="birdheader back-green" role="row">
-                    <th role="columnheader">Bird Name</th>
+                    <th role="columnheader" v-if="formData.name">Bird Name</th>
+                    <th role="columnheader" v-if="formData.sex">Gender</th>
+                    <th role="columnheader" v-if="formData.breeder">Breeder</th>
+                    <th role="columnheader" v-if="formData.lastSeen">Last Seen Date</th>
+                    <th role="columnheader" v-if="formData.studid">Stud ID</th>
+                    <th role="columnheader" v-if="formData.newstudid">New Stud ID</th>
+                    <th role="columnheader" v-if="formData.lring">Left Ring ID</th>
+                    <th role="columnheader" v-if="formData.rring">Right Ring ID</th>
+                    <th role="columnheader" v-if="formData.creator">Created By</th>
+                    <th role="columnheader" v-if="formData.mname">Female Parent</th>
+                    <th role="columnheader" v-if="formData.mstud">Female Parent Stud ID</th>
+                    <th role="columnheader" v-if="formData.fname">Male Parent</th>
+                    <th role="columnheader" v-if="formData.fstud">Male Parent Stud ID</th>
+                    <th role="columnheader" v-if="formData.sfname">Second Male Parent</th>
+                    <th role="columnheader" v-if="formData.sfstud">Second Male Parent Stud ID</th>
                     <th role="columnheader" v-if="formData.status">Status</th>
-                    <th role="columnheader" v-if="formData.lastSeenDate">Last Seen Date</th>
-                    <th role="columnheader">Stud ID</th>
-                    <th role="columnheader">Gender</th>
-                    <th role="columnheader">Male Parent</th>
-                    <th role="columnheader">Female Parent</th>
-                    <th role="columnheader">Age</th>
-                    <th role="columnheader">Breeder</th>
-                    <th role="columnheader">Current Breeding</th>
-                    <th role="columnheader">Distance To Hopper</th>
-                    <th role="columnheader">Previous Breeding</th>
+                    <th role="columnheader" v-if="formData.cnote">Condition</th>
+                    <th role="columnheader" v-if="formData.rnote">Notes</th>
+                    <th role="columnheader" v-if="formData.age">Age</th>
+                    <th role="columnheader" v-if="formData.lay">Lay Date</th>
+                    <th role="columnheader" v-if="formData.laidwhere">Where Laid</th>
+                    <th role="columnheader" v-if="formData.hatchdate">Hatch Date</th>
+                    <th role="columnheader" v-if="formData.hatchwhere">Where Hatch</th>
+                    <th role="columnheader" v-if="formData.incdays">Incubation Days</th>
+                    <th role="columnheader" v-if="formData.fledgedate">Fledge Date</th>
+                    <th role="columnheader" v-if="formData.fledgewhere">Where Fledged</th>
+                    <th role="columnheader" v-if="formData.releasedate">Release Date</th>
+                    <th role="columnheader" v-if="formData.releasedwhere">Where Release</th>
+                    <th role="columnheader" v-if="formData.currnestID">Current Breeding</th>
+                    <th role="columnheader" v-if="formData.currnestDist">Current Distance To Hopper</th>
+                    <th role="columnheader" v-if="formData.currnestDisc">Current Breeding Description</th>
+                    <th role="columnheader" v-if="formData.currnestCord">Current Breeding Coordinates</th>
+
+                    <!-- <th role="columnheader" v-if="formData.currnestLat">Current Breeding Latitude</th> -->
+                    
+
+                    <th role="columnheader" v-if="formData.prevnestID">Previous Breeding</th>
+                    <th role="columnheader" v-if="formData.prevnestDist">Previous Distance To Hopper</th>
+                    <th role="columnheader" v-if="formData.prevnestDisc">Previous Breeding Description</th>
+                    <th role="columnheader" v-if="formData.prevnestCord">Previous Breeding Coordinates</th>
+
+                    <!-- <th role="columnheader" v-if="formData.prevnestLat">Previous Breeding Latitude</th> -->
+                    
                  </tr>
               </thead>
               <tbody role="rowgroup">
                  <tr style="cursor:pointer;" class="clickable-row" @click="clickOpenExampleModalButton3(index)" v-for="(bird, index) in currentBirds">
-                    <td class="birdJustifyColumn" >{{bird.birdName}}</td>
+                    <td class="birdJustifyColumn" v-if="formData.name" >{{bird.birdName}}</td>
+                    <td v-if="formData.sex">{{bird.sex}}</td>
+                    <td v-if="formData.breeder">{{bird.isBreeder}}</td>
+                    <td v-if="formData.lastSeen">{{bird.visitHistory[0] ? new Date(bird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
+                    <td v-if="formData.studid">{{bird.studID}}</td>
+                    <td v-if="formData.newstudid">{{bird.newStudID}}</td>
+                    <td v-if="formData.lring">{{bird.leftRingID}}</td>
+                    <td v-if="formData.rring">{{bird.rightRingID}}</td>
+                    <td v-if="formData.creator">{{bird.createdBy.fullName}}</td>
+                    <td v-if="formData.mname">{{bird.motherName}}</td>
+                    <td v-if="formData.mstud">{{bird.motherStudID}}</td>
+                    <td v-if="formData.fname">{{bird.fatherName}}</td>
+                    <td v-if="formData.fstud">{{bird.fatherStudID}}</td>
+                    <td v-if="formData.sfname">{{bird.secondFatherName}}</td>
+                    <td v-if="formData.sfstud">{{bird.secondFatherStudID}}</td>
                     <td v-if="formData.status">{{bird.status}}</td>
-                    <td v-if="formData.lastSeenDate">{{bird.visitHistory[0] ? new Date(bird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : 'N/A' }}</td>
-                    <td>{{bird.studID}}</td>
-                    <td>{{bird.sex}}</td>
-                    <td>{{bird.fatherName}}</td>
-                    <td>{{bird.motherName}}</td>
-                    <td>{{bird.age}}</td>
-                    <td>{{bird.isBreeder}}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
-                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
+                    <td v-if="formData.cnote">{{bird.conditionHistory[0] ? bird.conditionHistory[0].birdCondition : 'N/A' }}</td>
+                    <td v-if="formData.rnote">{{bird.researcherNotes }}</td>
+                    <td v-if="formData.age">{{bird.age}}</td>
+                    <td v-if="formData.lay">{{new Date(bird.layDate*1000).toLocaleDateString('en-GB') }}</td>
+                    <td v-if="formData.laidwhere">{{bird.laidWhere ? bird.laidWhere.nestID : 'N/A' }}</td>
+                    <td v-if="formData.hatchdate">{{new Date(bird.hatchDate*1000).toLocaleDateString('en-GB') }}</td>
+                    <td v-if="formData.hatchwhere">{{bird.hatchedWhere ? bird.hatchedWhere.nestID : 'N/A' }}</td>
+                    <td v-if="formData.incdays">{{ bird.incubationDays }}</td>
+                    <td v-if="formData.fledgedate">{{new Date(bird.fledgeDate*1000).toLocaleDateString('en-GB') }}</td>
+                    <td v-if="formData.fledgewhere">{{bird.fledgedWhere ? bird.fledgedWhere.nestID : 'N/A' }}</td>
+                    <td v-if="formData.releasedate">{{new Date(bird.releasedWhen*1000).toLocaleDateString('en-GB') }}</td>
+                    <td v-if="formData.releasedwhere">{{bird.releasedWhere ? bird.releasedWhere.nestID : 'N/A' }}</td>
+                    <td v-if="formData.currnestID">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
+                    <td v-if="formData.currnestDist">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
+                    <td v-if="formData.currnestDisc">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestDescription : 'N/A' }}</td>
+                    <td v-if="formData.currnestCord">{{(bird.nestsiteHistory && bird.nestsiteHistory[0] ?  bird.nestsiteHistory[0].nestID.longitude : 'N/A' ) + ", " + (bird.nestsiteHistory && bird.nestsiteHistory[0] ?  bird.nestsiteHistory[0].nestID.latitude : 'N/A' )}}</td>
+                    
+                    <td v-if="formData.prevnestID">{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
+                    <td v-if="formData.prevnestDist">{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
+                    <td v-if="formData.prevnestDisc">{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestDescription : 'N/A' }}</td>  
+                    <td v-if="formData.prevnestCord">{{(bird.nestsiteHistory && bird.nestsiteHistory[1] ?  bird.nestsiteHistory[1].nestID.longitude : 'N/A' ) + ", " + (bird.nestsiteHistory && bird.nestsiteHistory[1] ?  bird.nestsiteHistory[1].nestID.latitude : 'N/A' )}}</td>
+
                  </tr>
               </tbody>
            </table>
@@ -132,6 +189,7 @@
                                          <li><input type="checkbox" checked="checked" v-model="formData.name">Name</li>
                                          <li><input type="checkbox" checked="checked" v-model="formData.sex">Gender</li>
                                          <li><input type="checkbox" checked="checked" v-model="formData.breeder">Is Breeder</li>
+                                         <li><input type="checkbox" checked="checked" v-model="formData.lastSeen">Last Seen Date</li>
                                          <li><input type="checkbox" checked="checked" v-model="formData.studid">Stud ID</li>
                                          <li><input type="checkbox" checked="checked" v-model="formData.newstudid">New Stud ID</li>
                                          <li><input type="checkbox" checked="checked" v-model="formData.lring">Left Ring ID</li>
@@ -142,20 +200,20 @@
                                    <td>
                                       <div style="font-weight:bold; text-align: center;">Bird Parentage Data</div>
                                       <ul  style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                        <li><input type="checkbox" checked="checked" v-model="formData.mname">Mother Name</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.mstud">Mother Stud ID</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.fname">Father Name</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.fstud">Father Stud ID</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.sfname">Second Father Name</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.sfstud">Second Father Stud ID</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.mname">Female Parent</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.mstud">Female Parent Stud ID</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.fname">Male Parent</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.fstud">Male Parent Stud ID</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.sfname">Second Male Parent</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.sfstud">Second Male Parent Stud ID</li>
                                       </ul>
                                    </td>
                                    <td>
                                         <div style="font-weight:bold; text-align:center;">Bird Status Data</div>
                                       <ul  style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
                                         <li><input type="checkbox" checked="checked" v-model="formData.status">Status</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.cnote">Condition Note</li>
-                                        <li><input type="checkbox" checked="checked" v-model="formData.rnote">Researcher Note</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.cnote">Condition</li>
+                                        <li><input type="checkbox" checked="checked" v-model="formData.rnote">Note</li>
                                         <li><input type="checkbox" checked="checked" v-model="formData.age">Age</li>
                                     </ul>
                                    </td>
@@ -165,6 +223,7 @@
                                         <div style="font-weight:bold; text-align:center;">Bird Creation Data</div>
                                         <ul  style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
                                           <li><input type="checkbox" checked="checked" v-model="formData.lay">Lay Date</li>
+                                          <li><input type="checkbox" checked="checked" v-model="formData.laidwhere">Laid Where</li>
                                           <li><input type="checkbox" checked="checked" v-model="formData.hatchdate">Hatch Date</li>
                                           <li><input type="checkbox" checked="checked" v-model="formData.hatchwhere">Hatched Where</li>
                                           <li><input type="checkbox" checked="checked" v-model="formData.incdays">Incubation Days</li>
@@ -172,7 +231,7 @@
                                           <li><input type="checkbox" checked="checked" v-model="formData.fledgewhere">Fledged Where</li>
                                           <li><input type="checkbox" checked="checked" v-model="formData.releasedate">Release Date</li>
                                           <li><input type="checkbox" checked="checked" v-model="formData.releasedwhere">Released Where</li>
-                                          <li><input type="checkbox" checked="checked" v-model="formData.laidwhere">Laid Where</li>
+                                          
                                         </ul>
                                     </td>
                                    <td>
@@ -183,16 +242,18 @@
                                                     <li><input type="checkbox" checked="checked" v-model="formData.currnestID">Name</li>
                                                     <li><input type="checkbox" checked="checked" v-model="formData.currnestDist">Distance to Hopper (km)</li>
                                                     <li><input type="checkbox" checked="checked" v-model="formData.currnestDisc">Description</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestLat">Latitude</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestLong">Longitude</li>
+                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestCord">Co-ordinates</li>
+
+                                                    <!-- <li><input type="checkbox" checked="checked" v-model="formData.currnestLat">Latitude</li>   -->
                                             </ul>
                                         <li style="font-weight:bold;">Previous Breeding Site</li>
                                             <ul  style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
                                                     <li><input type="checkbox" checked="checked" v-model="formData.prevnestID">Name</li>
                                                     <li><input type="checkbox" checked="checked" v-model="formData.prevnestDist">Distance to Hopper (km)</li>
                                                     <li><input type="checkbox" checked="checked" v-model="formData.prevnestDisc">Description</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestLat">Latitude</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestLong">Longitude</li>
+                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestCord">Co-ordinates</li>
+
+                                                    <!-- <li><input type="checkbox" checked="checked" v-model="formData.prevnestLat">Latitude</li> -->
                                             </ul>
                                       </ul>
                                    </td>
