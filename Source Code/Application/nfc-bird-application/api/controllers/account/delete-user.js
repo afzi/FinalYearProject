@@ -35,7 +35,22 @@ module.exports = {
     fn: async function (inputs) {
       var deletedRecord = await User.destroyOne({id: inputs.id, isSuperAdmin: false})
           .intercept({name: 'UsageError'}, 'invalid');
+
       if(deletedRecord) {
+        let inputsWrapper = inputs;
+        let vm = this;
+  
+        this.req.sessionStore.all((error, sessions) => {
+          if(sessions) {
+            for (const nextSession of Object.keys(sessions)) {
+              if(sessions[nextSession].userId == inputsWrapper.id) {
+                vm.req.sessionStore.destroy(nextSession, () => console.log(`Destroyed session for user with ID ${inputsWrapper.id} as their details were deleted`))
+              }
+            }
+          }
+        })
+
+
         inputs.username = deletedRecord.username;
         await sails.helpers.logActivity(this.req.me.id, 'Deleted user account', inputs);
       }

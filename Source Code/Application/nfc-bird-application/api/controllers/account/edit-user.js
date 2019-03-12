@@ -87,6 +87,19 @@ module.exports = {
       .intercept({name: 'UsageError'}, 'invalid')
       .fetch();
 
+      let inputsWrapper = inputs;
+      let vm = this;
+
+      this.req.sessionStore.all((error, sessions) => {
+        if(sessions) {
+          for (const nextSession of Object.keys(sessions)) {
+            if(sessions[nextSession].userId == inputsWrapper.id) {
+              vm.req.sessionStore.destroy(nextSession, () => console.log(`Destroyed session for user with ID ${inputsWrapper.id} as their details were changed`))
+            }
+          }
+        }
+      })
+
       if(inputs.password) inputs.password = "<hidden>"; // do this so the password doesn't appear in the logs
       inputs.username = newUserRecord.username;
       await sails.helpers.logActivity(this.req.me.id, 'Edited user account', inputs);
