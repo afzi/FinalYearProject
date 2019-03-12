@@ -214,7 +214,8 @@ module.exports = {
             ]
         );
 
-        this.res.attachment('report.xlsx');
+        var timestamp = new Date()
+        this.res.attachment('report '+ TimeUtil.currentTimestamp() +'.xlsx');
         return this.res.send(report);
     },
 

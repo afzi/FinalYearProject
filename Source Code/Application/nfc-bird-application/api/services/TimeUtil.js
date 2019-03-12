@@ -1,4 +1,24 @@
   module.exports = {
+
+    //Adapted From https://hype.codes/how-get-current-date-javascript
+    currentTimestamp: function(){
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1;
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd = '0'+dd
+      } 
+
+      if(mm<10) {
+          mm = '0'+mm
+      } 
+
+      today = dd + '-' + mm + '-' + yyyy;
+      return today;
+    },
+
     unixToDate: function (UNIX_timestamp){
         var date = new Date(UNIX_timestamp * 1000);
         var hours = date.getHours();
@@ -11,6 +31,7 @@
         return strTime;
       },
 
+      //Adapted From https://stackoverflow.com/questions/12251325/javascript-date-to-calculate-age-work-by-the-day-months-years
        getAge: function(dateString) {    
         var now = new Date();  
         var yearNow = now.getYear();
