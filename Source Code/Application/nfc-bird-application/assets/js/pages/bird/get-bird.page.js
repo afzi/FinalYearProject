@@ -10,7 +10,51 @@ parasails.registerPage('get-bird', {
 
         currentBirds: [],
 
-        formData: { /* … */ },
+        formData: {
+            //BID
+            id: false,
+            name: true,
+            sex: true,
+            breeder: false,
+            studid: true,
+            newstudid: false,
+            lring: false,
+            rring: false,
+            creator: false,
+            //BPD
+            mname: true,
+            mstud: false,
+            fname: true,
+            fstud: false,
+            sfname: false,
+            sfstud: false,
+            //BSD
+            status: false,
+            cnote: false,
+            rnote: false,
+            age: true,
+            //BCD
+            lay: false,
+            hatchdate: false,
+            hatchwhere: false,
+            incdays: false,
+            fledgedate: false,
+            fledgewhere: false,
+            releasedate: false,
+            releasedwhere: false,
+            laidwhere: false,
+            //NSD
+            currnestID: false,
+            currnestDist: false,
+            currnestDisc: false,
+            currnestLat: false,
+            currnestLong: false,
+            prevnestID: false,
+            prevnestDist: false,
+            prevnestDisc: false,
+            prevnestLat: false,
+            prevnestLong: false
+         },
 
         BirdCount: 0,
 
@@ -282,16 +326,17 @@ parasails.registerPage('get-bird', {
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
         exportToExcel: async function() {
-            // var params = {};
+            var baseURL = `birds/export`;
+            var firstParam = true;
+            var selectedFields = {};
+            var searchStrings = {};
 
             // if (this.currentBirdFilter != null && this.currentBirdFilter != "") {
-            //     params.birdName = this.currentBirdFilter;
+            //     searchStrings.currentBirdFilter(this.currentBirdFilter);
             // }
-
             // if (this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
-            //     params.studId = this.currentBirdIdFilter;
+            //     searchStrings.currentBirdFilter(this.currentBirdIdFilter);
             // }
-
             // if (this.currentSexFilter != null && this.currentSexFilter != "") {
             //     params.sex = this.currentSexFilter;
             // }
@@ -311,14 +356,10 @@ parasails.registerPage('get-bird', {
             // if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
             //     params.currentNestSite = this.currentNestSiteFilter;
             // }
-
-            // params.includeConditions = true;
-            // params.includeNestsites = true;
-            // params.includeVisits = true;
             // ?birdName=${params.birdName}&studId=${params.studId}&sex=${params.sex}
             // &fatherName=${params.fatherName}&motherName=${params.motherName}&isBreeder=${params.isBreeder}&currentNestSite=${params.currentNestSite}
             // &includeConditions=${params.includeConditions}&includeNestsites=${params.includeNestsites}&includeVisits=${params.includeVisits}
-            this.goto(`birds/export`);
+            this.goto(baseURL);
 
         },
 
