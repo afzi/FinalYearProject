@@ -37,17 +37,56 @@ module.exports = {
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
+            var NESTQUERY = `
+            SELECT * FROM nfcbirds.birdnest 
+            INNER JOIN nfcbirds.nestsite 
+            ON nfcbirds.birdnest.nestID = nfcbirds.nestsite.id 
+            WHERE birdID = $1 ORDER BY nfcbirds.birdnest.dateLeft ASC;`
+            var nestResult = await sails.sendNativeQuery(NESTQUERY,[row.id]);
+            var nestResultRows = nestResult.rows;
+            var nestInfo = {
+                current: '',
+                currentDist: '',
+                currentDisc: '',
+                currentLat: '',
+                currentLong: '',
+                last: '',
+                lastDist: '',
+                lastDisc: '',
+                lastLat: '',
+                lastLong: '',
+            };
+            for(var j = 0; j<nestResultRows.length; j++){
+                nrr = nestResultRows[j];
+                if(nrr.dateLeft === null){
+                    nestInfo.current = nrr.nestID;
+                    nestInfo.currentDist = nrr.distanceToHoppersKm;
+                    nestInfo.currentDisc = nrr.nestDescription;
+                    nestInfo.currentLat = nrr.latitude;
+                    nestInfo.currentLong = nrr.longitude;
+                } else{
+                    nestInfo.last = nrr.nestID;
+                    nestInfo.lastDist = nrr.distanceToHoppersKm;
+                    nestInfo.lastDisc = nrr.nestDescription;
+                    nestInfo.lastLat = nrr.latitude;
+                    nestInfo.lastLong = nrr.longitude;
+                    j = nestResultRows.length + 1; //got all we need so we out out
+                }
+            }
+
+            var age = TimeUtil.getAge(row.hatchDate);
+
             var bird = {
                 birdName: row.birdName,
                 studID: row.studID,
                 sex: row.sex,
                 fatherName: row.fatherName,
                 motherName: row.motherName,
-                hatchDate: row.hatchDate,
+                age: age,
                 isBreeder: row.isBreeder,
-                currentSite: 'TODO',
-                distance: 'TODO',
-                lastSite: 'TODO'
+                currentSite: nestInfo.current,
+                distance: nestInfo.currentDist,
+                lastSite: nestInfo.last
             }
             parsedResult.push(bird);
         }
@@ -131,8 +170,8 @@ module.exports = {
                 cellStyle: styles.cellPlain,
                 width: '15'
             },
-            hatchDate: {
-                displayName: 'Hatch Date',
+            age: {
+                displayName: 'Age',
                 headerStyle: styles.headerDark,
                 cellStyle: styles.cellPlain,
                 width: '15'

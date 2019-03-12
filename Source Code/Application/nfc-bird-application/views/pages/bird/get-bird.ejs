@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <table class="table table-bordered table-condensed table-hover">
+        <table class="table table-bordered table-condensed table-hover text-nowrap">
             <thead role="rowgroup">
                 <tr class="birdheader back-green" role="row">
                     <th role="columnheader">Bird Name</th>
@@ -99,7 +99,7 @@
                     <td>{{bird.sex}}</td>
                     <td>{{bird.fatherName}}</td>
                     <td>{{bird.motherName}}</td>
-                    <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
+                    <td>{{bird.age}}</td>
                     <td>{{bird.isBreeder}}</td>
                     <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
                     <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
@@ -265,7 +265,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Age</td>
-                                                <td style="text-align:right">{{new Date().getYear() - new Date(currentBird.hatchDate*1000).getYear()}}</td>
+                                                <td style="text-align:right">{{currentBird.age}}</td>
                                             </tr>
                                             <tr>
                                                 <td>NFC Ring ID</td>
@@ -1181,7 +1181,7 @@
                                         <td v-if="formData.fatherName">{{bird.fatherName}}</td>
                                         <td v-if="formData.secondFatherName">{{bird.secondFatherName}}</td>
                                         
-                                        <td v-if="formData.age">{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
+                                        <td v-if="formData.age">{{bird.age}}</td>
                                         <td>{{bird.isBreeder}}</td>
                                         
                                         <td v-if="formData.DistanceToHopper">{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>

@@ -270,6 +270,7 @@ module.exports = {
       var finalResult = [];
 
       for(let nextBird of result) {
+        nextBird.age = TimeUtil.getAge(nextBird.hatchDate);
         var rfid = await RFIDTag.findOne({birdID: nextBird.id});
 
         if(rfid) nextBird.nfcRingID = rfid.nfcRFID;

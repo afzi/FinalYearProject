@@ -4,7 +4,9 @@ parasails.registerPage('manage-users', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
         // Form data
-        formData: { /* … */ },
+        formData: { 
+          birdName: true,
+         },
 
         // For tracking client-side validation errors in our form.
         // > Has property set to `true` for each invalid property in `formData`.

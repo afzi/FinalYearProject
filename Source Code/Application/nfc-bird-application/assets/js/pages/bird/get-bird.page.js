@@ -10,9 +10,7 @@ parasails.registerPage('get-bird', {
 
         currentBirds: [],
 
-        formData: {
-             birdName: true
-            },
+        formData: { /* … */ },
 
         BirdCount: 0,
 
