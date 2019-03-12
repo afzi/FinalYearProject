@@ -15,7 +15,7 @@ parasails.registerPage('get-bird', {
             id: false,
             name: true,
             sex: true,
-            breeder: false,
+            breeder: true,
             studid: true,
             newstudid: false,
             lring: false,
