@@ -76,6 +76,8 @@
                <th role="columnheader" v-if="formData.lastSeen">Last Seen Date</th>
                <th role="columnheader" v-if="formData.studid">Stud ID</th>
                <th role="columnheader" v-if="formData.newstudid">New Stud ID</th>
+               <th role="columnheader" v-if="formData.nfcRingAssigned">Has NFC Ring</th>
+               <th role="columnheader" v-if="formData.nfcRing">NFC Ring Printed ID</th>
                <th role="columnheader" v-if="formData.lring">Left Ring ID</th>
                <th role="columnheader" v-if="formData.rring">Right Ring ID</th>
                <th role="columnheader" v-if="formData.creator">Created By</th>
@@ -127,6 +129,8 @@
                </td>
                <td v-if="formData.studid">{{bird.studID}}</td>
                <td v-if="formData.newstudid">{{bird.newStudID}}</td>
+               <td v-if="formData.nfcRingAssigned">{{ currentBird.nfcRingID ? 'Yes' : 'No' }}</td>
+               <td v-if="formData.nfcRing">{{ currentBird.nfcRingID ? currentBird.nfcRingID : '' }}</td>
                <td v-if="formData.lring">{{bird.leftRingID}}</td>
                <td v-if="formData.rring">{{bird.rightRingID}}</td>
                <td v-if="formData.creator">{{bird.createdBy.fullName}}</td>
@@ -235,6 +239,10 @@
                                     <li><input type="checkbox" checked="checked" v-model="formData.studid">Stud ID</li>
                                     <li><input type="checkbox" checked="checked" v-model="formData.newstudid">New Stud
                                        ID</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.nfcRingAssigned">Has NFC Ring
+                                    </li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.nfcRing">NFC Ring Printed ID
+                                    </li>
                                     <li><input type="checkbox" checked="checked" v-model="formData.lring">Left Ring ID
                                     </li>
                                     <li><input type="checkbox" checked="checked" v-model="formData.rring">Right Ring ID
