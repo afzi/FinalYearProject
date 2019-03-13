@@ -35,12 +35,16 @@ module.exports = {
             description: 'The end date to which to filter logs',
         },
 
-        data: {
+        newData: {
             required: false,
             type: 'string',
             description: 'The data (or part of it).'
         },
-
+        oldData: {
+            required: false,
+            type: 'string',
+            description: 'The data (or part of it).'
+        },
 
         skip: {
             required: false,
@@ -69,7 +73,12 @@ module.exports = {
         console.log("Received request to list/filter changelog")
 
         let query = {}
-        if (inputs.data) query.data = { 'contains': inputs.data }
+        if (inputs.newData) {
+            query.newData = { 'contains': inputs.newData }
+        }
+        if (inputs.oldData) {
+            query.oldData = { 'contains': inputs.oldData }
+        }
         if (inputs.action) query.action = { 'contains': inputs.action }
 
         if (inputs.dateFrom) query.createdAt = { '>=': inputs.dateFrom }

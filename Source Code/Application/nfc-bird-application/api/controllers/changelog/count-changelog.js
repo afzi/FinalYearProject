@@ -36,7 +36,13 @@ module.exports = {
         description: 'The end date to which to filter logs',
       },
 
-      data: {
+      newData: {
+        required: false,
+        type: 'string',
+        description: 'The data (or part of it).'
+      },
+
+      oldData: {
         required: false,
         type: 'string',
         description: 'The data (or part of it).'
@@ -57,7 +63,8 @@ module.exports = {
       console.log("Received request to count changelog")
 
       let query = {}
-      if(inputs.data) query.data = {'contains': inputs.data}
+      if(inputs.newData) query.newData = {'contains': inputs.newData}
+      if(inputs.oldData) query.oldData = {'contains': inputs.oldData}
       
       if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
       if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;

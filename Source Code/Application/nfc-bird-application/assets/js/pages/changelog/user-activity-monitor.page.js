@@ -35,7 +35,9 @@ parasails.registerPage('user-activity-monitor', {
 
         currentActionFilter: "",
 
-        currentDataFilter: "",
+        currentOldDataFilter: "",
+
+        currentNewDataFilter: "",
 
         currentChangelog: {},
 
@@ -87,7 +89,10 @@ parasails.registerPage('user-activity-monitor', {
     currentDateToFilter: function (_, _) {
       this.refresh();
     },
-    currentDataFilter: function (_, _) {
+    currentOldDataFilter: function (_, _) {
+      this.refresh();
+    },
+    currentNewDataFilter: function (_, _) {
       this.refresh();
     },
     pageSize: function (_, _) {
@@ -120,8 +125,12 @@ parasails.registerPage('user-activity-monitor', {
         params.username = this.currentUserFilter;
       }
 
-      if(this.currentDataFilter != null && this.currentDataFilter != "") {
-        params.data = this.currentDataFilter;
+      if(this.currentOldDataFilter != null && this.currentOldDataFilter != "") {
+        params.oldData = this.currentOldDataFilter;
+      }
+
+      if(this.currentNewDataFilter != null && this.currentNewDataFilter != "") {
+        params.newData = this.currentNewDataFilter;
       }
 
       if(this.currentActionFilter != null && this.currentActionFilter != "") {
@@ -143,7 +152,8 @@ parasails.registerPage('user-activity-monitor', {
 
     clearFilters: async function() {
       this.currentUserFilter = "";
-      this.currentDataFilter = "";
+      this.currentOldDataFilter = "";
+      this.currentNewDataFilter = "";
       this.currentActionFilter = "";
       this.currentDateFromFilter = null;
       this.currentDateToFilter = null;
