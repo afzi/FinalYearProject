@@ -66,13 +66,13 @@
          <div class="form-group search-box" v-if="formData.hatchwhere">
             <input id="hatchedWhere" class="form-control" type="text" v-model.trim="currentHatchWhereFilter" placeholder="Hatched Where"
                title="hatchedWhere" autocomplete="off">
-            <autocomplete for="hatchedWhere" action="getBird" params='{"limit": 5}' map="hatchedWhere" is-async> </autocomplete>
+            <autocomplete for="hatchedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
          </div>
 
          <div class="form-group search-box" v-if="formData.laidwhere">
             <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Laid Where"
                title="laidWhere" autocomplete="off">
-            <autocomplete for="laidWhere" action="getBird" params='{"limit": 5}' map="laidWhere" is-async> </autocomplete>
+            <autocomplete for="laidWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
          </div>
 
          <div class="form-group search-box">
