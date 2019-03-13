@@ -73,13 +73,7 @@ parasails.registerPage('live-view', {
         },
         timeTo: function(_, _) {
             this.refresh();
-        },
-        newVisits: function(_, _) {
-            console.log("hello");
-        },
-        diff: function(_, _) {
-            console.log("hello2");
-        },
+        }
 
     },
 
@@ -148,20 +142,6 @@ parasails.registerPage('live-view', {
             if(this.me.hasRead) {
                 this.goto(`/birds?initialBirdNameFilter=${birdName}`);
             }
-        },
-
-        exportToExcel: async function() {
-            var data = this.visitData;
-            var spec = {
-                    birdName: {
-                        displayName: 'Bird Name'
-                    },
-                    leftRingID: { displayName: 'Left Ring' },
-                    rightRingID: { displayName: 'Right Ring' },
-                    createdAt: { displayName: 'Visit Time' }
-                }
-                // await Cloud.exportData.with({ reportSpec: spec, reportData: data }); //DOESNT WORK
-            this.goto(`/export`); //THIS DOES BUT HOW TO PASS DATA NOT VIA URL LIKE METHOD ABOVE?
         }
     }
 });

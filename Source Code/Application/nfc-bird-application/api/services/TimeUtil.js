@@ -19,6 +19,24 @@
       return today;
     },
 
+    getTimeStampForUnix: function(unix){
+      var today = new Date(unix*1000);
+      var dd = today.getDate();
+      var mm = today.getMonth()+1;
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd = '0'+dd
+      } 
+
+      if(mm<10) {
+          mm = '0'+mm
+      } 
+
+      today = dd + '/' + mm + '/' + yyyy;
+      return today;
+    },
+
     unixToDate: function (UNIX_timestamp){
         var date = new Date(UNIX_timestamp * 1000);
         var hours = date.getHours();
