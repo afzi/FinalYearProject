@@ -3,7 +3,7 @@
       <div class="flex-container">
          <button class="btn btn-dark" @click="openCreateBirdModal" v-if="me.hasCreateEdit || me.hasEditFull">Register
             New Bird</button>
-         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="storeCurrent">More Filters</button>
+         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="storeCurrent">More Fields</button>
          <button class="btn btn-dark" @click="exportToExcel" v-if="me.hasExport">Export</button>
       </div>
       <div class="flex-container filterbar">
@@ -161,8 +161,8 @@
                </td>
                <td v-if="formData.studid">{{bird.studID}}</td>
                <td v-if="formData.newstudid">{{bird.newStudID}}</td>
-               <td v-if="formData.nfcRingAssigned">{{ currentBird.nfcRingID ? 'Yes' : 'No' }}</td>
-               <td v-if="formData.nfcRing">{{ currentBird.nfcRingID ? currentBird.nfcRingID : '' }}</td>
+               <td v-if="formData.nfcRingAssigned">{{ bird.nfcRingID ? 'Yes' : 'No' }}</td>
+               <td v-if="formData.nfcRing">{{ bird.nfcRingID ? bird.nfcRingID : '' }}</td>
                <td v-if="formData.lring">{{bird.leftRingID}}</td>
                <td v-if="formData.rring">{{bird.rightRingID}}</td>
                <td v-if="formData.creator">{{bird.createdBy.fullName}}</td>
