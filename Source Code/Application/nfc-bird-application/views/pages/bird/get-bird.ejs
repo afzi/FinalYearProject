@@ -22,10 +22,23 @@
             </select>
          </div>
          <div class="form-group search-box">
-            <input id="studID" class="form-control" type="text" v-model.trim="currentBirdIdFilter" placeholder="studID"
+            <input id="studID" class="form-control" type="text" v-model.trim="currentBirdIdFilter" placeholder="Stud ID"
                title="studID" autocomplete="off">
             <autocomplete for="studID" action="getBird" params='{"limit": 5}' map="studID" is-async> </autocomplete>
          </div>
+
+         <div class="form-group search-box" v-if="formData.newstudid">
+            <input id="newStudID" class="form-control" type="text" v-model.trim="currentNewStudIdFilter" placeholder="New Stud ID"
+               title="newStudID" autocomplete="off">
+            <autocomplete for="newStudID" action="getBird" params='{"limit": 5}' map="newStudID" is-async> </autocomplete>
+         </div>
+
+         <div class="form-group search-box" v-if="formData.lring">
+            <input id="leftRingID" class="form-control" type="text" v-model.trim="currentLeftRingFilter" placeholder="Left Ring ID"
+               title="leftRingID" autocomplete="off">
+            <autocomplete for="leftRingID" action="getBird" params='{"limit": 5}' map="leftRingID" is-async> </autocomplete>
+         </div>
+
          <div class="form-group search-box">
             <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter"
                placeholder="Female Parent" title="motherName" autocomplete="off">
@@ -225,21 +238,21 @@
                                  <div style="font-weight:bold; text-align: center;">Brid Identity Data</div>
                                  <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                     width="100%">
-                                    <li><input type="checkbox" checked="checked" v-model="formData.name">Name</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.id">System ID</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.sex">Gender</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.breeder">Is Breeder
+                                    <li><input type="checkbox" checked="checked" v-model="formData.name"> Name</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.id"> System ID</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.sex"> Gender</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.breeder"> Is Breeder
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.lastSeen">Last Seen
+                                    <li><input type="checkbox" checked="checked" v-model="formData.lastSeen"> Last Seen
                                        Date</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.studid">Stud ID</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.newstudid">New Stud
+                                    <li><input type="checkbox" checked="checked" v-model="formData.studid"> Stud ID</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.newstudid"> New Stud
                                        ID</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.lring">Left Ring ID
+                                    <li><input type="checkbox" checked="checked" v-model="formData.lring"> Left Ring ID
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.rring">Right Ring ID
+                                    <li><input type="checkbox" checked="checked" v-model="formData.rring"> Right Ring ID
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.creator">Created By
+                                    <li><input type="checkbox" checked="checked" v-model="formData.creator"> Created By
                                     </li>
                                  </ul>
                               </td>
@@ -247,17 +260,17 @@
                                  <div style="font-weight:bold; text-align: center;">Bird Parentage Data</div>
                                  <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                     width="100%">
-                                    <li><input type="checkbox" checked="checked" v-model="formData.mname">Female Parent
+                                    <li><input type="checkbox" checked="checked" v-model="formData.mname"> Female Parent
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.mstud">Female Parent
+                                    <li><input type="checkbox" checked="checked" v-model="formData.mstud"> Female Parent
                                        Stud ID</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.fname">Male Parent
+                                    <li><input type="checkbox" checked="checked" v-model="formData.fname"> Male Parent
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.fstud">Male Parent
+                                    <li><input type="checkbox" checked="checked" v-model="formData.fstud"> Male Parent
                                        Stud ID</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.sfname">Second Male
+                                    <li><input type="checkbox" checked="checked" v-model="formData.sfname"> Second Male
                                        Parent</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.sfstud">Second Male
+                                    <li><input type="checkbox" checked="checked" v-model="formData.sfstud"> Second Male
                                        Parent Stud ID</li>
                                  </ul>
                               </td>
@@ -265,10 +278,10 @@
                                  <div style="font-weight:bold; text-align:center;">Bird Status Data</div>
                                  <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                     width="100%">
-                                    <li><input type="checkbox" checked="checked" v-model="formData.status">Status</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.cnote">Condition</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.rnote">Note</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.age">Age</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.status"> Status</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.cnote"> Condition</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.rnote"> Note</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.age"> Age</li>
                                  </ul>
                               </td>
                            </tr>
@@ -277,23 +290,22 @@
                                  <div style="font-weight:bold; text-align:center;">Bird Creation Data</div>
                                  <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                     width="100%">
-                                    <li><input type="checkbox" checked="checked" v-model="formData.lay">Lay Date</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.laidwhere">Laid Where
+                                    <li><input type="checkbox" checked="checked" v-model="formData.lay"> Lay Date</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.laidwhere"> Laid Where
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.hatchdate">Hatch Date
+                                    <li><input type="checkbox" checked="checked" v-model="formData.hatchdate"> Hatch Date
                                     </li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.hatchwhere">Hatched
+                                    <li><input type="checkbox" checked="checked" v-model="formData.hatchwhere"> Hatched
                                        Where</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.incdays">Incubation
+                                    <li><input type="checkbox" checked="checked" v-model="formData.incdays"> Incubation
                                        Days</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.fledgedate">Fledge
+                                    <li><input type="checkbox" checked="checked" v-model="formData.fledgedate"> Fledge
                                        Date</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.fledgewhere">Fledged
+                                    <li><input type="checkbox" checked="checked" v-model="formData.fledgewhere"> Fledged
                                        Where</li>
-                                    <li><input type="checkbox" checked="checked" v-model="formData.releasedate">Release
+                                    <li><input type="checkbox" checked="checked" v-model="formData.releasedate"> Release
                                        Date</li>
-                                    <li><input type="checkbox" checked="checked"
-                                          v-model="formData.releasedwhere">Released Where</li>
+                                    <li><input type="checkbox" checked="checked" v-model="formData.releasedwhere"> Released Where</li>
 
                                  </ul>
                               </td>
@@ -301,31 +313,31 @@
                                  <div style="font-weight:bold; text-align:center;">Nest Site Data</div>
                                  <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                     width="100%">
-                                    <li style="font-weight:bold;">Current Breeding Site</li>
+                                    <li style="font-weight:bold;"> Current Breeding Site</li>
                                     <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                        width="100%">
-                                       <li><input type="checkbox" checked="checked" v-model="formData.currnestID">Name
+                                       <li><input type="checkbox" checked="checked" v-model="formData.currnestID"> Name
                                        </li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.currnestDist">Distance to Hopper (km)</li>
+                                             v-model="formData.currnestDist"> Distance to Hopper (km)</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.currnestDisc">Description</li>
+                                             v-model="formData.currnestDisc"> Description</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.currnestCord">Co-ordinates</li>
+                                             v-model="formData.currnestCord"> Co-ordinates</li>
 
                                        <!-- <li><input type="checkbox" checked="checked" v-model="formData.currnestLat">Latitude</li>   -->
                                     </ul>
                                     <li style="font-weight:bold;">Previous Breeding Site</li>
                                     <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege"
                                        width="100%">
-                                       <li><input type="checkbox" checked="checked" v-model="formData.prevnestID">Name
+                                       <li><input type="checkbox" checked="checked" v-model="formData.prevnestID"> Name
                                        </li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.prevnestDist">Distance to Hopper (km)</li>
+                                             v-model="formData.prevnestDist"> Distance to Hopper (km)</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.prevnestDisc">Description</li>
+                                             v-model="formData.prevnestDisc"> Description</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.prevnestCord">Co-ordinates</li>
+                                             v-model="formData.prevnestCord"> Co-ordinates</li>
 
                                        <!-- <li><input type="checkbox" checked="checked" v-model="formData.prevnestLat">Latitude</li> -->
                                     </ul>

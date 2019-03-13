@@ -74,6 +74,10 @@ parasails.registerPage('get-bird', {
 
         currentBirdIdFilter: "",
 
+        currentNewStudIdFilter:"",
+
+        currentLeftRingFilter:"",
+
         currentSexFilter: "",
 
         currentFatherFilter: "",
@@ -174,6 +178,23 @@ parasails.registerPage('get-bird', {
                 this.refresh();
             }
         },
+
+        currentLeftRingFilter: function(_, _) {
+            if ($("#leftRingID").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
+        currentNewStudIdFilter: function(_, _) {
+            if ($("#newStudID").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
         currentFatherFilter: function(_, _) {
             if ($("#fatherName").data('locked') != 1) {
                 this.currentPage = 1;
@@ -495,6 +516,13 @@ parasails.registerPage('get-bird', {
             if (this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
                 params.studId = this.currentBirdIdFilter;
             }
+            if (this.currentLeftRingFilter != null && this.currentLeftRingFilter != "") {
+                params.leftRingId = this.currentLeftRingFilter;
+            }
+
+            if (this.currentNewStudIdFilter != null && this.currentNewStudIdFilter != "") {
+                params.newStudId = this.currentNewStudIdFilter;
+            }
 
             if (this.currentSexFilter != null && this.currentSexFilter != "") {
                 params.sex = this.currentSexFilter;
@@ -544,6 +572,8 @@ parasails.registerPage('get-bird', {
             this.currentBirdFilter = "";
             this.currentStatusFilter="";
             this.currentBirdIdFilter = "";
+            this.currentNewStudIdFilter = "";
+            this.currentLeftRingFilter = "";
             this.currentSexFilter = "";
             this.currentFatherFilter = "";
             this.currentMotherFilter = "";
