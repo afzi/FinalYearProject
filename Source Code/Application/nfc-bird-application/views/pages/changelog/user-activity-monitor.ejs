@@ -2,23 +2,30 @@
     <div class="container">
         <div class="flex-container filterbar">
             <div class="form-group">
-                <input id="username" class="form-control" type="text" v-model.trim="currentUserFilter" placeholder="Username" title="Username" autocomplete="off">
-                <autocomplete for="username" action="getUser" params='{"limit": 5}' map="username" is-async> </autocomplete>
+                <input id="username" class="form-control" type="text" v-model.trim="currentUserFilter"
+                    placeholder="Username" title="Username" autocomplete="off">
+                <autocomplete for="username" action="getUser" params='{"limit": 5}' map="username" is-async>
+                </autocomplete>
             </div>
             <div class="form-group">
-                <datepicker id="date-from-filter" class="form-control" v-model="currentDateFromFilter" placeholder="Date from" title="Date from" :config="datepickerOptions">
+                <datepicker id="date-from-filter" class="form-control" v-model="currentDateFromFilter"
+                    placeholder="Date from" title="Date from" :config="datepickerOptions">
             </div>
             <div class="form-group">
-                <datepicker id="date-to-filter" class="form-control" v-model="currentDateToFilter" placeholder="Date to" title="Date to" :config="datepickerOptions">
+                <datepicker id="date-to-filter" class="form-control" v-model="currentDateToFilter" placeholder="Date to"
+                    title="Date to" :config="datepickerOptions">
             </div>
             <div class="form-group">
-                <input id="action-filter" class="form-control" type="text" v-model.trim="currentActionFilter" placeholder="Action" title="Action (contains)">
+                <input id="action-filter" class="form-control" type="text" v-model.trim="currentActionFilter"
+                    placeholder="Action" title="Action (contains)">
             </div>
             <div class="form-group">
-                <input id="old-data-filter" class="form-control" type="text" v-model.trim="currentOldDataFilter" placeholder="Old Data" title="Old Data (contains)">
+                <input id="old-data-filter" class="form-control" type="text" v-model.trim="currentOldDataFilter"
+                    placeholder="Old Data" title="Old Data (contains)">
             </div>
             <div class="form-group">
-                    <input id="new-data-filter" class="form-control" type="text" v-model.trim="currentNewDataFilter" placeholder="New Data" title="New Data (contains)">
+                <input id="new-data-filter" class="form-control" type="text" v-model.trim="currentNewDataFilter"
+                    placeholder="New Data" title="New Data (contains)">
             </div>
             <div class="form-group">
                 <button class="btn btn-secondary" @click="clearFilters">Clear</button>
@@ -38,57 +45,66 @@
             <tbody role="rowgroup" id="log-table-body">
                 <tr v-for="(log, index) in currentLogs">
                     <td>{{new Date(log.createdAt).toLocaleString()}}</td>
-                    <td><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}} ({{log.user.username}})</a></td>
+                    <td><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}}
+                            ({{log.user.username}})</a></td>
                     <td>{{log.action}}</td>
-                    <td><i class="fas fa-eye fa-lg" alt="View Data" title="View Data" data-toggle="modal" data-target="#viewDataModal" @click="selectCurrentChangelog(index)"></i></td>
+                    <td><i class="fas fa-eye fa-lg" alt="View Data" title="View Data" data-toggle="modal"
+                            data-target="#viewDataModal" @click="selectCurrentChangelog(index)"></i></td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="modal fade" id="viewDataModal" tabindex="-1" role="dialog" aria-labelledby="viewDataModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="viewDataModalLabel">View Data</h5>
-                            <button type="button" class="close" aria-label="Close" data-dismiss="modal" data-target="#viewDataModal">
+        <div class="modal fade" id="viewDataModal" tabindex="-1" role="dialog" aria-labelledby="viewDataModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewDataModalLabel">View Data</h5>
+                        <button type="button" class="close" aria-label="Close" data-dismiss="modal"
+                            data-target="#viewDataModal">
                             <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h5>New data</h5>
-                            <pre>{{currentChangelog.newData}}</pre>
-                            <h5>Old data</h5>
-                            <pre>{{currentChangelog.oldData}}</pre>
-                        </div>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>New data</h5>
+                        <pre>{{currentChangelog.newData}}</pre>
+                        <h5>Old data</h5>
+                        <pre>{{currentChangelog.oldData}}</pre>
                     </div>
                 </div>
             </div>
-
-        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
-        <div class="flex-container paginateContainer">
-            <div>
-                <paginate :page-count="Math.ceil(logCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
-                    :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
-                </paginate>
-            </div>
         </div>
+
+        <footer id="page-footer"
+            class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+            <div class="flex-container paginateContainer">
+                <div>
+                    <paginate :page-count="Math.ceil(logCount / pageSize)" :click-handler="pageClick"
+                        :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'"
+                        :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                        :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'"
+                        :disabled-class="'ignore disabled'">
+                    </paginate>
+                </div>
+            </div>
 
             <div class="font-white">Showing {{currentLogs.length}} entries out of {{logCount}}</div>
 
-            <div class="nav-item dropdown d-none d-sm-block font-white">Show 
+            <div class="nav-item dropdown d-none d-sm-block font-white">Show
                 <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto;margin: 0px 5px;">
-                              <option value="5" >5</option>
-                              <option value="10">10</option>
-                              <option selected value="15">15</option>
-                              <option value="20">20</option>
-                              <option value="25">25</option>
-                              <option value="30">30</option>
-                          </select> entries
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option selected value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="10000">All</option>
+                </select> entries
             </div>
-            </footer>
-   
+        </footer>
 
-      
+
+
 
     </div>
 </div>

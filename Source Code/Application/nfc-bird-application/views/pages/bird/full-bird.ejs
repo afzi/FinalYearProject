@@ -1,73 +1,81 @@
 <div id="get-bird">
-        <div class="container" v-if="!cloudSuccess">
-    
-            <table class="table table-bordered table-condensed table-hover">
-                <thead role="rowgroup">
-                    <tr class="birdheader back-green" role="row">
-                        <th role="columnheader"v-if="formData.birdName">Bird Name</th>
-                        <th role="columnheader">Stud ID</th>
-                        <th role="columnheader">Gender</th>
-                        <th role="columnheader">Male Parent</th>
-                        <th role="columnheader">Female Parent</th>
-                        <th role="columnheader">Age</th>
-                        <th role="columnheader">Breeder</th>
-                        <th role="columnheader">Current Breeding</th>
-                        <th role="columnheader">Distance To Hopper</th>
-                        <th role="columnheader">Previous Breeding</th>
-    
-                    </tr>
-                </thead>
-    
-                <tbody role="rowgroup">
-                    <tr v-for="(bird, index) in currentBirds">
-                        <td class="birdJustifyColumn" v-if="formData.birdName">{{bird.birdName}}</td>
-                        <td>{{bird.studID}}</td>
-                        <td>{{bird.sex}}</td>
-                        <td>{{bird.fatherName}}</td>
-                        <td>{{bird.motherName}}</td>
-                        <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
-                        <td>{{bird.isBreeder}}</td>
-                        <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}</td>
-                        <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}</td>
-                        <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container" v-if="!cloudSuccess">
+
+        <table class="table table-bordered table-condensed table-hover">
+            <thead role="rowgroup">
+                <tr class="birdheader back-green" role="row">
+                    <th role="columnheader" v-if="formData.birdName">Bird Name</th>
+                    <th role="columnheader">Stud ID</th>
+                    <th role="columnheader">Gender</th>
+                    <th role="columnheader">Male Parent</th>
+                    <th role="columnheader">Female Parent</th>
+                    <th role="columnheader">Age</th>
+                    <th role="columnheader">Breeder</th>
+                    <th role="columnheader">Current Breeding</th>
+                    <th role="columnheader">Distance To Hopper</th>
+                    <th role="columnheader">Previous Breeding</th>
+
+                </tr>
+            </thead>
+
+            <tbody role="rowgroup">
+                <tr v-for="(bird, index) in currentBirds">
+                    <td class="birdJustifyColumn" v-if="formData.birdName">{{bird.birdName}}</td>
+                    <td>{{bird.studID}}</td>
+                    <td>{{bird.sex}}</td>
+                    <td>{{bird.fatherName}}</td>
+                    <td>{{bird.motherName}}</td>
+                    <td>{{new Date().getYear() - new Date(bird.hatchDate*1000).getYear()}}</td>
+                    <td>{{bird.isBreeder}}</td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.nestID : 'N/A' }}
+                    </td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[0] ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : 'N/A' }}
+                    </td>
+                    <td>{{bird.nestsiteHistory && bird.nestsiteHistory[1] ? bird.nestsiteHistory[1].nestID.nestID : 'N/A' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 
 
 
-            <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
-                <div class="flex-container paginateContainer">
-                    <div>
-                        <paginate ref="paginate" :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
-                            :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
-                        </paginate>
-                    </div>
+        <footer id="page-footer"
+            class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+            <div class="flex-container paginateContainer">
+                <div>
+                    <paginate ref="paginate" :page-count="Math.ceil(BirdCount / pageSize)" :click-handler="pageClick"
+                        :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'"
+                        :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                        :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'"
+                        :disabled-class="'ignore disabled'">
+                    </paginate>
                 </div>
-    
-                <div class="font-white">Showing {{currentBirds.length}} entries out of {{BirdCount}}</div>
-    
-                <div class="nav-item dropdown d-none d-sm-block font-white">
-                    Show
-                    <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto; margin: 0px 5px;">
-                                    <option value="5" >5</option>
-                                    <option value="10">10</option>
-                                    <option selected value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="25">25</option>
-                                    <option value="30">30</option>
-                            </select> entries
-                </div>
-            </footer>
-    
-    
-    
-    <router-view></router-view>
-    
-    
-    
-    <!-- <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
+            </div>
+
+            <div class="font-white">Showing {{currentBirds.length}} entries out of {{BirdCount}}</div>
+
+            <div class="nav-item dropdown d-none d-sm-block font-white">
+                Show
+                <select class="pageSizeControl custom-select" v-model="pageSize" style="width: auto; margin: 0px 5px;">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option selected value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="10000">All</option>
+                </select> entries
+            </div>
+        </footer>
+
+
+
+        <router-view></router-view>
+
+
+
+        <!-- <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -1038,8 +1046,8 @@
     
             </modal>
      -->
-    
-        </div>
+
     </div>
-    
-    <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
+</div>
+
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
