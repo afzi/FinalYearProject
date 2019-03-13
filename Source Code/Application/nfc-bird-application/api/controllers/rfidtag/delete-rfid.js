@@ -38,9 +38,8 @@ module.exports = {
   
   
     fn: async function (inputs) {
+      var deleteRfid = await RFIDTag.findOne({nfcRFID: inputs.nfcRFID})
       if(!this.req.me.hasEditFull) {
-        var deleteRfid = await RFIDTag.findOne({nfcRFID: inputs.nfcRFID})
-
         if(deleteRfid.createdBy != this.req.me.id) {
           throw 'forbidden'
         }
@@ -49,8 +48,12 @@ module.exports = {
         await RFIDTag.destroyOne({nfcRFID: inputs.nfcRFID})
           .intercept({name: 'UsageError'}, 'invalid');
 
-        
-          await sails.helpers.logActivity(this.req.me.id, 'Deleted a RFID tag', inputs);
+          delete deleteRfid.createdAt;
+          delete deleteRfid.updatedAt;
+          delete deleteRfid.createdBy;
+          delete deleteRfid.updatedBy;
+
+          await sails.helpers.logActivity(this.req.me.id, 'Deleted a RFID tag', {}, deleteRfid);
     }
   
   

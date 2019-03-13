@@ -20,9 +20,15 @@ module.exports = {
         required: true
       },
 
-      data: {
+      newData: {
         type: 'json',
-        description: 'Any data associated with the action',
+        description: 'Any new data associated with the action',
+        required: true
+      },
+
+      oldData: {
+        type: 'json',
+        description: 'Any old data associated with the action',
         required: true
       }
   
@@ -33,7 +39,8 @@ module.exports = {
       await Changelog.create({
           user: inputs.userId,
           action: inputs.action,
-          data: JSON.stringify(inputs.data, null, '\t')
+          newData: JSON.stringify(inputs.newData, null, '\t'),
+          oldData: JSON.stringify(inputs.oldData, null, '\t')
       })
       return exits.success();
     }

@@ -336,11 +336,27 @@ module.exports = {
       .usingConnection(db);
     }
 
+    if(inputs.laidWhere) bird.laidWhere = inputs.laidWhere;
+    if(inputs.releasedWhere) bird.releasedWhere = inputs.releasedWhere;
+    if(inputs.hatchedWhere) bird.hatchedWhere = inputs.hatchedWhere;
+    if(inputs.fledgedWhere) bird.fledgedWhere = inputs.fledgedWhere;
+
+    if(bird.releasedWhen) bird.releasedWhen = new Date(bird.releasedWhen*1000).toLocaleDateString('en-GB')
+    if(bird.layDate) bird.layDate = new Date(bird.layDate*1000).toLocaleDateString('en-GB')
+    if(bird.fledgeDate) bird.fledgeDate = new Date(bird.fledgeDate*1000).toLocaleDateString('en-GB')
+    if(bird.hatchDate) bird.hatchDate = new Date(bird.hatchDate*1000).toLocaleDateString('en-GB')
+
+    delete bird.createdAt;
+    delete bird.updatedAt;
+    delete bird.createdBy;
+    delete bird.updatedBy;
+
+    await sails.helpers.logActivity(this.req.me.id, 'Created a bird', bird, {});
+
     })
     .intercept('E_UNIQUE', 'alreadyInUse')
     .intercept({name: 'UsageError'}, 'invalid')
 
-    await sails.helpers.logActivity(this.req.me.id, 'Created a bird', inputs);
 
   }
 };

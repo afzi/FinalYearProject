@@ -51,8 +51,12 @@ module.exports = {
         })
 
 
-        inputs.username = deletedRecord.username;
-        await sails.helpers.logActivity(this.req.me.id, 'Deleted user account', inputs);
+        deletedRecord.password = "<hidden>";
+        delete deletedRecord.createdAt;
+        delete deletedRecord.updatedAt;
+        delete deletedRecord.createdBy;
+        delete deletedRecord.updatedBy;
+        await sails.helpers.logActivity(this.req.me.id, 'Deleted user account', {}, deletedRecord);
       }
     }
   

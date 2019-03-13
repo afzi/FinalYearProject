@@ -18,7 +18,11 @@ module.exports = {
             columnType: "varchar",
             required: true
         },
-        data: {
+        newData: {
+            type: "ref",
+            columnType: "text"
+        },
+        oldData: {
             type: "ref",
             columnType: "text"
         }

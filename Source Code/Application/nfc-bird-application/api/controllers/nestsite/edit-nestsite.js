@@ -61,15 +61,15 @@ module.exports = {
   
   
     fn: async function (inputs) {
+      var editNestsite = await Nestsite.findOne({id: inputs.id})
       if(!this.req.me.hasEditFull) {
-        var editNestsite = await Nestsite.findOne({id: inputs.id})
 
         if(editNestsite.createdBy != this.req.me.id) {
           throw 'forbidden'
         }
       }
 
-        await Nestsite.update({id: inputs.id})
+        var newNestsite = await Nestsite.update({id: inputs.id})
         .set({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
@@ -77,10 +77,20 @@ module.exports = {
             editedBy: this.req.session.userId
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
-          .intercept({name: 'UsageError'}, 'invalid');
+          .intercept({name: 'UsageError'}, 'invalid')
+          .fetch();
 
+          delete newNestsite.createdAt;
+          delete newNestsite.updatedAt;
+          delete newNestsite.createdBy;
+          delete newNestsite.updatedBy;
+
+          delete editNestsite.createdAt;
+          delete editNestsite.updatedAt;
+          delete editNestsite.createdBy;
+          delete editNestsite.updatedBy;
           
-          await sails.helpers.logActivity(this.req.me.id, 'Edited a nestsite', inputs);
+          await sails.helpers.logActivity(this.req.me.id, 'Edited a nestsite', newNestsite, editNestsite);
         }
 
   

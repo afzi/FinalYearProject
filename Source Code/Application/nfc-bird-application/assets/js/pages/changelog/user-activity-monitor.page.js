@@ -37,6 +37,8 @@ parasails.registerPage('user-activity-monitor', {
 
         currentDataFilter: "",
 
+        currentChangelog: {},
+
         datepickerOptions: {
           icons: {
               time: 'far fa-clock',
@@ -150,6 +152,19 @@ parasails.registerPage('user-activity-monitor', {
 
     getLinkForUser: function(fullName) {
       return `/account/manage-users?initialFullNameFilter=${fullName}`;
+    },
+
+    selectCurrentChangelog: async function(index) {
+      this.currentChangelog = this.currentLogs[index];
+      // this.currentChangelog.oldData = this.currentChangelog.oldData.replace(/",/g, "\n");
+      this.currentChangelog.oldData = this.currentChangelog.oldData.replace(/{/g, "");
+      this.currentChangelog.oldData = this.currentChangelog.oldData.replace(/}/g, "");
+      this.currentChangelog.oldData = this.currentChangelog.oldData.replace(/"/g, "");
+
+      // this.currentChangelog.newData = this.currentChangelog.newData.replace(/",/g, "\n");
+      this.currentChangelog.newData = this.currentChangelog.newData.replace(/{/g, "");
+      this.currentChangelog.newData = this.currentChangelog.newData.replace(/}/g, "");
+      this.currentChangelog.newData = this.currentChangelog.newData.replace(/"/g, "");
     }
   }
 });

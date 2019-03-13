@@ -82,6 +82,8 @@ module.exports = {
 
 
       // Build up data for the new user record and save it to the database.
+      var oldUserRecord = await User.findOne({id: inputs.id});
+
       var newUserRecord = await User.update({id: inputs.id})
           .set(updateQuery)
       .intercept({name: 'UsageError'}, 'invalid')
@@ -100,9 +102,18 @@ module.exports = {
         }
       })
 
-      if(inputs.password) inputs.password = "<hidden>"; // do this so the password doesn't appear in the logs
-      inputs.username = newUserRecord.username;
-      await sails.helpers.logActivity(this.req.me.id, 'Edited user account', inputs);
+      delete newUserRecord.createdAt;
+      delete newUserRecord.updatedAt;
+      delete newUserRecord.createdBy;
+      delete newUserRecord.updatedBy;
+
+      delete oldUserRecord.createdAt;
+      delete oldUserRecord.updatedAt;
+      delete oldUserRecord.createdBy;
+      delete oldUserRecord.updatedBy;
+
+      newUserRecord.password = "<hidden>";
+      await sails.helpers.logActivity(this.req.me.id, 'Edited user account', newUserRecord, oldUserRecord);
     }
   
   };

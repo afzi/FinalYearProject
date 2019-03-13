@@ -29,12 +29,24 @@ module.exports = {
     var query = {}
 
     if(inputs.fullName) {
+      var oldUserRecord = await User.findOne({id: this.req.me.id});
+
       query.fullName = inputs.fullName;
       // Save to the db
-      await User.updateOne({id: this.req.me.id })
+      var newUserRecord = await User.updateOne({id: this.req.me.id })
       .set(query);
 
-      await sails.helpers.logActivity(this.req.me.id, 'Updated their Full Name', inputs);
+      delete newUserRecord.createdAt;
+      delete newUserRecord.updatedAt;
+      delete newUserRecord.createdBy;
+      delete newUserRecord.updatedBy;
+
+      delete oldUserRecord.createdAt;
+      delete oldUserRecord.updatedAt;
+      delete oldUserRecord.createdBy;
+      delete oldUserRecord.updatedBy;
+      
+      await sails.helpers.logActivity(this.req.me.id, 'Updated their Full Name', newUserRecord, oldUserRecord);
     } 
   }
 };

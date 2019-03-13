@@ -64,7 +64,7 @@ module.exports = {
   
   
     fn: async function (inputs) {
-        await Nestsite.create({
+        var newNestsite = await Nestsite.create({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
             distanceToHoppersKm: inputs.distanceToHoppersKm,
@@ -74,10 +74,16 @@ module.exports = {
             longitude: inputs.longitude
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
-          .intercept({name: 'UsageError'}, 'invalid');
+          .intercept({name: 'UsageError'}, 'invalid')
+          .fetch();
+
+          delete newNestsite.createdAt;
+          delete newNestsite.updatedAt;
+          delete newNestsite.createdBy;
+          delete newNestsite.updatedBy;
 
           
-          await sails.helpers.logActivity(this.req.me.id, 'Created new nestsite', inputs);
+          await sails.helpers.logActivity(this.req.me.id, 'Created new nestsite', newNestsite, {});
         }
  };
   

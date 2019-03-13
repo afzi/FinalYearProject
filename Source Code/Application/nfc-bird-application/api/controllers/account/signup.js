@@ -100,8 +100,13 @@ by modifying its session.`,
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
 
-    inputs.password = "<hidden>"; // do this so the password doesn't appear in the logs
-    await sails.helpers.logActivity(this.req.me.id, 'Created new user account', inputs);
+    newUserRecord.password = "<hidden>"; // do this so the password doesn't appear in the logs
+    delete newUserRecord.createdAt;
+    delete newUserRecord.updatedAt;
+    delete newUserRecord.createdBy;
+    delete newUserRecord.updatedBy;
+
+    await sails.helpers.logActivity(this.req.me.id, 'Created new user account', newUserRecord, {});
   }
 
 };

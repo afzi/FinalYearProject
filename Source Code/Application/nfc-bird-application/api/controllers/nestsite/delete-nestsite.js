@@ -43,8 +43,8 @@ module.exports = {
   
   
     fn: async function (inputs) {
+      var deleteNestsite = await Nestsite.findOne({id: inputs.id})
       if(!this.req.me.hasEditFull) {
-        var deleteNestsite = await sails.findOne({id: inputs.id})
 
         if(deleteNestsite.createdBy != this.req.me.id) {
           throw 'forbidden'
@@ -55,8 +55,13 @@ module.exports = {
           .intercept({name: 'UsageError'}, 'invalid');
 
           inputs.nestID = deletedRecord.nestID;
+
+          delete deleteNestsite.createdAt;
+          delete deleteNestsite.updatedAt;
+          delete deleteNestsite.createdBy;
+          delete deleteNestsite.updatedBy;
           
-        await sails.helpers.logActivity(this.req.me.id, 'Deleted a nestsite', inputs);
+        await sails.helpers.logActivity(this.req.me.id, 'Deleted a nestsite', {}, deleteNestsite);
     }
   
   

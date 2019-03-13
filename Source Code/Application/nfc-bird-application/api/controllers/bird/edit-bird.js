@@ -267,8 +267,12 @@ module.exports = {
     fn: async function (inputs) {
       console.log("Received request to edit bird")
 
+      let editBird = await Bird.findOne({id: inputs.id})
+      .populate('fledgedWhere')
+      .populate('laidWhere')
+      .populate('releasedWhere')
+      .populate('hatchedWhere')
       if(!this.req.me.hasEditFull) {
-        var editBird = await Bird.findOne({id: inputs.id})
 
         if(editBird.createdBy != this.req.me.id) {
           throw 'forbidden'
@@ -290,7 +294,7 @@ module.exports = {
         var fledgedWhereNestsite = null;
         if(inputs.fledgedWhere) fledgedWhereNestsite = (await Nestsite.findOne({nestID: inputs.fledgedWhere}).usingConnection(db)).id;
 
-        let bird = await Bird.update({id: inputs.id}).set({
+        let bird = await Bird.updateOne({id: inputs.id}).set({
           birdName: inputs.birdName,
           editedBy: this.req.session.userId,
           studID: inputs.studID,
@@ -317,8 +321,7 @@ module.exports = {
           groupName: inputs.groupName,
           status: inputs.status
         })
-        .usingConnection(db)
-        .fetch();
+        .usingConnection(db);
 
       if(inputs.nfcRingID) {
         await RFIDTag.update({
@@ -360,11 +363,41 @@ module.exports = {
         .usingConnection(db);
       }
 
+      if(editBird.hatchedWhere) editBird.hatchedWhere = editBird.hatchedWhere.nestID;
+      if(editBird.laidWhere) editBird.laidWhere = editBird.laidWhere.nestID;
+      if(editBird.releasedWhere) editBird.releasedWhere = editBird.releasedWhere.nestID;
+      if(editBird.fledgedWhere) editBird.fledgedWhere = editBird.fledgedWhere.nestID;
+
+      if(bird.hatchedWhere) bird.hatchedWhere = inputs.hatchedWHere;
+      if(bird.laidWhere) bird.laidWhere = inputs.laidWhere;
+      if(bird.releasedWhere) bird.releasedhere = inputs.releasedWhere;
+      if(bird.fledgedWhere) bird.fledgedWhere = inputs.fledgedWhere;
+
+      if(bird.releasedWhen) bird.releasedWhen = new Date(bird.releasedWhen*1000).toLocaleDateString('en-GB')
+      if(bird.layDate) bird.layDate = new Date(bird.layDate*1000).toLocaleDateString('en-GB')
+      if(bird.fledgeDate) bird.fledgeDate = new Date(bird.fledgeDate*1000).toLocaleDateString('en-GB')
+      if(bird.hatchDate) bird.hatchDate = new Date(bird.hatchDate*1000).toLocaleDateString('en-GB')
+
+      if(editBird.releasedWhen) editBird.releasedWhen = new Date(editBird.releasedWhen*1000).toLocaleDateString('en-GB')
+      if(editBird.layDate) editBird.layDate = new Date(editBird.layDate*1000).toLocaleDateString('en-GB')
+      if(editBird.fledgeDate) editBird.fledgeDate = new Date(editBird.fledgeDate*1000).toLocaleDateString('en-GB')
+      if(editBird.hatchDate) editBird.hatchDate = new Date(editBird.hatchDate*1000).toLocaleDateString('en-GB')
+
+      delete bird.createdAt;
+      delete bird.updatedAt;
+      delete bird.createdBy;
+      delete bird.updatedBy;
+
+      delete editBird.createdAt;
+      delete editBird.updatedAt;
+      delete editBird.createdBy;
+      delete editBird.updatedBy;
+
+      await sails.helpers.logActivity(this.req.me.id, 'Edited a bird', bird, editBird);
+
       })
       .intercept('E_UNIQUE', 'alreadyInUse')
       .intercept({name: 'UsageError'}, 'invalid')
-
-      await sails.helpers.logActivity(this.req.me.id, 'Edited a bird', inputs);
 
     }
   };

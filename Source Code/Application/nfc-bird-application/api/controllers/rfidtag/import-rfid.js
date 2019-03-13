@@ -67,7 +67,7 @@ module.exports = {
           
         }
 
-        await sails.helpers.logActivity(this.req.me.id, 'Imported RFID tags', {success: numSuccess, skipped: numSkipped});
+        await sails.helpers.logActivity(this.req.me.id, 'Imported RFID tags', {success: numSuccess, skipped: numSkipped}, {});
 
         return exits.success({success: numSuccess, skipped: numSkipped});
     }

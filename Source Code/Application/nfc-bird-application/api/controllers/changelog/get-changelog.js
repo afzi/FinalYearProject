@@ -66,7 +66,7 @@ module.exports = {
 
 
     fn: async function(inputs) {
-        console.log("Received request to list/filter birds")
+        console.log("Received request to list/filter changelog")
 
         let query = {}
         if (inputs.data) query.data = { 'contains': inputs.data }
