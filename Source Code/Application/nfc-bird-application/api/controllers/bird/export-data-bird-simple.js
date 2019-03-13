@@ -15,6 +15,8 @@ module.exports = {
         lastSeen: { required: false, type: 'boolean' },
         studid: { required: false, type: 'boolean' },
         newstudid: { required: false, type: 'boolean' },
+        nfcRingAssigned: { required: false, type: 'boolean' },
+        nfcRing: { required: false, type: 'boolean' },
         lring: { required: false, type: 'boolean' },
         rring: { required: false, type: 'boolean' },
         creator: { required: false, type: 'boolean' },
@@ -74,7 +76,7 @@ module.exports = {
         // specification provided above. But you should have all the fields
         // that are listed in the report specification
         var BIRDQUERY = `
-        SELECT bird.*, user.username, lnest.nestID as laidName,hnest.nestID as hatchName,fnest.nestID as flegName,rnest.nestID as relName FROM nfcbirds.bird 
+        SELECT bird.*, user.fullName, lnest.nestID as laidName,hnest.nestID as hatchName,fnest.nestID as flegName,rnest.nestID as relName FROM nfcbirds.bird 
         LEFT JOIN nfcbirds.user 
         ON bird.createdBy = user.id
         LEFT JOIN nfcbirds.nestsite AS lnest 
@@ -90,6 +92,21 @@ module.exports = {
         var rows = rawResult.rows;
         for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
+
+            var RINGQUERY = `
+            SELECT * FROM nfcbirds.rfidtag 
+            WHERE birdID = $1;`
+            var ringResult = await sails.sendNativeQuery(RINGQUERY, [row.id]);
+            var ringRows = ringResult.rows;
+            var ring = '';
+            var ringAssigned = 'No'
+            if (ringRows.length <= 0) {
+                ring = '';
+            }
+            else {
+                ring = ringRows[0].nfcRFID
+                ringAssigned = 'Yes'
+            }
 
             var LASTSEENQUERY = `
             SELECT * FROM nfcbirds.visit 
@@ -170,9 +187,11 @@ module.exports = {
                 lastSeen: seen,
                 studid: row.studID,
                 newstudid: row.newStudID,
+                nfcRingAssigned: ringAssigned,
+                nfcRing:ring,
                 lring: row.leftRingID,
                 rring: row.rightRingID,
-                creator: row.username,
+                creator: row.fullName,
                 //BPD
                 mname: row.motherName,
                 mstud: row.motherStudID,
@@ -314,6 +333,26 @@ module.exports = {
             var name = 'New Stud ID';
             var len = name.length + 2;
             specification.newstudid = {
+                displayName: name,
+                headerStyle: styles.headerDark,
+                cellStyle: styles.cellPlain,
+                width: `${len}`
+            };
+        }
+        if (inputs.nfcRingAssigned) {
+            var name = 'Has NFC Ring';
+            var len = name.length + 2;
+            specification.nfcRingAssigned = {
+                displayName: name,
+                headerStyle: styles.headerDark,
+                cellStyle: styles.cellPlain,
+                width: `${len}`
+            };
+        }
+        if (inputs.nfcRing) {
+            var name = 'NFC Ring Printed ID';
+            var len = name.length + 2;
+            specification.nfcRing = {
                 displayName: name,
                 headerStyle: styles.headerDark,
                 cellStyle: styles.cellPlain,
