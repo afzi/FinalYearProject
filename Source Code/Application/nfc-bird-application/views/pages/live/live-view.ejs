@@ -64,9 +64,12 @@
             <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page
                 to see.</div>
 
-            <div class="nav-item dropdown d-none d-sm-block">
-                <button class="btn btn-secondary" @click="exportToExcel">Export Test</button>
+            <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block">
+                <button class="btn btn-secondary" disabled>Refresh</button>
             </div>
+            <div v-else class="nav-item dropdown d-none d-sm-block">
+                    <button class="btn btn-secondary" href="/live">Refresh</button>
+                </div>
 
 
 

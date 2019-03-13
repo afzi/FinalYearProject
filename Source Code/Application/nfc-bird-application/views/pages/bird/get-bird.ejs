@@ -3,7 +3,7 @@
       <div class="flex-container">
          <button class="btn btn-dark" @click="openCreateBirdModal" v-if="me.hasCreateEdit || me.hasEditFull">Register
             New Bird</button>
-         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal">More Filters</button>
+         <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="storeCurrent">More Filters</button>
          <button class="btn btn-dark" @click="exportToExcel" v-if="me.hasExport">Export</button>
       </div>
       <div class="flex-container filterbar">
@@ -323,7 +323,7 @@
                                        <li><input type="checkbox" checked="checked"
                                              v-model="formData.currnestDisc"> Description</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.currnestCord"> Co-ordinates</li>
+                                             v-model="formData.currnestCord">Coordinates</li>
 
                                        <!-- <li><input type="checkbox" checked="checked" v-model="formData.currnestLat">Latitude</li>   -->
                                     </ul>
@@ -337,7 +337,7 @@
                                        <li><input type="checkbox" checked="checked"
                                              v-model="formData.prevnestDisc"> Description</li>
                                        <li><input type="checkbox" checked="checked"
-                                             v-model="formData.prevnestCord"> Co-ordinates</li>
+                                             v-model="formData.prevnestCord">Coordinates</li>
 
                                        <!-- <li><input type="checkbox" checked="checked" v-model="formData.prevnestLat">Latitude</li> -->
                                     </ul>
@@ -348,13 +348,12 @@
                   </div>
                   <div class="modal-footer flex-row-reverse justify-content-between">
                      <div id="createControls" class="flex-row-reverse form-group">
-                        <a type="submit" class="btn-dark btn" data-toggle="modal" data-target="#editUserModal"> Testing
-                        </a>
-                        <!-- <i class="fas fa-edit" data-toggle="modal" data-target="#editUserModal" @click="selectIndexFormData(index)"></i> -->
-                        <a type="submit" class="btn-dark btn" href="birds/full">Save</a>
+                           <button class="btn btn-secondary" data-dismiss="modal">Save & Close</button>
+                           <button class="btn btn-secondary" @click="resetColumns">Reset To Default</button>
+                           <button class="btn btn-secondary" @click="allColumns">Select All</button>
                      </div>
-                     <button type="button" data-dismiss="modal" @click="exitEditMode"
-                        class="btn btn-outline-info">Cancel</button>
+                     <button type="button" data-dismiss="modal"
+                        class="btn btn-outline-info"  @click="resetToStartState">Cancel</button>
                   </div>
                </div>
             </div>

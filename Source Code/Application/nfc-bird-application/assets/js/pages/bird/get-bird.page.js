@@ -10,12 +10,13 @@ parasails.registerPage('get-bird', {
 
         currentBirds: [],
 
-        formData: {
+        fixedDefaultState: {
             //BID
             id: false,
             name: true,
             sex: true,
             breeder: true,
+            lastSeen: false,
             studid: true,
             newstudid: false,
             lring: false,
@@ -35,6 +36,7 @@ parasails.registerPage('get-bird', {
             age: true,
             //BCD
             lay: false,
+            laidwhere: false,
             hatchdate: false,
             hatchwhere: false,
             incdays: false,
@@ -42,18 +44,64 @@ parasails.registerPage('get-bird', {
             fledgewhere: false,
             releasedate: false,
             releasedwhere: false,
-            laidwhere: false,
             //NSD
             currnestID: true,
             currnestDist: true,
             currnestDisc: false,
-            currnestLat: false,
-            currnestLong: false,
+            currnestCord: false,
             prevnestID: true,
             prevnestDist: false,
             prevnestDisc: false,
-            prevnestLat: false,
-            prevnestLong: false
+            prevnestCord: false
+        },
+
+        startState: {
+
+        },
+
+        formData: {
+            //BID
+            id: false,
+            name: true,
+            sex: true,
+            breeder: true,
+            lastSeen: false,
+            studid: true,
+            newstudid: false,
+            lring: false,
+            rring: false,
+            creator: false,
+            //BPD
+            mname: true,
+            mstud: false,
+            fname: true,
+            fstud: false,
+            sfname: false,
+            sfstud: false,
+            //BSD
+            status: false,
+            cnote: false,
+            rnote: false,
+            age: true,
+            //BCD
+            lay: false,
+            laidwhere: false,
+            hatchdate: false,
+            hatchwhere: false,
+            incdays: false,
+            fledgedate: false,
+            fledgewhere: false,
+            releasedate: false,
+            releasedwhere: false,
+            //NSD
+            currnestID: true,
+            currnestDist: true,
+            currnestDisc: false,
+            currnestCord: false,
+            prevnestID: true,
+            prevnestDist: false,
+            prevnestDisc: false,
+            prevnestCord: false
          },
 
         BirdCount: 0,
@@ -346,40 +394,47 @@ parasails.registerPage('get-bird', {
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
+        storeCurrent: async function() {
+            for (var k in this.formData){
+                this.startState[k] = this.formData[k];
+            }
+        },
+        resetColumns: async function() {
+            for (var k in this.fixedDefaultState){
+                this.formData[k] = this.fixedDefaultState[k];
+            }
+        },
+        allColumns: async function() {
+            for (var k in this.formData){
+                this.formData[k] = true;
+            }
+        },
+        resetToStartState: async function() {
+            for (var k in this.startState){
+                this.formData[k] = this.startState[k];
+            }
+        },
         exportToExcel: async function() {
             var baseURL = `birds/export`;
             var firstParam = true;
             var selectedFields = {};
-            var searchStrings = {};
+            //var searchStrings = {};
 
-            // if (this.currentBirdFilter != null && this.currentBirdFilter != "") {
-            //     searchStrings.currentBirdFilter(this.currentBirdFilter);
-            // }
-            // if (this.currentBirdIdFilter != null && this.currentBirdIdFilter != "") {
-            //     searchStrings.currentBirdFilter(this.currentBirdIdFilter);
-            // }
-            // if (this.currentSexFilter != null && this.currentSexFilter != "") {
-            //     params.sex = this.currentSexFilter;
-            // }
+            for (var k in this.formData){
+                if (this.formData[k] === true) {
+                    selectedFields[k] = this.formData[k];
+                }
+            }
 
-            // if (this.currentFatherFilter != null && this.currentFatherFilter != "") {
-            //     params.fatherName = this.currentFatherFilter;
-            // }
-
-            // if (this.currentMotherFilter != null && this.currentMotherFilter != "") {
-            //     params.motherName = this.currentMotherFilter;
-            // }
-
-            // if (this.currentBreederFilter != null && this.currentBreederFilter != "") {
-            //     params.isBreeder = this.currentBreederFilter;
-            // }
-
-            // if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
-            //     params.currentNestSite = this.currentNestSiteFilter;
-            // }
-            // ?birdName=${params.birdName}&studId=${params.studId}&sex=${params.sex}
-            // &fatherName=${params.fatherName}&motherName=${params.motherName}&isBreeder=${params.isBreeder}&currentNestSite=${params.currentNestSite}
-            // &includeConditions=${params.includeConditions}&includeNestsites=${params.includeNestsites}&includeVisits=${params.includeVisits}
+            for (var k in selectedFields){
+                if(firstParam === true){
+                    firstParam = false;
+                    baseURL+= `?` + k +`=${selectedFields[k]}`;
+                }else{
+                    baseURL+= `&` + k +`=${selectedFields[k]}`;
+                }
+            }
+            console.log(baseURL);
             this.goto(baseURL);
 
         },
