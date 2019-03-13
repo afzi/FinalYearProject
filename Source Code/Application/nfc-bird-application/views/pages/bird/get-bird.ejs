@@ -38,12 +38,12 @@
                title="leftRingID" autocomplete="off">
             <autocomplete for="leftRingID" action="getBird" params='{"limit": 5}' map="leftRingID" is-async> </autocomplete>
          </div>
-
          <div class="form-group search-box" v-if="formData.rring">
             <input id="rightRingID" class="form-control" type="text" v-model.trim="currentRightRingFilter" placeholder="Right Ring ID"
                title="rightRingID" autocomplete="off">
             <autocomplete for="rightRingID" action="getBird" params='{"limit": 5}' map="rightRingID" is-async> </autocomplete>
          </div>
+      
 
          <div class="form-group search-box">
             <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter"
