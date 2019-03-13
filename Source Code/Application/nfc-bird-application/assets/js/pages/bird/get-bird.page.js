@@ -126,6 +126,8 @@ parasails.registerPage('get-bird', {
 
         currentLeftRingFilter:"",
 
+        currentRightRingFilter:"",
+
         currentSexFilter: "",
 
         currentFatherFilter: "",
@@ -228,6 +230,14 @@ parasails.registerPage('get-bird', {
         },
 
         currentLeftRingFilter: function(_, _) {
+            if ($("#leftRingID").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
+        currentRightRingFilter: function(_, _) {
             if ($("#leftRingID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -575,6 +585,10 @@ parasails.registerPage('get-bird', {
                 params.leftRingId = this.currentLeftRingFilter;
             }
 
+            if (this.currentRightRingFilter != null && this.currentRightRingFilter != "") {
+                params.rightRingId = this.currentRightRingFilter;
+            }
+
             if (this.currentNewStudIdFilter != null && this.currentNewStudIdFilter != "") {
                 params.newStudId = this.currentNewStudIdFilter;
             }
@@ -629,6 +643,7 @@ parasails.registerPage('get-bird', {
             this.currentBirdIdFilter = "";
             this.currentNewStudIdFilter = "";
             this.currentLeftRingFilter = "";
+            this.currentRightRingFilter = "";
             this.currentSexFilter = "";
             this.currentFatherFilter = "";
             this.currentMotherFilter = "";
