@@ -138,6 +138,10 @@ parasails.registerPage('get-bird', {
 
         currentMotherFilter: "",
 
+        currentLaidWhereFilter:"",
+
+        currentHatchWhereFilter:"",
+
         currentBreederFilter: "",
 
         currentNestSiteFilter: "",
@@ -276,6 +280,22 @@ parasails.registerPage('get-bird', {
             this.$refs.paginate.selected = 1;
             this.refresh();
         },
+        currentHatchWhereFilter: function(_, _) {
+            if ($("#hatchedWhere").data('locked') != 1) {
+            this.currentPage = 1;
+            this.$refs.paginate.selected = 1;
+            this.refresh();
+            }
+        },
+        
+        currentLaidWhereFilter: function(_, _) {
+            if ($("#laidWhere").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
         currentNestSiteFilter: function(_, _) {
             if ($("#currentNestSite").data('locked') != 1) {
                 this.currentPage = 1;
@@ -612,6 +632,12 @@ parasails.registerPage('get-bird', {
             if (this.currentBreederFilter != null && this.currentBreederFilter != "") {
                 params.isBreeder = this.currentBreederFilter;
             }
+            if (this.currentLaidWhereFilter != null && this.currentLaidWhereFilter != "") {
+                params.whereLaid = this.currentLaidWhereFilter;
+            }
+            if (this.currentHatchWhereFilter != null && this.currentHatchWhereFilter != "") {
+                params.whereHatched = this.currentHatchWhereFilter;
+            }
 
             if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
                 params.currentNestSite = this.currentNestSiteFilter;
@@ -653,6 +679,8 @@ parasails.registerPage('get-bird', {
             this.currentMotherFilter = "";
             this.currentBreederFilter = "";
             this.currentNestSiteFilter = "";
+            this.currentLaidWhereFilter = "";
+            this.currentHatchWhereFilter = "";
         },
 
         validateNestsite: function(fieldName) {

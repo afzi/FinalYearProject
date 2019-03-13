@@ -131,6 +131,11 @@ module.exports = {
         type: 'number',
         description: 'The number of days this bird spent in incubation.'
       },
+      whereLaid:{
+        required: false,
+        type: 'string',
+        description: 'The location where the bird laid.'
+      },
 
       whereHatched: {
         required: false,
@@ -302,6 +307,8 @@ module.exports = {
             nextBird.nestsiteHistory = nestsiteHistory;
           }
         }
+
+
 
         if(inputs.includeVisits && allConditionsMatch) {
           var visitHistory = await Visit.find({where: {birdID: nextBird.id}, sort: 'createdAt DESC'});
