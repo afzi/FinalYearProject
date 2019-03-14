@@ -1006,11 +1006,14 @@ parasails.registerPage('get-bird', {
         },
 
         canEditThisBird: function() {
-            if(this.me.hasEditFull) return true;
-            if(this.me.hasCreateEdit) {
-                return this.currentBird.createdBy.id == this.me.id;
+            if(this.currentBird.id) {
+                if(this.me.hasEditFull) return true;
+                if(this.me.hasCreateEdit) {
+                    return this.currentBird.createdBy.id == this.me.id;
+                }
+                return false;
             }
-            return false;
+
 
         },
 
