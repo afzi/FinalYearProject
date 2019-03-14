@@ -1,14 +1,12 @@
 <div id="create-nestsite">
 
     <div class="container" v-if="!cloudSuccess">
-        <div class="form-group"><button class="btn btn-dark" data-toggle="modal" data-target="#createNestsiteModal"
-                v-show="me.hasCreateEdit || me.hasEditFull" @click="resetFormData">Add New</button></div>
+        <div class="form-group"><button class="btn btn-dark" data-toggle="modal" data-target="#createNestsiteModal" v-show="me.hasCreateEdit || me.hasEditFull" @click="resetFormData">Add New</button></div>
 
 
         <table id="all-nestsites" border="1" class="table table-bordered table-condensed table-hover text-nowrap">
             <thead role="rowgroup">
-                <tr role="row" class="birdheader"
-                    style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
+                <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
                     <th role="columnheader" style="width: 15%;">
                         Nestsite ID
                         <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'DESC')" @click="setSortItem('nestID', 'DESC')" alt="Sort by Nestsite ID Descending" title="Sort by Nestsite ID Descending"></i>
@@ -26,8 +24,10 @@
                     </th>
                     <th role="columnheader" style="width: 10%;">
                         Distance to hoppers (km)
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'DESC')" @click="setSortItem('distanceToHoppersKm', 'DESC')" alt="Sort by Distance to Hoppers Descending" title="Sort by Distance to Hoppers Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'ASC')" @click="setSortItem('distanceToHoppersKm', 'ASC')" alt="Sort by Distance to Hoppers Ascending" title="Sort by Distance to Hoppers Ascending"></i>
+                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'DESC')" @click="setSortItem('distanceToHoppersKm', 'DESC')" alt="Sort by Distance to Hoppers Descending"
+                            title="Sort by Distance to Hoppers Descending"></i>
+                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'ASC')" @click="setSortItem('distanceToHoppersKm', 'ASC')" alt="Sort by Distance to Hoppers Ascending"
+                            title="Sort by Distance to Hoppers Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 15%;">Occupied by (male)</th>
                     <th role="columnheader" style="width: 15%;">Occupied by (female / unknown)</th>
@@ -38,31 +38,25 @@
             <tbody role="rowgroup" id="nestsite-table-body">
                 <tr v-for="(nestsite, index) in currentNestsites">
                     <td>{{nestsite.nestID}}</td>
-                    <td>{{nestsite.nestDescription}}</td>
+                    <td class="text-wrap">{{nestsite.nestDescription}}</td>
                     <td>{{(nestsite.longitude ? nestsite.longitude : "") + ", " + (nestsite.latitude? nestsite.latitude : "")}}
                     </td>
                     <td>{{nestsite.distanceToHoppersKm}}</td>
                     <td>{{nestsite.maleBirds[0]? nestsite.maleBirds[0].birdName : 'None'}}</td>
                     <td>{{nestsite.femaleBirds[0]? nestsite.femaleBirds[0].birdName : 'None'}}</td>
                     <td>
-                        <i class="fas fa-edit fa-lg" v-if="canEditThisNestsite(index)"
-                            @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
-                        <i class="fas fa-trash-alt fa-lg" v-if="canEditThisNestsite(index)"
-                            @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
+                        <i class="fas fa-edit fa-lg" v-if="canEditThisNestsite(index)" @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
+                        <i class="fas fa-trash-alt fa-lg" v-if="canEditThisNestsite(index)" @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <footer id="page-footer"
-            class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
             <div class="flex-container filterbar" style="white-space: nowrap;">
                 <div>
-                    <paginate :page-count="Math.ceil(nestsiteCount / pageSize)" :click-handler="pageClick"
-                        :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'"
-                        :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
-                        :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'"
-                        :disabled-class="'ignore disabled'">
+                    <paginate :page-count="Math.ceil(nestsiteCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
+                        :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                     </paginate>
                 </div>
             </div>
@@ -82,64 +76,46 @@
 
         </footer>
 
-        <div class="modal fade" id="editNestsiteModal" tabindex="-1" role="dialog"
-            aria-labelledby="editNestsiteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="editNestsiteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editNestsiteModalLabel">Edit nestsite</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            @click="exitEditMode">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="exitEditMode">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <ajax-form id="edit-nestsite-form" action="editNestsite" :syncing.sync="syncing"
-                        :cloud-error.sync="cloudError" @submitted="submittedForm()"
-                        :handle-parsing="handleParsingFormEdit" autocomplete="off">
+                    <ajax-form id="edit-nestsite-form" action="editNestsite" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormEdit" autocomplete="off">
                         <div class="modal-body">
                             <div class="form-group">
-                                <input disabled id="nestIDEdit" type="text" class="form-control"
-                                    placeholder="Nestsite name" v-model.trim="formData.nestID" focus-first>
+                                <input disabled id="nestIDEdit" type="text" class="form-control" placeholder="Nestsite name" v-model.trim="formData.nestID" focus-first>
                             </div>
 
                             <div class="form-group">
-                                <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control"
-                                    placeholder="Nest Site Description"
-                                    :class="[formErrors.nestDescription ? 'is-invalid' : '']"
-                                    v-model.trim="formData.nestDescription"></textarea>
-                                <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid
-                                    nestsite description.</div>
+                                <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control" placeholder="Nest Site Description" :class="[formErrors.nestDescription ? 'is-invalid' : '']" v-model.trim="formData.nestDescription"></textarea>
+                                <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid nestsite description.</div>
                             </div>
 
                             <div class="form-group">
-                                <input id="distanceToHoppersKm" type="number" step="0.01" class="form-control"
-                                    placeholder="Distance to hoppers (km)" title="Distance to hoppers (km)"
-                                    :class="[formErrors.distanceToHoppersKm ? 'is-invalid' : '']"
-                                    v-model.trim="formData.distanceToHoppersKm">
-                                <div class="invalid-feedback" v-if="formErrors.distanceToHoppersKm">Please enter a valid
-                                    distance.</div>
+                                <input id="distanceToHoppersKm" type="number" step="0.01" class="form-control" placeholder="Distance to hoppers (km)" title="Distance to hoppers (km)" :class="[formErrors.distanceToHoppersKm ? 'is-invalid' : '']" v-model.trim="formData.distanceToHoppersKm">
+                                <div class="invalid-feedback" v-if="formErrors.distanceToHoppersKm">Please enter a valid distance.
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input id="longitude" type="number" step="0.00001" class="form-control"
-                                    placeholder="Longitude" title="Longitude "
-                                    :class="[formErrors.longitude ? 'is-invalid' : '']"
-                                    v-model.trim="formData.longitude">
-                                <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid
-                                    longitude.</div>
+                                <input id="longitude" type="number" step="0.00001" class="form-control" placeholder="Longitude" title="Longitude " :class="[formErrors.longitude ? 'is-invalid' : '']" v-model.trim="formData.longitude">
+                                <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid longitude.
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input id="latitude" type="number" step="0.00001" class="form-control"
-                                    placeholder="Latitude" title="Latitude"
-                                    :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
+                                <input id="latitude" type="number" step="0.00001" class="form-control" placeholder="Latitude" title="Latitude" :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
                                 <div class="invalid-feedback" v-if="formErrors.latitude">Please enter a valid latitude.
                                 </div>
                             </div>
 
 
-                            <lock :user="me.id" v-if="isEditMode" :action="'editNestsite'+formData.id"
-                                :run-on-failed="reload"> </lock>
+                            <lock :user="me.id" v-if="isEditMode" :action="'editNestsite'+formData.id" :run-on-failed="reload"> </lock>
                             <p class="text-danger" v-if="cloudError"><small>An error occured while processing your
                                     request. Please check your information and try again, or <a href="/contact">contact
                                         support</a> if the error persists.</small></p>
@@ -149,16 +125,14 @@
                             <div class="form-group">
                                 <ajax-button type="submit" :syncing="syncing" class=" btn-dark btn">Save</ajax-button>
                             </div>
-                            <button type="button" class="btn btn-outline-info" data-dismiss="modal"
-                                @click="exitEditMode">Close</button>
+                            <button type="button" class="btn btn-outline-info" data-dismiss="modal" @click="exitEditMode">Close</button>
                         </div>
                     </ajax-form>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="createNestsiteModal" tabindex="-1" role="dialog"
-            aria-labelledby="createNestsiteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="createNestsiteModal" tabindex="-1" role="dialog" aria-labelledby="createNestsiteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -167,49 +141,33 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <ajax-form id="create-nestsite-form" action="createNestsite" :syncing.sync="syncing"
-                        :cloud-error.sync="cloudError" @submitted="submittedForm()"
-                        :handle-parsing="handleParsingFormCreate" autocomplete="off">
+                    <ajax-form id="create-nestsite-form" action="createNestsite" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingFormCreate" autocomplete="off">
                         <div class="modal-body">
                             <div class="form-group">
-                                <input id="nestID" type="text" class="form-control" placeholder="Nestsite name"
-                                    :class="[formErrors.nestID ? 'is-invalid' : '']" v-model.trim="formData.nestID"
-                                    @blur="validateNestName" focus-first>
-                                <div class="invalid-feedback" v-if="formErrors.nestID">Please enter a unique Nest site
-                                    name.</div>
+                                <input id="nestID" type="text" class="form-control" placeholder="Nestsite name" :class="[formErrors.nestID ? 'is-invalid' : '']" v-model.trim="formData.nestID" @blur="validateNestName" focus-first>
+                                <div class="invalid-feedback" v-if="formErrors.nestID">Please enter a unique Nest site name.
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control"
-                                    placeholder="Nest Site Description"
-                                    :class="[formErrors.nestDescription ? 'is-invalid' : '']"
-                                    v-model.trim="formData.nestDescription"></textarea>
-                                <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid
-                                    nestsite description.</div>
+                                <textarea id="nestDescription" rows="10" cols="30" maxlengh="200" class="form-control" placeholder="Nest Site Description" :class="[formErrors.nestDescription ? 'is-invalid' : '']" v-model.trim="formData.nestDescription"></textarea>
+                                <div class="invalid-feedback" v-if="formErrors.nestDescription">Please enter a valid nestsite description.</div>
                             </div>
 
                             <div class="form-group" id="distance-group">
-                                <input id="distanceToHoppersKm" type="number" class="form-control"
-                                    placeholder="Distance to hoppers (km)" title="Distance to hoppers (km)"
-                                    :class="[formErrors.distanceToHoppersKm ? 'is-invalid' : '']"
-                                    v-model.trim="formData.distanceToHoppersKm">
-                                <div class="invalid-feedback" v-if="formErrors.distanceToHoppersKm">Please enter a valid
-                                    distance.</div>
+                                <input id="distanceToHoppersKm" type="number" class="form-control" placeholder="Distance to hoppers (km)" title="Distance to hoppers (km)" :class="[formErrors.distanceToHoppersKm ? 'is-invalid' : '']" v-model.trim="formData.distanceToHoppersKm">
+                                <div class="invalid-feedback" v-if="formErrors.distanceToHoppersKm">Please enter a valid distance.
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input id="longitude" type="number" step="0.00001" class="form-control"
-                                    placeholder="Longitude" title="Longitude "
-                                    :class="[formErrors.longitude ? 'is-invalid' : '']"
-                                    v-model.trim="formData.longitude">
-                                <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid
-                                    longitude.</div>
+                                <input id="longitude" type="number" step="0.00001" class="form-control" placeholder="Longitude" title="Longitude " :class="[formErrors.longitude ? 'is-invalid' : '']" v-model.trim="formData.longitude">
+                                <div class="invalid-feedback" v-if="formErrors.longitude">Please enter a valid longitude.
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <input id="latitude" type="number" step="0.00001" class="form-control"
-                                    placeholder="Latitude" title="Latitude"
-                                    :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
+                                <input id="latitude" type="number" step="0.00001" class="form-control" placeholder="Latitude" title="Latitude" :class="[formErrors.latitude ? 'is-invalid' : '']" v-model.trim="formData.latitude">
                                 <div class="invalid-feedback" v-if="formErrors.latitude">Please enter a valid latitude.
                                 </div>
                             </div>
