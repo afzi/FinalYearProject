@@ -37,11 +37,19 @@
                     </th>
                     <th role="columnheader" style="width: 10%;">
                          Assigned
+                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'isAssigned' || (currentSortItem === 'isAssigned' && currentSortDirection === 'DESC')" @click="setSortItem('isAssigned', 'DESC')" alt="Sort by Assigned Descending" title="Sort by Assigned Descending"></i>
+                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'isAssigned' || (currentSortItem === 'isAssigned' && currentSortDirection === 'ASC')" @click="setSortItem('isAssigned', 'ASC')" alt="Sort by Assigned Ascending" title="Sort by Assigned Ascending"></i>
                     </th>
                     
-                    <th role="columnheader" style="width: 10%;">Assigned to Bird</th>
+                    <th role="columnheader" style="width: 10%;">
+                        Assigned to Bird
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'birdName' || (currentSortItem === 'birdName' && currentSortDirection === 'DESC')" @click="setSortItem('birdName', 'DESC')" alt="Sort by Bird Descending" title="Sort by Bird Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'birdName' || (currentSortItem === 'birdName' && currentSortDirection === 'ASC')" @click="setSortItem('birdName', 'ASC')" alt="Sort by Bird Ascending" title="Sort by Bird Ascending"></i>
+                    </th>
                     <th role="columnheader" style="width: 20%;">
                         Assignment Date
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'assignmentDate' || (currentSortItem === 'assignmentDate' && currentSortDirection === 'DESC')" @click="setSortItem('assignmentDate', 'DESC')" alt="Sort by Assignment Date Descending" title="Sort by Assignment Date Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'assignmentDate' || (currentSortItem === 'assignmentDate' && currentSortDirection === 'ASC')" @click="setSortItem('assignmentDate', 'ASC')" alt="Sort by Assignment Date Ascending" title="Sort by Assignment Date Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 10%;">Actions</th>
                 </tr>

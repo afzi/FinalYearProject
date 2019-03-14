@@ -86,12 +86,64 @@ module.exports = {
         let finalQuery = {where: query}
         if(inputs.skip) finalQuery.skip = inputs.skip;
         if(inputs.limit) finalQuery.limit = inputs.limit;
-        finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
+
+        var manualSortFunction;
+        if(inputs.sortItem === 'isAssigned') {
+            if(inputs.sortDirection === 'DESC') {
+                manualSortFunction = (el1, el2) => {
+                  if(el1.birdID && el2.birdID) return 0;
+                  if(el1.birdID) return 1;
+                  if(el2.birdID) return -1;
+                }
+            } else {
+              manualSortFunction = (el1, el2) => {
+                if(el1.birdID && el2.birdID) return 0;
+                if(el1.birdID) return -1;
+                if(el2.birdID) return 1;
+              }
+            }
+        } else if(inputs.sortItem === 'assignmentDate') {
+          if(inputs.sortDirection === 'ASC') {
+            manualSortFunction = (el1, el2) => {
+              if(!el1.birdID && !el2.birdID) return 0;
+              if(!el1.birdID) return 1;
+              if(!el2.birdID) return -1;
+              return el1.updatedAt - el2.updatedAt;
+            };
+           } else {
+            manualSortFunction = (el1, el2) => {
+              if(!el1.birdID && !el2.birdID) return 0;
+              if(!el1.birdID) return -1;
+              if(!el2.birdID) return 1;
+              return el2.updatedAt - el1.updatedAt;
+            };
+          }
+        } else if(inputs.sortItem === 'birdName') {
+          if(inputs.sortDirection === 'ASC') {
+            manualSortFunction = (el1, el2) => {
+              if(!el1.birdID && !el2.birdID) return 0;
+              if(!el1.birdID) return 1;
+              if(!el2.birdID) return -1;
+              return el1.birdID.birdName.localeCompare(el2.birdID.birdName)
+            };
+           } else {
+            manualSortFunction = (el1, el2) => {
+              if(!el1.birdID && !el2.birdID) return 0;
+              if(!el1.birdID) return -1;
+              if(!el2.birdID) return 1;
+              return el2.birdID.birdName.localeCompare(el1.birdID.birdName)
+            };
+          }
+        } else {
+            finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
+        }
 
         var result = await RFIDTag.find(finalQuery)
         .populate('birdID')
         .populate('createdBy');
   
+        if(manualSortFunction) result.sort(manualSortFunction);
+
         return result;
     }
   

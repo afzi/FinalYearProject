@@ -270,7 +270,6 @@ module.exports = {
       if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
       if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
       if(inputs.sex) query.sex = inputs.sex
-      // if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
       
       if(inputs.fatherName) query.fatherName = {'contains': inputs.fatherName}
       if(inputs.motherName) query.motherName = {'contains': inputs.motherName}
@@ -286,17 +285,188 @@ module.exports = {
       if(inputs.incDaysTo) query.incubationDays['<='] = inputs.incDaysTo;
 
       if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
-
-
       let finalQuery = {where: query}
-      finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
-      // if(inputs.skip) finalQuery.skip = inputs.skip;
-      // if(inputs.limit) finalQuery.limit = inputs.limit;
 
-    //   if(inputs.nfcRingId) query.nfcRFID = {'contains': inputs.nfcRingId} TODO
-    //   if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+      var manualSortFunction;
+      if(inputs.sortItem === 'latestCondition') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if((!el1.conditionHistory || !el1.conditionHistory[0]) && (!el2.conditionHistory || !el2.conditionHistory[0])) return 0;
+            if((!el1.conditionHistory || !el1.conditionHistory[0])) return 1;
+            if((!el2.conditionHistory || !el2.conditionHistory[0])) return -1;
+            return el1.conditionHistory[0].birdCondition.localeCompare(el2.conditionHistory[0].birdCondition)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if((!el1.conditionHistory || !el1.conditionHistory[0]) && (!el2.conditionHistory || !el2.conditionHistory[0])) return 0;
+            if((!el1.conditionHistory || !el1.conditionHistory[0])) return 1;
+            if((!el2.conditionHistory || !el2.conditionHistory[0])) return -1;
+            return el1.conditionHistory[0].birdCondition.localeCompare(el2.conditionHistory[0].birdCondition)
+          };
+        }
+      } else if(inputs.sortItem === 'hatchedWhere') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.hatchedWhere && !el2.hatchedWhere) return 0;
+            if(!el1.hatchedWhere) return 1;
+            if(!el2.hatchedWhere) return -1;
+            return el1.hatchedWhere.nestID.localeCompare(el2.hatchedWhere.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.hatchedWhere && !el2.hatchedWhere) return 0;
+            if(!el1.hatchedWhere) return 1;
+            if(!el2.hatchedWhere) return -1;
+            return el1.hatchedWhere.nestID.localeCompare(el2.hatchedWhere.nestID)
+          };
+        }
+      } else if(inputs.sortItem === 'laidWhere') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.laidWhere && !el2.laidWhere) return 0;
+            if(!el1.laidWhere) return 1;
+            if(!el2.laidWhere) return -1;
+            return el1.laidWhere.nestID.localeCompare(el2.laidWhere.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.laidWhere && !el2.laidWhere) return 0;
+            if(!el1.laidWhere) return 1;
+            if(!el2.laidWhere) return -1;
+            return el1.laidWhere.nestID.localeCompare(el2.laidWhere.nestID)
+          };
+        }
+      } else if(inputs.sortItem === 'releasedWhere') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.releasedWhere && !el2.releasedWhere) return 0;
+            if(!el1.releasedWhere) return 1;
+            if(!el2.releasedWhere) return -1;
+            return el1.releasedWhere.nestID.localeCompare(el2.releasedWhere.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.releasedWhere && !el2.releasedWhere) return 0;
+            if(!el1.releasedWhere) return 1;
+            if(!el2.releasedWhere) return -1;
+            return el1.releasedWhere.nestID.localeCompare(el2.releasedWhere.nestID)
+          };
+        }
 
-  
+      } else if(inputs.sortItem === 'fledgedWhere') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.fledgedWhere && !el2.fledgedWhere) return 0;
+            if(!el1.fledgedWhere) return 1;
+            if(!el2.fledgedWhere) return -1;
+            return el1.fledgedWhere.nestID.localeCompare(el2.fledgedWhere.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.fledgedWhere && !el2.fledgedWhere) return 0;
+            if(!el1.fledgedWhere) return 1;
+            if(!el2.fledgedWhere) return -1;
+            return el1.fledgedWhere.nestID.localeCompare(el2.fledgedWhere.nestID)
+          };
+        }
+      } else if(inputs.sortItem === 'breedingSite') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[0] || !el1.nestsiteHistory[0].nestID) && (!el2.nestsiteHistory || !el2.nestsiteHistory[0] || !el2.nestsiteHistory[0].nestID)) return 0;
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[0] || !el1.nestsiteHistory[0].nestID)) return 1;
+            if((!el2.nestsiteHistory || !el2.nestsiteHistory[0] || !el2.nestsiteHistory[0].nestID)) return -1;
+            return el1.nestsiteHistory[0].nestID.nestID.localeCompare(el2.nestsiteHistory[0].nestID.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[0] || !el1.nestsiteHistory[0].nestID) && (!el2.nestsiteHistory || !el2.nestsiteHistory[0] || !el2.nestsiteHistory[0].nestID)) return 0;
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[0] || !el1.nestsiteHistory[0].nestID)) return 1;
+            if((!el2.nestsiteHistory || !el2.nestsiteHistory[0] || !el2.nestsiteHistory[0].nestID)) return -1;
+            return el1.nestsiteHistory[0].nestID.nestID.localeCompare(el2.nestsiteHistory[0].nestID.nestID)
+          };
+        }
+      } else if(inputs.sortItem === 'previousBreedingSite') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[1] || !el1.nestsiteHistory[1].nestID) && (!el2.nestsiteHistory || !el2.nestsiteHistory[1] || !el2.nestsiteHistory[1].nestID)) return 0;
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[1] || !el1.nestsiteHistory[1].nestID)) return 1;
+            if((!el2.nestsiteHistory || !el2.nestsiteHistory[1] || !el2.nestsiteHistory[1].nestID)) return -1;
+            return el1.nestsiteHistory[1].nestID.nestID.localeCompare(el2.nestsiteHistory[1].nestID.nestID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[1] || !el1.nestsiteHistory[1].nestID) && (!el2.nestsiteHistory || !el2.nestsiteHistory[1] || !el2.nestsiteHistory[1].nestID)) return 0;
+            if((!el1.nestsiteHistory || !el1.nestsiteHistory[1] || !el1.nestsiteHistory[1].nestID)) return 1;
+            if((!el2.nestsiteHistory || !el2.nestsiteHistory[1] || !el2.nestsiteHistory[1].nestID)) return -1;
+            return el1.nestsiteHistory[1].nestID.nestID.localeCompare(el2.nestsiteHistory[1].nestID.nestID)
+          };
+        }
+      } else if(inputs.sortItem === 'lastSeen') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if((!el1.visitHistory || !el1.visitHistory[0]) && (!el2.visitHistory || !el2.visitHistory[0])) return 0;
+            if((!el1.visitHistory || !el1.visitHistory[0])) return 1;
+            if((!el2.visitHistory || !el2.visitHistory[0])) return -1;
+            return el1.visitHistory[0].createdAt - el2.visitHistory[0].createdAt;
+          };
+         } else {
+          manualSortFunction = (el1, el2) => {
+            if((!el1.visitHistory || !el1.visitHistory[0]) && (!el2.visitHistory || !el2.visitHistory[0])) return 0;
+            if((!el1.visitHistory || !el1.visitHistory[0])) return -1;
+            if((!el2.visitHistory || !el2.visitHistory[0])) return 1;
+            return el2.visitHistory[0].createdAt - el1.visitHistory[0].createdAt;
+          };
+        }
+      } else if(inputs.sortItem === 'hasNFC') {
+        if(inputs.sortDirection === 'DESC') {
+          manualSortFunction = (el1, el2) => {
+            if(el1.nfcRingID && el2.nfcRingID) return 0;
+            if(el1.nfcRingID) return 1;
+            if(el2.nfcRingID) return -1;
+          }
+        } else {
+          manualSortFunction = (el1, el2) => {
+            if(el1.nfcRingID && el2.nfcRingID) return 0;
+            if(el1.nfcRingID) return -1;
+            if(el2.nfcRingID) return 1;
+          }
+        }
+      } else if(inputs.sortItem === 'nfcRingID') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.nfcRingID && !el2.nfcRingID) return 0;
+            if(!el1.nfcRingID) return 1;
+            if(!el2.nfcRingID) return -1;
+            return el1.nfcRingID.localeCompare(el2.nfcRingID)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.nfcRingID && !el2.nfcRingID) return 0;
+            if(!el1.nfcRingID) return 1;
+            if(!el2.nfcRingID) return -1;
+            return el1.nfcRingID.localeCompare(el2.nfcRingID)
+          };
+        }
+      } else if(inputs.sortItem === 'fullName') {
+        if(inputs.sortDirection === 'ASC') {
+          manualSortFunction = (el1, el2) => {
+            if(!el1.createdBy && !el2.createdBy) return 0;
+            if(!el1.createdBy) return 1;
+            if(!el2.createdBy) return -1;
+            return el1.createdBy.fullName.localeCompare(el2.createdBy.fullName)
+          };
+         } else {
+          manualSortFunction = (el2, el1) => {
+            if(!el1.createdBy && !el2.createdBy) return 0;
+            if(!el1.createdBy) return 1;
+            if(!el2.createdBy) return -1;
+            return el1.createdBy.fullName.localeCompare(el2.createdBy.fullName)
+          };
+        }
+      } else {
+        finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
+      }
+
       var result = await Bird.find(finalQuery).populate('hatchedWhere').populate('laidWhere').populate('fledgedWhere').populate('releasedWhere').populate('createdBy');
 
       var finalResult = [];
@@ -394,6 +564,8 @@ module.exports = {
       if(inputs.limit) {
         finalResult = finalResult.slice(0, inputs.limit);
       }
+
+      if(manualSortFunction) finalResult.sort(manualSortFunction);
 
       // TODO rewrite this whole fucking controller to be more efficient. No, seriously, it's horrible.
 

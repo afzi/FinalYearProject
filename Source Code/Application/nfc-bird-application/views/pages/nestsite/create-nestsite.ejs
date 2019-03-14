@@ -45,8 +45,8 @@
                     <td>{{nestsite.maleBirds[0]? nestsite.maleBirds[0].birdName : 'None'}}</td>
                     <td>{{nestsite.femaleBirds[0]? nestsite.femaleBirds[0].birdName : 'None'}}</td>
                     <td>
-                        <i class="fas fa-edit fa-xs" v-if="canEditThisNestsite(index)" @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
-                        <i class="fas fa-trash-alt fa-xs" v-if="canEditThisNestsite(index)" @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
+                        <i class="fas fa-edit fa-lg" v-if="canEditThisNestsite(index)" @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
+                        <i class="fas fa-trash-alt fa-lg" v-if="canEditThisNestsite(index)" @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
                     </td>
                 </tr>
             </tbody>

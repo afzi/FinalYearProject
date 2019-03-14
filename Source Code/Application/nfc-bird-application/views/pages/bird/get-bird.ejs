@@ -68,11 +68,6 @@
               </select>
               </div>
 
-            <!-- <div class="form-group search-box" v-if="formData.status">
-                <input id="status" class="form-control" type="text" v-model.trim="currentStatusFilter" placeholder="status" title="status" autocomplete="off">
-                <autocomplete for="status" action="getBird" params='{"limit": 5}' map="status" is-async> </autocomplete>
-            </div> -->
-
             <div class="form-group search-box" v-if="formData.laidwhere">
                <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Where Laid" title="laidWhere" autocomplete="off">
                <autocomplete for="laidWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
@@ -101,10 +96,7 @@
                <option value="unknown">unknown</option>
             </select>
             </div>
-            <!-- <div class="form-group">
-                 <input id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
-                 <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
-                 </div> -->
+            
             <div class="form-group search-box" v-IF="formData.currnestID">
                 <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="current Breeding" title="current Nest Site" autocomplete="off">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async>
@@ -117,9 +109,6 @@
                </autocomplete>
            </div>
 
-            <!-- <div class="form-group">
-                <button class="btn btn-secondary" @click="clearFilters">Clear</button>
-            </div> -->
         </div>
         <table class="table table-bordered table-condensed table-hover text-nowrap">
             <thead role="rowgroup">
@@ -140,7 +129,11 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'isBreeder' || (currentSortItem === 'isBreeder' && currentSortDirection === 'DESC')" @click="setSortItem('isBreeder', 'DESC')" alt="Sort by Breeder Descending" title="Sort by Breeder Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'isBreeder' || (currentSortItem === 'isBreeder' && currentSortDirection === 'ASC')" @click="setSortItem('isBreeder', 'ASC')" alt="Sort by Breeder Ascending" title="Sort by Breeder Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.lastSeen">Last Seen Date</th>
+                    <th role="columnheader" v-show="formData.lastSeen">
+                        Last Seen Date
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'lastSeen' || (currentSortItem === 'lastSeen' && currentSortDirection === 'DESC')" @click="setSortItem('lastSeen', 'DESC')" alt="Sort by Last Seen Date Descending" title="Sort by Last Seen Date Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'lastSeen' || (currentSortItem === 'lastSeen' && currentSortDirection === 'ASC')" @click="setSortItem('lastSeen', 'ASC')" alt="Sort by Last Seen Date Ascending" title="Sort by Last Seen Date Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.studid">
                         Stud ID
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'studID' || (currentSortItem === 'studID' && currentSortDirection === 'DESC')" @click="setSortItem('studID', 'DESC')" alt="Sort by Stud ID Descending" title="Sort by Stud ID Descending"></i>
@@ -151,8 +144,16 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'newStudID' || (currentSortItem === 'newStudID' && currentSortDirection === 'DESC')" @click="setSortItem('newStudID', 'DESC')" alt="Sort by New Stud ID Descending" title="Sort by New Stud ID Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'newStudID' || (currentSortItem === 'newStudID' && currentSortDirection === 'ASC')" @click="setSortItem('newStudID', 'ASC')" alt="Sort by New Stud ID Ascending" title="Sort by New Stud ID Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.nfcRingAssigned">Has NFC Ring</th>
-                    <th role="columnheader" v-show="formData.nfcRing">NFC Ring Printed ID</th>
+                    <th role="columnheader" v-show="formData.nfcRingAssigned">
+                        Has NFC Ring
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'hasNFC' || (currentSortItem === 'hasNFC' && currentSortDirection === 'DESC')" @click="setSortItem('hasNFC', 'DESC')" alt="Sort by Has NFC Ring Descending" title="Sort by Has NFC Ring Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'hasNFC' || (currentSortItem === 'hasNFC' && currentSortDirection === 'ASC')" @click="setSortItem('hasNFC', 'ASC')" alt="Sort by Has NFC Ring Ascending" title="Sort by Has NFC Ring Ascending"></i>
+                    </th>
+                    <th role="columnheader" v-show="formData.nfcRing">
+                        NFC Ring Printed ID
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'nfcRingID' || (currentSortItem === 'nfcRingID' && currentSortDirection === 'DESC')" @click="setSortItem('nfcRingID', 'DESC')" alt="Sort by NFC Ring Printed ID Descending" title="Sort by NFC Ring Printed ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'nfcRingID' || (currentSortItem === 'nfcRingID' && currentSortDirection === 'ASC')" @click="setSortItem('nfcRingID', 'ASC')" alt="Sort by NFC Ring Printed ID Ascending" title="Sort by NFC Ring Printed ID Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.lring">
                         Left Ring ID
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'leftRingID' || (currentSortItem === 'leftRingID' && currentSortDirection === 'DESC')" @click="setSortItem('leftRingID', 'DESC')" alt="Sort by Left Ring ID Descending" title="Sort by Left Ring ID Descending"></i>
@@ -163,7 +164,11 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'rightRingID' || (currentSortItem === 'rightRingID' && currentSortDirection === 'DESC')" @click="setSortItem('rightRingID', 'DESC')" alt="Sort by Right Ring ID Descending" title="Sort by Right Ring ID Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'rightRingID' || (currentSortItem === 'rightRingID' && currentSortDirection === 'ASC')" @click="setSortItem('rightRingID', 'ASC')" alt="Sort by Right Ring ID Ascending" title="Sort by Right Ring ID Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.creator">Created By</th>
+                    <th role="columnheader" v-show="formData.creator">
+                        Created By
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Created By Descending" title="Sort by Created By Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Created By Ascending" title="Sort by Created By Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.mname">
                         Mother
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'motherName' || (currentSortItem === 'motherName' && currentSortDirection === 'DESC')" @click="setSortItem('motherName', 'DESC')" alt="Sort by Femalre Parent Name Descending" title="Sort by Femalre Parent Name Descending"></i>
@@ -203,7 +208,11 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'DESC')" @click="setSortItem('status', 'DESC')" alt="Sort by Status Descending" title="Sort by Status Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'ASC')" @click="setSortItem('status', 'ASC')" alt="Sort by Status Ascending" title="Sort by Status Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.cnote"> Latest Condition</th>
+                    <th role="columnheader" v-show="formData.cnote">
+                        Latest Condition
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'latestCondition' || (currentSortItem === 'latestCondition' && currentSortDirection === 'DESC')" @click="setSortItem('latestCondition', 'DESC')" alt="Sort by Latest Condition Descending" title="Sort by Latest Condition Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'latestCondition' || (currentSortItem === 'latestCondition' && currentSortDirection === 'ASC')" @click="setSortItem('latestCondition', 'ASC')" alt="Sort by Latest Condition Ascending" title="Sort by Latest Condition Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.rnote">
                         Researcher Notes
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'researcherNotes' || (currentSortItem === 'researcherNotes' && currentSortDirection === 'DESC')" @click="setSortItem('researcherNotes', 'DESC')" alt="Sort by Notes Descending" title="Sort by Notes Descending"></i>
@@ -219,13 +228,21 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'layDate' || (currentSortItem === 'layDate' && currentSortDirection === 'DESC')" @click="setSortItem('layDate', 'DESC')" alt="Sort by Lay Date Descending" title="Sort by Lay Date Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'layDate' || (currentSortItem === 'layDate' && currentSortDirection === 'ASC')" @click="setSortItem('layDate', 'ASC')" alt="Sort by Lay Date Ascending" title="Sort by Lay Date Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.laidwhere">Where Laid</th>
+                    <th role="columnheader" v-show="formData.laidwhere">
+                        Where Laid
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'laidWhere' || (currentSortItem === 'laidWhere' && currentSortDirection === 'DESC')" @click="setSortItem('laidWhere', 'DESC')" alt="Sort by Where Laid Descending" title="Sort by Where Laid Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'laidWhere' || (currentSortItem === 'laidWhere' && currentSortDirection === 'ASC')" @click="setSortItem('laidWhere', 'ASC')" alt="Sort by Where Laid Ascending" title="Sort by Where Laid Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.hatchdate">
                         Hatch Date
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'DESC')" @click="setSortItem('hatchDate', 'DESC')" alt="Sort by Hatch Date Descending" title="Sort by Hatch Date Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'ASC')" @click="setSortItem('hatchDate', 'ASC')" alt="Sort by Hatch Date Ascending" title="Sort by Hatch Date Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.hatchwhere">Where Hatched</th>
+                    <th role="columnheader" v-show="formData.hatchwhere">
+                        Where Hatched
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'hatchedWhere' || (currentSortItem === 'hatchedWhere' && currentSortDirection === 'DESC')" @click="setSortItem('hatchedWhere', 'DESC')" alt="Sort by Where Hatched Descending" title="Sort by Where Hatched Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'hatchedWhere' || (currentSortItem === 'hatchedWhere' && currentSortDirection === 'ASC')" @click="setSortItem('hatchedWhere', 'ASC')" alt="Sort by Where Hatched Ascending" title="Sort by Where Hatched Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.incdays">
                         Incubation Days
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'incubationDays' || (currentSortItem === 'incubationDays' && currentSortDirection === 'DESC')" @click="setSortItem('incubationDays', 'DESC')" alt="Sort by Incubation Days Descending" title="Sort by Incubation Days Descending"></i>
@@ -236,27 +253,39 @@
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fledgeDate' || (currentSortItem === 'fledgeDate' && currentSortDirection === 'DESC')" @click="setSortItem('fledgeDate', 'DESC')" alt="Sort by Fledge Date Descending" title="Sort by Fledge Date Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fledgeDate' || (currentSortItem === 'fledgeDate' && currentSortDirection === 'ASC')" @click="setSortItem('fledgeDate', 'ASC')" alt="Sort by Fledge Date Ascending" title="Sort by Fledge Date Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.fledgewhere">Where Fledged</th>
+                    <th role="columnheader" v-show="formData.fledgewhere">
+                        Where Fledged
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fledgedWhere' || (currentSortItem === 'fledgedWhere' && currentSortDirection === 'DESC')" @click="setSortItem('fledgedWhere', 'DESC')" alt="Sort by Where Fledged Descending" title="Sort by Where Fledged Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fledgedWhere' || (currentSortItem === 'fledgedWhere' && currentSortDirection === 'ASC')" @click="setSortItem('fledgedWhere', 'ASC')" alt="Sort by Where Fledged Ascending" title="Sort by Where Fledged Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.releasedate">
                         Release Date
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'releasedWhen' || (currentSortItem === 'releasedWhen' && currentSortDirection === 'DESC')" @click="setSortItem('releasedWhen', 'DESC')" alt="Sort by Release Date Descending" title="Sort by Release Date Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'releasedWhen' || (currentSortItem === 'releasedWhen' && currentSortDirection === 'ASC')" @click="setSortItem('releasedWhen', 'ASC')" alt="Sort by Release Date Ascending" title="Sort by Release Date Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.releasedwhere">Where Release</th>
-                    <th role="columnheader" v-show="formData.currnestID">Current Breeding Site</th>
+                    <th role="columnheader" v-show="formData.releasedwhere">
+                        Where Released
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'releasedWhere' || (currentSortItem === 'releasedWhere' && currentSortDirection === 'DESC')" @click="setSortItem('releasedWhere', 'DESC')" alt="Sort by Where Released Descending" title="Sort by Where Released Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'releasedWhere' || (currentSortItem === 'releasedWhere' && currentSortDirection === 'ASC')" @click="setSortItem('releasedWhere', 'ASC')" alt="Sort by Where Released Ascending" title="Sort by Where Released Ascending"></i>
+                    </th>
+                    <th role="columnheader" v-show="formData.currnestID">
+                        Current Breeding Site
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'breedingSite' || (currentSortItem === 'breedingSite' && currentSortDirection === 'DESC')" @click="setSortItem('breedingSite', 'DESC')" alt="Sort by Current Breeding Site Descending" title="Sort by Current Breeding Site Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'breedingSite' || (currentSortItem === 'breedingSite' && currentSortDirection === 'ASC')" @click="setSortItem('breedingSite', 'ASC')" alt="Sort by Current Breeding Site Ascending" title="Sort by Current Breeding Site Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.currnestDist">Distance To Hopper (km)</th>
                     <th role="columnheader" v-show="formData.currnestDisc">Site Description</th>
                     <th role="columnheader" v-show="formData.currnestCord">Coordinates</th>
 
-                    <!-- <th role="columnheader" v-show="formData.currnestLat">Current Breeding Latitude</th> -->
 
-
-                    <th role="columnheader" v-show="formData.prevnestID">Previous Breeding Site</th>
+                    <th role="columnheader" v-show="formData.prevnestID">
+                        Previous Breeding Site
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'previousBreedingSite' || (currentSortItem === 'previousBreedingSite' && currentSortDirection === 'DESC')" @click="setSortItem('previousBreedingSite', 'DESC')" alt="Sort by Previous Breeding Site Descending" title="Sort by Previous Breeding Site Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'previousBreedingSite' || (currentSortItem === 'previousBreedingSite' && currentSortDirection === 'ASC')" @click="setSortItem('previousBreedingSite', 'ASC')" alt="Sort by Previous Breeding Site Ascending" title="Sort by Previous Breeding Site Ascending"></i>
+                    </th>
                     <th role="columnheader" v-show="formData.prevnestDist">Distance To Hopper (km)</th>
                     <th role="columnheader" v-show="formData.prevnestDisc">Site Description</th>
                     <th role="columnheader" v-show="formData.prevnestCord">Coordinates</th>
-
-                    <!-- <th role="columnheader" v-show="formData.prevnestLat">Previous Breeding Latitude</th> -->
 
                 </tr>
             </thead>
@@ -276,7 +305,7 @@
                     <td v-if="formData.nfcRing">{{ bird.nfcRingID ? bird.nfcRingID : '' }}</td>
                     <td v-if="formData.lring">{{bird.leftRingID}}</td>
                     <td v-if="formData.rring">{{bird.rightRingID}}</td>
-                    <td v-if="formData.creator">{{bird.createdBy.fullName}}</td>
+                    <td v-if="formData.creator">{{bird.createdBy ? bird.createdBy.fullName : '-'}}</td>
                     <td v-if="formData.mname">{{bird.motherName}}</td>
                     <td v-if="formData.mstud">{{bird.motherStudID}}</td>
                     <td v-if="formData.fname">{{bird.fatherName}}</td>
@@ -834,7 +863,7 @@
                                                  </tr>
                                                  <tr>
                                                      <td>Created by</td>
-                                                     <td style="text-align:right">{{currentBird.createdBy && currentBird.createdBy.fullName }}</td>
+                                                     <td style="text-align:right">{{currentBird.createdBy ? currentBird.createdBy.fullName : '-' }}</td>
                                                  </tr>
                                                  <tr>
                                                      <td>Created on</td>
@@ -961,7 +990,7 @@
                      <lock :user="me.id" v-if="isEditMode" :action="'editBird'+currentBird.id" :run-on-failed="exitEditMode">
                      </lock>
                      <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
-                       your information and try again, or <a href="/support">contact support</a> if the error
+                       your information and try again, or contact an admin if the error
                        persists.</small></p>
                      <div class="modal-footer flex-row-reverse justify-content-between">
                          <a class="btn btn-info " v-if="!isEditMode && canEditThisBird()" @click="enterEditMode">Edit</a>
@@ -1462,7 +1491,7 @@
                 <lock :user="me.id" v-if="isEditMode" :action="'editBird'+currentBird.id" :run-on-failed="exitEditMode">
                 </lock>
                 <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
-                  your information and try again, or <a href="/support">contact support</a> if the error
+                  your information and try again, or contact an admin if the error
                   persists.</small></p>
                 <div class="modal-footer flex-row-reverse justify-content-between">
                     <a class="btn btn-info " v-if="!isEditMode && canEditThisBird()" @click="enterEditMode">Edit</a>
@@ -1843,7 +1872,7 @@
                                </tr>
                            </table>
                            <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
-                             your information and try again, or <a href="/support">contact support</a> if the error
+                             your information and try again, or contact an admin if the error
                              persists.</small></p>
                            <div class="modal-footer flex-row-reverse justify-content-between">
                                <div id="createControls" class="flex-row-reverse form-group">
@@ -1855,462 +1884,6 @@
                  </div>
                </div>
              </div>
-
-
-
-
-
-
-        <!-- <modal id="createBirdModal" class="example-modal" v-if="modal==='createBirdModal'" v-cloak>
-            <div class="modal-header">
-                <h2 class="modal-title">Register New Bird</h2>
-                <hr />
-                <button type="button" class="modal-close-button" @click="closeCreateBirdModal(true)" aria-label="Close"></button>
-            </div>
-            <ajax-form action="createBird" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedFormCreate()" :handle-parsing="handleParsingFormCreate" autocomplete="off">
-                <table class="table">
-                    <tr>
-                        <td style="width:50%;">
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-6">
-                                            <h4>Main Information</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <table class="col-sm-6">
-                                            <tr>
-                                                <td style="white-space: nowrap">Bird Name</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="birdNameCreate" type="text" class="form-control" placeholder="Bird Name" title="Bird Name" :class="[createBirdErrors.birdName ? 'is-invalid' : '']" v-model.trim="createBirdData.birdName">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.birdName">Please provide a valid & unique Bird Name.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>NFC Ring ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="nfcRingIDCreate" type="text" class="form-control" placeholder="NFC Ring ID" title="NFC Ring ID" :class="[createBirdErrors.nfcRingID ? 'is-invalid' : '']" v-model.trim="createBirdData.nfcRingID">
-                                                        <autocomplete for="nfcRingIDCreate" action="getRfid" params='{"limit": 5, "assignedStatus": false}' map="nfcRFID" is-async>
-                                                        </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.nfcRingID">This ring either doesn't exist or has already been assigned.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stud ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="studIdCreate" type="text" class="form-control" placeholder="Stud Id" title="Stud Id" :class="[createBirdErrors.studID ? 'is-invalid' : '']" v-model.trim="createBirdData.studID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.studID">Please provide a valid studId.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>New Stud ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="newStudIdCreate" type="text" class="form-control" placeholder="New Stud Id" title="New Stud Id" :class="[createBirdErrors.newStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.newStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.newStudID">Please provide a valid New Stud Id.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Right Ring ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="rightRingIdCreate" type="text" class="form-control" placeholder="Right Ring ID" title="Right Ring ID" :class="[createBirdErrors.rightRingID ? 'is-invalid' : '']" v-model.trim="createBirdData.rightRingID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.rightRingID">Please provide a valid Right Ring Id.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Left Ring ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="leftRingIDCreate" type="text" class="form-control" placeholder="Left Ring ID" title="Left Ring ID" :class="[createBirdErrors.leftRingID? 'is-invalid' : '']" v-model.trim="createBirdData.leftRingID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.leftRingID">Please provide a valid Left Ring Id.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group Name</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="groupNameCreate" type="text" class="form-control" placeholder="Group Name" title="Group Name" :class="[createBirdErrors.groupName ? 'is-invalid' : '']" v-model.trim="createBirdData.groupName">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.groupName">Please provide a valid Group Name.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gender</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <select id="sexCreate" class="form-control" :class="[createBirdErrors.sex ? 'is-invalid' : '']" v-model.trim="createBirdData.sex">
-                                             <option value="male">Male</option>
-                                             <option value="female">Female</option>
-                                             <option selected value="unknown">Unknown</option>
-                                          </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Is breeder?</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <select id="isBreederCreate" class="form-control" :class="[createBirdErrors.isBreeder ? 'is-invalid' : '']" v-model.trim="createBirdData.isBreeder">
-                                             <option value="yes">Yes</option>
-                                             <option value="no">No</option>
-                                             <option selected value="unknown">Unknown</option>
-                                          </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Status</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <select id="statusCreate" class="form-control" :class="[createBirdErrors.status ? 'is-invalid' : '']" v-model.trim="createBirdData.status">
-                                             <option selected value="alive">Alive</option>
-                                             <option value="dead">Dead</option>
-                                             <option value="missing">Missing</option>
-                                          </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Condition</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="newCondition" type="text" class="form-control" placeholder="New Condition" title="New Condition" :class="[(createBirdErrors.newCondition || createBirdErrors.conditionDate) ? 'is-invalid' : '']" v-model.trim="createBirdData.newCondition">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.conditionDate">Please provide a valid date for the Condition.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr v-if="createBirdData.newCondition && createBirdData.newCondition !== ''">
-                                                <td>Date of Condition</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="newConditionDate" class="form-control" v-model="createBirdData.newConditionDate" :class="[createBirdErrors.conditionDate ? 'is-invalid' : '']" placeholder="Date of Condition" title="Date of Condition" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-6">
-                                            <h4>More Information</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                                            <tr>
-                                                <td>Where Laid</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="laidWhereCreate" type="text" class="form-control" placeholder="Where Laid" title="Where Laid" :class="[createBirdErrors.laidWhere ? 'is-invalid' : '']" v-model.trim="createBirdData.laidWhere">
-                                                        <autocomplete for="laidWhereCreate" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.laidWhere">Please provide a valid Nest Site for Where Laid.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lay Date</td>
-                                                <td>
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="layDate" class="form-control" v-model="createBirdData.layDate" placeholder="Lay date" title="Lay date" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Where Hatched</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="hatchedWhereCreate" type="text" class="form-control" placeholder="Where Hatched" title="Where Hatched" :class="[createBirdErrors.hatchedWhere ? 'is-invalid' : '']" v-model.trim="createBirdData.hatchedWhere">
-                                                        <autocomplete for="hatchedWhereCreate" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.hatchedWhere">Please provide a valid Nest Site for Where Hatched.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Hatch Date</td>
-                                                <td>
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="hatchDate" class="form-control" v-model="createBirdData.hatchDate" placeholder="Hatch date" title="Hatch date" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Where Fledged</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="fledgedWhereCreate" type="text" class="form-control" placeholder="Where Fledged" title="Where Fledged" :class="[createBirdErrors.fledgedWhere ? 'is-invalid' : '']" v-model.trim="createBirdData.fledgedWhere">
-                                                        <autocomplete for="fledgedWhereCreate" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.fledgedWhere">Please provide a valid value for Where Fledged.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Fledge Date</td>
-                                                <td>
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="fledgeDateCreate" class="form-control" v-model="createBirdData.fledgeDate" placeholder="Fledge date" title="Fledge date" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="white-space: nowrap">Incubation Days</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="incubationDaysCreate" type="number" class="form-control" placeholder="Incubation days" title="Incubation days" :class="[createBirdErrors.incubationDays ? 'is-invalid' : '']" v-model.trim="createBirdData.incubationDays">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.incubationDays">Please provide a valid number of Incubation Days.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Where Released</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="releasedWhereCreate" type="text" class="form-control" placeholder="Where Released" title="Where Released" :class="[createBirdErrors.releasedWhere ? 'is-invalid' : '']" v-model.trim="createBirdData.releasedWhere">
-                                                        <autocomplete for="releasedWhereCreate" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.releasedWhere">Please provide a valid Nest Site for Where Released.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Release Date</td>
-                                                <td>
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="releasedWhen" class="form-control" v-model="createBirdData.releasedWhen" placeholder="Release Date" title="Release Date" :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Breeding Site</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="newBreedingSiteCreate" type="text" class="form-control" placeholder="Breeding Site" title="Breeding Site" :class="[(createBirdErrors.newBreedingSite || createBirdErrors.newBreedingSiteDate) ? 'is-invalid' : '']" v-model.trim="createBirdData.newBreedingSite">
-                                                        <autocomplete for="newBreedingSiteCreate" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.newBreedingSite">Please provide a valid Breeding Site.</div>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.newBreedingSiteDate">
-                                                            Please provide a valid Breeding Site Date.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr v-if="createBirdData.newBreedingSite && createBirdData.newBreedingSite !== ''">
-                                                <td>Date Breeding Site Registered</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group datepicker-group">
-                                                        <datepicker id="newBreedingSiteDateCreate" class="form-control" v-model="createBirdData.newBreedingSiteDate" :class="[createBirdErrors.newBreedingSiteDate ? 'is-invalid' : '']" placeholder="Date Breeding Site Registered" title="Date Breeding Site Registered"
-                                                            :config="datepickerOptions">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Notes</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <textarea id="researcherNotesCreate" class="form-control" placeholder="Researcher Notes" title="Researcher Notes" :class="[createBirdErrors.researcherNotes ? 'is-invalid' : '']" v-model.trim="createBirdData.researcherNotes"></textarea>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.researcherNotes">Please provide valid Researcher Notes.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:50%;">
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-6">
-                                            <h4>Parents</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <table style="max-width: 90% !important;" class="col-sm-6">
-                                            <tr>
-                                                <td>Mother</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="motherNameCreate" type="text" class="form-control" placeholder="Mother" title="Mother" :class="[createBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="createBirdData.motherName">
-                                                        <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.motherName">Please provide a valid value for Mother Name.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Father</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="fatherNameCreate" type="text" class="form-control" placeholder="Father" title="Father" :class="[createBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherName">
-                                                        <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.fatherName">Please provide a valid value for Father Name.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2nd Father</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="secondFatherNameCreate" type="text" class="form-control" placeholder="2nd Potential Father" title="2nd Potential Father" :class="[createBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherName">
-                                                        <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Father.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-6">
-                                            <h4>&nbsp;</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <table align="center" style="max-width: 90% !important;" class="col-sm-6">
-                                            <tr>
-                                                <td>Mother Stud ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="motherStudIDCreate" type="text" class="form-control" placeholder="Mother Stud ID" title="Mother Stud ID" :class="[createBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.motherStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.motherStudID">Please provide a valid value for Mother Stud ID.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Father Stud ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="fatherStudIDCreate" type="text" class="form-control" placeholder="Father Stud ID" title="Father Stud ID" :class="[createBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.fatherStudID">Please provide a valid value for Father Stud ID.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2nd Father Stud ID</td>
-                                                <td style="text-align:right">
-                                                    <div class="form-group">
-                                                        <input id="secondFatherStudIDCreate" type="text" class="form-control" placeholder="2nd Potential Father Stud ID" title="2nd Potential Father Stud ID" :class="[createBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.secondFatherStudID">
-                                                            Please provide a valid value for 2nd Father Stud ID.</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </td>
-                    </tr>
-                </table>
-                <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check
-                  your information and try again, or <a href="/support">contact support</a> if the error
-                  persists.</small></p>
-                <div class="modal-footer flex-row-reverse justify-content-between">
-                    <div id="createControls" class="flex-row-reverse form-group">
-                        <ajax-button type="submit" :syncing="syncing" class="btn-dark btn">Save</ajax-button>
-                    </div>
-                    <button type="button" @click="closeCreateBirdModal(true)" class="btn btn-outline-info">Cancel</button>
-                </div>
-            </ajax-form>
-        </modal> -->
-
-        <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered">
-                <div class="modal-content" style="overflow-x: scroll;overflow-y: hidden;width: 100% ;white-space: nowrap;">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserModalLabel">All Birds</h5>
-                        <button type="button" class="close" @click="exitEditMode" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                  </button>
-                    </div>
-                    <div class="flex-container filterbar bg-info">
-                        <div class="form-group search-box" v-if="formData.status">
-                            <input id="status" class="form-control" type="text" v-model.trim="currentStatusFilter" placeholder="status" title="status" autocomplete="off">
-                            <autocomplete for="status" action="getBird" params='{"limit": 5}' map="status" is-async>
-                            </autocomplete>
-                        </div>
-                    </div>
-                    <table class="table table-bordered table-condensed table-hover">
-                        <thead role="rowgroup">
-                            <tr class="birdheader back-green" role="row">
-                                <th role="columnheader" v-if="formData.birdName">Bird Name</th>
-                                <th role="columnheader" v-if="formData.status">Status</th>
-                                <th role="columnheader" v-if="formData.lastSeenDate">Last Seen Date</td>
-                                    <th role="columnheader" v-if="formData.currentNestSite">Current Breeding Site</th>
-                                    <th role="columnheader" v-if="formData.PreviousNestSite">Previous Breeding Site</th>
-                                    <th role="columnheader" v-if="formData.birdID">Bird ID</th>
-                                    <th role="columnheader" v-if="formData.studId">Stud ID</th>
-                                    <th role="columnheader" v-if="formData.newStudId">New Stud ID</th>
-                                    <th role="columnheader" v-if="formData.rightRingId">Right Ring ID</th>
-                                    <th role="columnheader" v-if="formData.leftRingId">Left Ring ID</th>
-                                    <th role="columnheader" v-if="formData.groupName">Group Name</th>
-                                    <th role="columnheader" v-if="formData.sex">Gender</th>
-                                    <th role="columnheader" v-if="formData.currentCondition">Current Condition</th>
-                                    <th role="columnheader" v-if="formData.motherName">Mother</th>
-                                    <th role="columnheader" v-if="formData.fatherName">Father</th>
-                                    <th role="columnheader" v-if="formData.secondFatherName">Second Father</th>
-                                    <th role="columnheader" v-if="formData.age">Age</th>
-                                    <th role="columnheader">Breeder</th>
-                                    <th role="columnheader" v-if="formData.DistanceToHopper">Distance To Hopper</th>
-                            </tr>
-                        </thead>
-                        <tbody role="rowgroup">
-                            <tr v-for="(bird, index) in currentBirds">
-                                <td class="birdJustifyColumn" v-if="formData.birdName">{{bird.birdName}}</td>
-                                <td v-if="formData.status">{{bird.status ? bird.status : 'Unknown' }}</td>
-                                <td v-if="formData.lastSeenDate">
-                                    {{bird.visitHistory[0] ? new Date(bird.visitHistory[0].createdAt *1000).toLocaleDateString('en-GB') : '' }}
-                                </td>
-                                <td v-if="formData.currentNestSite">
-                                    {{bird.nestsiteHistory && bird.nestsiteHistory[0] && bird.nestsiteHistory[0].nestID ? bird.nestsiteHistory[0].nestID.nestID : '' }}
-                                </td>
-                                <td v-if="formData.PreviousNestSite">
-                                    {{bird.nestsiteHistory && bird.nestsiteHistory[1] && bird.nestsiteHistory[1].nestID ? bird.nestsiteHistory[1].nestID.nestID : '' }}
-                                </td>
-                                <td v-if="formData.birdID">{{bird.id}}</td>
-                                <td v-if="formData.studId">{{bird.studID}}</td>
-                                <td v-if="formData.newStudId">{{bird.newStudID}}</td>
-                                <td v-if="formData.rightRingId">{{bird.rightRingID}}</td>
-                                <td v-if="formData.leftRingId">{{bird.leftRingID}}</td>
-                                <td v-if="formData.groupName">{{bird.groupName}}</td>
-                                <td v-if="formData.sex">{{bird.sex}}</td>
-                                <td v-if="formData.currentCondition">
-                                    {{bird.conditionHistory[0] ? bird.conditionHistory[0].birdCondition : '' }}</td>
-                                <td v-if="formData.motherName">{{bird.motherName}}</td>
-                                <td v-if="formData.fatherName">{{bird.fatherName}}</td>
-                                <td v-if="formData.secondFatherName">{{bird.secondFatherName}}</td>
-                                <td v-if="formData.age">{{bird.age}}</td>
-                                <td>{{bird.isBreeder}}</td>
-                                <td v-if="formData.DistanceToHopper">
-                                    {{bird.nestsiteHistory && bird.nestsiteHistory[0] && bird.nestsiteHistory[0].nestID ? bird.nestsiteHistory[0].nestID.distanceToHoppersKm : '' }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
