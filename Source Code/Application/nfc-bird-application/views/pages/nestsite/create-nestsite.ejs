@@ -9,24 +9,24 @@
                 <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
                     <th role="columnheader" style="width: 15%;">
                         Nestsite ID
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'DESC')" @click="setSortItem('nestID', 'DESC')" alt="Sort by Nestsite ID Descending" title="Sort by Nestsite ID Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'ASC')" @click="setSortItem('nestID', 'ASC')" alt="Sort by Nestsite ID Ascending" title="Sort by Nestsite ID Ascending"></i>
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'DESC')" @click="setSortItem('nestID', 'DESC')" alt="Sort by Nestsite ID Descending" title="Sort by Nestsite ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'ASC')" @click="setSortItem('nestID', 'ASC')" alt="Sort by Nestsite ID Ascending" title="Sort by Nestsite ID Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 25%;">
                         Description
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'nestDescription' || (currentSortItem === 'nestDescription' && currentSortDirection === 'DESC')" @click="setSortItem('nestDescription', 'DESC')" alt="Sort by Description Descending" title="Sort by Description Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'nestDescription' || (currentSortItem === 'nestDescription' && currentSortDirection === 'ASC')" @click="setSortItem('nestDescription', 'ASC')" alt="Sort by Description Ascending" title="Sort by Description Ascending"></i>
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'nestDescription' || (currentSortItem === 'nestDescription' && currentSortDirection === 'DESC')" @click="setSortItem('nestDescription', 'DESC')" alt="Sort by Description Descending" title="Sort by Description Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'nestDescription' || (currentSortItem === 'nestDescription' && currentSortDirection === 'ASC')" @click="setSortItem('nestDescription', 'ASC')" alt="Sort by Description Ascending" title="Sort by Description Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 10%;">
                         Coordinates
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'longitude' || (currentSortItem === 'longitude' && currentSortDirection === 'DESC')" @click="setSortItem('longitude', 'DESC')" alt="Sort by Coordinates (longitude) Descending" title="Sort by Coordinates (longitude) Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'longitude' || (currentSortItem === 'longitude' && currentSortDirection === 'ASC')" @click="setSortItem('longitude', 'ASC')" alt="Sort by Coordinates (longitude) Ascending" title="Sort by Coordinates (longitude) Ascending"></i>
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'longitude' || (currentSortItem === 'longitude' && currentSortDirection === 'DESC')" @click="setSortItem('longitude', 'DESC')" alt="Sort by Coordinates (longitude) Descending" title="Sort by Coordinates (longitude) Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'longitude' || (currentSortItem === 'longitude' && currentSortDirection === 'ASC')" @click="setSortItem('longitude', 'ASC')" alt="Sort by Coordinates (longitude) Ascending" title="Sort by Coordinates (longitude) Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 10%;">
                         Distance to hoppers (km)
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'DESC')" @click="setSortItem('distanceToHoppersKm', 'DESC')" alt="Sort by Distance to Hoppers Descending"
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'DESC')" @click="setSortItem('distanceToHoppersKm', 'DESC')" alt="Sort by Distance to Hoppers Descending"
                             title="Sort by Distance to Hoppers Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'ASC')" @click="setSortItem('distanceToHoppersKm', 'ASC')" alt="Sort by Distance to Hoppers Ascending"
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'distanceToHoppersKm' || (currentSortItem === 'distanceToHoppersKm' && currentSortDirection === 'ASC')" @click="setSortItem('distanceToHoppersKm', 'ASC')" alt="Sort by Distance to Hoppers Ascending"
                             title="Sort by Distance to Hoppers Ascending"></i>
                     </th>
                     <th role="columnheader" style="width: 15%;">Occupied by (male)</th>
@@ -45,8 +45,8 @@
                     <td>{{nestsite.maleBirds[0]? nestsite.maleBirds[0].birdName : 'None'}}</td>
                     <td>{{nestsite.femaleBirds[0]? nestsite.femaleBirds[0].birdName : 'None'}}</td>
                     <td>
-                        <i class="fas fa-edit fa-lg" v-if="canEditThisNestsite(index)" @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
-                        <i class="fas fa-trash-alt fa-lg" v-if="canEditThisNestsite(index)" @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
+                        <i class="fas fa-edit fa-xs" v-if="canEditThisNestsite(index)" @click="selectIndexFormData(index)" alt="Edit Nestsite" title="Edit Nestsite"></i>
+                        <i class="fas fa-trash-alt fa-xs" v-if="canEditThisNestsite(index)" @click="promptDeleteNestsite(index)" alt="Delete Nestsite" title="Delete Nestsite"></i>
                     </td>
                 </tr>
             </tbody>

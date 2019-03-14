@@ -915,7 +915,7 @@ parasails.registerPage('get-bird', {
 
         openCreateBirdModal: async function() {
             this.enterCreateMode();
-            this.goto('/birds/create');
+            // this.goto('/birds/create');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';
@@ -937,7 +937,7 @@ parasails.registerPage('get-bird', {
         closeCreateBirdModal: function(prompt) {
             if (!prompt || this.promptExitCreateMode()) {
                 $('#createBirdModal').modal('hide');
-                this.goto('/birds');
+                // this.goto('/birds');
             }
             // Or, without deep links, instead do:
             // ```
