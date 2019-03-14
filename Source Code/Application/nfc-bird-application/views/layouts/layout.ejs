@@ -108,6 +108,23 @@
                                 <a class="dropdown-item" href="/logout">Log out</a>
                             </div>
                         </div>
+
+                        <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/live/view">Live View</a>
+                        <% if(me.hasRead) { %>
+                            <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/birds">Birds Table</a>
+                            <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/rfidtag">Manage Rings</a>
+                            <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/nestsites">Manage Nest Sites</a>
+                        <% } %>
+
+                        <% if(me.hasAdmin || me.isSuperAdmin) { %>
+                            <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account/manage-users">Manage Users</a>
+                            <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/changelog/user-activity-monitor">User Activity Monitor</a>
+                        <% } %>
+
+                        
+                        <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/account">My Profile</a>
+                        <a class="nav-item nav-link ml-2 mr-2 d-block d-sm-none" href="/logout">Log out</a>
+
                         <% } else { %>
                             <!-- LOGGED-OUT NAVIGATION -->
                             <!-- <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/faq">FAQ</a> -->
