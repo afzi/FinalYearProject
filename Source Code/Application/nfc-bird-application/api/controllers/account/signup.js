@@ -32,7 +32,6 @@ by modifying its session.`,
     password: {
       required: true,
       type: 'string',
-      maxLength: 200,
       example: 'passwordlol',
       description: 'The unencrypted password to use for the new account.'
     },

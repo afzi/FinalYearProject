@@ -28,7 +28,6 @@ module.exports = {
       password: {
         required: false,
         type: 'string',
-        maxLength: 200,
         example: 'passwordlol',
         description: 'The unencrypted password to use for the new account.'
       },
