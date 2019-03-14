@@ -225,14 +225,14 @@ module.exports = {
         sortItem: {
           required: false,
           type: 'string',
-          default: 'createdAt',
+          defaultValue: 'createdAt',
           description: 'Which field to sort by'
         },
   
         sortDirection: {
           required: false,
           type: 'string',
-          default: 'DESC',
+          defaultValue: 'DESC',
           description: 'Which direction to sort in (ASC/DESC)'
         }
   

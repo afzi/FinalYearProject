@@ -23,13 +23,13 @@
         <tr role="row" class="back-green">
           <th role="columnheader" style="width: 30%;">
             Full name
-            <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Full Name Descending" title="Sort by Full Name Descending"></i>
-            <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Full Name Ascending" title="Sort by Full Name Ascending"></i>
+            <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Full Name Descending" title="Sort by Full Name Descending"></i>
+            <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Full Name Ascending" title="Sort by Full Name Ascending"></i>
           </th>
           <th role="columnheader" style="width: 30%;">
               Username
-              <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'DESC')" @click="setSortItem('username', 'DESC')" alt="Sort by Username Descending" title="Sort by Username Descending"></i>
-              <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'ASC')" @click="setSortItem('username', 'ASC')" alt="Sort by Username Ascending" title="Sort by Username Ascending"></i>
+              <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'DESC')" @click="setSortItem('username', 'DESC')" alt="Sort by Username Descending" title="Sort by Username Descending"></i>
+              <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'ASC')" @click="setSortItem('username', 'ASC')" alt="Sort by Username Ascending" title="Sort by Username Ascending"></i>
             </th>
           <th role="columnheader" style="width: 30%;">Privileges</th>
           <th role="columnheader" style="width: 10%;">Actions</th>
@@ -51,9 +51,9 @@
             </ul>
           </td>
           <td>
-            <i v-show="!user.isSuperAdmin" class="fas fa-edit fa-lg" data-toggle="modal" data-target="#editUserModal"
+            <i v-show="!user.isSuperAdmin" class="fas fa-edit fa-xs" data-toggle="modal" data-target="#editUserModal"
               @click="selectIndexFormData(index)" alt="Edit User" title="Edit User"></i>
-            <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt fa-lg"
+            <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt fa-xs"
               @click="promptDeleteUser(index)" alt="Delete User" title="Delete User"></i>
           </td>
         </tr>

@@ -37,8 +37,8 @@
                 <tr role="row">
                     <th role="columnheader">
                         Date
-                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'DESC')" @click="setSortItem('createdAt', 'DESC')" alt="Sort by Date Descending" title="Sort by Date Descending"></i>
-                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'ASC')" @click="setSortItem('createdAt', 'ASC')" alt="Sort by Date Ascending" title="Sort by Date Ascending"></i>
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'DESC')" @click="setSortItem('createdAt', 'DESC')" alt="Sort by Date Descending" title="Sort by Date Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'ASC')" @click="setSortItem('createdAt', 'ASC')" alt="Sort by Date Ascending" title="Sort by Date Ascending"></i>
                     </th>
                     <th role="columnheader">User</th>
                     <th role="columnheader">Action</th>
@@ -52,7 +52,7 @@
                     <td><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}}
                             ({{log.user.username}})</a></td>
                     <td>{{log.action}}</td>
-                    <td><i class="fas fa-eye fa-lg" alt="View Data" title="View Data" data-toggle="modal"
+                    <td><i class="fas fa-eye fa-xs" alt="View Data" title="View Data" data-toggle="modal"
                             data-target="#viewDataModal" @click="selectCurrentChangelog(index)"></i></td>
                 </tr>
             </tbody>
