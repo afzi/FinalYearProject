@@ -9071,6 +9071,10 @@ button.bg-dark:focus {
     text-align: justify !important;
 }
 
+.text-wrap {
+    white-space: normal !important;
+}
+
 .text-nowrap {
     white-space: nowrap !important;
 }
