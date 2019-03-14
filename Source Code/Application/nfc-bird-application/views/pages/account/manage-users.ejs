@@ -21,10 +21,18 @@
     <table id="all-users" class="table table-bordered table-condensed table-hover text-nowrap">
       <thead role="rowgroup">
         <tr role="row" class="back-green">
-          <th role="columnheader">Full name</th>
-          <th role="columnheader">Username</th>
-          <th role="columnheader">Privileges</th>
-          <th role="columnheader">Actions</th>
+          <th role="columnheader" style="width: 30%;">
+            Full name
+            <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Full Name Descending" title="Sort by Full Name Descending"></i>
+            <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Full Name Ascending" title="Sort by Full Name Ascending"></i>
+          </th>
+          <th role="columnheader" style="width: 30%;">
+              Username
+              <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'DESC')" @click="setSortItem('username', 'DESC')" alt="Sort by Username Descending" title="Sort by Username Descending"></i>
+              <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'ASC')" @click="setSortItem('username', 'ASC')" alt="Sort by Username Ascending" title="Sort by Username Ascending"></i>
+            </th>
+          <th role="columnheader" style="width: 30%;">Privileges</th>
+          <th role="columnheader" style="width: 10%;">Actions</th>
         </tr>
       </thead>
 

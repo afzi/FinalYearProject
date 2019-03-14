@@ -33,7 +33,11 @@ parasails.registerPage('import-rfid', {
 
     pageSize: 15,
 
-    currentPage: 1
+    currentPage: 1,
+
+    currentSortItem: 'nfcRFID',
+
+    currentSortDirection: 'ASC'
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -55,8 +59,10 @@ parasails.registerPage('import-rfid', {
     },
 
     ringidFilter: function(_, _) {
-          this.refresh();
-  },
+      if($("#nfcRFIDFilter").data('locked') != 1) {
+        this.refresh();
+      }
+    },
 
 //   ringidFilter: function(_, _) {
 //     this.refresh();
@@ -91,9 +97,16 @@ parasails.registerPage('import-rfid', {
   },
 
     refresh: async function() {
-
-      this.currentRfids = await Cloud.getRfid.with({skip:  (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
-      this.rfidCount = await Cloud.countRfid();
+      var params = {}
+      if(this.ringidFilter) {
+        params.nfcRFID = this.ringidFilter;
+      }
+      params.skip = (this.currentPage - 1) * this.pageSize
+      params.limit = this.pageSize;
+      params.sortItem = this.currentSortItem;
+      params.sortDirection = this.currentSortDirection;
+      this.currentRfids = await Cloud.getRfid.with(params);
+      this.rfidCount = await Cloud.countRfid.with(params);
     },
 
     startSubmit: async function(result) {
@@ -181,6 +194,17 @@ parasails.registerPage('import-rfid', {
       }
 
       return false;
+    },
+
+    setSortItem: async function(newSortItem, newSortDirection) {
+      if(newSortItem === this.currentSortItem) {
+        if(newSortDirection === 'ASC') newSortDirection = 'DESC';
+        else newSortDirection = 'ASC'; // if we're just changing the direction not the sort item, we instead want to change it to the opposite of what was clicked
+      }
+
+      this.currentSortItem = newSortItem;
+      this.currentSortDirection = newSortDirection;
+      this.refresh();
     }
   }
 });

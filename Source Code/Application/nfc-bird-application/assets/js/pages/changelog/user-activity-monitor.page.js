@@ -41,6 +41,10 @@ parasails.registerPage('user-activity-monitor', {
 
         currentChangelog: {},
 
+        currentSortItem: "createdAt",
+
+        currentSortDirection: "DESC",
+
         datepickerOptions: {
           icons: {
               time: 'far fa-clock',
@@ -67,6 +71,7 @@ parasails.registerPage('user-activity-monitor', {
   beforeMount: function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+    this.currentDateFromFilter = moment().subtract(1, 'months')
   },
   mounted: async function() {
     this.refresh();
@@ -141,6 +146,9 @@ parasails.registerPage('user-activity-monitor', {
 
       params.limit = this.pageSize;
 
+      params.sortItem = this.currentSortItem;
+      params.sortDirection = this.currentSortDirection;
+
       this.currentLogs = await Cloud.getChangelog.with(params);
       this.logCount = await Cloud.countChangelog.with(params);
     },
@@ -175,6 +183,17 @@ parasails.registerPage('user-activity-monitor', {
       this.currentChangelog.newData = this.currentChangelog.newData.replace(/{/g, "");
       this.currentChangelog.newData = this.currentChangelog.newData.replace(/}/g, "");
       this.currentChangelog.newData = this.currentChangelog.newData.replace(/"/g, "");
+    },
+
+    setSortItem: async function(newSortItem, newSortDirection) {
+      if(newSortItem === this.currentSortItem) {
+        if(newSortDirection === 'ASC') newSortDirection = 'DESC';
+        else newSortDirection = 'ASC'; // if we're just changing the direction not the sort item, we instead want to change it to the opposite of what was clicked
+      }
+
+      this.currentSortItem = newSortItem;
+      this.currentSortDirection = newSortDirection;
+      this.refresh();
     }
   }
 });

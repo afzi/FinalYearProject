@@ -59,6 +59,20 @@ module.exports = {
           required: false,
           type: 'number',
           description: 'How many records to return (if used in pagination - what is the page size)'
+      },
+
+      sortItem: {
+        required: false,
+        type: 'string',
+        default: 'username',
+        description: 'Which field to sort by'
+      },
+
+      sortDirection: {
+        required: false,
+        type: 'string',
+        default: 'ASC',
+        description: 'Which direction to sort in (ASC/DESC)'
       }
     },
   
@@ -81,8 +95,15 @@ module.exports = {
         let finalQuery = {where: query}
         if(inputs.skip) finalQuery.skip = inputs.skip;
         if(inputs.limit) finalQuery.limit = inputs.limit;
+        finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
 
         var result = await User.find(finalQuery);
+
+        result = result.map(user => {
+          user.password = "";
+          user.confirmPassword = "";
+          return user;
+        });
   
         return result;
     }

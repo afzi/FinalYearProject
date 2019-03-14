@@ -35,7 +35,11 @@
         <table id="all-logs" class="table table-bordered table-condensed table-hover text-nowrap">
             <thead role="rowgroup" class="back-green">
                 <tr role="row">
-                    <th role="columnheader">Date</th>
+                    <th role="columnheader">
+                        Date
+                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'DESC')" @click="setSortItem('createdAt', 'DESC')" alt="Sort by Date Descending" title="Sort by Date Descending"></i>
+                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'createdAt' || (currentSortItem === 'createdAt' && currentSortDirection === 'ASC')" @click="setSortItem('createdAt', 'ASC')" alt="Sort by Date Ascending" title="Sort by Date Ascending"></i>
+                    </th>
                     <th role="columnheader">User</th>
                     <th role="columnheader">Action</th>
                     <th role="columnheader">Data</th>
