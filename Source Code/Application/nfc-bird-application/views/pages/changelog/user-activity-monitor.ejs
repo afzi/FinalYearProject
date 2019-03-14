@@ -1,7 +1,7 @@
-<div id="user-activity-monitor">
+<div id="user-activity-monitor" v-cloak>
     <div class="container">
         <div class="flex-container filterbar bg-info">
-            <h6>Filter by...&nbsp</h6><br>
+            <h6>Filter by...&nbsp;</h6><br>
             <div class="form-group">
                 <input id="username" class="form-control" type="text" v-model.trim="currentUserFilter"
                     placeholder="Username" title="Username" autocomplete="off">
@@ -53,7 +53,7 @@
                     <td><a v-bind:href="getLinkForUser(log.user.fullName)" target="_blank">{{log.user.fullName}}
                             ({{log.user.username}})</a></td>
                     <td>{{log.action}}</td>
-                    <td><i class="fas fa-eye fa-xs" alt="View Data" title="View Data" data-toggle="modal"
+                    <td><i class="fas fa-eye fa-lg" alt="View Data" title="View Data" data-toggle="modal"
                             data-target="#viewDataModal" @click="selectCurrentChangelog(index)"></i></td>
                 </tr>
             </tbody>

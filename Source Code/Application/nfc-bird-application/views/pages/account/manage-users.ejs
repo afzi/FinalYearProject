@@ -1,4 +1,4 @@
-<div id="manage-users">
+<div id="manage-users" v-cloak>
   <div class="container" v-if="!cloudSuccess">
 
     <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register New
@@ -52,9 +52,9 @@
             </ul>
           </td>
           <td>
-            <i v-show="!user.isSuperAdmin" class="fas fa-edit fa-xs" data-toggle="modal" data-target="#editUserModal"
+            <i v-show="!user.isSuperAdmin" class="fas fa-edit fa-lg" data-toggle="modal" data-target="#editUserModal"
               @click="selectIndexFormData(index)" alt="Edit User" title="Edit User"></i>
-            <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt fa-xs"
+            <i v-show="user.id !== me.id && !user.isSuperAdmin" class="fas fa-trash-alt fa-lg"
               @click="promptDeleteUser(index)" alt="Delete User" title="Delete User"></i>
           </td>
         </tr>
