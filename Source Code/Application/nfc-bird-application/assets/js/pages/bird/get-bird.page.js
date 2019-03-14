@@ -152,6 +152,8 @@ parasails.registerPage('get-bird', {
 
         currentNestSiteFilter: "",
 
+        previousNestSiteFilter: "",
+
     //    'formData.birdName': true,
         
 
@@ -334,6 +336,15 @@ parasails.registerPage('get-bird', {
                 this.refresh();
             }
         },
+
+        previousNestSiteFilter: function(_, _) {
+            if ($("#previousNestSite").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
         pageSize: function(_, _) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
@@ -717,6 +728,10 @@ parasails.registerPage('get-bird', {
             if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
                 params.currentNestSite = this.currentNestSiteFilter;
             }
+            if (this.previousNestSiteFilter != null && this.previousNestSiteFilter != "") {
+                params.previousNestSite = this.previousNestSiteFilter;
+            }
+            
 
             params.includeConditions = true;
             params.includeNestsites = true;
@@ -756,6 +771,7 @@ parasails.registerPage('get-bird', {
             this.currentMotherFilter = "";
             this.currentBreederFilter = "";
             this.currentNestSiteFilter = "";
+            this.previousNestSiteFilter = "";
             this.currentLaidWhereFilter = "";
             this.currentHatchWhereFilter = "";
             this.currentFledgeWhereFilter = "";

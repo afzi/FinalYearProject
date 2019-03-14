@@ -190,7 +190,13 @@ module.exports = {
       currentNestSite: { // TODO
         required: false,
         type: 'string',
-        description: 'Where is the bird currently nesting'      },
+        description: 'Where is the bird currently nesting'      
+      },
+      previousNestSite: { // TODO
+        required: false,
+        type: 'string',
+        description: 'Where is the bird currently nesting'      
+      },
 
         currentCondition: { // TODO
             required: false,
@@ -348,6 +354,19 @@ module.exports = {
           var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
           if(inputs.currentNestSite) {
             if(nestsiteHistory[0] && (nestsiteHistory[0].nestID.nestID === inputs.currentNestSite)) {
+              nextBird.nestsiteHistory = nestsiteHistory;
+            } else {
+              allConditionsMatch = false;
+            }
+          } else {
+            nextBird.nestsiteHistory = nestsiteHistory;
+          }
+        }
+
+        if(inputs.includeNestsites && allConditionsMatch) {
+          var nestsiteHistory = await Birdnest.find({where: {birdID: nextBird.id}, sort: 'dateEntered DESC'}).populate('nestID');
+          if(inputs.previousNestSite) {
+            if(nestsiteHistory[1] && (nestsiteHistory[1].nestID.nestID === inputs.previousNestSite)) {
               nextBird.nestsiteHistory = nestsiteHistory;
             } else {
               allConditionsMatch = false;

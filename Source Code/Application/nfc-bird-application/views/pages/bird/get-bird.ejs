@@ -93,10 +93,16 @@
                  <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
                  </div> -->
             <div class="form-group search-box" v-IF="formData.currnestID">
-                <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="current Nest Site" title="currentNestSite" autocomplete="off">
+                <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="current Breeding" title="current Nest Site" autocomplete="off">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async>
                 </autocomplete>
             </div>
+
+            <div class="form-group search-box" v-IF="formData.prevnestID">
+               <input id="previousNestSite" class="form-control" type="text" v-model.trim="previousNestSiteFilter" placeholder="Previous Breeding" title="previous Nest Site" autocomplete="off">
+               <autocomplete for="previousNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async>
+               </autocomplete>
+           </div>
 
             <div class="form-group">
                 <button class="btn btn-secondary" @click="clearFilters">Clear</button>
