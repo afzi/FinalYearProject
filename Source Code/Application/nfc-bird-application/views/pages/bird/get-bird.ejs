@@ -6,7 +6,7 @@
             <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="storeCurrent">More Fields</button>
             <button class="btn btn-dark" @click="exportToExcel" v-if="me.hasExport">Export</button>
         </div>
-        <div class="flex-container filterbar">
+        <div class="flex-container filterbar" style="display:inline-flex !important">
             <div class="form-group search-box">
                 <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="Bird Name" title="birdName" autocomplete="off">
                 <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
@@ -26,27 +26,32 @@
             </div>
 
             <div class="form-group search-box" v-if="formData.newstudid">
-                <input id="newStudID" class="form-control" type="text" v-model.trim="currentNewStudIdFilter" placeholder="New Stud ID" title="newStudID" autocomplete="off">
+                <input id="newStudID" class="form-control" type="text" v-model.trim="currentNewStudIdFilter" placeholder="New Stud ID" title="new Stud ID" autocomplete="off">
                 <autocomplete for="newStudID" action="getBird" params='{"limit": 5}' map="newStudID" is-async> </autocomplete>
             </div>
 
             <div class="form-group search-box" v-if="formData.lring">
-                <input id="leftRingID" class="form-control" type="text" v-model.trim="currentLeftRingFilter" placeholder="Left Ring ID" title="leftRingID" autocomplete="off">
+                <input id="leftRingID" class="form-control" type="text" v-model.trim="currentLeftRingFilter" placeholder="Left Ring ID" title="left Ring ID" autocomplete="off">
                 <autocomplete for="leftRingID" action="getBird" params='{"limit": 5}' map="leftRingID" is-async> </autocomplete>
             </div>
             <div class="form-group search-box" v-if="formData.rring">
-                <input id="rightRingID" class="form-control" type="text" v-model.trim="currentRightRingFilter" placeholder="Right Ring ID" title="rightRingID" autocomplete="off">
+                <input id="rightRingID" class="form-control" type="text" v-model.trim="currentRightRingFilter" placeholder="Right Ring ID" title="right Ring ID" autocomplete="off">
                 <autocomplete for="rightRingID" action="getBird" params='{"limit": 5}' map="rightRingID" is-async> </autocomplete>
             </div>
 
+            <div class="form-group search-box" v-if="formData.creator">
+               <input id="createdBy" class="form-control" type="text" v-model.trim="currentCreatorFilter" placeholder="Created By" title="created By" autocomplete="off">
+               <autocomplete for="createdBy" action="getUser" params='{"limit": 5}' map="username" is-async> </autocomplete>
+           </div>
+
 
             <div class="form-group search-box">
-                <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="Female Parent" title="motherName" autocomplete="off">
+                <input id="motherName" class="form-control" type="text" v-model.trim="currentMotherFilter" placeholder="Mother" title="mother Name" autocomplete="off">
                 <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="motherName" is-async>
                 </autocomplete>
             </div>
             <div class="form-group search-box">
-                <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="Male Parent" title="fatherName" autocomplete="off">
+                <input id="fatherName" class="form-control" type="text" v-model.trim="currentFatherFilter" placeholder="Father" title="father Name" autocomplete="off">
                 <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="fatherName" is-async>
                 </autocomplete>
             </div>
@@ -56,27 +61,27 @@
             </div>
 
             <div class="form-group search-box" v-if="formData.laidwhere">
-               <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Laid Where" title="laidWhere" autocomplete="off">
+               <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Where Laid" title="laidWhere" autocomplete="off">
                <autocomplete for="laidWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
            </div>
 
             <div class="form-group search-box" v-if="formData.hatchwhere">
-                <input id="hatchedWhere" class="form-control" type="text" v-model.trim="currentHatchWhereFilter" placeholder="Hatched Where" title="hatchedWhere" autocomplete="off">
+                <input id="hatchedWhere" class="form-control" type="text" v-model.trim="currentHatchWhereFilter" placeholder="Where Hatched" title="hatched Where" autocomplete="off">
                 <autocomplete for="hatchedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
             </div>
 
             <div class="form-group search-box" v-if="formData.fledgewhere">
-               <input id="fledgedWhere" class="form-control" type="text" v-model.trim="currentFledgeWhereFilter" placeholder="Fledged Where" title="fledgedWhere" autocomplete="off">
+               <input id="fledgedWhere" class="form-control" type="text" v-model.trim="currentFledgeWhereFilter" placeholder="Where Fledged" title="fledged Where" autocomplete="off">
                <autocomplete for="fledgedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
            </div>
 
            <div class="form-group search-box" v-if="formData.releasedwhere">
-            <input id="releasedWhere" class="form-control" type="text" v-model.trim="currentreleasedWhereFilter" placeholder="Released Where" title="releasedWhere" autocomplete="off">
+            <input id="releasedWhere" class="form-control" type="text" v-model.trim="currentreleasedWhereFilter" placeholder="Where Released" title="released Where" autocomplete="off">
             <autocomplete for="releasedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
         </div>
 
             <div class="form-group search-box">
-                <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="Breeder" title="isBreeder" autocomplete="off">
+                <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="Breeder" title="is Breeder" autocomplete="off">
                <option disabled selected value="">Breeder</option>
                <option value="no">No</option>
                <option value="yes">Yes</option>
@@ -87,11 +92,12 @@
                  <input id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="isBreeder" title="isBreeder" autocomplete="off">
                  <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
                  </div> -->
-            <div class="form-group search-box">
+            <div class="form-group search-box" v-IF="formData.currnestID">
                 <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="current Nest Site" title="currentNestSite" autocomplete="off">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async>
                 </autocomplete>
             </div>
+
             <div class="form-group">
                 <button class="btn btn-secondary" @click="clearFilters">Clear</button>
             </div>
@@ -140,47 +146,47 @@
                     </th>
                     <th role="columnheader" v-show="formData.creator">Created By</th>
                     <th role="columnheader" v-show="formData.mname">
-                        Female Parent
+                        Mother
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'motherName' || (currentSortItem === 'motherName' && currentSortDirection === 'DESC')" @click="setSortItem('motherName', 'DESC')" alt="Sort by Femalre Parent Name Descending" title="Sort by Femalre Parent Name Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'motherName' || (currentSortItem === 'motherName' && currentSortDirection === 'ASC')" @click="setSortItem('motherName', 'ASC')" alt="Sort by Femalre Parent Name Ascending" title="Sort by Femalre Parent Name Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.mstud">
-                        Female Parent Stud ID
+                        Mother Stud ID
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'motherStudID' || (currentSortItem === 'motherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('motherStudID', 'DESC')" alt="Sort by Femalre Parent Stud ID Descending" title="Sort by Femalre Parent Stud ID Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'motherStudID' || (currentSortItem === 'motherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('motherStudID', 'ASC')" alt="Sort by Femalre Parent Stud ID Ascending" title="Sort by Femalre Parent Stud ID Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.fname">
-                        Male Parent
-                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'DESC')" @click="setSortItem('fatherName', 'DESC')" alt="Sort by Male Parent Name Descending" title="Sort by Male Parent Name Descending"></i>
-                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'ASC')" @click="setSortItem('fatherName', 'ASC')" alt="Sort by Male Parent Name Ascending" title="Sort by Male Parent Name Ascending"></i>
+                        Father
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'DESC')" @click="setSortItem('fatherName', 'DESC')" alt="Sort by Father Name Descending" title="Sort by Father Name Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'ASC')" @click="setSortItem('fatherName', 'ASC')" alt="Sort by Father Name Ascending" title="Sort by Father Name Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.fstud">
-                        Male Parent Stud ID
-                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('fatherStudID', 'DESC')" alt="Sort by Male Parent Stud ID Descending" title="Sort by Male Parent Stud ID Descending"></i>
-                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('fatherStudID', 'ASC')" alt="Sort by Male Parent Stud ID Ascending" title="Sort by Male Parent Stud ID Ascending"></i>
+                        Father Stud ID
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('fatherStudID', 'DESC')" alt="Sort by Father Stud ID Descending" title="Sort by Father Stud ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('fatherStudID', 'ASC')" alt="Sort by Father Stud ID Ascending" title="Sort by Father Stud ID Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.sfname">
-                        Second Male Parent
-                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherName', 'DESC')" alt="Sort by Second Male Parent Name Descending"
-                            title="Sort by Second Male Parent Name Descending"></i>
-                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherName', 'ASC')" alt="Sort by Second Male Parent Name Ascending"
-                            title="Sort by Second Male Parent Name Ascending"></i>
+                        Second Father
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherName', 'DESC')" alt="Sort by Second Father Name Descending"
+                            title="Sort by Second Father Name Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherName', 'ASC')" alt="Sort by Second Father Name Ascending"
+                            title="Sort by Second Father Name Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.sfstud">
-                        Second Male Parent Stud ID
-                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherStudID', 'DESC')" alt="Sort by Second Male Parent Stud ID Descending"
-                            title="Sort by Second Male Parent Stud ID Descending"></i>
-                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherStudID', 'ASC')" alt="Sort by Second Male Parent Stud ID Ascending"
-                            title="Sort by Second Male Parent Stud ID Ascending"></i>
+                        Second Father Stud ID
+                        <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherStudID', 'DESC')" alt="Sort by Second Father Stud ID Descending"
+                            title="Sort by Second Father Stud ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherStudID', 'ASC')" alt="Sort by Second Father Stud ID Ascending"
+                            title="Sort by Second Father Stud ID Ascending"></i>
                     </th>
                     <th role="columnheader" v-show="formData.status">
                         Status
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'DESC')" @click="setSortItem('status', 'DESC')" alt="Sort by Status Descending" title="Sort by Status Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'ASC')" @click="setSortItem('status', 'ASC')" alt="Sort by Status Ascending" title="Sort by Status Ascending"></i>
                     </th>
-                    <th role="columnheader" v-show="formData.cnote">Condition</th>
+                    <th role="columnheader" v-show="formData.cnote"> Latest Condition</th>
                     <th role="columnheader" v-show="formData.rnote">
-                        Notes
+                        Latest Notes
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'researcherNotes' || (currentSortItem === 'researcherNotes' && currentSortDirection === 'DESC')" @click="setSortItem('researcherNotes', 'DESC')" alt="Sort by Notes Descending" title="Sort by Notes Descending"></i>
                         <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'researcherNotes' || (currentSortItem === 'researcherNotes' && currentSortDirection === 'ASC')" @click="setSortItem('researcherNotes', 'ASC')" alt="Sort by Notes Ascending" title="Sort by Notes Ascending"></i>
                     </th>
@@ -219,17 +225,17 @@
                     </th>
                     <th role="columnheader" v-show="formData.releasedwhere">Where Release</th>
                     <th role="columnheader" v-show="formData.currnestID">Current Breeding Site</th>
-                    <th role="columnheader" v-show="formData.currnestDist">Current Distance To Hopper (km)</th>
-                    <th role="columnheader" v-show="formData.currnestDisc">Current Breeding Site Description</th>
-                    <th role="columnheader" v-show="formData.currnestCord">Current Breeding Site Coordinates</th>
+                    <th role="columnheader" v-show="formData.currnestDist">Distance To Hopper (km)</th>
+                    <th role="columnheader" v-show="formData.currnestDisc">Site Description</th>
+                    <th role="columnheader" v-show="formData.currnestCord">Coordinates</th>
 
                     <!-- <th role="columnheader" v-show="formData.currnestLat">Current Breeding Latitude</th> -->
 
 
                     <th role="columnheader" v-show="formData.prevnestID">Previous Breeding Site</th>
-                    <th role="columnheader" v-show="formData.prevnestDist">Previous Distance To Hopper (km)</th>
-                    <th role="columnheader" v-show="formData.prevnestDisc">Previous Breeding Site Description</th>
-                    <th role="columnheader" v-show="formData.prevnestCord">Previous Breeding Site Coordinates</th>
+                    <th role="columnheader" v-show="formData.prevnestDist">Distance To Hopper (km)</th>
+                    <th role="columnheader" v-show="formData.prevnestDisc">Site Description</th>
+                    <th role="columnheader" v-show="formData.prevnestCord">Coordinates</th>
 
                     <!-- <th role="columnheader" v-show="formData.prevnestLat">Previous Breeding Latitude</th> -->
 
@@ -342,49 +348,49 @@
                                         <td>
                                             <div style="font-weight:bold; text-align: center;">Brid Identity Data</div>
                                             <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                <li><input type="checkbox" checked="checked" v-model="formData.name"> Name</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.id"> System ID</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.sex"> Gender</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.breeder"> Is Breeder
+                                                <li><input type="checkbox"  v-model="formData.name"> Name</li>
+                                                <li><input type="checkbox"  v-model="formData.id"> System ID</li>
+                                                <li><input type="checkbox"  v-model="formData.sex"> Gender</li>
+                                                <li><input type="checkbox"  v-model="formData.breeder"> Is Breeder
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.lastSeen"> Last Seen Date
+                                                <li><input type="checkbox"  v-model="formData.lastSeen"> Last Seen Date
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.studid"> Stud ID</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.newstudid"> New Stud ID
+                                                <li><input type="checkbox"  v-model="formData.studid"> Stud ID</li>
+                                                <li><input type="checkbox"  v-model="formData.newstudid"> New Stud ID
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.nfcRingAssigned">Has NFC Ring
+                                                <li><input type="checkbox"  v-model="formData.nfcRingAssigned">Has NFC Ring
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.nfcRing">NFC Ring Printed ID
+                                                <li><input type="checkbox"  v-model="formData.nfcRing">NFC Ring Printed ID
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.lring">Left Ring ID
+                                                <li><input type="checkbox"  v-model="formData.lring">Left Ring ID
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.rring"> Right Ring ID
+                                                <li><input type="checkbox"  v-model="formData.rring"> Right Ring ID
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.creator"> Created By
+                                                <li><input type="checkbox"  v-model="formData.creator"> Created By
                                                 </li>
                                             </ul>
                                         </td>
                                         <td>
                                             <div style="font-weight:bold; text-align: center;">Bird Parentage Data</div>
                                             <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                <li><input type="checkbox" checked="checked" v-model="formData.mname"> Female Parent
+                                                <li><input type="checkbox"  v-model="formData.mname"> Mother
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.mstud"> Female Parent Stud ID</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.fname"> Male Parent
+                                                <li><input type="checkbox"  v-model="formData.mstud"> Mother Stud ID</li>
+                                                <li><input type="checkbox"  v-model="formData.fname"> Father
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.fstud"> Male Parent Stud ID</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.sfname"> Second Male Parent
+                                                <li><input type="checkbox"  v-model="formData.fstud"> Father Stud ID</li>
+                                                <li><input type="checkbox"  v-model="formData.sfname"> Second Father
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.sfstud"> Second Male Parent Stud ID</li>
+                                                <li><input type="checkbox"  v-model="formData.sfstud"> Second Father Stud ID</li>
                                             </ul>
                                         </td>
                                         <td>
                                             <div style="font-weight:bold; text-align:center;">Bird Status Data</div>
                                             <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                <li><input type="checkbox" checked="checked" v-model="formData.status"> Status</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.cnote"> Condition</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.rnote"> Note</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.age"> Age</li>
+                                                <li><input type="checkbox"  v-model="formData.status"> Status</li>
+                                                <li><input type="checkbox"  v-model="formData.cnote"> Condition</li>
+                                                <li><input type="checkbox"  v-model="formData.rnote"> Note</li>
+                                                <li><input type="checkbox"  v-model="formData.age"> Age</li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -392,22 +398,22 @@
                                         <td>
                                             <div style="font-weight:bold; text-align:center;">Bird Creation Data</div>
                                             <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                <li><input type="checkbox" checked="checked" v-model="formData.lay"> Lay Date</li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.laidwhere"> Laid Where
+                                                <li><input type="checkbox"  v-model="formData.lay"> Lay Date</li>
+                                                <li><input type="checkbox"  v-model="formData.laidwhere"> Laid Where
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.hatchdate"> Hatch Date
+                                                <li><input type="checkbox"  v-model="formData.hatchdate"> Hatch Date
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.hatchwhere"> Hatched Where
+                                                <li><input type="checkbox"  v-model="formData.hatchwhere"> Hatched Where
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.incdays"> Incubation Days
+                                                <li><input type="checkbox"  v-model="formData.incdays"> Incubation Days
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.fledgedate"> Fledge Date
+                                                <li><input type="checkbox"  v-model="formData.fledgedate"> Fledge Date
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.fledgewhere"> Fledged Where
+                                                <li><input type="checkbox"  v-model="formData.fledgewhere"> Fledged Where
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.releasedate"> Release Date
+                                                <li><input type="checkbox"  v-model="formData.releasedate"> Release Date
                                                 </li>
-                                                <li><input type="checkbox" checked="checked" v-model="formData.releasedwhere"> Released Where</li>
+                                                <li><input type="checkbox"  v-model="formData.releasedwhere"> Released Where</li>
 
                                             </ul>
                                         </td>
@@ -416,23 +422,21 @@
                                             <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
                                                 <li style="font-weight:bold;"> Current Breeding Site</li>
                                                 <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestID"> Name
-                                                    </li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestDist"> Distance to Hopper (km)</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestDisc"> Description</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.currnestCord">Coordinates</li>
+                                                    <li><input type="checkbox"  v-model="formData.currnestID":disabled="formData.currnestDist || formData.currnestDisc || formData.currnestCord"> Name </li>
+                                                    <li><input type="checkbox"  v-model="formData.currnestDist"> Distance to Hopper (km)</li>
+                                                    <li><input type="checkbox"  v-model="formData.currnestDisc"> Description</li>
+                                                    <li><input type="checkbox"  v-model="formData.currnestCord">Coordinates</li>
 
-                                                    <!-- <li><input type="checkbox" checked="checked" v-model="formData.currnestLat">Latitude</li>   -->
+                                                    <!-- <li><input type="checkbox"  v-model="formData.currnestLat">Latitude</li>   -->
                                                 </ul>
                                                 <li style="font-weight:bold;">Previous Breeding Site</li>
                                                 <ul style="text-align:left; list-style-type:none;padding-left: 0;" id="privilege" width="100%">
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestID"> Name
-                                                    </li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestDist"> Distance to Hopper (km)</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestDisc"> Description</li>
-                                                    <li><input type="checkbox" checked="checked" v-model="formData.prevnestCord">Coordinates</li>
+                                                    <li><input type="checkbox"  v-model="formData.prevnestID":disabled="formData.prevnestDist || formData.prevnestDisc || formData.prevnestCord"> Name</li>
+                                                    <li><input type="checkbox"  v-model="formData.prevnestDist"> Distance to Hopper (km)</li>
+                                                    <li><input type="checkbox"  v-model="formData.prevnestDisc"> Description</li>
+                                                    <li><input type="checkbox"  v-model="formData.prevnestCord">Coordinates</li>
 
-                                                    <!-- <li><input type="checkbox" checked="checked" v-model="formData.prevnestLat">Latitude</li> -->
+                                                    <!-- <li><input type="checkbox"  v-model="formData.prevnestLat">Latitude</li> -->
                                                 </ul>
                                             </ul>
                                         </td>
@@ -830,67 +834,67 @@
                                     <div class="row mb-3">
                                         <table style="max-width: 90% !important;" class="col-sm-6">
                                             <tr>
-                                                <td>Female Parent</td>
+                                                <td>Mother</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherName}}</td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="motherName" type="text" class="form-control" placeholder="Female Parent" title="Female Parent" :class="[editBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="editBirdData.motherName">
+                                                        <input id="motherName" type="text" class="form-control" placeholder="Mother" title="Mother" :class="[editBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="editBirdData.motherName">
                                                         <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
                                                         <div class="invalid-feedback" v-if="editBirdErrors.motherName">Please provide a valid value for Mother Name.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Female Parent Stud ID</td>
+                                                <td>Mother Stud ID</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.motherStudID}}</td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="motherStudID" type="text" class="form-control" placeholder="Female Parent Stud ID" title="Female Parent Stud ID" :class="[editBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.motherStudID">
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.motherStudID">Please provide a valid value for Female Parent Stud ID.</div>
+                                                        <input id="motherStudID" type="text" class="form-control" placeholder="Mother Stud ID" title="Mother Stud ID" :class="[editBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.motherStudID">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.motherStudID">Please provide a valid value for Mother Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Male Parent</td>
+                                                <td>Father</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherName}}</td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="fatherName" type="text" class="form-control" placeholder="Male Parent" title="Male Parent" :class="[editBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherName">
+                                                        <input id="fatherName" type="text" class="form-control" placeholder="Father" title="Father" :class="[editBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherName">
                                                         <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
                                                         <div class="invalid-feedback" v-if="editBirdErrors.fatherName">Please provide a valid value for Father Name.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Male Parent Stud ID</td>
+                                                <td>Father Stud ID</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.fatherStudID}}</td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="fatherStudID" type="text" class="form-control" placeholder="Male Parent Stud ID" title="Male Parent Stud ID" :class="[editBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherStudID">
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.fatherStudID">Please provide a valid value for Male Parent Stud ID.</div>
+                                                        <input id="fatherStudID" type="text" class="form-control" placeholder="Father Stud ID" title="Father Stud ID" :class="[editBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.fatherStudID">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.fatherStudID">Please provide a valid value for Father Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>2nd Potential Male</td>
+                                                <td>2nd Father</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherName}}
                                                 </td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="secondFatherName" type="text" class="form-control" placeholder="2nd Potential Male Parent" title="2nd Potential Male Parent" :class="[editBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherName">
+                                                        <input id="secondFatherName" type="text" class="form-control" placeholder="2nd Potential Father" title="2nd Potential Father" :class="[editBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherName">
                                                         <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Male Parent.</div>
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Father.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>2nd Potential Male Stud ID</td>
+                                                <td>2nd Father Stud ID</td>
                                                 <td v-if="!isEditMode" style="text-align:right">{{currentBird.secondFatherStudID}}
                                                 </td>
                                                 <td style="text-align:right" v-else>
                                                     <div class="form-group">
-                                                        <input id="secondFatherStudID" type="text" class="form-control" placeholder="2nd Potential Male Parent Stud ID" title="2nd Potential Male Parent Stud ID" :class="[editBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherStudID">
-                                                        <div class="invalid-feedback" v-if="editBirdErrors.secondFatherStudID">Please provide a valid value for 2nd Potential Male Stud ID.</div>
+                                                        <input id="secondFatherStudID" type="text" class="form-control" placeholder="2nd Potential Father Stud ID" title="2nd Potential Father Stud ID" :class="[editBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="editBirdData.secondFatherStudID">
+                                                        <div class="invalid-feedback" v-if="editBirdErrors.secondFatherStudID">Please provide a valid value for 2nd Father Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1226,32 +1230,32 @@
                                     <div class="row mb-3">
                                         <table style="max-width: 90% !important;" class="col-sm-6">
                                             <tr>
-                                                <td>Female Parent</td>
+                                                <td>Mother</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="motherNameCreate" type="text" class="form-control" placeholder="Female Parent" title="Female Parent" :class="[createBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="createBirdData.motherName">
+                                                        <input id="motherNameCreate" type="text" class="form-control" placeholder="Mother" title="Mother" :class="[createBirdErrors.motherName ? 'is-invalid' : '']" v-model.trim="createBirdData.motherName">
                                                         <autocomplete for="motherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
                                                         <div class="invalid-feedback" v-if="createBirdErrors.motherName">Please provide a valid value for Mother Name.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Male Parent</td>
+                                                <td>Father</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="fatherNameCreate" type="text" class="form-control" placeholder="Male Parent" title="Male Parent" :class="[createBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherName">
+                                                        <input id="fatherNameCreate" type="text" class="form-control" placeholder="Father" title="Father" :class="[createBirdErrors.fatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherName">
                                                         <autocomplete for="fatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
                                                         <div class="invalid-feedback" v-if="createBirdErrors.fatherName">Please provide a valid value for Father Name.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>2nd Potential Male</td>
+                                                <td>2nd Father</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="secondFatherNameCreate" type="text" class="form-control" placeholder="2nd Potential Male Parent" title="2nd Potential Male Parent" :class="[createBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherName">
+                                                        <input id="secondFatherNameCreate" type="text" class="form-control" placeholder="2nd Potential Father" title="2nd Potential Father" :class="[createBirdErrors.secondFatherName ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherName">
                                                         <autocomplete for="secondFatherName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Male Parent.</div>
+                                                        <div class="invalid-feedback" v-if="createBirdErrors.secondFatherName">Please provide a valid value for 2nd Potential Father.</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1271,30 +1275,30 @@
                                     <div class="row mb-3">
                                         <table align="center" style="max-width: 90% !important;" class="col-sm-6">
                                             <tr>
-                                                <td>Female Parent Stud ID</td>
+                                                <td>Mother Stud ID</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="motherStudIDCreate" type="text" class="form-control" placeholder="Female Parent Stud ID" title="Female Parent Stud ID" :class="[createBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.motherStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.motherStudID">Please provide a valid value for Female Parent Stud ID.</div>
+                                                        <input id="motherStudIDCreate" type="text" class="form-control" placeholder="Mother Stud ID" title="Mother Stud ID" :class="[createBirdErrors.motherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.motherStudID">
+                                                        <div class="invalid-feedback" v-if="createBirdErrors.motherStudID">Please provide a valid value for Mother Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Male Parent Stud ID</td>
+                                                <td>Father Stud ID</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="fatherStudIDCreate" type="text" class="form-control" placeholder="Male Parent Stud ID" title="Male Parent Stud ID" :class="[createBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherStudID">
-                                                        <div class="invalid-feedback" v-if="createBirdErrors.fatherStudID">Please provide a valid value for Male Parent Stud ID.</div>
+                                                        <input id="fatherStudIDCreate" type="text" class="form-control" placeholder="Father Stud ID" title="Father Stud ID" :class="[createBirdErrors.fatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.fatherStudID">
+                                                        <div class="invalid-feedback" v-if="createBirdErrors.fatherStudID">Please provide a valid value for Father Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>2nd Potential Male Stud ID</td>
+                                                <td>2nd Father Stud ID</td>
                                                 <td style="text-align:right">
                                                     <div class="form-group">
-                                                        <input id="secondFatherStudIDCreate" type="text" class="form-control" placeholder="2nd Potential Male Parent Stud ID" title="2nd Potential Male Parent Stud ID" :class="[createBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherStudID">
+                                                        <input id="secondFatherStudIDCreate" type="text" class="form-control" placeholder="2nd Potential Father Stud ID" title="2nd Potential Father Stud ID" :class="[createBirdErrors.secondFatherStudID ? 'is-invalid' : '']" v-model.trim="createBirdData.secondFatherStudID">
                                                         <div class="invalid-feedback" v-if="createBirdErrors.secondFatherStudID">
-                                                            Please provide a valid value for 2nd Potential Male Stud ID.</div>
+                                                            Please provide a valid value for 2nd Father Stud ID.</div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1350,9 +1354,9 @@
                                     <th role="columnheader" v-if="formData.groupName">Group Name</th>
                                     <th role="columnheader" v-if="formData.sex">Gender</th>
                                     <th role="columnheader" v-if="formData.currentCondition">Current Condition</th>
-                                    <th role="columnheader" v-if="formData.motherName">Female Parent</th>
-                                    <th role="columnheader" v-if="formData.fatherName">Male Parent</th>
-                                    <th role="columnheader" v-if="formData.secondFatherName">Second Potential Male</th>
+                                    <th role="columnheader" v-if="formData.motherName">Mother</th>
+                                    <th role="columnheader" v-if="formData.fatherName">Father</th>
+                                    <th role="columnheader" v-if="formData.secondFatherName">Second Father</th>
                                     <th role="columnheader" v-if="formData.age">Age</th>
                                     <th role="columnheader">Breeder</th>
                                     <th role="columnheader" v-if="formData.DistanceToHopper">Distance To Hopper</th>

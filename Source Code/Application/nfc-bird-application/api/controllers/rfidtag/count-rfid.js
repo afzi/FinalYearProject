@@ -55,21 +55,21 @@ module.exports = {
     fn: async function (inputs) {
         var numRfids = await RFIDTag.count();
 
-        let birdIdConstraint;
-        if(inputs.isAssigned) {
-            birdIdConstraint = {
-                '!=': null
-            }
-        } else if(inputs.isAssigned === false) {
-            birdIdConstraint = null;
-        }
+        // let birdIdConstraint;
+        // if(inputs.isAssigned) {
+        //     birdIdConstraint = {
+        //         '!=': null
+        //     }
+        // } else if(inputs.isAssigned === false) {
+        //     birdIdConstraint = null;
+        // }
   
         let query = {};
 
-        if(birdIdConstraint) query.birdId = birdIdConstraint;
-        if(inputs.nfcRFID) query.nfcRFID = {'contains': inputs.nfcRFID}
-        if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
-        if(inputs.colour) query.colour = {'contains': inputs.colour}
+        // if(birdIdConstraint) query.birdId = birdIdConstraint;
+        // if(inputs.nfcRFID) query.nfcRFID = {'contains': inputs.nfcRFID}
+        // if(inputs.nfcRFIDInternal) query.nfcRFIDInternal = {'contains': inputs.nfcRFIDInternal}
+        // if(inputs.colour) query.colour = {'contains': inputs.colour}
         
         let finalQuery = {where: query}
 

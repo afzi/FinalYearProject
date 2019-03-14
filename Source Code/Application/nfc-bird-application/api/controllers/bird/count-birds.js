@@ -186,25 +186,25 @@ module.exports = {
       console.debug("Received request to list/filter birds")
 
       let query = {}
-      if(inputs.studId) query.studID = {'contains': inputs.studId}
-      if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
-      if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
-      if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
-      if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
-      if(inputs.sex) query.sex = inputs.sex
-      if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
-      if(inputs.fatherName) query.fatherName = {'contains': inputs.fatherName}
-      if(inputs.motherName) query.motherName = {'contains': inputs.motherName}
-      if(inputs.secondFatherName) query.secondFatherName = {'contains': inputs.secondFatherName}
-      if(inputs.groupName) query.groupName = {'contains': inputs.groupName}
-      if(inputs.researcherNotes) query.researcherNotes = {'contains': inputs.researcherNotes}
+      // if(inputs.studId) query.studID = {'contains': inputs.studId}
+      // if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
+      // if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
+      // if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
+      // if(inputs.birdName) query.birdName = {'contains': inputs.birdName}
+      // if(inputs.sex) query.sex = inputs.sex
+      // if(inputs.isBreeder) query.isBreeder = inputs.isBreeder;
+      // if(inputs.fatherName) query.fatherName = {'contains': inputs.fatherName}
+      // if(inputs.motherName) query.motherName = {'contains': inputs.motherName}
+      // if(inputs.secondFatherName) query.secondFatherName = {'contains': inputs.secondFatherName}
+      // if(inputs.groupName) query.groupName = {'contains': inputs.groupName}
+      // if(inputs.researcherNotes) query.researcherNotes = {'contains': inputs.researcherNotes}
       
-      if(inputs.layDateFrom) query.layDate = {'>=': inputs.layDateFrom}
-      if(inputs.layDateTo) query.layDate['<='] = inputs.layDateTo;
-      if(inputs.hatchDateFrom) query.hatchDate = {'>=': inputs.hatchDateFrom}
-      if(inputs.hatchDateTo) query.hatchDate['<='] = inputs.hatchDateTo;
-      if(inputs.incDaysFrom) query.incubationDays = {'>=': inputs.incDaysFrom};
-      if(inputs.incDaysTo) query.incubationDays['<='] = inputs.incDaysTo;
+      // if(inputs.layDateFrom) query.layDate = {'>=': inputs.layDateFrom}
+      // if(inputs.layDateTo) query.layDate['<='] = inputs.layDateTo;
+      // if(inputs.hatchDateFrom) query.hatchDate = {'>=': inputs.hatchDateFrom}
+      // if(inputs.hatchDateTo) query.hatchDate['<='] = inputs.hatchDateTo;
+      // if(inputs.incDaysFrom) query.incubationDays = {'>=': inputs.incDaysFrom};
+      // if(inputs.incDaysTo) query.incubationDays['<='] = inputs.incDaysTo;
 
       let finalQuery = {where: query}
 

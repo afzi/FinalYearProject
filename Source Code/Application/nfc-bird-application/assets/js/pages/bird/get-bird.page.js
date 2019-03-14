@@ -132,6 +132,8 @@ parasails.registerPage('get-bird', {
 
         currentRightRingFilter:"",
 
+        currentCreatorFilter:"",
+
         currentSexFilter: "",
 
         currentFatherFilter: "",
@@ -254,6 +256,13 @@ parasails.registerPage('get-bird', {
         },
 
         currentRightRingFilter: function(_, _) {
+            if ($("#leftRingID").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+        currentCreatorFilter: function(_, _) {
             if ($("#leftRingID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -415,9 +424,44 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        //  'formData.birdName':function(newValue,_) {
-        //     Vue.set(this.formData, 'birdName', true);
-        //  }
+
+         'formData.currnestDist':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+         'formData.currnestDisc':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+         'formData.currnestCord':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+
+         'formData.prevnestDist':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         },
+         'formData.prevnestDisc':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         },
+         'formData.prevnestCord':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         }
 
     },
 
@@ -634,7 +678,10 @@ parasails.registerPage('get-bird', {
             if (this.currentRightRingFilter != null && this.currentRightRingFilter != "") {
                 params.rightRingId = this.currentRightRingFilter;
             }
-
+            if (this.currentCreatorFilter != null && this.currentCreatorFilter != "") {
+                params.createdBy = this.currentCreatorFilter;
+            }
+            
             if (this.currentNewStudIdFilter != null && this.currentNewStudIdFilter != "") {
                 params.newStudId = this.currentNewStudIdFilter;
             }

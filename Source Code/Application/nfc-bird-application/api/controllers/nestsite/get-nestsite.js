@@ -13,7 +13,7 @@ module.exports = {
         type: 'string',
         description: 'The friendly name of nest'
       },
-
+      
       nestDescription: {
         required: false,
         type: 'string',

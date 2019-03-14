@@ -55,6 +55,12 @@ module.exports = {
         extendedDescription: 'Must be one of male / female / unknown'
       },
       
+      createdBy: {
+        required: false,
+        type: 'string',
+        description: 'Who created the bird'
+      },
+      
       isBreeder: {
         required: false,
         type: 'string',
@@ -296,6 +302,12 @@ module.exports = {
         if(rfid) nextBird.nfcRingID = rfid.nfcRFID;
 
         var allConditionsMatch = true;
+
+        if(inputs.createdBy) {
+          if(nextBird.createdBy && nextBird.createdBy.username === inputs.createdBy) {
+            allConditionsMatch = true;
+          } else allConditionsMatch = false;
+        }
 
         if(inputs.whereLaid) {
           if(nextBird.laidWhere && nextBird.laidWhere.nestID === inputs.whereLaid) {
