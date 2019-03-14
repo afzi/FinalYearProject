@@ -31,8 +31,7 @@
             </thead>
 
             <tbody role="rowgroup">
-                <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)"
-                    v-for="visit in visitData">
+                <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)" v-for="visit in visitData">
                     <td class="birdJustifyColumn">{{visit.birdName}}</td>
                     <td>{{visit.leftRingID}}</td>
                     <td>{{visit.rightRingID}}</td>
@@ -43,14 +42,10 @@
 
         <!-- FOOTER BAR -->
 
-        <footer id="page-footer"
-            class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
+        <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
             <div class="nav-item dropdown d-none d-sm-block">
-                <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick"
-                    :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'"
-                    :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
-                    :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'"
-                    :disabled-class="'ignore disabled'">
+                <paginate :page-count="Math.ceil(visitCount / pageSize)" :click-handler="pageClick" :prev-text="'&nbsp Prev'" :next-text="'Next &nbsp'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'"
+                    :prev-link-class="'page-link'" :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
                 </paginate>
             </div>
 
@@ -60,16 +55,16 @@
             </div>
 
             <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block font-white">last refresh:
-                <%-new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(); %></div>
-            <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page
-                to see.</div>
+                <%-new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds(); %>
+            </div>
+            <div v-else class="nav-item dropdown d-none d-sm-block font-white">{{diff}} new visits found, refresh page to see.</div>
 
             <div v-if="newVisits === false" class="nav-item dropdown d-none d-sm-block">
                 <button class="btn btn-secondary" disabled>Refresh</button>
             </div>
             <div v-else class="nav-item dropdown d-none d-sm-block">
-                    <button class="btn btn-secondary" href="/live">Refresh</button>
-                </div>
+                <button class="btn btn-secondary" @click="refresh">Refresh</button>
+            </div>
 
 
 
@@ -83,8 +78,7 @@
                     <option value="25">25</option>
                     <option value="30">30</option>
                     <option value="10000">All</option>
-                </select>
-                entries
+                </select> entries
             </div>
         </footer>
 
