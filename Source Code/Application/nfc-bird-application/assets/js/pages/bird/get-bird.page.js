@@ -215,6 +215,13 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
+        // window.addEventListener('beforeunload', e => {
+        //     if(window.location.pathname.endsWith('single')) {
+        //         // e.preventDefault();
+        //         window.location.href = '../'
+        //     }
+        // }); 
+
         this.currentBirdFilter = SAILS_LOCALS.initialBirdNameFilter;
         this.refresh();
     },
@@ -882,6 +889,12 @@ parasails.registerPage('get-bird', {
             // ```
         },
 
+        openmodal:async function(index) {
+            this.currentBird = this.currentBirds[index];
+            var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
+            this.visitCount = temp.count;
+        },
+
         selectIndexFormData: async function(index) {
             this.formErrors = {};
             this.formData = this.currentBirds[index];
@@ -902,7 +915,7 @@ parasails.registerPage('get-bird', {
 
         openCreateBirdModal: async function() {
             this.enterCreateMode();
-            this.goto('/birds/create');
+            // this.goto('/birds/create');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';
@@ -912,8 +925,7 @@ parasails.registerPage('get-bird', {
         closeSingleViewModal: function() {
             if (!this.isEditMode || (this.isEditMode && this.promptExitEditMode())) {
                 this.currentBird = {};
-                $('#singleViewModal').modal('hide');
-                this.goto('/birds');
+                $('#createUserModal2').modal('hide');
             }
             // Or, without deep links, instead do:
             // ```
@@ -925,7 +937,7 @@ parasails.registerPage('get-bird', {
         closeCreateBirdModal: function(prompt) {
             if (!prompt || this.promptExitCreateMode()) {
                 $('#createBirdModal').modal('hide');
-                this.goto('/birds');
+                // this.goto('/birds');
             }
             // Or, without deep links, instead do:
             // ```
