@@ -8,7 +8,8 @@
             <button class="btn btn-secondary" @click="clearFilters">Clear Filters</button>
            
         </div>
-        <div class="flex-container filterbar" style="display:inline-flex !important">
+        <div class="flex-container filterbar bg-info" style="display:inline-flex !important">
+            <h6>Filter by...&nbsp</h6><br>
             <div class="form-group search-box">
                 <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="Bird Name" title="birdName" autocomplete="off">
                 <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
@@ -1846,7 +1847,7 @@
                      <span aria-hidden="true">&times;</span>
                   </button>
                     </div>
-                    <div class="flex-container filterbar">
+                    <div class="flex-container filterbar bg-info">
                         <div class="form-group search-box" v-if="formData.status">
                             <input id="status" class="form-control" type="text" v-model.trim="currentStatusFilter" placeholder="status" title="status" autocomplete="off">
                             <autocomplete for="status" action="getBird" params='{"limit": 5}' map="status" is-async>
