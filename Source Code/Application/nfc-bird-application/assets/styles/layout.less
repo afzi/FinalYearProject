@@ -93,10 +93,6 @@ html, body {
   }
 }
 
-.navbar {
-  overflow: auto !important;
-}
-
 body.detected-mobile {
   // Above and beyond the media queries below, this selector (which relies on
   // `parasails` automatically attaching this class, if appropriate) contains
@@ -104,6 +100,9 @@ body.detected-mobile {
   // mobile device, regardless of viewport dimensions.  This includes tablet
   // devices (like the iPad) as well as handset devices (like the iPhone).
   // …
+  .navbar {
+    overflow: auto !important;
+  }
 }
 
 @media (max-width: 800px) {

@@ -141,6 +141,7 @@ parasails.registerComponent('autocomplete', {
               this.isLoading = true;
               Cloud[this.action].with(argins).then(result => {
                   this.incomingData = result.map(nextResult => nextResult[this.map || this.for]);
+                  this.incomingData = this.incomingData.filter(nextData => nextData);
               });
             } else {
               // Data is sync, we can search our flat array
