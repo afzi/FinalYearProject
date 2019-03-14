@@ -184,8 +184,8 @@
                </th>
                <th role="columnheader" v-show="formData.age">
                   Age
-                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'DESC')" @click="setSortItem('hatchDate', 'DESC')" alt="Sort by Age Descending" title="Sort by Age Descending"></i>
-                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'ASC')" @click="setSortItem('hatchDate', 'ASC')" alt="Sort by Age Ascending" title="Sort by Age Ascending"></i>
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'ASC')" @click="setSortItem('hatchDate', 'ASC')" alt="Sort by Age Ascending" title="Sort by Age Ascending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'DESC')" @click="setSortItem('hatchDate', 'DESC')" alt="Sort by Age Descending" title="Sort by Age Descending"></i>
                </th>
                <th role="columnheader" v-show="formData.lay">
                   Lay Date
