@@ -53,7 +53,7 @@
         </table>
 
         <footer id="page-footer" class="navbar navbar-expand-sm navbar-dark bg-dark flex-column flex-md-row justify-content-between position-fixed footernav">
-            <div class="flex-container filterbar" style="white-space: nowrap;">
+            <div class="flex-container" style="white-space: nowrap;">
                 <div>
                     <paginate :page-count="Math.ceil(nestsiteCount / pageSize)" :click-handler="pageClick" :prev-text="'Prev'" :next-text="'Next'" :container-class="'pagination'" :page-class="'page-item'" :page-link-class="'page-link'" :prev-class="'ignore page-item'" :prev-link-class="'page-link'"
                         :next-class="'ignore page-item'" :next-link-class="'page-link'" :disabled-class="'ignore disabled'">
