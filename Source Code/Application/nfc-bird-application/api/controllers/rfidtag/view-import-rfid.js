@@ -22,7 +22,7 @@ module.exports = {
         // Respond with view.
         return {
             rfidCount: numRfids,
-            title: 'Manage RFID Tags'
+            title: 'Manage Rings'
         };
 
     }

@@ -32,10 +32,14 @@
 
             <tbody role="rowgroup">
                 <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)" v-for="visit in visitData">
-                    <td class="birdJustifyColumn">{{visit.birdName}}</td>
-                    <td>{{visit.leftRingID}}</td>
-                    <td>{{visit.rightRingID}}</td>
-                    <td>{{visit.createdAt}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.birdName}}</td>
+                    <td class="birdJustifyColumn" v-else>{{visit.birdName}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.leftRingID}}</td>
+                    <td v-else>{{visit.leftRingID}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.rightRingID}}</td>
+                    <td v-else>{{visit.rightRingID}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.createdAt}}</td>
+                    <td v-else>{{visit.createdAt}}</td>
                 </tr>
             </tbody>
         </table>
