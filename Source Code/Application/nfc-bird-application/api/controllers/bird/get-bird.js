@@ -253,8 +253,6 @@ module.exports = {
       if(inputs.id) query.id = inputs.id;
       if(inputs.studId) query.studID = {'contains': inputs.studId}
       if(inputs.status) query.status = {'contains': inputs.status}
-      if(inputs.whereLaid) query.whereLaid = {'contains': inputs.whereLaid}
-      if(inputs.whereHatched) query.whereHatched = {'contains': inputs.whereHatched}
       if(inputs.newStudId) query.newStudID = {'contains': inputs.newStudId}
       if(inputs.leftRingId) query.leftRingID = {'contains': inputs.leftRingId}
       if(inputs.rightRingId) query.rightRingID = {'contains': inputs.rightRingId}
@@ -299,7 +297,29 @@ module.exports = {
 
         var allConditionsMatch = true;
 
-        if(inputs.includeConditions) {
+        if(inputs.whereLaid) {
+          if(nextBird.laidWhere && nextBird.laidWhere.nestID === inputs.whereLaid) {
+            allConditionsMatch = true;
+          } else allConditionsMatch = false;
+        }
+        if(inputs.whereHatched) {
+          if(nextBird.hatchedWhere && nextBird.hatchedWhere.nestID === inputs.whereHatched) {
+            allConditionsMatch = true;
+          } else allConditionsMatch = false;
+        }
+        if(inputs.whereFledged) {
+          if(nextBird.fledgedWhere && nextBird.fledgedWhere.nestID === inputs.whereFledged) {
+            allConditionsMatch = true;
+          } else allConditionsMatch = false;
+        }
+
+        if(inputs.whereReleased) {
+          if(nextBird.releasedWhere && nextBird.releasedWhere.nestID === inputs.whereReleased) {
+            allConditionsMatch = true;
+          } else allConditionsMatch = false;
+        }
+
+        if(inputs.includeConditions && allConditionsMatch) {
           var conditionHistory = await Birdcondition.find({where: {birdID: nextBird.id}, sort: 'dateNoted DESC'});
           if(inputs.currentCondition) {
             if(conditionHistory[0] && (conditionHistory[0].birdCondition === inputs.currentCondition)) {

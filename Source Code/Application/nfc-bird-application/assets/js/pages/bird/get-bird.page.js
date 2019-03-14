@@ -142,6 +142,10 @@ parasails.registerPage('get-bird', {
 
         currentHatchWhereFilter:"",
 
+        currentFledgeWhereFilter:"",
+
+        currentreleasedWhereFilter:"",
+
         currentBreederFilter: "",
 
         currentNestSiteFilter: "",
@@ -286,6 +290,20 @@ parasails.registerPage('get-bird', {
         },
         currentHatchWhereFilter: function(_, _) {
             if ($("#hatchedWhere").data('locked') != 1) {
+            this.currentPage = 1;
+            this.$refs.paginate.selected = 1;
+            this.refresh();
+            }
+        },
+        currentFledgeWhereFilter: function(_, _) {
+            if ($("#fledgedWhere").data('locked') != 1) {
+            this.currentPage = 1;
+            this.$refs.paginate.selected = 1;
+            this.refresh();
+            }
+        },
+        currentreleasedWhereFilter: function(_, _) {
+            if ($("#releasedWhere").data('locked') != 1) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
@@ -642,6 +660,12 @@ parasails.registerPage('get-bird', {
             if (this.currentHatchWhereFilter != null && this.currentHatchWhereFilter != "") {
                 params.whereHatched = this.currentHatchWhereFilter;
             }
+            if (this.currentFledgeWhereFilter != null && this.currentFledgeWhereFilter != "") {
+                params.whereFledged = this.currentFledgeWhereFilter;
+            }
+            if (this.currentreleasedWhereFilter != null && this.currentreleasedWhereFilter != "") {
+                params.whereReleased = this.currentreleasedWhereFilter;
+            }
 
             if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
                 params.currentNestSite = this.currentNestSiteFilter;
@@ -687,6 +711,8 @@ parasails.registerPage('get-bird', {
             this.currentNestSiteFilter = "";
             this.currentLaidWhereFilter = "";
             this.currentHatchWhereFilter = "";
+            this.currentFledgeWhereFilter = "";
+            this.currentreleasedWhereFilter = "";
         },
 
         validateNestsite: function(fieldName) {
@@ -784,7 +810,7 @@ parasails.registerPage('get-bird', {
         clickOpenExampleModalButton3: async function(index) {
             this.currentBird = this.currentBirds[index];
             var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
-            this.currentBird.visitHistory = temp.visits;
+            // this.currentBird.visitHistory = temp.visits;
             this.visitCount = temp.count;
             this.goto('/birds/single');
             // Or, without deep links, instead do:

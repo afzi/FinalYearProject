@@ -8,15 +8,10 @@
         </div>
         <div class="flex-container filterbar">
             <div class="form-group search-box">
-                <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="Name" title="birdName" autocomplete="off">
+                <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="Bird Name" title="birdName" autocomplete="off">
                 <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
             </div>
 
-            <div class="form-group search-box">
-               <input id="birdName" class="form-control" type="text" v-model.trim="currentBirdFilter" placeholder="Name" title="birdName" autocomplete="off">
-               <autocomplete for="birdName" action="getBird" params='{"limit": 5}' map="birdName" is-async> </autocomplete>
-           </div>
-           
             <div class="form-group search-box">
                 <select id="sex" class="form-control" type="text" v-model="currentSexFilter" placeholder="sex" title="sex" autocomplete="off">
                <option disabled selected value="">Gender</option>
@@ -60,15 +55,25 @@
                 <autocomplete for="status" action="getBird" params='{"limit": 5}' map="status" is-async> </autocomplete>
             </div>
 
+            <div class="form-group search-box" v-if="formData.laidwhere">
+               <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Laid Where" title="laidWhere" autocomplete="off">
+               <autocomplete for="laidWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+           </div>
+
             <div class="form-group search-box" v-if="formData.hatchwhere">
                 <input id="hatchedWhere" class="form-control" type="text" v-model.trim="currentHatchWhereFilter" placeholder="Hatched Where" title="hatchedWhere" autocomplete="off">
                 <autocomplete for="hatchedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
             </div>
 
-            <div class="form-group search-box" v-if="formData.laidwhere">
-                <input id="laidWhere" class="form-control" type="text" v-model.trim="currentLaidWhereFilter" placeholder="Laid Where" title="laidWhere" autocomplete="off">
-                <autocomplete for="laidWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
-            </div>
+            <div class="form-group search-box" v-if="formData.fledgewhere">
+               <input id="fledgedWhere" class="form-control" type="text" v-model.trim="currentFledgeWhereFilter" placeholder="Fledged Where" title="fledgedWhere" autocomplete="off">
+               <autocomplete for="fledgedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+           </div>
+
+           <div class="form-group search-box" v-if="formData.releasedwhere">
+            <input id="releasedWhere" class="form-control" type="text" v-model.trim="currentreleasedWhereFilter" placeholder="Released Where" title="releasedWhere" autocomplete="off">
+            <autocomplete for="releasedWhere" action="getNestsite" params='{"limit": 5}' map="nestID" is-async> </autocomplete>
+        </div>
 
             <div class="form-group search-box">
                 <select id="isBreeder" class="form-control" type="text" v-model.trim="currentBreederFilter" placeholder="Breeder" title="isBreeder" autocomplete="off">
@@ -83,7 +88,7 @@
                  <autocomplete for="isBreeder" action="getBird" params='{"limit": 3}' map="isBreeder" is-async> </autocomplete>
                  </div> -->
             <div class="form-group search-box">
-                <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="currentNestSite" title="currentNestSite" autocomplete="off">
+                <input id="currentNestSite" class="form-control" type="text" v-model.trim="currentNestSiteFilter" placeholder="current Nest Site" title="currentNestSite" autocomplete="off">
                 <autocomplete for="currentNestSite" action="getNestsite" params='{"limit": 3}' map="nestID" is-async>
                 </autocomplete>
             </div>
@@ -284,7 +289,7 @@
                         {{bird.nestsiteHistory && bird.nestsiteHistory[1] && bird.nestsiteHistory[1].nestID ? bird.nestsiteHistory[1].nestID.nestID : '' }}
                     </td>
                     <td v-if="formData.prevnestDist">
-                        {{bird.nestsiteHistory && bird.nestsiteHistory[1] && bird.nestsiteHistory[1].nestID ? bird.nestsiteHistory[1].nestID.nestID : '' }}
+                     {{bird.nestsiteHistory && bird.nestsiteHistory[1] && bird.nestsiteHistory[1].nestID ? bird.nestsiteHistory[1].nestID.distanceToHoppersKm : '' }}
                     </td>
                     <td class="text-wrap" v-if="formData.prevnestDisc">
                         {{bird.nestsiteHistory && bird.nestsiteHistory[1] && bird.nestsiteHistory[1].nestID ? bird.nestsiteHistory[1].nestID.nestDescription : '' }}
