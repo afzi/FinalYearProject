@@ -24,7 +24,11 @@ parasails.registerPage('create-nestsite', {
 
     currentPage: 1,
 
-    isEditMode: false
+    isEditMode: false,
+
+    currentSortItem: 'nestID',
+
+    currentSortDirection: 'ASC'
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -58,7 +62,7 @@ parasails.registerPage('create-nestsite', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     refresh: async function() {
-      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
+      this.currentNestsites = await Cloud.getNestsite.with({includeBirds: true, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize, sortItem: this.currentSortItem, sortDirection: this.currentSortDirection});
       this.nestsiteCount = await Cloud.countNestsite();
     },
 
@@ -162,6 +166,17 @@ parasails.registerPage('create-nestsite', {
       }
 
       return false;
+    },
+
+    setSortItem: async function(newSortItem, newSortDirection) {
+      if(newSortItem === this.currentSortItem) {
+        if(newSortDirection === 'ASC') newSortDirection = 'DESC';
+        else newSortDirection = 'ASC'; // if we're just changing the direction not the sort item, we instead want to change it to the opposite of what was clicked
+      }
+
+      this.currentSortItem = newSortItem;
+      this.currentSortDirection = newSortDirection;
+      this.refresh();
     }
 
   }

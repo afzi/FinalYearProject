@@ -31,7 +31,11 @@ parasails.registerPage('manage-users', {
 
         currentFullNameFilter: "",
 
-        isEditMode: false
+        isEditMode: false,
+
+        currentSortItem: 'username',
+
+        currentSortDirection: 'ASC'
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -131,12 +135,7 @@ parasails.registerPage('manage-users', {
     },
 
     refresh: async function() {
-      this.currentUsers = await Cloud.getUser.with({fullName: this.currentFullNameFilter, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize});
-      this.currentUsers = this.currentUsers.map(user => {
-        user.password = "";
-        user.confirmPassword = "";
-        return user;
-      });
+      this.currentUsers = await Cloud.getUser.with({fullName: this.currentFullNameFilter, skip: (this.currentPage - 1) * this.pageSize, limit: this.pageSize, sortItem: this.currentSortItem, sortDirection: this.currentSortDirection});
       this.userCount = await Cloud.countUser.with({fullName: this.currentFullNameFilter});
     },
 
@@ -237,6 +236,17 @@ parasails.registerPage('manage-users', {
 
     reload: function() {
       location.reload();
+    },
+
+    setSortItem: async function(newSortItem, newSortDirection) {
+      if(newSortItem === this.currentSortItem) {
+        if(newSortDirection === 'ASC') newSortDirection = 'DESC';
+        else newSortDirection = 'ASC'; // if we're just changing the direction not the sort item, we instead want to change it to the opposite of what was clicked
+      }
+
+      this.currentSortItem = newSortItem;
+      this.currentSortDirection = newSortDirection;
+      this.refresh();
     }
   }
 });

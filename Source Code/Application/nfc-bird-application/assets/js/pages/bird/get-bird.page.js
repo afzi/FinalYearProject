@@ -174,6 +174,10 @@ parasails.registerPage('get-bird', {
         // Success state when form has been submitted
         cloudSuccess: false,
 
+        currentSortItem: 'birdName',
+
+        currentSortDirection: 'ASC',
+
         datepickerOptions: {
             icons: {
                 time: 'far fa-clock',
@@ -650,6 +654,8 @@ parasails.registerPage('get-bird', {
 
             params.skip = (this.currentPage - 1) * this.pageSize;
             params.limit = this.pageSize;
+            params.sortItem = this.currentSortItem;
+            params.sortDirection = this.currentSortDirection;
 
             this.currentBirds = await Cloud.getBird.with(params);
             this.BirdCount = await Cloud.countBirds.with(params);
@@ -905,6 +911,17 @@ parasails.registerPage('get-bird', {
             }
             return false;
 
+        },
+
+        setSortItem: async function(newSortItem, newSortDirection) {
+            if(newSortItem === this.currentSortItem) {
+                if(newSortDirection === 'ASC') newSortDirection = 'DESC';
+                else newSortDirection = 'ASC'; // if we're just changing the direction not the sort item, we instead want to change it to the opposite of what was clicked
+            }
+
+            this.currentSortItem = newSortItem;
+            this.currentSortDirection = newSortDirection;
+            this.refresh();
         }
 
 

@@ -101,51 +101,135 @@
       <table class="table table-bordered table-condensed table-hover text-nowrap">
          <thead role="rowgroup">
             <tr class="birdheader back-green" role="row">
-               <th role="columnheader" v-if="formData.name">Bird Name</th>
-               <th role="columnheader" v-if="formData.id">System ID</th>
-               <th role="columnheader" v-if="formData.sex">Gender</th>
-               <th role="columnheader" v-if="formData.breeder">Breeder</th>
-               <th role="columnheader" v-if="formData.lastSeen">Last Seen Date</th>
-               <th role="columnheader" v-if="formData.studid">Stud ID</th>
-               <th role="columnheader" v-if="formData.newstudid">New Stud ID</th>
-               <th role="columnheader" v-if="formData.nfcRingAssigned">Has NFC Ring</th>
-               <th role="columnheader" v-if="formData.nfcRing">NFC Ring Printed ID</th>
-               <th role="columnheader" v-if="formData.lring">Left Ring ID</th>
-               <th role="columnheader" v-if="formData.rring">Right Ring ID</th>
-               <th role="columnheader" v-if="formData.creator">Created By</th>
-               <th role="columnheader" v-if="formData.mname">Female Parent</th>
-               <th role="columnheader" v-if="formData.mstud">Female Parent Stud ID</th>
-               <th role="columnheader" v-if="formData.fname">Male Parent</th>
-               <th role="columnheader" v-if="formData.fstud">Male Parent Stud ID</th>
-               <th role="columnheader" v-if="formData.sfname">Second Male Parent</th>
-               <th role="columnheader" v-if="formData.sfstud">Second Male Parent Stud ID</th>
-               <th role="columnheader" v-if="formData.status">Status</th>
-               <th role="columnheader" v-if="formData.cnote">Condition</th>
-               <th role="columnheader" v-if="formData.rnote">Notes</th>
-               <th role="columnheader" v-if="formData.age">Age</th>
-               <th role="columnheader" v-if="formData.lay">Lay Date</th>
-               <th role="columnheader" v-if="formData.laidwhere">Where Laid</th>
-               <th role="columnheader" v-if="formData.hatchdate">Hatch Date</th>
-               <th role="columnheader" v-if="formData.hatchwhere">Where Hatch</th>
-               <th role="columnheader" v-if="formData.incdays">Incubation Days</th>
-               <th role="columnheader" v-if="formData.fledgedate">Fledge Date</th>
-               <th role="columnheader" v-if="formData.fledgewhere">Where Fledged</th>
-               <th role="columnheader" v-if="formData.releasedate">Release Date</th>
-               <th role="columnheader" v-if="formData.releasedwhere">Where Release</th>
-               <th role="columnheader" v-if="formData.currnestID">Current Breeding Site</th>
-               <th role="columnheader" v-if="formData.currnestDist">Current Distance To Hopper (km)</th>
-               <th role="columnheader" v-if="formData.currnestDisc">Current Breeding Site Description</th>
-               <th role="columnheader" v-if="formData.currnestCord">Current Breeding Site Coordinates</th>
+               <th role="columnheader" v-show="formData.name">
+                  Bird Name
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'birdName' || (currentSortItem === 'birdName' && currentSortDirection === 'DESC')" @click="setSortItem('birdName', 'DESC')" alt="Sort by Bird Name Descending" title="Sort by Bird Name Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'birdName' || (currentSortItem === 'birdName' && currentSortDirection === 'ASC')" @click="setSortItem('birdName', 'ASC')" alt="Sort by Bird Name Ascending" title="Sort by Bird Name Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.id">System ID</th>
+               <th role="columnheader" v-show="formData.sex">
+                  Gender
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'sex' || (currentSortItem === 'sex' && currentSortDirection === 'DESC')" @click="setSortItem('sex', 'DESC')" alt="Sort by Gender Descending" title="Sort by Gender Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'sex' || (currentSortItem === 'sex' && currentSortDirection === 'ASC')" @click="setSortItem('sex', 'ASC')" alt="Sort by Gender Ascending" title="Sort by Gender Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.breeder">
+                  Breeder
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'isBreeder' || (currentSortItem === 'isBreeder' && currentSortDirection === 'DESC')" @click="setSortItem('isBreeder', 'DESC')" alt="Sort by Breeder Descending" title="Sort by Breeder Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'isBreeder' || (currentSortItem === 'isBreeder' && currentSortDirection === 'ASC')" @click="setSortItem('isBreeder', 'ASC')" alt="Sort by Breeder Ascending" title="Sort by Breeder Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.lastSeen">Last Seen Date</th>
+               <th role="columnheader" v-show="formData.studid">
+                  Stud ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'studID' || (currentSortItem === 'studID' && currentSortDirection === 'DESC')" @click="setSortItem('studID', 'DESC')" alt="Sort by Stud ID Descending" title="Sort by Stud ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'studID' || (currentSortItem === 'studID' && currentSortDirection === 'ASC')" @click="setSortItem('studID', 'ASC')" alt="Sort by Stud ID Ascending" title="Sort by Stud ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.newstudid">
+                  New Stud ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'newStudID' || (currentSortItem === 'newStudID' && currentSortDirection === 'DESC')" @click="setSortItem('newStudID', 'DESC')" alt="Sort by New Stud ID Descending" title="Sort by New Stud ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'newStudID' || (currentSortItem === 'newStudID' && currentSortDirection === 'ASC')" @click="setSortItem('newStudID', 'ASC')" alt="Sort by New Stud ID Ascending" title="Sort by New Stud ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.nfcRingAssigned">Has NFC Ring</th>
+               <th role="columnheader" v-show="formData.nfcRing">NFC Ring Printed ID</th>
+               <th role="columnheader" v-show="formData.lring">
+                  Left Ring ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'leftRingID' || (currentSortItem === 'leftRingID' && currentSortDirection === 'DESC')" @click="setSortItem('leftRingID', 'DESC')" alt="Sort by Left Ring ID Descending" title="Sort by Left Ring ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'leftRingID' || (currentSortItem === 'leftRingID' && currentSortDirection === 'ASC')" @click="setSortItem('leftRingID', 'ASC')" alt="Sort by Left Ring ID Ascending" title="Sort by Left Ring ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.rring">
+                  Right Ring ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'rightRingID' || (currentSortItem === 'rightRingID' && currentSortDirection === 'DESC')" @click="setSortItem('rightRingID', 'DESC')" alt="Sort by Right Ring ID Descending" title="Sort by Right Ring ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'rightRingID' || (currentSortItem === 'rightRingID' && currentSortDirection === 'ASC')" @click="setSortItem('rightRingID', 'ASC')" alt="Sort by Right Ring ID Ascending" title="Sort by Right Ring ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.creator">Created By</th>
+               <th role="columnheader" v-show="formData.mname">
+                  Female Parent
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'motherName' || (currentSortItem === 'motherName' && currentSortDirection === 'DESC')" @click="setSortItem('motherName', 'DESC')" alt="Sort by Femalre Parent Name Descending" title="Sort by Femalre Parent Name Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'motherName' || (currentSortItem === 'motherName' && currentSortDirection === 'ASC')" @click="setSortItem('motherName', 'ASC')" alt="Sort by Femalre Parent Name Ascending" title="Sort by Femalre Parent Name Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.mstud">
+                  Female Parent Stud ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'motherStudID' || (currentSortItem === 'motherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('motherStudID', 'DESC')" alt="Sort by Femalre Parent Stud ID Descending" title="Sort by Femalre Parent Stud ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'motherStudID' || (currentSortItem === 'motherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('motherStudID', 'ASC')" alt="Sort by Femalre Parent Stud ID Ascending" title="Sort by Femalre Parent Stud ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.fname">
+                  Male Parent
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'DESC')" @click="setSortItem('fatherName', 'DESC')" alt="Sort by Male Parent Name Descending" title="Sort by Male Parent Name Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fatherName' || (currentSortItem === 'fatherName' && currentSortDirection === 'ASC')" @click="setSortItem('fatherName', 'ASC')" alt="Sort by Male Parent Name Ascending" title="Sort by Male Parent Name Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.fstud">
+                  Male Parent Stud ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('fatherStudID', 'DESC')" alt="Sort by Male Parent Stud ID Descending" title="Sort by Male Parent Stud ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fatherStudID' || (currentSortItem === 'fatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('fatherStudID', 'ASC')" alt="Sort by Male Parent Stud ID Ascending" title="Sort by Male Parent Stud ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.sfname">
+                  Second Male Parent
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherName', 'DESC')" alt="Sort by Second Male Parent Name Descending" title="Sort by Second Male Parent Name Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'secondFatherName' || (currentSortItem === 'secondFatherName' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherName', 'ASC')" alt="Sort by Second Male Parent Name Ascending" title="Sort by Second Male Parent Name Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.sfstud">
+                  Second Male Parent Stud ID
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'DESC')" @click="setSortItem('secondFatherStudID', 'DESC')" alt="Sort by Second Male Parent Stud ID Descending" title="Sort by Second Male Parent Stud ID Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'secondFatherStudID' || (currentSortItem === 'secondFatherStudID' && currentSortDirection === 'ASC')" @click="setSortItem('secondFatherStudID', 'ASC')" alt="Sort by Second Male Parent Stud ID Ascending" title="Sort by Second Male Parent Stud ID Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.status">
+                  Status
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'DESC')" @click="setSortItem('status', 'DESC')" alt="Sort by Status Descending" title="Sort by Status Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'status' || (currentSortItem === 'status' && currentSortDirection === 'ASC')" @click="setSortItem('status', 'ASC')" alt="Sort by Status Ascending" title="Sort by Status Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.cnote">Condition</th>
+               <th role="columnheader" v-show="formData.rnote">
+                  Notes
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'researcherNotes' || (currentSortItem === 'researcherNotes' && currentSortDirection === 'DESC')" @click="setSortItem('researcherNotes', 'DESC')" alt="Sort by Notes Descending" title="Sort by Notes Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'researcherNotes' || (currentSortItem === 'researcherNotes' && currentSortDirection === 'ASC')" @click="setSortItem('researcherNotes', 'ASC')" alt="Sort by Notes Ascending" title="Sort by Notes Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.age">
+                  Age
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'DESC')" @click="setSortItem('hatchDate', 'DESC')" alt="Sort by Age Descending" title="Sort by Age Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'ASC')" @click="setSortItem('hatchDate', 'ASC')" alt="Sort by Age Ascending" title="Sort by Age Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.lay">
+                  Lay Date
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'layDate' || (currentSortItem === 'layDate' && currentSortDirection === 'DESC')" @click="setSortItem('layDate', 'DESC')" alt="Sort by Lay Date Descending" title="Sort by Lay Date Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'layDate' || (currentSortItem === 'layDate' && currentSortDirection === 'ASC')" @click="setSortItem('layDate', 'ASC')" alt="Sort by Lay Date Ascending" title="Sort by Lay Date Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.laidwhere">Where Laid</th>
+               <th role="columnheader" v-show="formData.hatchdate">
+                  Hatch Date
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'DESC')" @click="setSortItem('hatchDate', 'DESC')" alt="Sort by Hatch Date Descending" title="Sort by Hatch Date Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'hatchDate' || (currentSortItem === 'hatchDate' && currentSortDirection === 'ASC')" @click="setSortItem('hatchDate', 'ASC')" alt="Sort by Hatch Date Ascending" title="Sort by Hatch Date Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.hatchwhere">Where Hatched</th>
+               <th role="columnheader" v-show="formData.incdays">
+                  Incubation Days
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'incubationDays' || (currentSortItem === 'incubationDays' && currentSortDirection === 'DESC')" @click="setSortItem('incubationDays', 'DESC')" alt="Sort by Incubation Days Descending" title="Sort by Incubation Days Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'incubationDays' || (currentSortItem === 'incubationDays' && currentSortDirection === 'ASC')" @click="setSortItem('incubationDays', 'ASC')" alt="Sort by Incubation Days Ascending" title="Sort by Incubation Days Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.fledgedate">
+                  Fledge Date
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fledgeDate' || (currentSortItem === 'fledgeDate' && currentSortDirection === 'DESC')" @click="setSortItem('fledgeDate', 'DESC')" alt="Sort by Fledge Date Descending" title="Sort by Fledge Date Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fledgeDate' || (currentSortItem === 'fledgeDate' && currentSortDirection === 'ASC')" @click="setSortItem('fledgeDate', 'ASC')" alt="Sort by Fledge Date Ascending" title="Sort by Fledge Date Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.fledgewhere">Where Fledged</th>
+               <th role="columnheader" v-show="formData.releasedate">
+                  Release Date
+                  <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'releasedWhen' || (currentSortItem === 'releasedWhen' && currentSortDirection === 'DESC')" @click="setSortItem('releasedWhen', 'DESC')" alt="Sort by Release Date Descending" title="Sort by Release Date Descending"></i>
+                  <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'releasedWhen' || (currentSortItem === 'releasedWhen' && currentSortDirection === 'ASC')" @click="setSortItem('releasedWhen', 'ASC')" alt="Sort by Release Date Ascending" title="Sort by Release Date Ascending"></i>
+               </th>
+               <th role="columnheader" v-show="formData.releasedwhere">Where Release</th>
+               <th role="columnheader" v-show="formData.currnestID">Current Breeding Site</th>
+               <th role="columnheader" v-show="formData.currnestDist">Current Distance To Hopper (km)</th>
+               <th role="columnheader" v-show="formData.currnestDisc">Current Breeding Site Description</th>
+               <th role="columnheader" v-show="formData.currnestCord">Current Breeding Site Coordinates</th>
 
-               <!-- <th role="columnheader" v-if="formData.currnestLat">Current Breeding Latitude</th> -->
+               <!-- <th role="columnheader" v-show="formData.currnestLat">Current Breeding Latitude</th> -->
 
 
-               <th role="columnheader" v-if="formData.prevnestID">Previous Breeding Site</th>
-               <th role="columnheader" v-if="formData.prevnestDist">Previous Distance To Hopper (km)</th>
-               <th role="columnheader" v-if="formData.prevnestDisc">Previous Breeding Site Description</th>
-               <th role="columnheader" v-if="formData.prevnestCord">Previous Breeding Site Coordinates</th>
+               <th role="columnheader" v-show="formData.prevnestID">Previous Breeding Site</th>
+               <th role="columnheader" v-show="formData.prevnestDist">Previous Distance To Hopper (km)</th>
+               <th role="columnheader" v-show="formData.prevnestDisc">Previous Breeding Site Description</th>
+               <th role="columnheader" v-show="formData.prevnestCord">Previous Breeding Site Coordinates</th>
 
-               <!-- <th role="columnheader" v-if="formData.prevnestLat">Previous Breeding Latitude</th> -->
+               <!-- <th role="columnheader" v-show="formData.prevnestLat">Previous Breeding Latitude</th> -->
 
             </tr>
          </thead>

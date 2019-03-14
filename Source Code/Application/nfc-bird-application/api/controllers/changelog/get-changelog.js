@@ -56,6 +56,20 @@ module.exports = {
             required: false,
             type: 'number',
             description: 'How many records to return (if used in pagination - what is the page size)'
+        },
+
+        sortItem: {
+          required: false,
+          type: 'string',
+          default: 'createdAt',
+          description: 'Which field to sort by'
+        },
+  
+        sortDirection: {
+          required: false,
+          type: 'string',
+          default: 'DESC',
+          description: 'Which direction to sort in (ASC/DESC)'
         }
 
     },
@@ -85,7 +99,7 @@ module.exports = {
         if (inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
         let finalQuery = { where: query }
-        finalQuery.sort = 'createdAt DESC';
+        finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
 
         var result = await Changelog.find(finalQuery).populate('user');
 

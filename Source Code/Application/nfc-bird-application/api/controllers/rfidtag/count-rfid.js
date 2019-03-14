@@ -72,8 +72,6 @@ module.exports = {
         if(inputs.colour) query.colour = {'contains': inputs.colour}
         
         let finalQuery = {where: query}
-        if(inputs.skip) finalQuery.skip = inputs.skip;
-        if(inputs.limit) finalQuery.limit = inputs.limit;
 
         var result = await RFIDTag.count(finalQuery);
         result.rfidCount = numRfids;

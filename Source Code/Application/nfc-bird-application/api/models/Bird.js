@@ -20,7 +20,6 @@ module.exports = {
         birdName: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20,
             unique: true
         },
         studID: {
@@ -128,8 +127,7 @@ module.exports = {
         },
         researcherNotes: {
             type: "ref",
-            columnType: "varchar",
-            maxLength: 200
+            columnType: "varchar"
         },
         //GENERATED OTF -- could save computation time by storing one time calcs (hatched, fledged, seenSinceFlegded)
         //birdStatus

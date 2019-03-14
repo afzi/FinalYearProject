@@ -3,10 +3,9 @@
     <div class="container" v-if="!cloudSuccess">
 
 
-            <div class="flex-container filterbar">
-                
+        <div class="flex-container filterbar">           
             <div class="form-group search-box">
-                    <input id="nfcRFID" class="form-control" type="text" v-model.trim="ringidFilter" placeholder="Ring ID" title="nfcRFID" autocomplete="off">
+                    <input id="nfcRFIDFilter" class="form-control" type="text" v-model.trim="ringidFilter" placeholder="Printed Ring ID" title="Printed Ring ID" autocomplete="off">
                     <autocomplete for="nfcRFID" action="getRfid" params='{"limit": 5}' map="nfcRFID" is-async> </autocomplete>
             </div>
 
@@ -21,13 +20,30 @@
         <table id="all-rfids" border="1" class="table table-bordered table-condensed text-nowrap">
             <thead role="rowgroup">
                 <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
-                    <th role="columnheader">Printed Ring ID</th>
-                    <th role="columnheader">Ring colour</th>
-                    <th role="columnheader">System ID</th>
-                    <th role="columnheader">Assigned</th>
-                    <th role="columnheader">Assigned to Bird</th>
-                    <th role="columnheader">Assignment Date</th>
-                    <th role="columnheader">Actions</th>
+                    <th role="columnheader" style="width: 10%;">
+                        Printed Ring ID
+                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'nfcRFID' || (currentSortItem === 'nfcRFID' && currentSortDirection === 'DESC')" @click="setSortItem('nfcRFID', 'DESC')" alt="Sort by Printed Ring ID Descending" title="Sort by Printed Ring ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'nfcRFID' || (currentSortItem === 'nfcRFID' && currentSortDirection === 'ASC')" @click="setSortItem('nfcRFID', 'ASC')" alt="Sort by Printed Ring ID Ascending" title="Sort by Printed Ring ID Ascending"></i>
+                    </th>
+                    <th role="columnheader" style="width: 20%;">
+                        Ring colour
+                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'colour' || (currentSortItem === 'colour' && currentSortDirection === 'DESC')" @click="setSortItem('colour', 'DESC')" alt="Sort by colour Descending" title="Sort by colour Descending"></i>
+                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'colour' || (currentSortItem === 'colour' && currentSortDirection === 'ASC')" @click="setSortItem('colour', 'ASC')" alt="Sort by colour Ascending" title="Sort by colour Ascending"></i>
+                    </th>
+                    <th role="columnheader" style="width: 20%;">
+                        System ID
+                        <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'nfcRFIDInternal' || (currentSortItem === 'nfcRFIDInternal' && currentSortDirection === 'DESC')" @click="setSortItem('nfcRFIDInternal', 'DESC')" alt="Sort by System ID Descending" title="Sort by System ID Descending"></i>
+                        <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'nfcRFIDInternal' || (currentSortItem === 'nfcRFIDInternal' && currentSortDirection === 'ASC')" @click="setSortItem('nfcRFIDInternal', 'ASC')" alt="Sort by System ID Ascending" title="Sort by System ID Ascending"></i>
+                    </th>
+                    <th role="columnheader" style="width: 10%;">
+                         Assigned
+                    </th>
+                    
+                    <th role="columnheader" style="width: 10%;">Assigned to Bird</th>
+                    <th role="columnheader" style="width: 20%;">
+                        Assignment Date
+                    </th>
+                    <th role="columnheader" style="width: 10%;">Actions</th>
                 </tr>
             </thead>
 
@@ -38,7 +54,7 @@
                     <td>{{rfidtag.nfcRFIDInternal}}</td>
                     <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                     <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
-                    <td>{{new Date(rfidtag.updatedAt).toLocaleDateString('en-GB')}}</td>
+                    <td>{{rfidtag.birdID ? new Date(rfidtag.updatedAt).toLocaleDateString('en-GB') : '-'}}</td>
                     <td><i v-if="!rfidtag.birdID && canEditThisRfid(index)" class="fas fa-trash-alt fa-lg" @click="promptDeleteRing(index)" alt="Delete Ring" title="Delete Ring"></i></td>
                 </tr>
             </tbody>
