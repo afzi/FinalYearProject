@@ -325,8 +325,8 @@ Zigbee is a better option for our needs. Considering ZigBee's almost instant net
     <br>
         
     <h2 id="hifi1"> Hi-Fi Design 1 <button><a href="#title">Back to Top </a></button></h2>
-    <p> This version of UI design was created once we decided that for system development, we will be using sails.js web application framework which supports large number of user-friendly UI features.</p>
-
+    <p> This version of UI design was created once we decided that for system development, we will be using sails.js web application framework which supports large number of user-friendly UI features. The priority was to concentrate on displaying data in Live View, in Single Bird View and Bird Table view. Based on this, other parts of the system can be constructed in the same way to create consistent UI throughout the whole system.</p>
+    <h3> Live View</h3>
     <p>In order to display as much information as possible we decided to locate drop-down menu at the top of the page in the left corner which freed up the space to display more information on the screen. More sophisticated time filters were added in order to find specific bird visit times. Users can search for birds by typing their name in the search box. Pagination bar in the footer enables users to navigate through large amount of data more easily. If users wanted to view full information about bird that showed up on the live view they can press 'View' button at the end of the row and it would open new view with bird information.   
     </p>    
     <table id="lofitable1" border="0">
@@ -341,6 +341,24 @@ Zigbee is a better option for our needs. Considering ZigBee's almost instant net
     </tr>
     </table>
         
+    <p>This version of 'Live View' has been modified number of times. Table has been moved to centre. First column has been removed to avoid unnecessary information on the screen as it does not serve any purpose for researchers.  Menu has been moved to the top right corner and 'Live View' button has been added so that users can always return to live screen from any view. 'View' button at the end of each row has been also removed as we decided that this option can be replaced with different functionality such as pressing on the table entry. This made Live View less cluttered from unnecessary buttons. </p> 
+        
+    <p>We also had to decide on the ways of showing users when visits have been registered in the system. If new visits were added automatically, it would distract users from viewing Live View, therefore system was developed in the way that it would inform users that new visits were registered and advice users to refresh the page.</p>   
+        
+    <table id="lofitable1" border="0">
+    <tr>
+    <td id="img"> Live View Version 4</td>
+    <td id="img"> Live View Version 4 with Menu </td>
+    </tr>
+        
+    <tr>
+    <td id="img"><img src="Phase3/liveview4.png" width="400" height="200"></td>
+    <td id="img"><img src="Phase3/liveview4menu.png" width="400" height="200"></td>
+    </tr>
+    </table>       
+        
+        
+    <h3> Single Bird View</h3>    
     <p>One of the ways to view single bird information is by clicking on 'View' button from Live View screen. All data is aligned to centre and buttons are added to expand more information about birds such as: Parent information, More information and table with past visits. 'Edit' button in the footer allows to edit information in this view.</p>    
     
     <table id="lofitable1" border="0">
@@ -353,23 +371,11 @@ Zigbee is a better option for our needs. Considering ZigBee's almost instant net
     <td id="img"><img src="Phase3/birdviewedit.png" width="400" height="200"></td>
     </tr>        
     </table>   
-    <p>This version of 'Live View' has been modified number of times. Table has been moved to centre to add consistency throughout the system, to avoid unnecessary information on the screen the first row has been removed as it does not serve any purpose for researchers.  Menu has been moved to the top right corner and 'Live View' button has been added so that users can always return to live screen from any view. 'View' button at the end of each row has been also removed as we decided that this option can be replaced with different functionality such as pressing on the table entry. This made Live View less cluttered from unnecessary buttons. </p> 
-        
-    <p>We also had to decide on the ways of showing users when visits have been registered in the system. If new visits were added automatically, it would distract users from viewing Live View, therefore system was developed in the way that it would inform users that new visits were registered and advice users to refresh the page.</p>
+    
         
     <p>Single Bird view has also been modified. Instead of arranging all data in one column, decision has been made to display information in two columns. This enables users to see more data on the screen. 'Export' button has been added in the footer to export information about one bird as requested by the client, however this function has been removed at the later stage after user testing as researcher advised that this function will not be used. </p>
      
-    <table id="lofitable1" border="0">
-    <tr>
-    <td id="img"> Live View Version 4</td>
-    <td id="img"> Bird View Version 2 </td>
-    </tr>
-        
-    <tr>
-    <td id="img"><img src="Phase3/liveview3.png" width="400" height="200"></td>
-    <td id="img"><img src="Phase3/birdview2.png" width="400" height="200"></td>
-    </tr>
-    </table>    
+     
     
     <table id="lofitable1" border="0">
     <tr>
@@ -382,15 +388,39 @@ Zigbee is a better option for our needs. Considering ZigBee's almost instant net
     <td id="img"><img src="Phase3/birdviewedit2.png" width="400" height="200"></td>
     </tr>
     </table>    
-            
-        
+    <table>
+    <tr>
+    <td id="img"><img src="Phase3/birdviewdecision.png" width="400" height="175"></td>
+    </tr>
+    </table>    
         
         
         
         
         
     <h2 id="hifi2"> Hi-Fi Design 2 <button><a href="#title">Back to Top </a></button></h2>     
-       
+    
+    <h3>Contrast checker</h3>    
+    <p>Following first UI prototype test, client agreed to chosen colour scheme for the system. However, chosen colours failed contrast checker criteria.</p>  
+    
+    <table id="lofitable1" border="0">
+    <tr>
+    <td id="img"><img src="Phase3/contrastfail.png" width="350" height="200"></td>
+    </tr>
+    </table>    
+    
+    <p>To meet usability standard, colours had to be modified. As client already agreed to chosen colours scheme, we decided to use same colours, but modify shades and brightness. Pictures below show that new colours have passed the contrast checker criteria.</p>
+        
+    <table id="lofitable1" border="0">
+    <tr>
+    <td id="img"><img src="Phase3/contrastpass1.png" width="350" height="200"></td>
+    <td id="img"><img src="Phase3/contrastpass2.png" width="350" height="200"></td>
+    </tr>
+    </table>   
+     
+        
+        
+        
         
         
     </body>
