@@ -6,6 +6,7 @@
 module.exports = {
 
     attributes: {
+        // test
         //BirdID provided by sails ID
         //createdOn provided by sails
         //updatedOn provided by sails
