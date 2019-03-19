@@ -143,7 +143,8 @@ class SerialReader:
 
                 if start_byte == 0xAA and end_byte == 0xBB:
                     supposed_packet = incoming_bytes[start_index:end_index+1]
-                    logging.debug("Extracted something that looks like a packet: %s, validating...", supposed_packet.hex())
+                    logging.debug("Extracted something that looks like a packet: %s, validating...",
+						supposed_packet.hex())
                     if(self.__validate_packet(supposed_packet)):
                         logging.debug("Validation succeeded, we've found a packet in our data")
                         return supposed_packet
@@ -151,9 +152,13 @@ class SerialReader:
                         logging.debug("Validation failed, continuing search for packet")
 
                 start_index += 1
-                end_index += 1 # if we've reached this point, we either didn't manage to extract a packet, or it failed validation, so keep searching
+                end_index += 1 
+				# if we've reached this point, we either didn't manage to extract a packet,
+				# or it failed validation, so keep searching
 
-            return None # if we've reached this point, our loop failed to extract a valid packet, so signal to the caller that we've failed by returning None
+            return None 
+			# if we've reached this point, our loop failed to extract a valid packet,
+			# so signal to the caller that we've failed by returning None
 
 
 

@@ -605,6 +605,35 @@
     </div>
     <div id="scripts">
         <h2> Hardware Scripts <button><a href="#title">Back to Top </a></button></h2>
+        <p>
+            Raw RFID data is read from the ZigBee coordinator using a Python application that reads and processes data from a serial connection.
+            This application makes use of a config file (config.py) for various parameters required for operation.
+            The config file is validated when the application starts and if incorrect or missing values are detected, the application
+            exits with a descriptive error message, letting the user know what went wrong.
+        </p>
+        <img src="Phase5/Img/notepad++_2019-03-19_00-28-50.png"></img>
+        <p>
+            The application works by building up a buffer of at least 13 bytes, as that is the size of the raw
+            RFID packet received over ZigBee. When the buffer reaches 13 bytes and the static
+            'end byte' (0xBB) is received, the buffer is then handled asynchronously to prevent blocking new incoming messages.
+        </p>
+        <img src="Phase5/Img/notepad++_2019-03-19_00-36-49.png"></img>
+        <p>
+            The buffer is then passed to an 'extractor' function that attempts to extract a 13-byte packet that starts with the static
+            'start byte' (0xAA) and the previously mentioned 'end byte', as well as passes XOR checksum validation (if none found, the buffer is discarded). This was done in order to prevent the possibility of the data going
+            'out of sync' - although the packet size should always be 13 bytes, network errors could mean that we receive packets of different sizes. 
+            There is no indication where a packet 'starts' or 'ends' besides the start/end bytes, which could also
+            be present in the payload enclosed within the packet, so it's imperial that all the checks described above pass. This approach also ensures minimal data loss in case such an error occurs.
+        </p>
+        <img src="Phase5/Img/notepad++_2019-03-19_00-39-44.png"></img>
+        <p>
+            If a valid packet is successfully extracted from the buffer, it is then passed to the database service. This service retrieves the relevant RFID record from the database
+            according to the payload of the packet (if none found, the packet is discarded). It then checks whether there have been any visits recorded from this RFID record within the period defined by
+            same_visit_frequency_minutes setting in the config file. If there are, the packet is discarded. If not, a new record is written in the visit table in the database, containing the date/time the
+            buffer was received, the RFID record ID and the bird record ID (if present). The visit table is read directly by the main application to detect and show new visits.
+        </p>
+        <img src="Phase5/Img/notepad++_2019-03-19_00-51-15.png"></img>
+            
     </div>
     <div id="datamodel">
         <h2> Database & Models <button><a href="#title">Back to Top </a></button></h2>

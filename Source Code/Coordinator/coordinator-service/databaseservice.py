@@ -61,7 +61,8 @@ class DatabaseService:
                                        visit_datetime)
 
             cursor.close()
-        except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e: # something's gone wrong with the server, try to recover and if successful, retry this function
+        except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e: 
+			# something's gone wrong with the server, try to recover and if successful, retry this function
             logging.warning("Disconnected from database, attempting to reconnect...")
             print(e)
             self.__reconnect()
