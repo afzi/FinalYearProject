@@ -149,7 +149,7 @@
             </tr>
             <tr>
                 <td> 5.1 </td>
-                <td><a href="#scripts"> Hardware Scripts </a></td>
+                <td><a href="#scripts">Coordinator Service</a></td>
                 <td> Karlis Jaunslavietis </td>
                 <td></td>
             </tr>
@@ -604,35 +604,157 @@
 
     </div>
     <div id="scripts">
-        <h2> Hardware Scripts <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.1 Coordinator Service<button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.1.1 High Level Activity Diagram</h3>
+        <img src="Phase5/Img/Python_HighLevel.svg" class="center"></img>
+        <!-- TODO:
+            1. give example of RFID packet
+            2. more info on config validation
+            3. link pictures to text and make images stand out more
+            4. use diagrams more than text (state / flow)
+            5. future improvements is a go, make sure technical purpose is outlined and why they weren't included -->
+        <h3>5.1.2 Config</h3>
         <p>
-            Raw RFID data is read from the ZigBee coordinator using a Python application that reads and processes data from a serial connection.
-            This application makes use of a config file (config.py) for various parameters required for operation.
-            The config file is validated when the application starts and if incorrect or missing values are detected, the application
-            exits with a descriptive error message, letting the user know what went wrong.
+            Configuration parameters are defined in <a href="Phase5/Src/config.py" target="_blank"><code>config.py</code> (follow link to see an example with comments)</a>.
+            Parameters
+            are validated in two steps - static (explicit) and dynamic (implicit). In the static step, the following conditions must be met:
+            <ul>
+                <li>
+                    <code>config.py</code> exists
+                </li>
+                <li>
+                    Required parameters defined (<code>db_host</code>, <code>db_user</code>, <code>db_password</code>, <code>db_port</code>, <code>db_name</code>)
+                </li>
+            </ul>
+            Parameters related to the database are the only required values as the service can't make reasonable default guesses. 
+            The static step also internally sets the default values where applicable. If one of the conditions above is not satisfied, the service exits with a descriptive error message
+            (eg. <code>"Missing required config param db_name"</code>). If a default value is used, the service outputs a log informing the user (eg. <code>"Mising optional config param log_level, using default = 'WARNING'"</code>,
+            or <code>"Unknown log_level value TRACE in config, must be one of 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL'. Using default = 'WARNING'"</code>).<br><br>
+            The dynamic step occurs when the service attempts to use the provided parameters to connect to the database and serial port. If either of the connections fail, the service exits with
+            an error message informing the user what went wrong (eg. <code>"Couldn't connect to database, make sure it's running and the correct connection params are set in config.py"</code>).
         </p>
-        <img src="Phase5/Img/notepad++_2019-03-19_00-28-50.png"></img>
+        <h3>5.1.3 Reading RFID packets</h3>
         <p>
-            The application works by building up a buffer of at least 13 bytes, as that is the size of the raw
-            RFID packet received over ZigBee. When the buffer reaches 13 bytes and the static
-            'end byte' (0xBB) is received, the buffer is then handled asynchronously to prevent blocking new incoming messages.
+            The RFID packets are 13 bytes long and have the following structure:
+            <table>
+                <tr>
+                    <th>Start byte (static - 1 byte)</th>
+                    <th>Unused (static - 3 bytes)</th>
+                    <th>Tag Data (varies - 7 bytes)</th>
+                    <th>XOR checksum (varies - 1 byte)</th>
+                    <th>End Byte (static - 1 byte)</th>
+                </tr>
+                <tr>
+                    <td>
+                        <code>0xAA</code>
+                    </td>
+                    <td>
+                        <code>0x0F 0x08 0x00</code>
+                    </td>
+                    <td>
+                        <code>0x03 0x84 0x12 0xDB 0xFA 0xE7 0xD5</code>
+                    </td>
+                    <td>
+                        <code>0xB1</code>
+                    </td>
+                    <td>
+                        <code>0xBB</code>
+                    </td>
+                </tr>
+            </table>
+            Testing showed that packets are not separated from one another in the incoming serial data stream. Therefore, a mechanism was required to deal with the possibility that a network
+            error causes us to receive a packet with missing, or extra, bytes. Simply relying on start and end bytes would not be sufficient, as the tag data can also contain <code>0xAA</code> and <code>0xBB</code>.
+            Therefore, the code builds up a buffer that always starts with <code>0xAA</code>, is at least 13 bytes long, and always ends with <code>0xBB</code>. This increases the chance that the buffer will contain
+            a valid packet and minimizes data loss by allowing for some network noise before or after the packet. This is achieved with the following code:
+            <pre><code>
+                    buffer = bytearray()
+                    while True:
+                        read = self.ser.read(1)[0] # read one byte at a time
+            
+                        if read == 0xBB and len(buffer) >= 12:
+                            # we've read the end byte and the buffer is at least as big as the expected packet size,
+                            # so parse what we have (async)
+                            buffer.append(read)
+                            threading.Thread(target=self.__handle_read, args=(buffer,datetime.datetime.now())).start()
+                            buffer = bytearray()
+                        elif len(buffer) == 0 and read != 0xAA:
+                            # the buffer is empty but we've read something other than the start byte, so let's discard this
+                            logging.debug("Read byte %X but expecting start byte 0xAA, discarding this read", read)
+                        else:
+                            buffer.append(read)
+            </code></pre>
+            The buffer is then handled asynchronously (described in section 5.1.4) to prevent blocking new incoming data.
         </p>
-        <img src="Phase5/Img/notepad++_2019-03-19_00-36-49.png"></img>
+        <h3>5.1.4 Buffer handling</h3>
+            <p>
+                The raw buffer is handled by a function that attempts to extract a 13-byte packet that starts with the
+                start byte and ends with the end byte, as well as passes XOR checksum validation. If no valid packet is found, the buffer is discarded.
+                This is achieved with the following code:
+                <pre><code>
+                        # tries to extract a single packet from the raw data we received
+                        # the raw data should have at most one packet of length 13, starting with 0xAA and ending with 0xBB
+                        # if no valid packet found in the data, return None
+                        def __try_extract_and_validate_packet(self, incoming_bytes):
+                            if len(incoming_bytes) < 13:
+                                return None # this shouldn't ever happen
+                            else:
+                                logging.debug("Received a data buffer with 13 or more bytes, attempting to extract packet")
+                                start_index = 0
+                                end_index = 12
+
+                                while end_index < len(incoming_bytes):
+                                    start_byte = incoming_bytes[start_index]
+                                    end_byte = incoming_bytes[end_index]
+
+                                    if start_byte == 0xAA and end_byte == 0xBB:
+                                        supposed_packet = incoming_bytes[start_index:end_index+1]
+                                        logging.debug("Extracted something that looks like a packet: %s, validating...",
+                                            supposed_packet.hex())
+                                        if(self.__validate_packet(supposed_packet)):
+                                            logging.debug("Validation succeeded, we've found a packet in our data")
+                                            return supposed_packet
+                                        else:
+                                            logging.debug("Validation failed, continuing search for packet")
+
+                                    start_index += 1
+                                    end_index += 1 
+                                    # if we've reached this point, we either didn't manage to extract a packet,
+                                    # or it failed validation, so keep searching
+
+                                return None 
+                                # if we've reached this point, our loop failed to extract a valid packet,
+                                # so signal to the caller that we've failed by returning None
+                </code></pre>
+                If a valid packet is found, it (along the date and time the buffer was received) is then passed to the database service, described in section 5.1.5.
+            </p>
+        <h3>5.1.5 Packet Handling</h3>
         <p>
-            The buffer is then passed to an 'extractor' function that attempts to extract a 13-byte packet that starts with the static
-            'start byte' (0xAA) and the previously mentioned 'end byte', as well as passes XOR checksum validation (if none found, the buffer is discarded). This was done in order to prevent the possibility of the data going
-            'out of sync' - although the packet size should always be 13 bytes, network errors could mean that we receive packets of different sizes. 
-            There is no indication where a packet 'starts' or 'ends' besides the start/end bytes, which could also
-            be present in the payload enclosed within the packet, so it's imperial that all the checks described above pass. This approach also ensures minimal data loss in case such an error occurs.
+                The service retrieves the relevant RFID record from the database
+                according to the payload of the packet (if no RFID records are found, the packet is discarded). It then checks whether there have been any visits recorded from this RFID record within the period defined by
+                same_visit_frequency_minutes setting in the config file. If there are, the packet is discarded. If not, a new record is written in the visit table in the database, containing the date/time the
+                buffer was received, the RFID record ID and the bird record ID (if present). The visit table is read directly by the main application to detect and show new visits.
+                If at any point the connection to the database is dropped, the service attempts to reconnect up to five times before giving up and exiting with an error message.
         </p>
-        <img src="Phase5/Img/notepad++_2019-03-19_00-39-44.png"></img>
+        <h3>5.1.6 Future Improvements</h3>
         <p>
-            If a valid packet is successfully extracted from the buffer, it is then passed to the database service. This service retrieves the relevant RFID record from the database
-            according to the payload of the packet (if none found, the packet is discarded). It then checks whether there have been any visits recorded from this RFID record within the period defined by
-            same_visit_frequency_minutes setting in the config file. If there are, the packet is discarded. If not, a new record is written in the visit table in the database, containing the date/time the
-            buffer was received, the RFID record ID and the bird record ID (if present). The visit table is read directly by the main application to detect and show new visits.
+            <ul>
+                <li>
+                    <strong>Automatic serial port scanning.</strong><br> Currently, the person launching the service must specify the serial port name in the configuration file. Although the service
+                    is intended to be used only by technical users, this can still present a challenge if the user is unfamiliar with the operating system or serial communication in general.<br>
+                    This wasn't included due to extensive testing required to ensure that the automatic scanning is reliable and does not introduce more problems that it solves.
+                </li>
+                <li>
+                    <strong>Abstraction of the database layer.</strong><br> Currently, raw SQL queries are used by the service to interact with the database. This presents possible maintenance difficulties
+                    in the future as small errors can lead to catastrophic consequences, and code readability is compromised. Object-relational mapping (ORM), similar to the one used for the main system, could be used instead.<br>
+                    This wasn't included due to an aim to keep the service lean and reduce level of bloat. However, the right ORM implemented correctly could offset these negatives with the positives it brings.
+                </li>
+                <li>
+                    <strong>Support of API mode.</strong><br> Currently, the service can only read data received in XBee AT mode (AT and API modes compared in section 1.2). API mode support could be added
+                    as it allows for greater extensibility and more features, such as identifying when a network device has gone offline.<br>
+                    This wasn't included due to the increased complexity of API mode and the system requirements lacking features that could make use of API mode.
+                </li>
+            </ul>
         </p>
-        <img src="Phase5/Img/notepad++_2019-03-19_00-51-15.png"></img>
             
     </div>
     <div id="datamodel">

@@ -31,7 +31,7 @@ class DatabaseService:
                 auth_plugin='mysql_native_password'
             )
         except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e:
-            logging.error("Couldn't connect to database, make sure it's running and the connection params are set in config.py")
+            logging.error("Couldn't connect to database, make sure it's running and the correct connection params are set in config.py")
             raise Exception(e)
 
         self.cutoff_minutes = params.same_visit_frequency_minutes
