@@ -11,14 +11,13 @@ module.exports = {
         username: {
             type: "string",
             columnType: "varchar",
-            maxLength: 20,
+            
             required: true,
             unique: true
         },
         fullName: {
             type: "string",
             columnType: "varchar",
-            maxLength: 40,
             required: true
         },
         password: {

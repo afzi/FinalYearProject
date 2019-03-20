@@ -51,7 +51,7 @@
 
       //Adapted From https://stackoverflow.com/questions/12251325/javascript-date-to-calculate-age-work-by-the-day-months-years
        getAge: function(dateString) {
-        if(dateString) return '-'; 
+        if(!dateString) return '-'; 
         
         var now = new Date();  
         var yearNow = now.getYear();

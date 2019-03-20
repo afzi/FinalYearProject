@@ -6,7 +6,6 @@
 module.exports = {
 
     attributes: {
-        // test
         //BirdID provided by sails ID
         //createdOn provided by sails
         //updatedOn provided by sails
@@ -26,24 +25,22 @@ module.exports = {
         studID: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20,
+            
             unique: true
         },
         newStudID: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20,
+            
             unique: true
         },
         leftRingID: {
             type: "ref",
-            columnType: "varchar",
-            maxLength: 30
+            columnType: "varchar"
         },
         rightRingID: {
             type: "ref",
-            columnType: "varchar",
-            maxLength: 30
+            columnType: "varchar"
         },
         sex: {
             type: "ref",
@@ -94,37 +91,37 @@ module.exports = {
         groupName: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         motherName: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         fatherName: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         secondFatherName: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         motherStudID: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         fatherStudID: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         secondFatherStudID: {
             type: "ref",
             columnType: "varchar",
-            maxLength: 20
+            
         },
         researcherNotes: {
             type: "ref",

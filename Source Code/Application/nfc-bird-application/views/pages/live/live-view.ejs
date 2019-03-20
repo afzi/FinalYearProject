@@ -1,21 +1,20 @@
-<div id="live-view">
+<div id="live-view" v-cloak>
     <div class="container" v-if="!cloudSuccess">
         <!-- FILTER BAR -->
-        <div class="flex-container filterbar" style="white-space: nowrap;">
-            <div class="form-group col-xs-6">
-                <input id="searchText " type="text " v-model="search" class="form-control " placeholder="Search " />
+        <div class="flex-container filterbar bg-info" style="white-space: nowrap;">
+            <h6>Filter by...&nbsp;</h6><br>
+            <div class="form-group">
+                <input id="searchText " type="text " v-model="search" class="form-control " placeholder="Bird Name" title="Bird Name" />
             </div>
 
-            <div class="form-group col-xs-6">
-                <span style="padding-left: 150px;"> Start Time:</span>
-                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 30%; display: inline-block;">
+            <div class="form-group">
+                <datepicker v-model="timeFrom" :config="timepickerOptions" style="width: 30%; display: inline-block;" placeholder="Time From" title="Time From" >
                 </datepicker>
-
-                <span style="padding-left: 15px;">End Time:</span>
-                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 30%; display: inline-block;">
+                <span>&nbsp;to&nbsp;</span>
+                <datepicker v-model="timeTo" :config="timepickerOptions" style="width: 30%; display: inline-block;" placeholder="Time To" title="Time To" >
                 </datepicker>
             </div>
-            <div class="form-group col-xs-6">
+            <div class="form-group">
                 <button class="btn btn-secondary" @click="clearFilters">Clear</button>
             </div>
         </div>
@@ -32,10 +31,14 @@
 
             <tbody role="rowgroup">
                 <tr style="cursor:pointer;" class="clickable-row" @click="goToBird(visit.birdName)" v-for="visit in visitData">
-                    <td class="birdJustifyColumn">{{visit.birdName}}</td>
-                    <td>{{visit.leftRingID}}</td>
-                    <td>{{visit.rightRingID}}</td>
-                    <td>{{visit.createdAt}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.birdName}}</td>
+                    <td class="birdJustifyColumn" v-else>{{visit.birdName}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.leftRingID}}</td>
+                    <td v-else>{{visit.leftRingID}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.rightRingID}}</td>
+                    <td v-else>{{visit.rightRingID}}</td>
+                    <td class="birdJustifyColumnWarning" v-if="visit.leftRingID=='-'">{{visit.createdAt}}</td>
+                    <td v-else>{{visit.createdAt}}</td>
                 </tr>
             </tbody>
         </table>

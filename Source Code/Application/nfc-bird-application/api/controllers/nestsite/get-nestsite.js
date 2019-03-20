@@ -13,7 +13,7 @@ module.exports = {
         type: 'string',
         description: 'The friendly name of nest'
       },
-
+      
       nestDescription: {
         required: false,
         type: 'string',
@@ -53,14 +53,14 @@ module.exports = {
       sortItem: {
         required: false,
         type: 'string',
-        default: 'nestID',
+        defaultsTo: 'nestID',
         description: 'Which field to sort by'
       },
 
       sortDirection: {
         required: false,
         type: 'string',
-        default: 'ASC',
+        defaultsTo: 'ASC',
         description: 'Which direction to sort in (ASC/DESC)'
       }
     },

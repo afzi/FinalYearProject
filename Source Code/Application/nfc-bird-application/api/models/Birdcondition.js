@@ -15,7 +15,7 @@ module.exports = {
         birdCondition: {
             type: "string",
             columnType: "varchar",
-            maxLength: 200
+            
         },
         dateNoted: {
             type: "ref",

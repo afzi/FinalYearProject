@@ -607,12 +607,6 @@
         <h2>5.1 Coordinator Service<button><a href="#title">Back to Top </a></button></h2>
         <h3>5.1.1 High Level Activity Diagram</h3>
         <img src="Phase5/Img/Python_HighLevel.svg" class="center"></img>
-        <!-- TODO:
-            1. give example of RFID packet
-            2. more info on config validation
-            3. link pictures to text and make images stand out more
-            4. use diagrams more than text (state / flow)
-            5. future improvements is a go, make sure technical purpose is outlined and why they weren't included -->
         <h3>5.1.2 Config</h3>
         <p>
             Configuration parameters are defined in <a href="Phase5/Src/config.py" target="_blank"><code>config.py</code> (follow link to see an example with comments)</a>.
@@ -776,7 +770,73 @@
         <h2> Bird Data Export <button><a href="#title">Back to Top </a></button></h2>
     </div>
     <div id="ring">
-        <h2> Ring Management <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.8 Ring Management <button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.8.1 Manage Rings Screen</h3>
+        <img src="Phase5/Img/managerings-ss.png" class="center"></img>
+        <h3>5.8.2 Importing Rings</h3>
+        <p>
+            Rings are uploaded to the system in bulk, by the user submitting a <a href="Phase5/Asset/test.csv" target="_blank">CSV file (click link for example of valid CSV)</a>. When the user uploads a CSV file, it is validated client-side using the following criteria, all of which must pass:
+            <ul>
+                <li>
+                    It is comma-separated column-wise
+                </li>
+                <li>
+                    It is newline-separated row-wise
+                </li>
+                <li>
+                    It has exactly three columns
+                </li>
+                <li>
+                    The first row consists of the column headers and is exactly <code>short,long,colour</code>
+                </li>
+            </ul>
+            If the file fails validation, the user is presented with the following error message: <code>Please upload a valid file. See tooltip for help.</code>.
+            If the file passes validation, the user is presented with the following success message: <code>File is valid, you may proceed</code> and the 'Import' button
+            becomes available.<br><br>
+            When the user presses 'import', the CSV file is parsed to a JSON object and sent to the backend. In the backend, these values are inserted into the database, skipping non-unique records
+            (uniqueness is determined by either the short ID or the long ID). When the backend has saved the new records to the database, it sends the number of inserted and skipped records back to the
+            front-end, where it is presented as: <code>Successfully imported X rings. Y rings were skipped due to non-unique attributes (either short or long ID).</code><br><br>
+            CSV validation and parsing makes use of the <a href="https://www.papaparse.com/" target="_blank"><code>papaparse</code> library.</a>
+        </p>
+        <h3>5.8.3 Viewing Rings</h3>
+        <p>
+            The rings are displayed in a simple HTML table, following the design of similar pages. The ring data is pulled from the back-end and the table is populated using a v-for loop. Filtering is available
+            on the printed ring ID using a contains-match. Filtering is done in the backend and the list of matching rings is updated as soon as the user types or edits anything in the filter field.
+        </p>
+        <h3>5.8.4 Editing Rings</h3>
+        <p>
+            The user is able to delete rings that have not been assigned to a bird (assigned rings cannot be deleted without being un-assigned first, to prevent loss of data on rings that are in active use). Rings can be deleted by clicking on the bin icon (if the bin cannot be displayed, it is replaced by the text 'Delete Ring').
+            The user is prompted for confirmation and, if they accept, a request is sent to the backend to delete this ring record from the database.
+        </p>
+        <h3>5.8.5 Future Improvements</h3>
+        <p>
+            <ul>
+                <li><strong>Allow insertion of single rings.</strong><br> Currently rings can only be inserted via a CSV upload. Although this is handy when inserting a large volume of records,
+                it makes inserting single records tedious. A manual-entry form could be included to insert new rings into the system one-by-one.<br>
+                This wasn't included as the <a href="Phase5/Img/usecase-importrings.png" target="_blank">relevant use case (click on link to view)</a> only detailed bulk upload. Nevertheless, from a user's
+                perspective, manual entry could come in handy once in a while, and from a developer's perspective, this would be a relatively simple task.
+                </li>
+            </ul>
+            <ul>
+                <li><strong>Allow ring assignment from this screen.</strong><br>Currently rings can only be assigned to birds via the Bird View. It would be useful for the user to be able to
+                    also assign rings from this screen.<br>
+                    This functionality wasn't considered for development as the user is already able to assign rings through other means, however it would increase user efficiency / productivity if the task could be
+                    achieved via this screen too.
+                </li>
+            </ul>
+            <ul>
+                <li><strong>Allow user to view the bird details by clicking on the bird name.</strong><br>The bird names in the 'Assigned to Bird' column could be clickable and bring up bird details.<br>
+                    This functionality wasn't added due to an oversight, as such functionality already exists in similar pages, such as Live View.
+                </li>
+            </ul>
+            <ul>
+                <li><strong>Relax CSV validation.</strong><br>The <code>papaparse</code> library is quite powerful and able to deal with CSV files in different formats, so current CSV validation
+                    is unnecessarily strict. Some of the rules, such as column order, could be removed altogether.<br>
+                    This wasn't done due to security concerns about allowing the users to upload files in various formats to the back-end. Extensive testing could alleviate these concerns but wasn't
+                    performed due to time constraints.
+                </li>
+            </ul>
+        </p>
     </div>
     <div id="nest">
         <h2> Nest Management <button><a href="#title">Back to Top </a></button></h2>
