@@ -61,14 +61,14 @@ module.exports = {
         sortItem: {
           required: false,
           type: 'string',
-          default: 'createdAt',
+          defaultsTo: 'createdAt',
           description: 'Which field to sort by'
         },
   
         sortDirection: {
           required: false,
           type: 'string',
-          default: 'DESC',
+          defaultsTo: 'DESC',
           description: 'Which direction to sort in (ASC/DESC)'
         }
 
@@ -99,7 +99,17 @@ module.exports = {
         if (inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
         let finalQuery = { where: query }
-        finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
+
+        var manualSortFunction;
+        if(inputs.sortItem === 'fullName') {
+            if(inputs.sortDirection === 'ASC') {
+                manualSortFunction = (el1, el2) => el1.user.fullName.localeCompare(el2.user.fullName)
+            } else {
+                manualSortFunction = (el1, el2) => el2.user.fullName.localeCompare(el1.user.fullName)
+            }
+        } else {
+            finalQuery.sort = `${inputs.sortItem} ${inputs.sortDirection}`
+        }
 
         var result = await Changelog.find(finalQuery).populate('user');
 
@@ -118,6 +128,8 @@ module.exports = {
         if(inputs.limit) {
           finalResult = finalResult.slice(0, inputs.limit);
         }
+
+        if(manualSortFunction) finalResult.sort(manualSortFunction);
 
       // TODO rewrite this whole fucking controller to be more efficient
 

@@ -1,10 +1,11 @@
-<div id="manage-users">
+<div id="manage-users" v-cloak>
   <div class="container" v-if="!cloudSuccess">
 
     <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="resetFormData">Register New
       User</button>
 
-    <div class="flex-container filterbar">
+    <div class="flex-container filterbar bg-info">
+      <h6>Filter by...&nbsp</h6><br>
       <div class="form-group search-box">
         <input id="fullName" class="form-control" type="text" v-model.trim="currentFullNameFilter"
           placeholder="Full Name" title="fullName" autocomplete="off">
@@ -23,13 +24,13 @@
         <tr role="row" class="back-green">
           <th role="columnheader" style="width: 30%;">
             Full name
-            <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Full Name Descending" title="Sort by Full Name Descending"></i>
-            <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Full Name Ascending" title="Sort by Full Name Ascending"></i>
+            <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'DESC')" @click="setSortItem('fullName', 'DESC')" alt="Sort by Full Name Descending" title="Sort by Full Name Descending"></i>
+            <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'fullName' || (currentSortItem === 'fullName' && currentSortDirection === 'ASC')" @click="setSortItem('fullName', 'ASC')" alt="Sort by Full Name Ascending" title="Sort by Full Name Ascending"></i>
           </th>
           <th role="columnheader" style="width: 30%;">
               Username
-              <i class="fas fa-chevron-down fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'DESC')" @click="setSortItem('username', 'DESC')" alt="Sort by Username Descending" title="Sort by Username Descending"></i>
-              <i class="fas fa-chevron-up fa-lg" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'ASC')" @click="setSortItem('username', 'ASC')" alt="Sort by Username Ascending" title="Sort by Username Ascending"></i>
+              <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'DESC')" @click="setSortItem('username', 'DESC')" alt="Sort by Username Descending" title="Sort by Username Descending"></i>
+              <i class="fas fa-chevron-up fa-xs" v-show="currentSortItem !== 'username' || (currentSortItem === 'username' && currentSortDirection === 'ASC')" @click="setSortItem('username', 'ASC')" alt="Sort by Username Ascending" title="Sort by Username Ascending"></i>
             </th>
           <th role="columnheader" style="width: 30%;">Privileges</th>
           <th role="columnheader" style="width: 10%;">Actions</th>
@@ -240,7 +241,7 @@
                   </div> -->
 
               <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please
-                  check your information and try again, or <a href="/support">contact support</a> if the error
+                  check your information and try again, or contact an admin if the error
                   persists.</small></p>
             </div>
             <div class="modal-footer flex-row-reverse justify-content-between">
@@ -397,7 +398,7 @@
                   </div> -->
 
               <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please
-                  check your information and try again, or <a href="/support">contact support</a> if the error
+                  check your information and try again, or contact an admin if the error
                   persists.</small></p>
             </div>
             <div class="modal-footer">

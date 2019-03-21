@@ -45,10 +45,10 @@ module.exports = {
     fn: async function (inputs) {
         let query = {}
 
-        if(inputs.nestID) query.nestID = {'contains': inputs.nestID}
-        if(inputs.nestDescription) query.nestDescription = {'contains': inputs.nestDescription}
-        if(inputs.distanceKmFrom) query.distanceToHoppersKm = {'>=': inputs.distanceKmFrom};
-        if(inputs.distanceKmTo) query.distanceToHoppersKm = {'<=': inputs.distanceKmTo};
+        // if(inputs.nestID) query.nestID = {'contains': inputs.nestID}
+        // if(inputs.nestDescription) query.nestDescription = {'contains': inputs.nestDescription}
+        // if(inputs.distanceKmFrom) query.distanceToHoppersKm = {'>=': inputs.distanceKmFrom};
+        // if(inputs.distanceKmTo) query.distanceToHoppersKm = {'<=': inputs.distanceKmTo};
 
         var result = await Nestsite.count(query);
   

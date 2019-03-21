@@ -24,7 +24,7 @@ module.exports = {
         nestDescription: {
             type: "string",
             columnType: "varchar",
-            maxLength: 200
+            
         },
         distanceToHoppersKm: {
             type: "ref",

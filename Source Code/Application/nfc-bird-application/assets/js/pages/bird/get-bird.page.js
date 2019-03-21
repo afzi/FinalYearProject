@@ -132,6 +132,8 @@ parasails.registerPage('get-bird', {
 
         currentRightRingFilter:"",
 
+        currentCreatorFilter:"",
+
         currentSexFilter: "",
 
         currentFatherFilter: "",
@@ -142,9 +144,15 @@ parasails.registerPage('get-bird', {
 
         currentHatchWhereFilter:"",
 
+        currentFledgeWhereFilter:"",
+
+        currentreleasedWhereFilter:"",
+
         currentBreederFilter: "",
 
         currentNestSiteFilter: "",
+
+        previousNestSiteFilter: "",
 
     //    'formData.birdName': true,
         
@@ -207,6 +215,13 @@ parasails.registerPage('get-bird', {
         _.extend(this, SAILS_LOCALS);
     },
     mounted: async function() {
+        // window.addEventListener('beforeunload', e => {
+        //     if(window.location.pathname.endsWith('single')) {
+        //         // e.preventDefault();
+        //         window.location.href = '../'
+        //     }
+        // }); 
+
         this.currentBirdFilter = SAILS_LOCALS.initialBirdNameFilter;
         this.refresh();
     },
@@ -256,6 +271,13 @@ parasails.registerPage('get-bird', {
                 this.refresh();
             }
         },
+        currentCreatorFilter: function(_, _) {
+            if ($("#leftRingID").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
 
         currentNewStudIdFilter: function(_, _) {
             if ($("#newStudID").data('locked') != 1) {
@@ -291,6 +313,20 @@ parasails.registerPage('get-bird', {
             this.refresh();
             }
         },
+        currentFledgeWhereFilter: function(_, _) {
+            if ($("#fledgedWhere").data('locked') != 1) {
+            this.currentPage = 1;
+            this.$refs.paginate.selected = 1;
+            this.refresh();
+            }
+        },
+        currentreleasedWhereFilter: function(_, _) {
+            if ($("#releasedWhere").data('locked') != 1) {
+            this.currentPage = 1;
+            this.$refs.paginate.selected = 1;
+            this.refresh();
+            }
+        },
         
         currentLaidWhereFilter: function(_, _) {
             if ($("#laidWhere").data('locked') != 1) {
@@ -307,6 +343,15 @@ parasails.registerPage('get-bird', {
                 this.refresh();
             }
         },
+
+        previousNestSiteFilter: function(_, _) {
+            if ($("#previousNestSite").data('locked') != 1) {
+                this.currentPage = 1;
+                this.$refs.paginate.selected = 1;
+                this.refresh();
+            }
+        },
+
         pageSize: function(_, _) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
@@ -397,9 +442,44 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        //  'formData.birdName':function(newValue,_) {
-        //     Vue.set(this.formData, 'birdName', true);
-        //  }
+
+         'formData.currnestDist':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+         'formData.currnestDisc':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+         'formData.currnestCord':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'currnestID', true);
+              }
+            
+         },
+
+         'formData.prevnestDist':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         },
+         'formData.prevnestDisc':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         },
+         'formData.prevnestCord':function(newValue,_) {
+            if(newValue === true) {
+                Vue.set(this.formData, 'prevnestID', true);
+              }
+            
+         }
 
     },
 
@@ -616,7 +696,10 @@ parasails.registerPage('get-bird', {
             if (this.currentRightRingFilter != null && this.currentRightRingFilter != "") {
                 params.rightRingId = this.currentRightRingFilter;
             }
-
+            if (this.currentCreatorFilter != null && this.currentCreatorFilter != "") {
+                params.createdBy = this.currentCreatorFilter;
+            }
+            
             if (this.currentNewStudIdFilter != null && this.currentNewStudIdFilter != "") {
                 params.newStudId = this.currentNewStudIdFilter;
             }
@@ -642,10 +725,20 @@ parasails.registerPage('get-bird', {
             if (this.currentHatchWhereFilter != null && this.currentHatchWhereFilter != "") {
                 params.whereHatched = this.currentHatchWhereFilter;
             }
+            if (this.currentFledgeWhereFilter != null && this.currentFledgeWhereFilter != "") {
+                params.whereFledged = this.currentFledgeWhereFilter;
+            }
+            if (this.currentreleasedWhereFilter != null && this.currentreleasedWhereFilter != "") {
+                params.whereReleased = this.currentreleasedWhereFilter;
+            }
 
             if (this.currentNestSiteFilter != null && this.currentNestSiteFilter != "") {
                 params.currentNestSite = this.currentNestSiteFilter;
             }
+            if (this.previousNestSiteFilter != null && this.previousNestSiteFilter != "") {
+                params.previousNestSite = this.previousNestSiteFilter;
+            }
+            
 
             params.includeConditions = true;
             params.includeNestsites = true;
@@ -685,8 +778,11 @@ parasails.registerPage('get-bird', {
             this.currentMotherFilter = "";
             this.currentBreederFilter = "";
             this.currentNestSiteFilter = "";
+            this.previousNestSiteFilter = "";
             this.currentLaidWhereFilter = "";
             this.currentHatchWhereFilter = "";
+            this.currentFledgeWhereFilter = "";
+            this.currentreleasedWhereFilter = "";
         },
 
         validateNestsite: function(fieldName) {
@@ -784,13 +880,19 @@ parasails.registerPage('get-bird', {
         clickOpenExampleModalButton3: async function(index) {
             this.currentBird = this.currentBirds[index];
             var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
-            this.currentBird.visitHistory = temp.visits;
+            // this.currentBird.visitHistory = temp.visits;
             this.visitCount = temp.count;
             this.goto('/birds/single');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';
             // ```
+        },
+
+        openmodal:async function(index) {
+            this.currentBird = this.currentBirds[index];
+            var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
+            this.visitCount = temp.count;
         },
 
         selectIndexFormData: async function(index) {
@@ -813,7 +915,7 @@ parasails.registerPage('get-bird', {
 
         openCreateBirdModal: async function() {
             this.enterCreateMode();
-            this.goto('/birds/create');
+            // this.goto('/birds/create');
             // Or, without deep links, instead do:
             // ```
             // this.modal = 'example';
@@ -823,8 +925,7 @@ parasails.registerPage('get-bird', {
         closeSingleViewModal: function() {
             if (!this.isEditMode || (this.isEditMode && this.promptExitEditMode())) {
                 this.currentBird = {};
-                $('#singleViewModal').modal('hide');
-                this.goto('/birds');
+                $('#createUserModal2').modal('hide');
             }
             // Or, without deep links, instead do:
             // ```
@@ -836,7 +937,7 @@ parasails.registerPage('get-bird', {
         closeCreateBirdModal: function(prompt) {
             if (!prompt || this.promptExitCreateMode()) {
                 $('#createBirdModal').modal('hide');
-                this.goto('/birds');
+                // this.goto('/birds');
             }
             // Or, without deep links, instead do:
             // ```
@@ -905,11 +1006,14 @@ parasails.registerPage('get-bird', {
         },
 
         canEditThisBird: function() {
-            if(this.me.hasEditFull) return true;
-            if(this.me.hasCreateEdit) {
-                return this.currentBird.createdBy.id == this.me.id;
+            if(this.currentBird.id) {
+                if(this.me.hasEditFull) return true;
+                if(this.me.hasCreateEdit) {
+                    return this.currentBird.createdBy.id == this.me.id;
+                }
+                return false;
             }
-            return false;
+
 
         },
 

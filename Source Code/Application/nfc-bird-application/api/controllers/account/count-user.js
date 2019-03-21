@@ -58,7 +58,7 @@ module.exports = {
     fn: async function (inputs) {
         let query = {};
 
-        if(inputs.fullName) query.fullName = {'contains': inputs.fullName}
+        // if(inputs.fullName) query.fullName = {'contains': inputs.fullName}
 
         var result = await User.count(query);
   

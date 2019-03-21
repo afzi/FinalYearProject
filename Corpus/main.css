@@ -97,4 +97,12 @@ h3 {
     
 }
 
+a {
+    text-decoration: none;
+}
+
+.center {
+  margin-left: 400px;
+  width: 50%;
+}
 

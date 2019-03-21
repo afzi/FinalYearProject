@@ -145,11 +145,11 @@ parasails.registerPage('import-rfid', {
 
       if(!parsed.data[0] || parsed.meta.fields.length != 3 || !(parsed.meta.fields[0] == "short" && parsed.meta.fields[1] == "long" && parsed.meta.fields[2] == "colour")) {
         this.statusText = "CSV invalid";
-        this.formErrors.csvUpload = true;
+        Vue.set(this.formErrors, 'csvUpload', true);
         this.csvValid = false;
       } else {
         this.csvParsed = parsed.data;
-        this.formErrors.csvUpload = false;
+        Vue.set(this.formErrors, 'csvUpload', false);
         this.csvValid = true;
         this.statusText = `Ready to upload ${this.csvParsed.length} RFID rings`;
       }
@@ -158,7 +158,7 @@ parasails.registerPage('import-rfid', {
 
     parseCsv: function(e) {
       this.csvValid = false;
-      this.formErrors.csvUpload = false;
+      Vue.set(this.formErrors, 'csvUpload', false);
       this.statusText = "Parsing..."; 
 
       // var reader = new FileReader();

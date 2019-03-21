@@ -31,7 +31,7 @@ class DatabaseService:
                 auth_plugin='mysql_native_password'
             )
         except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e:
-            logging.error("Couldn't connect to database, make sure it's running and the connection params are set in config.py")
+            logging.error("Couldn't connect to database, make sure it's running and the correct connection params are set in config.py")
             raise Exception(e)
 
         self.cutoff_minutes = params.same_visit_frequency_minutes
@@ -61,7 +61,8 @@ class DatabaseService:
                                        visit_datetime)
 
             cursor.close()
-        except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e: # something's gone wrong with the server, try to recover and if successful, retry this function
+        except (mysql.connector.errors.OperationalError, mysql.connector.errors.DatabaseError) as e: 
+			# something's gone wrong with the server, try to recover and if successful, retry this function
             logging.warning("Disconnected from database, attempting to reconnect...")
             print(e)
             self.__reconnect()

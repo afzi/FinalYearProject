@@ -63,22 +63,22 @@ module.exports = {
       console.log("Received request to count changelog")
 
       let query = {}
-      if(inputs.newData) query.newData = {'contains': inputs.newData}
-      if(inputs.oldData) query.oldData = {'contains': inputs.oldData}
+      // if(inputs.newData) query.newData = {'contains': inputs.newData}
+      // if(inputs.oldData) query.oldData = {'contains': inputs.oldData}
       
-      if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
-      if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
+      // if(inputs.dateFrom) query.createdAt = {'>=': inputs.dateFrom}
+      // if(inputs.dateTo) query.createdAt['<='] = inputs.dateTo;
 
 
-      var result;
-      if(inputs.username) {
-        result = await Changelog.find(query).populate('user');
-        result = result.filter(nextResult => nextResult.user.username === inputs.username);
-        return result.length;
-      } else {
+      // var result;
+      // if(inputs.username) {
+      //   result = await Changelog.find(query).populate('user');
+      //   result = result.filter(nextResult => nextResult.user.username === inputs.username);
+      //   return result.length;
+      // } else {
         result = await Changelog.count(query);
         return result;
-      }
+      // }
 
     }
   
