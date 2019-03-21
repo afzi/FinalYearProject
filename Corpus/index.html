@@ -51,14 +51,8 @@
 
             <tr>
                 <td> 1.2 </td>
-                <td><a href="#hardwarelist"> Hardware List</a></td>
-                <td> Karlis Jaunslaietis </td>
-                <td></td>
-            </tr>
-<tr>
-                <td> 1.3 </td>
-                <td><a href="#software"> Software List</a></td>
-                <td> Priyesh Patel </td>
+                <td><a href="#designChoices"> System Hardware & Software Decision</a></td>
+                <td> Karlis Jaunslaietis, Priyesh Patel, Afzaal Ahmad Razeem </td>
                 <td></td>
             </tr>
 
@@ -78,7 +72,7 @@
                 <td> Karlis Jaunslavietis, Elina Voitane, Priyesh Patel, Afzaal Ahmad Razeem</td>
                 <td></td>
             </tr>
-			<tr>
+            <tr>
                 <td> 2.3 </td>
                 <td><a href="#usecases"> Use Case Diagrams </a></td>
                 <td> Karlis Jaunslavietis, Elina Voitane, Priyesh Patel, Afzaal Ahmad Razeem</td>
@@ -96,7 +90,7 @@
             <tr>
                 <td> 3.1 </td>
                 <td><a href="#datadi"> Database Diagram </a></td>
-                <td> Priyesh Patel </td>
+                <td> Priyesh Patel, Afzaal Ahmad Razeem </td>
                 <td></td>
             </tr>
             <tr>
@@ -356,13 +350,10 @@
             given our project scenario, this trade-off can be afforded.
         </p>
     </div>
-    <div id="hardwarelist">
-        <h2 id="hardwarelist"> Hardware List <button><a href="#title">Back to Top </a></button></h2>
+    <div id="designChoices">
+        <h2> System Hardware & Software Decision <button><a href="#title">Back to Top </a></button></h2>
     </div>
-    <div id="software">
-        <h2 > Software List <button><a href="#title">Back to Top </a></button></h2>
-</div>
-	<div id="users">
+    <div id="users">
         <h2> Understanding the user <button><a href="#title">Back to Top </a></button></h2>
 
         <p>One of the first challenges when working on requirements from the client was to understand users of the system, what they are responsible for when working on field and how much access they are allowed to scientifically important data</p>
@@ -434,7 +425,7 @@
     <div id="usecases">
         <h2> Use Case Diagrams <button><a href="#title">Back to Top </a></button></h2>
     </div>
-	<div id="reqdoc">
+    <div id="reqdoc">
         <h2> Requirements Document <button><a href="#title">Back to Top </a></button></h2>
     </div>
     <div id="datadi">
@@ -609,9 +600,8 @@
         <img src="Phase5/Img/Python_HighLevel.svg" class="center"></img>
         <h3>5.1.2 Config</h3>
         <p>
-            Configuration parameters are defined in <a href="Phase5/Src/config.py" target="_blank"><code>config.py</code> (follow link to see an example with comments)</a>.
-            Parameters
-            are validated in two steps - static (explicit) and dynamic (implicit). In the static step, the following conditions must be met:
+            Configuration parameters are defined in <a href="Phase5/Src/config.py" target="_blank"><code>config.py</code> (follow link to see an example with comments)</a>. Parameters are validated in two steps - static (explicit) and dynamic (implicit).
+            In the static step, the following conditions must be met:
             <ul>
                 <li>
                     <code>config.py</code> exists
@@ -620,12 +610,10 @@
                     Required parameters defined (<code>db_host</code>, <code>db_user</code>, <code>db_password</code>, <code>db_port</code>, <code>db_name</code>)
                 </li>
             </ul>
-            Parameters related to the database are the only required values as the service can't make reasonable default guesses. 
-            The static step also internally sets the default values where applicable. If one of the conditions above is not satisfied, the service exits with a descriptive error message
-            (eg. <code>"Missing required config param db_name"</code>). If a default value is used, the service outputs a log informing the user (eg. <code>"Mising optional config param log_level, using default = 'WARNING'"</code>,
-            or <code>"Unknown log_level value TRACE in config, must be one of 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL'. Using default = 'WARNING'"</code>).<br><br>
-            The dynamic step occurs when the service attempts to use the provided parameters to connect to the database and serial port. If either of the connections fail, the service exits with
-            an error message informing the user what went wrong (eg. <code>"Couldn't connect to database, make sure it's running and the correct connection params are set in config.py"</code>).
+            Parameters related to the database are the only required values as the service can't make reasonable default guesses. The static step also internally sets the default values where applicable. If one of the conditions above is not satisfied, the service
+            exits with a descriptive error message (eg. <code>"Missing required config param db_name"</code>). If a default value is used, the service outputs a log informing the user (eg. <code>"Mising optional config param log_level, using default = 'WARNING'"</code>,
+            or <code>"Unknown log_level value TRACE in config, must be one of 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL'. Using default = 'WARNING'"</code>).<br><br> The dynamic step occurs when the service attempts to use the provided parameters
+            to connect to the database and serial port. If either of the connections fail, the service exits with an error message informing the user what went wrong (eg. <code>"Couldn't connect to database, make sure it's running and the correct connection params are set in config.py"</code>).
         </p>
         <h3>5.1.3 Reading RFID packets</h3>
         <p>
@@ -656,10 +644,10 @@
                     </td>
                 </tr>
             </table>
-            Testing showed that packets are not separated from one another in the incoming serial data stream. Therefore, a mechanism was required to deal with the possibility that a network
-            error causes us to receive a packet with missing, or extra, bytes. Simply relying on start and end bytes would not be sufficient, as the tag data can also contain <code>0xAA</code> and <code>0xBB</code>.
-            Therefore, the code builds up a buffer that always starts with <code>0xAA</code>, is at least 13 bytes long, and always ends with <code>0xBB</code>. This increases the chance that the buffer will contain
-            a valid packet and minimizes data loss by allowing for some network noise before or after the packet. This is achieved with the following code:
+            Testing showed that packets are not separated from one another in the incoming serial data stream. Therefore, a mechanism was required to deal with the possibility that a network error causes us to receive a packet with missing, or extra, bytes. Simply
+            relying on start and end bytes would not be sufficient, as the tag data can also contain <code>0xAA</code> and <code>0xBB</code>. Therefore, the code builds up a buffer that always starts with <code>0xAA</code>, is at least 13
+            bytes long, and always ends with <code>0xBB</code>. This increases the chance that the buffer will contain a valid packet and minimizes data loss by allowing for some network noise before or after the packet. This is achieved with the following
+            code:
             <pre><code>
                     buffer = bytearray()
                     while True:
@@ -676,15 +664,13 @@
                             logging.debug("Read byte %X but expecting start byte 0xAA, discarding this read", read)
                         else:
                             buffer.append(read)
-            </code></pre>
-            The buffer is then handled asynchronously (described in section 5.1.4) to prevent blocking new incoming data.
+            </code></pre> The buffer is then handled asynchronously (described in section 5.1.4) to prevent blocking new incoming data.
         </p>
         <h3>5.1.4 Buffer handling</h3>
-            <p>
-                The raw buffer is handled by a function that attempts to extract a 13-byte packet that starts with the
-                start byte and ends with the end byte, as well as passes XOR checksum validation. If no valid packet is found, the buffer is discarded.
-                This is achieved with the following code:
-                <pre><code>
+        <p>
+            The raw buffer is handled by a function that attempts to extract a 13-byte packet that starts with the start byte and ends with the end byte, as well as passes XOR checksum validation. If no valid packet is found, the buffer is discarded. This is achieved
+            with the following code:
+            <pre><code>
                         # tries to extract a single packet from the raw data we received
                         # the raw data should have at most one packet of length 13, starting with 0xAA and ending with 0xBB
                         # if no valid packet found in the data, return None
@@ -718,41 +704,90 @@
                                 return None 
                                 # if we've reached this point, our loop failed to extract a valid packet,
                                 # so signal to the caller that we've failed by returning None
-                </code></pre>
-                If a valid packet is found, it (along the date and time the buffer was received) is then passed to the database service, described in section 5.1.5.
-            </p>
+                </code></pre> If a valid packet is found, it (along the date and time the buffer was received) is then passed to the database service, described in section 5.1.5.
+        </p>
         <h3>5.1.5 Packet Handling</h3>
         <p>
-                The service retrieves the relevant RFID record from the database
-                according to the payload of the packet (if no RFID records are found, the packet is discarded). It then checks whether there have been any visits recorded from this RFID record within the period defined by
-                same_visit_frequency_minutes setting in the config file. If there are, the packet is discarded. If not, a new record is written in the visit table in the database, containing the date/time the
-                buffer was received, the RFID record ID and the bird record ID (if present). The visit table is read directly by the main application to detect and show new visits.
-                If at any point the connection to the database is dropped, the service attempts to reconnect up to five times before giving up and exiting with an error message.
+            The service retrieves the relevant RFID record from the database according to the payload of the packet (if no RFID records are found, the packet is discarded). It then checks whether there have been any visits recorded from this RFID record within the
+            period defined by same_visit_frequency_minutes setting in the config file. If there are, the packet is discarded. If not, a new record is written in the visit table in the database, containing the date/time the buffer was received, the RFID
+            record ID and the bird record ID (if present). The visit table is read directly by the main application to detect and show new visits. If at any point the connection to the database is dropped, the service attempts to reconnect up to five
+            times before giving up and exiting with an error message.
         </p>
         <h3>5.1.6 Future Improvements</h3>
         <p>
             <ul>
                 <li>
-                    <strong>Automatic serial port scanning.</strong><br> Currently, the person launching the service must specify the serial port name in the configuration file. Although the service
-                    is intended to be used only by technical users, this can still present a challenge if the user is unfamiliar with the operating system or serial communication in general.<br>
-                    This wasn't included due to extensive testing required to ensure that the automatic scanning is reliable and does not introduce more problems that it solves.
+                    <strong>Automatic serial port scanning.</strong><br> Currently, the person launching the service must specify the serial port name in the configuration file. Although the service is intended to be used only by technical users, this
+                    can still present a challenge if the user is unfamiliar with the operating system or serial communication in general.<br> This wasn't included due to extensive testing required to ensure that the automatic scanning is reliable and
+                    does not introduce more problems that it solves.
                 </li>
                 <li>
-                    <strong>Abstraction of the database layer.</strong><br> Currently, raw SQL queries are used by the service to interact with the database. This presents possible maintenance difficulties
-                    in the future as small errors can lead to catastrophic consequences, and code readability is compromised. Object-relational mapping (ORM), similar to the one used for the main system, could be used instead.<br>
-                    This wasn't included due to an aim to keep the service lean and reduce level of bloat. However, the right ORM implemented correctly could offset these negatives with the positives it brings.
+                    <strong>Abstraction of the database layer.</strong><br> Currently, raw SQL queries are used by the service to interact with the database. This presents possible maintenance difficulties in the future as small errors can lead to catastrophic
+                    consequences, and code readability is compromised. Object-relational mapping (ORM), similar to the one used for the main system, could be used instead.<br> This wasn't included due to an aim to keep the service lean and reduce level
+                    of bloat. However, the right ORM implemented correctly could offset these negatives with the positives it brings.
                 </li>
                 <li>
-                    <strong>Support of API mode.</strong><br> Currently, the service can only read data received in XBee AT mode (AT and API modes compared in section 1.2). API mode support could be added
-                    as it allows for greater extensibility and more features, such as identifying when a network device has gone offline.<br>
-                    This wasn't included due to the increased complexity of API mode and the system requirements lacking features that could make use of API mode.
+                    <strong>Support of API mode.</strong><br> Currently, the service can only read data received in XBee AT mode (AT and API modes compared in section 1.2). API mode support could be added as it allows for greater extensibility and more
+                    features, such as identifying when a network device has gone offline.<br> This wasn't included due to the increased complexity of API mode and the system requirements lacking features that could make use of API mode.
                 </li>
             </ul>
         </p>
-            
+
     </div>
     <div id="datamodel">
-        <h2> Database & Models <button><a href="#title">Back to Top </a></button></h2>
+        <h2> 5.2 Database & Models <button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.2.1 Creation</h3>
+        <p>
+            in the early stages of development we used Sails' built-in datastore called: <code> sails-disk.</code> This let us manually create entries that only exisited during that run of the program which was fine for when we were creating simple pages
+            such as the login but in the larger tests and for actual production we needed a proper database so around the time that live view was starting to be develop the MySQL database was created. With use of version 1 of the database diagram, scripts
+            were made to create corisponding tables. <br><br> These tables were then used to generate the Models in our Source Code using the Node Plugin <a href="https://www.npmjs.com/package/sails-inverse-model" target="_blank"><code>sails-inverse-model</code> (follow link to go to plugin's npm page)</a>.
+            These models are the mapping that sails uses between system variables and database feilds. If these models are modifed Sails can uses them to create new tables so after the First version was generated we could just update the models instead
+            of updating the original scripts. Although we could have used this method to make the orignal database We selected to use the script method as it was easier to verify that the diagram was actually workable and to check if Sails handled the
+            data types as expected.<br><br> Below is an example of one of the simpler table, <b>visit</b> and it's create script along with the generated model.
+            <pre><code> 
+CREATE TABLE visit (
+    createdAt bigint(20) DEFAULT NULL,
+    id int(11) NOT NULL AUTO_INCREMENT,
+    birdID int(11) DEFAULT NULL,
+    nfcRFID varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+    ) 
+            </code></pre>
+            <pre><code>
+/**
+    Generated by sails-inverse-model
+    Date:Thu Jan 24 2019 13:21:47 GMT+0000 (Greenwich Mean Time)
+*/
+
+module.exports = {
+    attributes: {
+        //visitID provided by sails ID
+        //CreatedOn (i.e. visit time) Auto made by sails
+        updatedAt: false,
+        birdID: {
+            model: "bird"
+        },
+        nfcRFID: {
+            model: "rfidtag",
+            required: true
+        } 
+    }
+};
+</code></pre>
+        </p>
+        <h3>5.2.3 Test Data</h3>
+        <p>
+            Placeholder
+            <pre><code> Code Here </code></pre>
+        </p>
+        <h3>5.2.4 Future Improvements</h3>
+        <p>
+            <ul>
+                <li>
+                    <strong>Bullet Point</strong><br> Placeholder
+                </li>
+            </ul>
+        </p>
     </div>
     <div id="css">
         <h2> CSS Styling & Matching UI Design <button><a href="#title">Back to Top </a></button></h2>
@@ -775,7 +810,8 @@
         <img src="Phase5/Img/managerings-ss.png" class="center"></img>
         <h3>5.8.2 Importing Rings</h3>
         <p>
-            Rings are uploaded to the system in bulk, by the user submitting a <a href="Phase5/Asset/test.csv" target="_blank">CSV file (click link for example of valid CSV)</a>. When the user uploads a CSV file, it is validated client-side using the following criteria, all of which must pass:
+            Rings are uploaded to the system in bulk, by the user submitting a <a href="Phase5/Asset/test.csv" target="_blank">CSV file (click link for example of valid CSV)</a>. When the user uploads a CSV file, it is validated client-side using the
+            following criteria, all of which must pass:
             <ul>
                 <li>
                     It is comma-separated column-wise
@@ -790,105 +826,98 @@
                     The first row consists of the column headers and is exactly <code>short,long,colour</code>
                 </li>
             </ul>
-            If the file fails validation, the user is presented with the following error message: <code>Please upload a valid file. See tooltip for help.</code>.
-            If the file passes validation, the user is presented with the following success message: <code>File is valid, you may proceed</code> and the 'Import' button
-            becomes available.<br><br>
-            When the user presses 'import', the CSV file is parsed to a JSON object and sent to the backend (<code>import-rfid.js</code>). In the backend, these values are inserted into the database, skipping non-unique records
-            (uniqueness is determined by either the short ID or the long ID). When the backend has saved the new records to the database, it sends the number of inserted and skipped records back to the
-            front-end, where it is presented as: <code>Successfully imported X rings. Y rings were skipped due to non-unique attributes (either short or long ID).</code><br><br>
-            CSV validation and parsing makes use of the <a href="https://www.papaparse.com/" target="_blank"><code>papaparse</code> library.</a>
+            If the file fails validation, the user is presented with the following error message: <code>Please upload a valid file. See tooltip for help.</code>. If the file passes validation, the user is presented with the following success message:
+            <code>File is valid, you may proceed</code> and the 'Import' button becomes available.<br><br> When the user presses 'import', the CSV file is parsed to a JSON object and sent to the backend (<code>import-rfid.js</code>). In the backend, these
+            values are inserted into the database, skipping non-unique records (uniqueness is determined by either the short ID or the long ID). When the backend has saved the new records to the database, it sends the number of inserted and skipped records
+            back to the front-end, where it is presented as: <code>Successfully imported X rings. Y rings were skipped due to non-unique attributes (either short or long ID).</code><br><br> CSV validation and parsing makes use of the <a href="https://www.papaparse.com/"
+                target="_blank"><code>papaparse</code> library.</a>
         </p>
         <h3>5.8.3 Viewing Rings</h3>
         <p>
-            The rings are displayed in a simple paginated HTML table, following the design of similar pages. The ring data for the current page is pulled from the back-end (<code>get-rfid.js</code>) and the table is populated using a v-for loop. Filtering is available
-            on the printed ring ID using a contains-match. Filtering is done in the backend and the list of matching rings is updated as soon as the user types or edits anything in the filter field.
+            The rings are displayed in a simple paginated HTML table, following the design of similar pages. The ring data for the current page is pulled from the back-end (<code>get-rfid.js</code>) and the table is populated using a v-for loop. Filtering
+            is available on the printed ring ID using a contains-match. Filtering is done in the backend and the list of matching rings is updated as soon as the user types or edits anything in the filter field.
         </p>
         <h3>5.8.4 Editing Rings</h3>
         <p>
-            The user is able to delete rings that have not been assigned to a bird (assigned rings cannot be deleted without being un-assigned first, to prevent loss of data on rings that are in active use). Rings can be deleted by clicking on the bin icon (if the bin cannot be displayed, it is replaced by the text 'Delete Ring').
-            The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-rfid.js</code>) to delete this ring record from the database.
+            The user is able to delete rings that have not been assigned to a bird (assigned rings cannot be deleted without being un-assigned first, to prevent loss of data on rings that are in active use). Rings can be deleted by clicking on the bin icon (if the
+            bin cannot be displayed, it is replaced by the text 'Delete Ring'). The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-rfid.js</code>) to delete this ring record from the database.
         </p>
         <h3>5.8.5 Future Improvements</h3>
         <p>
             <ul>
-                <li><strong>Allow insertion of single rings.</strong><br> Currently rings can only be inserted via a CSV upload. Although this is handy when inserting a large volume of records,
-                it makes inserting single records tedious. A manual-entry form could be included to insert new rings into the system one-by-one.<br>
-                This wasn't included as the <a href="Phase5/Img/usecase-importrings.png" target="_blank">relevant use case (click on link to view)</a> only detailed bulk upload. Nevertheless, from a user's
-                perspective, manual entry could come in handy once in a while, and from a developer's perspective, this would be a relatively simple task.
+                <li><strong>Allow insertion of single rings.</strong><br> Currently rings can only be inserted via a CSV upload. Although this is handy when inserting a large volume of records, it makes inserting single records tedious. A manual-entry form
+                    could be included to insert new rings into the system one-by-one.<br> This wasn't included as the <a href="Phase5/Img/usecase-importrings.png" target="_blank">relevant use case (click on link to view)</a> only detailed bulk upload.
+                    Nevertheless, from a user's perspective, manual entry could come in handy once in a while, and from a developer's perspective, this would be a relatively simple task.
                 </li>
             </ul>
             <ul>
-                <li><strong>Allow ring assignment from this screen.</strong><br>Currently rings can only be assigned to birds via the Bird View. It would be useful for the user to be able to
-                    also assign rings from this screen.<br>
-                    This functionality wasn't considered for development as the user is already able to assign rings through other means, however it would increase user efficiency / productivity if the task could be
-                    achieved via this screen too.
+                <li><strong>Allow ring assignment from this screen.</strong><br>Currently rings can only be assigned to birds via the Bird View. It would be useful for the user to be able to also assign rings from this screen.<br> This functionality wasn't
+                    considered for development as the user is already able to assign rings through other means, however it would increase user efficiency / productivity if the task could be achieved via this screen too.
                 </li>
             </ul>
             <ul>
-                <li><strong>Allow user to view the bird details by clicking on the bird name.</strong><br>The bird names in the 'Assigned to Bird' column could be clickable and bring up bird details.<br>
-                    This functionality wasn't added due to an oversight, as such functionality already exists in similar pages, such as Live View.
+                <li><strong>Allow user to view the bird details by clicking on the bird name.</strong><br>The bird names in the 'Assigned to Bird' column could be clickable and bring up bird details.<br> This functionality wasn't added due to an oversight,
+                    as such functionality already exists in similar pages, such as Live View.
                 </li>
             </ul>
             <ul>
-                <li><strong>Relax CSV validation.</strong><br>The <code>papaparse</code> library is quite powerful and able to deal with CSV files in different formats, so current CSV validation
-                    is unnecessarily strict. Some of the rules, such as column order, could be removed altogether.<br>
-                    This wasn't done due to security concerns about allowing the users to upload files in various formats to the back-end. Extensive testing could alleviate these concerns but wasn't
-                    performed due to time constraints.
+                <li><strong>Relax CSV validation.</strong><br>The <code>papaparse</code> library is quite powerful and able to deal with CSV files in different formats, so current CSV validation is unnecessarily strict. Some of the rules, such as column order,
+                    could be removed altogether.<br> This wasn't done due to security concerns about allowing the users to upload files in various formats to the back-end. Extensive testing could alleviate these concerns but wasn't performed due to time
+                    constraints.
                 </li>
             </ul>
         </p>
     </div>
     <div id="nest">
-            <h2>5.9 Nest Management <button><a href="#title">Back to Top </a></button></h2>
-            <h3>5.9.1 Manage Nest Sites Screen</h3>
-            <img src="Phase5/Img/managenests-ss.png" class="center"></img>
-            <h3>5.9.2 About Nest Sites</h3>
-            <p>
-                Nest sites are created to have references to locations on the site that can hold additional data about the locations such as coordinates and description. They are used in bird records
-                to indicate important locations - for example, where the bird was hatched, or where it is currently breeding.
-            </p>
-            <h3>5.9.3 Creating Nest Sites</h3>
-            <img src="Phase5/Img/createnest-ss.png" class="center"></img>
-            <p>
-                Nest sites are created through a modal form seen in the screenshot above. The following live validation is performed on the form to ensure data integrity:
-                <ul>
-                    <li>
-                        Nestsite name must be present and unique
-                    </li>
-                    <li>
-                        Distance, latitude and longitude must be either empty or valid numbers (decimal points allowed)
-                    </li>
-                </ul>
-                If an invalid value is detected, the field is highlited in red and the user isn't allowed to submit the form until they enter valid values:
-                <div><img src="Phase5/Img/invalidnestform-ss.png" class="center"></img></div>
-                If all values are valid, the data is sent to the back-end (<code>create-nestsite.js</code>) where the nest record is inserted in the database.
-            </p>
-            <h3>5.9.4 Viewing Nest Sites</h3>
-            <p>
-                The nests are displayed in a simple paginated HTML table, following the design of similar pages. The nest data for the current page is pulled from the back-end (<code>get-nestsite.js</code>) and the table is populated using a v-for loop.
-            </p>
-            <h3>5.9.5 Editing Nest Sites</h3>
-            <p>
-                The user can edit data on any nest site, except for its name. This is done by clicking on the 'Pencil' icon in the Actions column. If the icon can't be displayed, the text 'Edit nestsite'
-                is shown instead. The edit screen is the same as the create screen seen in 5.9.3, with the exception that all fields are pre-poulated with existing data and the 'Nestsite name' field is disabled. When the user clicks 'Save', the new data is sent to the back-end (<code>edit-nestsite.js</code>) and the relevant record updated.<br><br>
-                The user can delete any nest sites, including ones that are assigned to birds. In this case, the nest site will be removed from the bird's record. 
-                This is done by clicking on the 'Bin' icon in the Actions column. If the icon can't be displayed, the text 'Delete nestsite' is shown instead. The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-nestsite.js</code>) to delete this nestsite record from the database.
-            </p>
-            <h3>5.8.6 Future Improvements</h3>
-            <p>
-                <ul>
-                    <li><strong>Allow breeding site assignment from this screen.</strong><br>Currently breeding sites can only be assigned to birds via the Bird View. It would be useful for the user to be able to
-                        also assign breeding sites from this screen.<br>
-                        This functionality wasn't considered for development as the user is already able to assign breeding sites through other means, however it would increase user efficiency / productivity if the task could be
-                        achieved via this screen too.
-                    </li>
-                </ul>
-                <ul>
-                    <li><strong>Allow user to view the bird details by clicking on the bird name.</strong><br>The bird names in the 'Occupied by' columns could be clickable and bring up bird details.<br>
-                        This functionality wasn't added due to an oversight, as such functionality already exists in similar pages, such as Live View.
-                    </li>
-                </ul>
-            </p>
+        <h2>5.9 Nest Management <button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.9.1 Manage Nest Sites Screen</h3>
+        <img src="Phase5/Img/managenests-ss.png" class="center"></img>
+        <h3>5.9.2 About Nest Sites</h3>
+        <p>
+            Nest sites are created to have references to locations on the site that can hold additional data about the locations such as coordinates and description. They are used in bird records to indicate important locations - for example, where the bird was hatched,
+            or where it is currently breeding.
+        </p>
+        <h3>5.9.3 Creating Nest Sites</h3>
+        <img src="Phase5/Img/createnest-ss.png" class="center"></img>
+        <p>
+            Nest sites are created through a modal form seen in the screenshot above. The following live validation is performed on the form to ensure data integrity:
+            <ul>
+                <li>
+                    Nestsite name must be present and unique
+                </li>
+                <li>
+                    Distance, latitude and longitude must be either empty or valid numbers (decimal points allowed)
+                </li>
+            </ul>
+            If an invalid value is detected, the field is highlited in red and the user isn't allowed to submit the form until they enter valid values:
+            <div><img src="Phase5/Img/invalidnestform-ss.png" class="center"></img>
+            </div>
+            If all values are valid, the data is sent to the back-end (<code>create-nestsite.js</code>) where the nest record is inserted in the database.
+        </p>
+        <h3>5.9.4 Viewing Nest Sites</h3>
+        <p>
+            The nests are displayed in a simple paginated HTML table, following the design of similar pages. The nest data for the current page is pulled from the back-end (<code>get-nestsite.js</code>) and the table is populated using a v-for loop.
+        </p>
+        <h3>5.9.5 Editing Nest Sites</h3>
+        <p>
+            The user can edit data on any nest site, except for its name. This is done by clicking on the 'Pencil' icon in the Actions column. If the icon can't be displayed, the text 'Edit nestsite' is shown instead. The edit screen is the same as the create screen
+            seen in 5.9.3, with the exception that all fields are pre-poulated with existing data and the 'Nestsite name' field is disabled. When the user clicks 'Save', the new data is sent to the back-end (<code>edit-nestsite.js</code>)
+            and the relevant record updated.<br><br> The user can delete any nest sites, including ones that are assigned to birds. In this case, the nest site will be removed from the bird's record. This is done by clicking on the 'Bin' icon in the Actions
+            column. If the icon can't be displayed, the text 'Delete nestsite' is shown instead. The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-nestsite.js</code>) to delete this nestsite record
+            from the database.
+        </p>
+        <h3>5.8.6 Future Improvements</h3>
+        <p>
+            <ul>
+                <li><strong>Allow breeding site assignment from this screen.</strong><br>Currently breeding sites can only be assigned to birds via the Bird View. It would be useful for the user to be able to also assign breeding sites from this screen.<br>                    This functionality wasn't considered for development as the user is already able to assign breeding sites through other means, however it would increase user efficiency / productivity if the task could be achieved via this screen too.
+                </li>
+            </ul>
+            <ul>
+                <li><strong>Allow user to view the bird details by clicking on the bird name.</strong><br>The bird names in the 'Occupied by' columns could be clickable and bring up bird details.<br> This functionality wasn't added due to an oversight, as
+                    such functionality already exists in similar pages, such as Live View.
+                </li>
+            </ul>
+        </p>
     </div>
     <div id="user">
         <h2> User Management <button><a href="#title">Back to Top </a></button></h2>
