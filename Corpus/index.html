@@ -209,7 +209,7 @@
             </tr>
             <tr>
                 <td> 5.11 </td>
-                <td><a href="#useract"> User Activity Management </a></td>
+                <td><a href="#useract"> User Activity Monitoring </a></td>
                 <td> Karlis Jaunslavietis </td>
                 <td></td>
             </tr>
@@ -775,7 +775,7 @@
         <img src="Phase5/Img/managerings-ss.png" class="center"></img>
         <h3>5.8.2 Importing Rings</h3>
         <p>
-            Rings are uploaded to the system in bulk, by the user submitting a <a href="Phase5/Asset/test.csv" target="_blank">CSV file (click link for example of valid CSV)</a>. When the user uploads a CSV file, it is validated client-side using the following criteria, all of which must pass:
+            Rings are uploaded to the system in bulk (given Create privileges), by the user submitting a <a href="Phase5/Asset/test.csv" target="_blank">CSV file (click link for example of valid CSV)</a>. When the user uploads a CSV file, it is validated client-side using the following criteria, all of which must pass:
             <ul>
                 <li>
                     It is comma-separated column-wise
@@ -805,7 +805,7 @@
         </p>
         <h3>5.8.4 Editing Rings</h3>
         <p>
-            The user is able to delete rings that have not been assigned to a bird (assigned rings cannot be deleted without being un-assigned first, to prevent loss of data on rings that are in active use). Rings can be deleted by clicking on the bin icon (if the bin cannot be displayed, it is replaced by the text 'Delete Ring').
+            The user is able to delete rings (given the right privileges) that have not been assigned to a bird (assigned rings cannot be deleted without being un-assigned first, to prevent loss of data on rings that are in active use). Rings can be deleted by clicking on the bin icon (if the bin cannot be displayed, it is replaced by the text 'Delete Ring').
             The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-rfid.js</code>) to delete this ring record from the database.
         </p>
         <h3>5.8.5 Future Improvements</h3>
@@ -850,7 +850,7 @@
             <h3>5.9.3 Creating Nest Sites</h3>
             <img src="Phase5/Img/createnest-ss.png" class="center"></img>
             <p>
-                Nest sites are created through a modal form seen in the screenshot above. The following live validation is performed on the form to ensure data integrity:
+                Nest sites are created through a modal form seen in the screenshot above (given Create privileges). The following live validation is performed on the form to ensure data integrity:
                 <ul>
                     <li>
                         Nestsite name must be present and unique
@@ -869,12 +869,12 @@
             </p>
             <h3>5.9.5 Editing Nest Sites</h3>
             <p>
-                The user can edit data on any nest site, except for its name. This is done by clicking on the 'Pencil' icon in the Actions column. If the icon can't be displayed, the text 'Edit nestsite'
+                The user can edit data on any nest site (given the right privileges), except for its name. This is done by clicking on the 'Pencil' icon in the Actions column. If the icon can't be displayed, the text 'Edit nestsite'
                 is shown instead. The edit screen is the same as the create screen seen in 5.9.3, with the exception that all fields are pre-poulated with existing data and the 'Nestsite name' field is disabled. When the user clicks 'Save', the new data is sent to the back-end (<code>edit-nestsite.js</code>) and the relevant record updated.<br><br>
-                The user can delete any nest sites, including ones that are assigned to birds. In this case, the nest site will be removed from the bird's record. 
+                The user can delete any nest sites (given the right privileges), including ones that are assigned to birds. In this case, the nest site will be removed from the bird's record. 
                 This is done by clicking on the 'Bin' icon in the Actions column. If the icon can't be displayed, the text 'Delete nestsite' is shown instead. The user is prompted for confirmation and, if they accept, a request is sent to the backend (<code>delete-nestsite.js</code>) to delete this nestsite record from the database.
             </p>
-            <h3>5.8.6 Future Improvements</h3>
+            <h3>5.9.6 Future Improvements</h3>
             <p>
                 <ul>
                     <li><strong>Allow breeding site assignment from this screen.</strong><br>Currently breeding sites can only be assigned to birds via the Bird View. It would be useful for the user to be able to
@@ -891,16 +891,19 @@
             </p>
     </div>
     <div id="user">
-        <h2> User Management <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.10 User Management <button><a href="#title">Back to Top </a></button></h2>
+
     </div>
     <div id="useract">
-        <h2> User Activity Management <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.11 User Activity Monitoring <button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.11.1 User Activity Monitor Screen</h3>
+        <img src="Phase5/Img/uam-ss.png" class="center"></img>
     </div>
     <div id="over">
-        <h2> Account Overview <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.12 Account Overview <button><a href="#title">Back to Top </a></button></h2>
     </div>
     <div id="utils">
-        <h2> Utilities <button><a href="#title">Back to Top </a></button></h2>
+        <h2>5.13 Utilities <button><a href="#title">Back to Top </a></button></h2>
     </div>
     <div id="sysdi">
         <h2> System Diagram <button><a href="#title">Back to Top </a></button></h2>
