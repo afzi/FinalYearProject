@@ -989,6 +989,26 @@ module.exports = {
     </div>
     <div id="over">
         <h2>5.12 Account Overview <button><a href="#title">Back to Top </a></button></h2>
+        <h3>5.12.1 Account Overview Screen</h3>
+        <img src="Phase5/Img/accountoverview-ss.png" class="center"></img>
+        <h3>5.12.2 Viewing Account Overview</h3>
+        <p>
+            Account Overview is a simple screen that shows the user's full name, username, privileges and registration date.
+            It also allows the user to update their full name and password.
+
+        </p>
+        <h3>5.12.3 Editing Account Details</h3>
+        <p>
+            The user is able to update their full name and password by using the 'Edit profile' and 'Change password' buttons, respectively:
+            <div>
+                <img src="Phase5/Img/editaccount-ss.png" class="center"></img>
+            </div>
+            Live validation is done on the password field to ensure that it is at least 6 characters long, and the password confirmation matches.
+            Live validation is also done on the full name field to ensure that the full name isn't empty. If validation fails, the field is highlited in red
+            and the user is prevented from saving the form.<br>
+            When clicking save, the data is sent to the back-end (<code>update-password.js</code> for password and <code>update-profile.js</code> for full name),
+            where the relevant database record is then updated with the new data.
+        </p>
     </div>
     <div id="utils">
         <h2>5.13 Utilities <button><a href="#title">Back to Top </a></button></h2>
