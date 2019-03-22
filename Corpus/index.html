@@ -927,6 +927,65 @@ module.exports = {
         <h2>5.11 User Activity Monitoring <button><a href="#title">Back to Top </a></button></h2>
         <h3>5.11.1 User Activity Monitor Screen</h3>
         <img src="Phase5/Img/uam-ss.png" class="center"></img>
+        <h3>5.11.2 Viewing User Activity Monitor</h3>
+        <p>
+            The User Activity Monitor screen, seen in section 5.11.1, shows actions taken by users that modified the data in some way. The following actions are logged:
+            <ul>
+                <li>Create / edit bird</li>
+                <li>Create / edit / delete nestsite</li>
+                <li>Import / delete RFID ring</li>
+                <li>Create / edit / delete user</li>
+                <li>Edit your own full name / password</li>
+            </ul>
+            The logs are displayed in a simple paginated HTML table, following the design of similar pages. The logs for the current page is pulled from the back-end (<code>get-changelog.js</code>) and the table is populated using a v-for loop.<br>
+            Filtering is available on username, date range, action and data (all of these, except for date, are a contains-match). Filtering is done in the backend and the list of matching logs is updated as soon as the user types or edits anything in any of the filter fields.<br>
+            The associated data can be viewed by clicking on the 'eye' icon in the action column (if this icon can't be displayed, the text 'View Data' is shown instead).
+            The user is then presented with a screen showing the data that was changed:
+            <div>
+                <img src="Phase5/Img/viewdata-ss.png" class="center"></img>
+            </div>
+        </p>
+        <h3>5.11.3 Logging actions</h3>
+        <p>
+            Actions are logged using the <code>logActivity</code> function (<code>log-activity.js</code>). The controller of the modifying action
+            is responsible for the format of the data it passes to this function and adding / excluding any data (such as passwords). The <code>logActivity</code> function
+            takes four parameters: <code>oldData</code>, <code>newData</code>, <code>action</code> and <code>user</code>. It is responsible for removing any data that's
+            duplicated in oldData and newData (so only attributes different between the two are stored), converting the data from JSON to string, and storing it in the database:
+            <pre><code>
+        fn: async function (inputs, exits) {
+            let newDataDiff = _.diff(inputs.newData, inputs.oldData);
+            let oldDataDiff = _.diff(inputs.oldData, inputs.newData);
+        
+            await Changelog.create({
+                user: inputs.userId,
+                action: inputs.action,
+                newData: JSON.stringify(newDataDiff, null, '\t'),
+                oldData: JSON.stringify(oldDataDiff, null, '\t')
+            })
+            return exits.success();
+            }
+            </code></pre>
+            Some further formatting is done by the frontend before displaying the data, in order to improve readability, such as removing curly brackets, extra quotes, inserting line-breaks where required.
+        </p>
+        <h3>5.11.4 Future improvements</h3>
+        <ul>
+            <li>
+                <strong>Present the data in a more readable format.</strong><br>
+                Currently, relatively little formatting is done on the raw data used in the backend. For example, for the most part, the
+                attribute names are shown how they appear in the database, rather than how they appear in the front-end (for example, 'fledgedWhere' instead of 'Where Fledged').
+                This would improve readability and make it more user-friendly, as this screen is intended to be used by both technical and non-technical users.<br>
+                This wasn't done as it would require planning to prevent the codebase from becoming convulated, and it was viewed as a relatively insignificant improvement,
+                so wasn't prioritised.
+            </li>
+            <li>
+                <strong>Add a scheduled clean-up function.</strong><br>
+                As the system is used over years, the database table of logs will grow larger and larger. Currently there is no way to delete old data without executing manual
+                database queries. This doesn't affect the user experience as they are able to filter the logs by date-range (a default date-range filter of a 1-month period is applied).
+                However, there is a risk that this table grows too large and starts using up database resources that could be better used elsewhere.<br>
+                This wasn't done as as pruning of old logs wasn't discussed with the user, so the feature wasn't added
+                to avoid introducing unexpected behaviour / causing data loss. Furthermore, it is an issue that is highly unlikely to occur within the foreseeable future, and can easily be added at any later time even by developers who aren't familiar with the overall system.
+            </li>
+        </ul>
     </div>
     <div id="over">
         <h2>5.12 Account Overview <button><a href="#title">Back to Top </a></button></h2>
