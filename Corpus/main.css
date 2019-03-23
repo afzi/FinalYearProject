@@ -84,12 +84,12 @@ footer {
     margin-bottom: 0px;
 }
 
-button {
+.bu {
     background-color: white;
     border: none;
     text-decoration: none;
     border: 2px solid #83CBD7;
-    text-decoration: none;
+    font-size: small;
 }
 
 h3 {

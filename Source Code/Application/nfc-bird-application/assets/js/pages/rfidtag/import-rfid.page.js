@@ -157,25 +157,27 @@ parasails.registerPage('import-rfid', {
     },
 
     parseCsv: function(e) {
-      this.csvValid = false;
-      Vue.set(this.formErrors, 'csvUpload', false);
-      this.statusText = "Parsing..."; 
+      if(e.target && e.target.files && e.target.files[0]) {
+        this.csvValid = false;
+        Vue.set(this.formErrors, 'csvUpload', false);
+        this.statusText = "Parsing..."; 
 
-      // var reader = new FileReader();
+        // var reader = new FileReader();
 
-      // reader.onload = (file) => {
-      //   papaparse.parse(file, this.validateCsv);
-      // }
+        // reader.onload = (file) => {
+        //   papaparse.parse(file, this.validateCsv);
+        // }
 
-      papaparse.parse(e.target.files[0], {
-        complete: this.validateCsv,
-        error: () => {
-          this.formErrors.csvUpload = true;
-          this.statusText = "CSV invalid";
-        },
-        header: true,
-        skipEmptyLines: true
-      });
+        papaparse.parse(e.target.files[0], {
+          complete: this.validateCsv,
+          error: () => {
+            this.formErrors.csvUpload = true;
+            this.statusText = "CSV invalid";
+          },
+          header: true,
+          skipEmptyLines: true
+        });
+      }
     },
 
     promptDeleteRing: async function(index) {

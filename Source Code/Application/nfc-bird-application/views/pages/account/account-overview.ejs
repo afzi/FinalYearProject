@@ -29,6 +29,15 @@
       <div class="col"><strong>{{me.username}}</strong></div>
       <div class="col-3">Registered since:</div>
       <div class="col"><strong>{{new Date(me.createdAt).toLocaleDateString('en-GB')}}</strong></div>
+      <div class="col-3">Privileges:</div>
+      <ul>
+        <li v-show="me.hasRead"><strong>Read</strong></li>
+        <li v-show="me.hasCreateEdit"><strong>Create</strong></li>
+        <li v-show="me.hasEditFull"><strong>Edit</strong></li>
+        <li v-show="me.hasExport"><strong>Export</strong></li>
+        <li v-show="me.hasAdmin"><strong>Admin</strong></li>
+        <li v-show="me.isSuperAdmin"><strong>Super-admin</strong></li>
+      </ul>
     </div>
     <hr/>
     <div class="row mb-3">

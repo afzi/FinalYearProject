@@ -21,6 +21,7 @@
     "sails-hook-sockets": "^1.5.5",
     "sails-mysql": "^1.0.1",
     "stream": "0.0.2",
+    "underscore": "^1.9.1",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vuejs-paginate": "^2.1.0"
   },

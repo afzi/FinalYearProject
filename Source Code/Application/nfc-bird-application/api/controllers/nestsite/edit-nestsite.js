@@ -69,7 +69,7 @@ module.exports = {
         }
       }
 
-        var newNestsite = await Nestsite.update({id: inputs.id})
+        var newNestsite = await Nestsite.updateOne({id: inputs.id})
         .set({
             nestID: inputs.nestID,
             nestDescription: inputs.nestDescription,
@@ -77,8 +77,7 @@ module.exports = {
             editedBy: this.req.session.userId
           })
           .intercept('E_UNIQUE', 'alreadyInUse')
-          .intercept({name: 'UsageError'}, 'invalid')
-          .fetch();
+          .intercept({name: 'UsageError'}, 'invalid');
 
           delete newNestsite.createdAt;
           delete newNestsite.updatedAt;

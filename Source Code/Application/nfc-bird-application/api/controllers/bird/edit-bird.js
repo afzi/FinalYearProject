@@ -325,6 +325,13 @@ module.exports = {
 
       if(inputs.nfcRingID) {
         await RFIDTag.update({
+          birdID: inputs.id
+        }).set({
+          birdID: null
+        })
+        .usingConnection(db)
+
+        await RFIDTag.update({
           nfcRFID: inputs.nfcRingID
         }).set({
           birdID: inputs.id
@@ -347,7 +354,7 @@ module.exports = {
         .usingConnection(db)
         .fetch();
 
-        var previousNestsite = await Birdnest.findOne({where: {birdID: bird.id}, sort: 'dateEntered DESC'}).usingConnection(db);
+        var previousNestsite = await Birdnest.find({where: {birdID: bird.id}, sort: 'dateEntered DESC', limit: 1}).usingConnection(db)[0];
 
         if(previousNestsite && previousNestsite.dateEntered <= newNest.dateEntered) {
           await Birdnest.update({id: previousNestsite.id}).set({dateLeft: previousNestsite.dateEntered}).usingConnection(db);
@@ -368,9 +375,9 @@ module.exports = {
       if(editBird.releasedWhere) editBird.releasedWhere = editBird.releasedWhere.nestID;
       if(editBird.fledgedWhere) editBird.fledgedWhere = editBird.fledgedWhere.nestID;
 
-      if(bird.hatchedWhere) bird.hatchedWhere = inputs.hatchedWHere;
+      if(bird.hatchedWhere) bird.hatchedWhere = inputs.hatchedWhere;
       if(bird.laidWhere) bird.laidWhere = inputs.laidWhere;
-      if(bird.releasedWhere) bird.releasedhere = inputs.releasedWhere;
+      if(bird.releasedWhere) bird.releasedWhere = inputs.releasedWhere;
       if(bird.fledgedWhere) bird.fledgedWhere = inputs.fledgedWhere;
 
       if(bird.releasedWhen) bird.releasedWhen = new Date(bird.releasedWhen*1000).toLocaleDateString('en-GB')
@@ -387,11 +394,13 @@ module.exports = {
       delete bird.updatedAt;
       delete bird.createdBy;
       delete bird.updatedBy;
+      delete bird.editedBy;
 
       delete editBird.createdAt;
       delete editBird.updatedAt;
       delete editBird.createdBy;
       delete editBird.updatedBy;
+      delete editBird.editedBy;
 
       await sails.helpers.logActivity(this.req.me.id, 'Edited a bird', bird, editBird);
 

@@ -83,10 +83,9 @@ module.exports = {
       // Build up data for the new user record and save it to the database.
       var oldUserRecord = await User.findOne({id: inputs.id});
 
-      var newUserRecord = await User.update({id: inputs.id})
+      var newUserRecord = await User.updateOne({id: inputs.id})
           .set(updateQuery)
-      .intercept({name: 'UsageError'}, 'invalid')
-      .fetch();
+      .intercept({name: 'UsageError'}, 'invalid');
 
       let inputsWrapper = inputs;
       let vm = this;
@@ -111,6 +110,7 @@ module.exports = {
       delete oldUserRecord.createdBy;
       delete oldUserRecord.updatedBy;
 
+      oldUserRecord.password = "<hidden>";
       newUserRecord.password = "<hidden>";
       await sails.helpers.logActivity(this.req.me.id, 'Edited user account', newUserRecord, oldUserRecord);
     }
