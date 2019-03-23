@@ -983,7 +983,7 @@
             and the table is populated using a v-for loop. When the page is loaded, instead of displaying all the information about the birds it only displays the important and frequently accessed
             information which was discussed and agreed with the client.</br>
             Filtering is available on the fields using a contains-match excpet for "Gender", "Status" and "Breeder" which are made a drop down options for user to choose from instead of typing.
-            Filtering is done in the backend and the list of matching Birds is updated as soon as the user types or edits anything in any of the filter fields
+            Filtering is done in the backend and the list of matching Birds is updated as soon as the user types or edits anything in any of the filter fields. All filters can be cleared by clicking "Clear Filters" button.
         </p>
         <h3>5.6.2 More Fields</h3>
         <img src="Phase5/Img/more-data.png" class="center"></img>
@@ -996,9 +996,18 @@
         <h3>5.6.3 Viewing Single Bird</h3>
         <img src="Phase5/Img/single-bird.png" class="center"></img>
         <p>
-            Each row from the Birds table can be clicked to get further details of the specific bird. Details are displayed in a modal, which are divided into 4 main sections.
-            
+            Each row from the Birds table can be clicked to get further details of the specific bird. Details are displayed in a modal using v-for loop. 
+            Details of the bird are divided into 4 main sections including the past visit history of the bird which is displayed in an other paginated table(image below). 
+        </br>
+            Condition History is also added in the single view which displays the most currently added condition of the bird. Condition History can be expanded further to see the past conditions of the bird.
+    </br>
+            All birds can be edited from single bird view by clicking the edit button. The modal can be closed by either clicking close button or simply cliking outside the modal.
+        <img src="Phase5/Img/past-visit.png" class="center"></img>
         </p>
+
+        <h3>5.6.4 Edit Bird</h3>
+
+        <h3>5.6.5 Register Bird</h3>
 
 
     </div>
