@@ -611,7 +611,7 @@
                 </li>
             </ul>
             Parameters related to the database are the only required values as the service can't make reasonable default guesses. The static step also internally sets the default values where applicable. If one of the conditions above is not satisfied, the service
-            exits with a descriptive error message (eg. <code>"Missing required config param db_name"</code>). If a default value is used, the service outputs a log informing the user (eg. <code>"Mising optional config param log_level, using default = 'WARNING'"</code>,
+            exits with a descriptive error message (eg. <code>"Missing required config param db_name"</code>). If a default value is used, the service outputs a log informing the user (eg. <code>"Missing optional config param log_level, using default = 'WARNING'"</code>,
             or <code>"Unknown log_level value TRACE in config, must be one of 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL'. Using default = 'WARNING'"</code>).<br><br> The dynamic step occurs when the service attempts to use the provided parameters
             to connect to the database and serial port. If either of the connections fail, the service exits with an error message informing the user what went wrong (eg. <code>"Couldn't connect to database, make sure it's running and the correct connection params are set in config.py"</code>).
         </p>
@@ -738,10 +738,10 @@
         <h2> 5.2 Database & Models <a class="bu" href="#">Back to Top </a></h2>
         <h3>5.2.1 Creation</h3>
         <p>
-            in the early stages of development we used Sails' built-in datastore called: <code> sails-disk</code>. This let us manually create entries that only exisited during that run of the program. This was fine for when we were creating simple pages
+            in the early stages of development we used Sails' built-in datastore called: <code> sails-disk</code>. This let us manually create entries that only existed during that run of the program. This was fine for when we were creating simple pages
             such as the login page but in the larger tests and for actual production we needed a proper database, so around the time that live view was starting to be developed the MySQL database was created. With use of v1 of the database diagram, scripts
-            were made to create corisponding tables. <br><br> These tables were then used to generate the Models in our Source Code, <code>located in api/models</code>, using the Node Plugin <a href="https://www.npmjs.com/package/sails-inverse-model" target="_blank"><code>sails-inverse-model</code> (click to go to plugin's npm page)</a>.<br><br>
-            These models have a set of built-in methods that allow us to interact with the database. <br><br>If these models are modifed Sails can uses them to create new tables by running the system using <code>sails lift --drop</code> to drop the old tables and create new ones. So after the first versions of models were generated we could just update the models instead of updating the original scripts and reruning. Although we could have used this method of creating the model first and letting Sails create the tables to make the orignal version We selected to use the script method as it was easier to verify that the diagram was actually workable and to check if Sails handled the data types we wanted as expected.<br><br> Below is an example of one of the simpler table, <b>visit</b> and it's create script along with the generated model.
+            were made to create corresponding tables. <br><br> These tables were then used to generate the Models in our Source Code, <code>located in api/models</code>, using the Node Plugin <a href="https://www.npmjs.com/package/sails-inverse-model" target="_blank"><code>sails-inverse-model</code> (click to go to plugin's npm page)</a>.<br><br>
+            These models have a set of built-in methods that allow us to interact with the database. <br><br>If these models are modified Sails can uses them to create new tables by running the system using <code>sails lift --drop</code> to drop the old tables and create new ones. So after the first versions of models were generated we could just update the models instead of updating the original scripts and rerunning. Although we could have used this method of creating the model first and letting Sails create the tables to make the original version We selected to use the script method as it was easier to verify that the diagram was actually workable and to check if Sails handled the data types we wanted as expected.<br><br> Below is an example of one of the simpler table, <b>visit</b> and it's create script along with the generated model.
             <pre><code> 
 CREATE TABLE visit (
     createdAt bigint(20) DEFAULT NULL,
@@ -781,17 +781,18 @@ module.exports = {
     </div>
     <div id="css">
         <h2> 5.3 CSS Styling & Matching UI Design <a class="bu" href="#">Back to Top </a></h2>
-        <h3>5.3.1 Initial Styling</h3>
+        <h3>5.3.1 Initial Styling - Priyesh Patel</h3>
+        <p>
+            Sails.js provides an overall page layout in which common elements can be put and the body of the page can be injected when ran, originally the common elements included both the header and footer bars but for our system we altered the footer on most pages so I removed this and switched it to be injected with the body. For the actual styling Sails has Bootstrap 4 preinstalled (a vast library of front-end elements) so we used this as a base and modified what we needed, for a proof of concept I stylized the live view page using some quick inline CSS, this was then taken over by Afzaal who extracted CSS to their own files and tweaked, added to and applied them globally.
+        </p>
+        <h3>5.3.2 Full System Styling - Afzaal Ahmad Razeem</h3>
         <p>
             
         </p>
-        <h3>5.3.2 Full System Styling</h3>
+        <h3>5.3.2 UI Design Compliance & Client Requested Changes - All</h3>
         <p>
-            
-        </p>
-        <h3>5.3.2 UI Design Compliance & Client Requested Changes</h3>
-        <p>
-            
+            throughout the styling process we used the latest UI Design as our reference, and for pages that weren't fully defined we used some common sense and made sure the overall style matched the rest of the defined pages. There are some discrepancies between UI Design and the end product due to some input we gathered from the client during live demonstration meetings (see screenshot below), such as the buttons for adding new records being moved above tables instead of below and some name changes.
+            <img src="Phase5/Img/clientStyle.png" class="center"></img>
         </p>
     </div>
     <div id="log">
