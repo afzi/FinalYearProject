@@ -1,7 +1,7 @@
 <div id="get-bird" v-cloak>
     <div class="container" v-if="!cloudSuccess">
         <div class="flex-container">
-            <button class="btn btn-dark" data-toggle="modal" data-target="#createBirdModal" @click="openCreateBirdModal" v-if="me.hasCreateEdit || me.hasEditFull">Register
+            <button class="btn btn-dark" data-toggle="modal" data-target="#createBirdModal" @click="openCreateBirdModal" v-show="me.hasCreateEdit">Register
             New Bird</button>
             <button class="btn btn-dark" data-toggle="modal" data-target="#createUserModal" @click="storeCurrent">More Fields</button>
             <button class="btn btn-dark" @click="exportToExcel" v-if="me.hasExport">Export</button>

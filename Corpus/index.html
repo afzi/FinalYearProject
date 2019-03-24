@@ -1219,6 +1219,107 @@
     </div>
     <div id="user">
         <h2>5.10 User Management <a class="bu" href="#">Back to Top </a></h2>
+        <h3>5.10.1 Manage Users Screen</h3>
+        <img src="Phase5/Img/manageusers-ss.png" class="center"></img>
+        <h3>5.10.2 User Privileges</h3>
+        <p>
+            A user can have the following privileges:
+            <ul>
+                <li>
+                    <strong>Read</strong> - this privilege allows the user to read all non-admin data (birds, visits, nest sites, rings)
+                </li>
+                <li>
+                    <strong>Create</strong> (includes Read) - this privilege allows the user to create non-admin data (birds, visits, nest sites, rings) and edit / delete records that they have created, but not records made by other users
+                </li>
+                <li>
+                    <strong>Edit</strong> (includes Create) - this privilege allows the user to edit / delete all non-admin data (birds, visits, nest sites, rings)
+                </li>
+                <li>
+                    <strong>Export</strong> (includes Read) - this privilege allows the user export bird data to spreadsheet
+                </li>
+                <li>
+                    <strong>Admin</strong> (includes all above) - this privilege allows the user to create, edit, view and delete admin data (user management & user activity monitor)
+                </li>
+                <li>
+                    <strong>Super Admin</strong> - this privilege gives the user the same level of access as Admin. Super Admin users can only be created, updated or deleted via manual database queries. This privilege was added to prevent the possibility of users being locked out of the system in the case that all other user accounts are inaccessible.
+                </li>
+            </ul>
+            Privileges are taken into account when granting access in both front-end and back-end. In the front-end, this is normally handled by using v-show directives
+            to control when certain UI elements are rendered. For example, the following button seen in <code>get-bird.ejs</code>:
+            <pre><code>
+                &lt;button class="btn btn-dark" data-toggle="modal" data-target="#createBirdModal" @click="openCreateBirdModal" v-show="me.hasCreateEdit"&gt;Register
+                    New Bird&lt;/button&gt;
+            </code></pre>
+            will only render if the user has Create privileges (represented as hasCreateEdit flag in the code). In the back-end, this is handled using the
+            <code>policies.js</code> file that maps API routes to policies that must pass, or else the user will receive a 403 response.
+        </p>
+        <h3>5.10.3 Creating Users</h3>
+        <img src="Phase5/Img/createuser-ss.png" class="center"></img>
+        <p>
+            Users are created through a modal form seen in the screenshot above. The following live validation is
+            performed on the form to ensure data integrity:
+            <ul>
+                <li>
+                   Username, full name and password must be present and unique
+                </li>
+                <li>
+                    Password must be at least 6 characters and match Confirm Password
+                </li>
+            </ul>
+            If an invalid value is detected, the field is highlited in red and the user isn't allowed to submit the form
+            until they enter valid values:
+            <div><img src="Phase5/Img/invaliduserform-ss.png" class="center"></img>
+            </div>
+            If all values are valid, the data is sent to the back-end (<code>create-user.js</code>) where the password is hashed and the
+            user
+            record is inserted in the database.
+        </p>
+        <h3>5.10.4 Viewing Users</h3>
+        <p>
+            The users are displayed in a simple paginated HTML table, following the design of similar pages. The user
+            data for the current page is pulled from the back-end (<code>get-user.js</code>) and the table is populated
+            using a v-for loop. Filtering
+            is available on the user's full name. Filtering is done in the backend and the list of
+            matching rings is updated as soon as the user types or edits anything in the filter field.
+        </p>
+        <h3>5.10.5 Editing Users</h3>
+        <p>
+            The admin can edit data on any user, except for its username. This is done by clicking on the 'Pencil' icon
+            in the Actions column. If the icon can't be displayed, the text 'Edit user' is shown instead. The edit
+            screen is the same as the create screen
+            seen in 5.10.3, with the exception that non-password fields are pre-poulated with existing data and the 'Username' field is disabled. When the user clicks 'Save', the new data is sent to the back-end
+            (<code>edit-user.js</code>)
+            and the relevant record updated.<br><br> The admin can delete any users, except for themselves and users with Super Admin privileges. In this case, the nest site will be removed from the bird's record. This is done by
+            clicking on the 'Bin' icon in the Actions
+            column. If the icon can't be displayed, the text 'Delete user' is shown instead. The user is prompted
+            for confirmation and, if they accept, a request is sent to the backend (<code>delete-user.js</code>) to
+            delete this nestsite record
+            from the database.<br><br>
+            When a user is edited or deleted via this screen, their session, if active, is terminated. This is achieved with the following code in
+            <code>edit-user.js</code> and <code>delete-user.js</code>:
+            <code><pre>
+                this.req.sessionStore.all((error, sessions) => {
+                    if(sessions) {
+                      for (const nextSession of Object.keys(sessions)) {
+                        if(sessions[nextSession].userId == inputsWrapper.id) {
+                          vm.req.sessionStore.destroy(nextSession, () =>
+                           console.log(`Destroyed session for user with ID ${inputsWrapper.id} as their details were changed`))
+                        }
+                      }
+                    }
+                  })
+            </pre></code>
+        </p>
+        <h3>5.10.6 Future Improvements</h3>
+        <ul>
+            <li>
+                <strong>More filtering options & more information on users.</strong><br>
+                The ability to filter on username and privilege level could be useful and simple from a development perspective. We could also store more information
+                about each user - for example, the last time they were active, or the IP address from which they logged on.<br>
+                This wasn't added as it wasn't required by the user, however it could be suggested as a possible improvement in the future to improve
+                the administration experience.
+            </li>
+        </ul>
 
     </div>
     <div id="useract">

@@ -94,7 +94,8 @@ module.exports = {
         if(sessions) {
           for (const nextSession of Object.keys(sessions)) {
             if(sessions[nextSession].userId == inputsWrapper.id) {
-              vm.req.sessionStore.destroy(nextSession, () => console.log(`Destroyed session for user with ID ${inputsWrapper.id} as their details were changed`))
+              vm.req.sessionStore.destroy(nextSession, () =>
+               console.log(`Destroyed session for user with ID ${inputsWrapper.id} as their details were changed`))
             }
           }
         }
