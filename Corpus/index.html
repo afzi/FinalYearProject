@@ -1042,9 +1042,68 @@
         </p>
 
         <h3>5.6.4 Edit Bird</h3>
+        <img src="Phase5/Img/editbird-ss.png" class="center"></img>
+        <p>
+            Bird data can be edited by pressing the 'Edit' button in Single Bird view. This makes all the fields
+            in Single view editable. 
+            The following live validation is
+            performed on the form to ensure data integrity:
+            <ul>
+                <li>
+                    Bird name must be present and unique
+                </li>
+                <li>
+                    NFC Ring ID, if present, must be a registered ring that's not assigned to another bird
+                </li>
+                <li>
+                    Where Hatched, Where Laid, Where Released, Where Fledged, New Breeding Site, if present, must be valid Nest Site records
+                </li>
+            </ul>
+            When the user clicks 'Save', the new data is sent to the back-end
+            (<code>edit-bird.js</code>), where the appropriate record is updated and saved in the database.
+        </p>
 
         <h3>5.6.5 Register Bird</h3>
-
+        <p>
+            The 'Register Bird' modal can be accessed by pressing the 'Register New Bird' button in the full bird view
+            (described in section 5.6.1). It looks and functions largely the same way as the 'Edit Bird' screen (described in section
+            5.6.4). When the user clicks 'Save', the new data is sent to the back-end
+            (<code>create-bird.js</code>), where the appropriate record is created and saved in the database.
+        </p>
+        <h3>5.6.6 Future Improvements</h3>
+        <ul>
+            <li>
+                <strong>Improve back-end efficiency.</strong> <br>Currently, the <code>get-bird.js</code> controller is very inefficient
+                in the way that it retrieves and processes bird records. This causes degraded performance when viewing or filtering birds.
+                This is because the object-relational mapping (ORM) system used in the backend (<a href="http://waterlinejs.org/" target="_blank">Waterline</a>)
+                doesn't support complex filtering, such as nested fields or joined tables. This means that filtering and pagination must be done at the
+                controller level which is much slower than doing it on the database level. Possible solutions include using a native SQL query or using a different
+                ORM.<br>
+                This wasn't done as it would have taken significant development / testing time to implement either of the two approaches outlined above. Nevertheless,
+                this is one of the priorities when considering future development, as the performance is likely to worsen when more bird records are added.
+            </li>
+            <li>
+                <strong>Split up the modal views.</strong><br> Currently, the single view, edit and create modals are very large with a lot of information being
+                displayed at once. They could be made smaller by, for example, hiding some less-used fields by default.<br>
+                Although the hiding approach was used in the earlier stages of development, the design prototype preferred by the user didn't include the option to hide any fields. Nevertheless, this could
+                still be worked in while taking care not to limit functionality or efficiency of common tasks.
+            </li>
+            <li><strong>Allow user to view nestsite / RFID details by clicking on the relevant field.</strong><br>The RFID / nest site
+                names
+                in the 'NFC Ring ID', 'Where Hatched', 'Where Released', 'Where Fledged', 'Where Laid', 'Current Breeding Site' column could be clickable and bring up details of the relevant record.<br> This
+                functionality wasn't added due to an oversight,
+                as such functionality already exists in similar pages, such as Live View.
+            </li>
+            <li>
+                <strong>
+                    Link parent details to existing birds.</strong><br> Currently, the bird parentage details are a simple text field that makes no attempt
+                    to link to existing birds in the system. Although the user should be able to log parent names even if they're not registered in the system,
+                    it would be useful to match parent details to registered birds, if there are any.<br>
+                    This wasn't done as it would require a change in our data model and, as the user hadn't indicated that they want this field to link
+                    to existing birds, this change wasn't prioritized. Nevertheless, if implemented correctly, it could provide valuable information to the user, without
+                    introducing any negatives.
+            </li>
+        </ul>
 
     </div>
     <div id="export">
