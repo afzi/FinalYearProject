@@ -6,7 +6,7 @@
 
         <table id="all-nestsites" border="1" class="table table-bordered table-condensed table-hover text-nowrap">
             <thead role="rowgroup">
-                <tr role="row" class="birdheader" style="font-weight: bold; background-color: #83cbd7 !important; color: #001117 !important;">
+                <tr role="row" class="birdheader back-green">
                     <th role="columnheader" style="width: 15%;">
                         Nestsite ID
                         <i class="fas fa-chevron-down fa-xs" v-show="currentSortItem !== 'nestID' || (currentSortItem === 'nestID' && currentSortDirection === 'DESC')" @click="setSortItem('nestID', 'DESC')" alt="Sort by Nestsite ID Descending" title="Sort by Nestsite ID Descending"></i>
@@ -37,7 +37,7 @@
 
             <tbody role="rowgroup" id="nestsite-table-body">
                 <tr v-for="(nestsite, index) in currentNestsites">
-                    <td>{{nestsite.nestID}}</td>
+                    <td class="birdJustifyColumn">{{nestsite.nestID}}</td>
                     <td class="text-wrap">{{nestsite.nestDescription}}</td>
                     <td>{{(nestsite.longitude ? nestsite.longitude : "") + ", " + (nestsite.latitude? nestsite.latitude : "")}}
                     </td>
