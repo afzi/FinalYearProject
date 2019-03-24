@@ -950,9 +950,34 @@
         </p>
         <h3>5.3.2 Full System Styling - Afzaal Ahmad Razeem</h3>
         <p>
-
+            A lot of effort has been put to make the overall website interactive and easy to navigate. We have tried to make it consistent and easy to use web interface.
         </p>
-        <h3>5.3.2 UI Design Compliance & Client Requested Changes - All</h3>
+        <h4>5.3.2.1 Contrast and color</h4>
+        <p>
+            We chose the colors very carefully including the theme colors, buttons, text. The chosen colors were agreed with the client and we made sure
+            that they meet usability standards. The colors are kept consistent throughout the website.
+        </p>
+        <h4>5.3.2.2 Buttons</h4>
+        <img src="Phase5/Img/buttons.png" class="center"></img>
+        <p>
+            Many different types of buttons are used(these are shown in the image above). All the buttons are kept consistent throughout the webiste, 
+            for example same button is used for cancel button for the whole website. moreover, position of the buttons is kept consistent as well, 
+            for example cancel/close button are always on the left side of the modals whereas save/create buttons are on the right side.
+        </p>
+        <h4>5.3.2.3 Modals</h4>
+        <p>
+            On different pages, modals have been used instead of new pages. That way we have less pages for the whole website which also makes it easier for users to 
+            navigate through the website. For example, viewing bird, editing bird and registering bird are using modals and can be accessed from birds page. 
+        </p>
+        <h4>5.3.2.4 tables</h4>
+        <p>
+            Tables have been used throughout the website. We have used the same colors, styles, font sizes for all the tables to make is consistent. For example, the first
+            column and first row of every table has a different color which was kept consistent throughout the website.
+        </p>
+
+
+
+        <h3>5.3.3 UI Design Compliance & Client Requested Changes - All</h3>
         <p>
             throughout the styling process we used the latest UI Design as our reference, and for pages that weren't
             fully defined we used some common sense and made sure the overall style matched the rest of the defined
@@ -964,6 +989,23 @@
     </div>
     <div id="log">
         <h2> 5.4 Login / Logout <a class="bu" href="#">Back to Top </a></h2>
+        <h3>5.4.1 Logging in</h3>
+        <img src="Phase5/Img/login.png" style="background-color:#F0F0F0; padding: 20px" class="center"></img>
+        <p>
+            Login is a simple screen that shows two input fields for username and password, and a "Remember me" checkbox for extending the lifetime of the user's session if ticked. User can login using thier unique username and password. When "Sign in" button is clicked,
+            data is sent to the back-end <code>login.js</code> which attempts to look up the user record in the database with the specified username. Then, if the username exists, it uses
+            bcrypt to compare the hashed password from the database with the provided password. If that matches then user is logged in and redicted to the home page.
+        </br>
+            if however, username does not exist in the database or provided email and password combination does not match any user in the database, 
+            it displays a message saying that username and/or password is incorrect.
+            <img src="Phase5/Img/login-2.png" class="center"></img>
+        </p>
+        <h3>5.4.2 Logging out</h3>
+        <p>When user clicks on Log out button, data is sent to <code>logout.js</code>. This action deletes the req.session.userId key from the session of the requesting user agent. 
+            After logging out from a web browser, the user is redirected to the login page. </p>
+
+
+
     </div>
     <div id="live">
         <h2> 5.5 Live View <a class="bu" href="#">Back to Top </a></h2>
