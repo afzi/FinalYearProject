@@ -242,13 +242,13 @@
             <tr>
             <tr>
                 <td>D1</td>
-                <td><a href="#"> Abstract </a></td>
+                <td><a href="ModuleDeliverables/AbstractFinal.pdf" target="_blank"> Abstract </a></td>
                 <td>Elina Voitane</td>
                 <td></td>
             </tr>
             <tr>
                 <td>D2</td>
-                <td><a href="ModuleDeliverables/PosterFinal.pdf"> Poster </a></td>
+                <td><a href="ModuleDeliverables/PosterFinal.pdf" target="_blank"> Poster </a></td>
                 <td>Elina Voitane</td>
                 <td></td>
             </tr>
@@ -260,13 +260,13 @@
             </tr>
             <tr>
                 <td>D4</td>
-                <td><a href="#">Source Code</a> </td>
+                <td><a href="ModuleDeliverables/SourceCode.zip" download>Source Code</a> </td>
                 <td>Karlis Jaunslavietis, Priyesh Patel, Afzaal Ahmad Razeem</td>
                 <td></td>
             </tr>
             <tr>
                 <td>D5</td>
-                <td><a href="#">System Video</a> </td>
+                <td><a href="ModuleDeliverables/VideoFinal.mp4" download>System Video - (if on chrome, right click and save as to download)</a> </td>
                 <td>Priyesh Patel</td>
                 <td></td>
             </tr>
@@ -275,19 +275,13 @@
             </tr>
             <tr>
                 <td>M1</td>
-                <td><a href="Miscellaneous/Meeting%20Minutes%20Combined.pdf"> Meeting Minutes </a></td>
+                <td><a href="Miscellaneous/Meeting%20Minutes%20Combined.pdf" target="_blank"> Meeting Minutes </a></td>
                 <td>Elina Voitane</td>
                 <td></td>
             </tr>
             <tr>
                 <td>M2</td>
-                <td><a href="Miscellaneous/Project%20Plan.pdf"> Project Plan </a></td>
-                <td>Elina Voitane</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>M3</td>
-                <td><a href="#"> Risk Assessment </a></td>
+                <td><a href="Miscellaneous/Project%20Plan.pdf" target="_blank"> Project Plan </a></td>
                 <td>Elina Voitane</td>
                 <td></td>
             </tr>
@@ -476,23 +470,23 @@
             instead we were sent the table headings with some dummy data. See below for the interaction: </p>
         <img src="Phase3/v1clientInput.png" class="centerTrue"></img>
         <p>Based off what was interpreted from the dummy data and our own understanding of what the system should be,
-            this version was made <a href="Phase3/BirdsV1.jpeg">(click here to open diagram image)</a>. </p>
+            this version was made <a href="Phase3/BirdsV1.jpeg" target="_blank">(click here to open diagram image)</a>. </p>
         <h3> Version 2</h3>
         <p>V2 was a small update to add some missing information (such as group name) and to include user permissions
             based off of the interactions discussed in the <b>Understanding the user</b> section. Also the missing table
             for RFID tags was added in and the unnessacary separation of user and user details was removed.
-            <a href="Phase3/BirdsV2.png">(click here to open diagram image)</a>
+            <a href="Phase3/BirdsV2.png" target="_blank">(click here to open diagram image)</a>
         </p>
         <h3> Version 3</h3>
         <p> For V3 we removed the unneeded splitting of Bird, Status and Bird Creation Details. They were all one to one
             relations so I just made sense to have them in one table (even though that did mean a rather large one).
-            <a href="Phase3/BirdsV3.png">(click here to open diagram image)</a></p>
+            <a href="Phase3/BirdsV3.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 4</h3>
         <p> V4 was mostly a tidying up of V3 but we also made a change in that the user and permissions table was
             combined (following the same reasoning as Bird Table in V3) and an overlooked part of one of the client's
             request was added in, which was the ability to see previous nest sites, to do this we thought it would be
             necessary to add in a table for nest sites.
-            <a href="Phase3/BirdsV4.png">(click here to open diagram image)</a></p>
+            <a href="Phase3/BirdsV4.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 5</h3>
         <p> As we got further into development some inadequacies in the database started to show, such as a lack of
             being able to properly handle historical nest sites, to counter this a new table was added called bird nest
@@ -501,12 +495,12 @@
             the complexity of the Python Reader Scripts Also the feeder table was removed as the client didn't express
             interest in managing specific feeding locations as we have for nest sites so instead a field with feeder ID
             was added to visits.
-            <a href="Phase3/BirdsV5.png">(click here to open diagram image)</a></p>
+            <a href="Phase3/BirdsV5.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 6 - Final</h3>
         <p> As development ramped up in it's final stages the models in the system began to change often, at which point
             it was no longer feasible to keep updating this diagram, so V6 was created retroactively at the end of
             development to model the final state of the database.<br><br> As you'll be able to tell from the image of
-            this diagram <a href="Phase3/BirdsV6.png">(click here to open diagram image)</a>, a lot has changed from V6.
+            this diagram <a href="Phase3/BirdsV6.png" target="_blank">(click here to open diagram image)</a>, a lot has changed from V6.
             <ol>
                 <li>
                     We have a new lock table which was created for Karlis' concurrent access locking mechanism
