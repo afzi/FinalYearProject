@@ -890,6 +890,8 @@ parasails.registerPage('get-bird', {
         },
 
         openmodal:async function(index) {
+            this.exitEditMode();
+            this.exitCreateMode();
             this.currentBird = this.currentBirds[index];
             var temp = await Cloud.getSingleBirdVisit.with({ birdName: this.currentBird.birdName, offset: 0, numOfRows: this.visitPageSize });
             this.visitCount = temp.count;
