@@ -1059,7 +1059,10 @@
                     Where Hatched, Where Laid, Where Released, Where Fledged, New Breeding Site, if present, must be valid Nest Site records
                 </li>
             </ul>
-            When the user clicks 'Save', the new data is sent to the back-end
+            If an invalid value is detected, the field is highlited in red and the user isn't allowed to submit the form
+            until they enter valid values:
+            <div><img src="Phase5/Img/invalidbirdform-ss.png" class="center"></img></div>
+            When the user clicks 'Save', if all values are valid, the new data is sent to the back-end
             (<code>edit-bird.js</code>), where the appropriate record is updated and saved in the database.
         </p>
 
@@ -1067,7 +1070,7 @@
         <p>
             The 'Register Bird' modal can be accessed by pressing the 'Register New Bird' button in the full bird view
             (described in section 5.6.1). It looks and functions largely the same way as the 'Edit Bird' screen (described in section
-            5.6.4). When the user clicks 'Save', the new data is sent to the back-end
+            5.6.4). When the user clicks 'Save', if all values are valid, the new data is sent to the back-end
             (<code>create-bird.js</code>), where the appropriate record is created and saved in the database.
         </p>
         <h3>5.6.6 Future Improvements</h3>
@@ -1495,6 +1498,70 @@
     </div>
     <div id="utils">
         <h2>5.13 Utilities <a class="bu" href="#">Back to Top </a></h2>
+        <h3>5.13.1 Autocomplete - Karlis Jaunslavietis</h3>
+        <p>
+            <code>autocomplete</code> is a custom Vue component defined in <code>autocomplete.component.js</code>.
+            The component is used to aid user input on forms / filters by presenting a drop-down list of possible values,
+            obtained from the database. The list is filtered based on current input. It is used in various places throughout the system.
+            <div><img src="Phase5/Img/autocomplete-ss.png" class="center"></img></div>
+            In the above example, it is used in the Edit Bird screen to present a list of valid NFC rings that can be assigned to the bird.
+            The component can be embedded in a form the following way:
+            <pre><code>
+                &lt;input id="nfcRingIDEdit" type="text"&gt;
+                &lt;autocomplete for="nfcRingIDEdit" action="getRfid" params='{"limit": 5}' map="nfcRFID" is-async&gt; &lt;/autocomplete&gt;
+            </code></pre>
+            The <code>for</code> attribute indicates the ID of the input field that this autocomplete should attach to. This is used for positioning of the autocomplete
+            dropdown, reading the current input and populating the input field when an autocomplete result is clicked.<br>
+            The <code>action</code> attribute is the Sails action name of the controller that will be used to retrieve the data used for suggestions.<br>
+            The <code>params</code> attribute is a JSON-string that should contain any additional parameters passed to the controller.<br>
+            The <code>map</code> attribute is a string that, if present, indicates the field key that should be used to populate the autocomplete
+            suggestions if a complex object is retreived. For example, if the following object is received from the controller:
+            <pre><code>
+                {
+                    id: 3,
+                    nfcRFID: "ah202",
+                    nfcRFIDInternal: "AE40233I249221242",
+                    birdID: 5
+                }
+            </code></pre>
+            having map="nfcRFID" will mean that only the value of the nfcRFID field ("ah202") will be shown in the suggestions.<br>
+            The <code>is-async</code> parameter indicates that the suggestions should be retrieved from the backend asynchronously.
+        </p>
+        <h3>5.13.2 Lock - Karlis Jaunslavietis</h3>
+        <p>
+            <code>lock</code> is a custom Vue component defined in <code>lock.component.js</code>. The component is used to implement a
+            mutual lock mechanism to prevent two users from editing the same data at the same time. It is currently used in the following views:
+            <ul>
+                <li>
+                    Edit Bird
+                </li>
+                <li>
+                    Edit Nestsite
+                </li>
+                <li>
+                    Edit User
+                </li>
+            </ul>
+            It works by sending constant 'pings' to the <code>try-acquire-renew-lock.js</code> controller. When the element first renders,
+            it attempts to acquire a lock. If another user already has a lock (lock information is stored in the <code>lock</code> table in the database),
+            the controller indicates to the component that it failed to acquire a lock. The component then prevents the user from editing the data, as it has detected
+            that another user is already editing the same data. If it, instead, manages to acquire a lock, the user is granted access to edit the data, and the element
+            constantly pings the controller to refresh the lock and prevent other users from editing the data. The component can be embedded in a view the following way:
+            <code><pre>
+                &lt;lock :user="me.id" v-if="isEditMode" :action="'editBird'+currentBird.id" :run-on-failed="exitEditMode"&gt;
+            </pre></code>
+            The <code>v-if</code> directive ensures that this element is only rendered, and therefore locking, when the user is in edit mode; if the user exits edit mode,
+            leaves the page or loses connectivity, the lock expires within 10 seconds and another user can then attempt to acquire it.
+
+            <br>
+            The <code>user</code> attribute indicates the user ID who's holding the lock; this is used to identify the user who currently holds a lock on the data:
+            <div><img src="Phase5/Img/birdlocked-ss.png" class="center"></img></div>
+            <br>
+            The <code>action</code> attribute uniquely identifies the data the user is currently editing. This should be consistent for all users
+            so that the locking mechanism can correctly identify what data is being edited.<br>
+            The <code>run-on-failed</code> attribute identifies the JavaScript function that should run if the lock isn't acquired successfully;
+            normally, this should be a function that exits the editing mode, reloads the page or otherwise prevents the user from continuing.
+        </p>
     </div>
 
 
