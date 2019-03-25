@@ -1603,7 +1603,7 @@
             having map="nfcRFID" will mean that only the value of the nfcRFID field ("ah202") will be shown in the suggestions.<br>
             The <code>is-async</code> parameter indicates that the suggestions should be retrieved from the backend asynchronously.
         </p>
-        <h3>5.13.2 Lock - Karlis Jaunslavietis</h3>
+        <h3>5.13.2 Concurrency Lock - Karlis Jaunslavietis</h3>
         <p>
             <code>lock</code> is a custom Vue component defined in <code>lock.component.js</code>. The component is used to implement a
             mutual lock mechanism to prevent two users from editing the same data at the same time. It is currently used in the following views:
@@ -1618,7 +1618,7 @@
                     Edit User
                 </li>
             </ul>
-            It works by sending constant 'pings' to the <code>try-acquire-renew-lock.js</code> controller. When the element first renders,
+            It works by sending constant 'pings' to the <code>try-acquire-renew-lock.js</code> controller. When the element is created (added to the DOM),
             it attempts to acquire a lock. If another user already has a lock (lock information is stored in the <code>lock</code> table in the database),
             the controller indicates to the component that it failed to acquire a lock. The component then prevents the user from editing the data, as it has detected
             that another user is already editing the same data. If it, instead, manages to acquire a lock, the user is granted access to edit the data, and the element
@@ -1626,7 +1626,7 @@
             <code><pre>
                 &lt;lock :user="me.id" v-if="isEditMode" :action="'editBird'+currentBird.id" :run-on-failed="exitEditMode"&gt;
             </pre></code>
-            The <code>v-if</code> directive ensures that this element is only rendered, and therefore locking, when the user is in edit mode; if the user exits edit mode,
+            The <code>v-if</code> directive ensures that this element is only added to the DOM, and therefore operational, when the user is in edit mode; if the user exits edit mode,
             leaves the page or loses connectivity, the lock expires within 10 seconds and another user can then attempt to acquire it.
 
             <br>
@@ -1635,7 +1635,7 @@
             <br>
             The <code>action</code> attribute uniquely identifies the data the user is currently editing. This should be consistent for all users
             so that the locking mechanism can correctly identify what data is being edited.<br>
-            The <code>run-on-failed</code> attribute identifies the JavaScript function that should run if the lock isn't acquired successfully;
+            The <code>run-on-failed</code> attribute identifies the function that should run if the lock isn't acquired successfully;
             normally, this should be a function that exits the editing mode, reloads the page or otherwise prevents the user from continuing.
         </p>
     </div>
