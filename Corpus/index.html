@@ -44,14 +44,14 @@
 
             <tr>
                 <td> 1.1 </td>
-                <td><a href="#wirelesstechnologies"> Wireless Technologies</a></td>
-                <td> Afzaal Ahmad Razeem </td>
+                <td><a href="#hardwareChoices"> Hardware Decisions</a></td>
+                <td> Karlis Jaunslavietis, Afzaal Ahmad Razeem </td>
                 <td></td>
             </tr>
 
             <tr>
                 <td> 1.2 </td>
-                <td><a href="#designChoices"> System Hardware & Software Decision</a></td>
+                <td><a href="#softwareChoices"> Software Decisions</a></td>
                 <td> Karlis Jaunslavietis, Priyesh Patel, Afzaal Ahmad Razeem </td>
                 <td></td>
             </tr>
@@ -288,71 +288,146 @@
         </table>
     </div>
 
-    <div id="wirelesstechnologies">
-        <h2 id="wirelesstechnologies"> Wireless Technologies <a class="bu" href="#">Back to Top </a></h2>
+    <div id="hardwareChoices">
+        <h2 id="hardwareChoices"> 1.1 Hardware Decisions <a class="bu" href="#">Back to Top </a></h2>
+        <h3>1.1.1 Network technology</h3>
+            We chose to use a wireless network because the customer didn't want to have exposed cables running around the site, and digging trenches for the cables
+            was deemed infeasible. Given the limited power available on site, we had to choose a low-power wireless network technology to carry RFID data from the reader
+            to the server where it would then be stored in a database. Based on the amount of documentation and support available, we found the three most popular low-power wireless technologies to be Bluetooth Low Energy (BLE),
+            ZigBee and Long Range Wide Area Network (LoraWAN).
+            <table id="t03" align="center">
 
-        <table id="t03" align="center">
+                <tr>
+                    <td>BLE</td>
+                    <td>ZigBee</td>
+                    <td>LoraWAN</td>
+                </tr>
 
-            <tr>
-                <td>BLE (Bluetooth Low Energy)</td>
-                <td>ZigBee</td>
-                <td>LoraWAN (Long range Area wide network)</td>
-            </tr>
+                <tr>
+                    <td id="tableinfo">
+                        <ul>
+                            <li>BLE is low power</li>
+                            <li>It is cheap</li>
+                            <li>Data rate is 1mb/s</li>
+                            <li>Range 50-150 metres</li>
+                            <li>BLE does not officially offer mesh network*</li>
+                        </ul>
 
-            <tr>
-                <td id="tableinfo">
-                    <ul>
-                        <li>BLE is low power</li>
-                        <li>It is cheap</li>
-                        <li>Data rate is 1mb/s</li>
-                        <li>Range 50-150 metres</li>
-                        <li>BLE does not officially offer mesh network*</li>
-                    </ul>
+                        <p>* Few BLE solutions do offer mesh network (Nordic, Qualcomm)</p>
+                        <br>
+                        <p>BLE supported hardware on Mbed</p>
+                        <ul>
+                            <li>Nordic development board</li>
+                            <li>Seeed Arch BLE</li>
+                        </ul>
+                    </td>
 
-                    <p>* Few BLE solutions do offer mesh network (Nordic, Qualcomm)</p>
-                    <br>
-                    <p>BLE supported hardware on Mbed</p>
-                    <ul>
-                        <li>Nordic development board</li>
-                        <li>Seeed Arch BLE</li>
-                    </ul>
-                </td>
+                    <td id="tableinfo">
+                        <ul>
+                            <li>Used in mesh network designed to carry small amounts of data across medium distances</li>
+                            <li>Low power (more than BLE)</li>
+                            <li>Data rate is 250 kb/s</li>
+                            <li>Range 10-100 metres</li>
+                            <li>Official Mbed library</li>
+                        </ul>
+                    </td>
 
-                <td id="tableinfo">
-                    <ul>
-                        <li>Used in mesh network designed to carry small amounts of data across medium distances</li>
-                        <li>Low power (more than BLE)</li>
-                        <li>Data rate is 250 kb/s</li>
-                        <li>Range 10-100 metres</li>
-                        <li>Official Mbed library</li>
-                    </ul>
-                </td>
+                    <td id="tableinfo">
+                        <ul>
+                            <li>Data rate is 0.3 - 50 kb/s</li>
+                            <li>Range 2-3km (urban environment)</li>
+                            <li>Power consumption lower than ZigBee</li>
 
-                <td id="tableinfo">
-                    <ul>
-                        <li>Data rate is 0.3 - 50 kb/s</li>
-                        <li>Range 2-3km (urban environment)</li>
-                        <li>Power consumption lower than ZigBee</li>
+                        </ul>
+                    </td>
 
-                    </ul>
-                </td>
+                </tr>
 
-            </tr>
-
-        </table>
+            </table>
         <br>
-        <h3> Conclusion</h3>
         <p>BLE is a radio protocol meant for PAN. Good for devices that stay in close proximity to each other. It is not
             ideal for devices that are separated by more than a few meters away from each other. Zigbee is a better
             option for our needs. Considering
             ZigBee's almost instant network join time it is more suitable for our project needs as well as its support
             for large-scale automation purposes. The trade-off that had to be considered was ZigBee's higher power
             consumption than BLE, however,
-            given our project scenario, this trade-off can be afforded.
+            given our project scenario, this trade-off can be afforded.<br><br>
+            <p class="todo">TODO: take a second look at the above paragraph</p>
+            ZigBee devices can operate in two modes: <i>AT</i> and <i>API</i>.
+            In AT mode, only raw data is passed between ZigBee devices; the receiving device receives exactly the data that the sending device sent, without any additional padding or meta-data.
+            In API mode, all messages sent between the ZigBee devices are constructed as packets that contain various other information and/or instructions. AT mode can only be used for sending raw data in one direction
+            (eg. without expecting any response), whereas in API mode the devices can pass commands between each other that can solicit a response, status information, etc. Despite the extra features offered by API mode,
+            we chose to use AT mode, as using it in API mode would require it to be connected to a microcontroller to use its processor, whereas in AT mode we could connect the RFID reader to the ZigBee directly without
+            having to process the data with a middle-device. This choice significantly decreased the complexity of our system design as well as the power consumption of the individual reader nodes, at the expense of some extra functionality,
+            such as the ability to automatically detect when a ZigBee device goes offline. 
+            <br><br>
+            Three ZigBee-compliant radio modules (Digi XBee) were given to us by our supervisor for development and testing purposes. One is used as the network 'coordinator'; in a ZigBee network the coordinator is responsible for creating and maintaining the
+            network and administrating other devices joining the network. Our system also uses the coordinator as the receiver of all data; it is connected via serial to the server (described in sections 1.1.4 and 5.1), which reads the incoming data and stores
+            it in the database.
+            <p class="todo">TODO: check with Dan that they're actually XBees</p>
+                </p>
+        <h3>1.1.2 RFID techonology</h3>
+        <p>
+            When choosing the RFID hardware, we aimed for the following:
+            <ol>
+                <li>
+                    The antenna embedded in the bird ring should not require an internal power source - adding a battery to the bird ring was deemed infeasible
+                </li>
+                <li>
+                    The read distance (maximum range between the RFID antenna and reader where the reader can receive data from the antenna) should be maximized to avoid missing bird visits
+                </li>
+                <li>
+                    The RFID signal should be able to pass through minor obstacles, such as a protective case, as well as dust, grime
+                </li>
+                <li>
+                    The RFID antenna should be small enough to fit in a ring
+                </li>
+            </ol>
+            RFID devices are generally grouped by their frequency:
+            <ul>
+                <li>Low Frequency (125 - 134 KHz)</li>
+                <li>High Frequency (13.56 MHz)</li>
+                <li>Ultra High Frequency (433, 860-960 MHz)</li>
+            </ul>
+            Following the laws of physics, the higher the frequency, the lower the wavelength, thus, the read distance increases with frequency.  As frequency decreases, the wavelength increases, and high wavelengths are essential for waves to penetrate objects. This makes lower frequencies more reliable, despite the trade-off in read distance.<br><br>
+
+            Aside from the frequency, the other defining characteristic for RFID systems is the way the tag is powered. Active tags require an internal power source, most commonly a battery. Passive tags, meanwhile, use the radio waves generated by the reader to power their internal circuits. This means that the reading distance for passive tags is much lower than for active tags, as the waves powering the tag lose power over distance. As an active tag would eventually need to have its batteries recharged (thus requiring the team to capture the bird, remove the ring, recharge and reattach it), in this use case a passive RFID system was deemed to be most fitting.<br><br>
+            
+            With these two factors in mind, we opted to use a 134.2 KHz RFID reader and tags. The read distance (~2 cm) was determined to be suitable for the use case, as the reader can be positioned in such a way that it is guaranteed to register a visit once the bird accesses the food stored in the hopper.
+            The specific devices we used for development and testing were recommended and purchased by our supervisor. They are ISO 11784/11785 ("Radio Frequency Identification of Animals") compliant, which means that there is standardized documentation available and a different ISO-compliant vendor can be used in the future, if required.
+            The size of the antenna is 1.25mm x 7mm, which can comfortably fit into a bird ring.
+            <p class="todo">TODO: pictures of the tag and reader</p>
+        </p>
+        <h3>1.1.3 Power Solution</h3>
+        <p>
+            On the customer's site, solar power is used for nearly all purposes. Although they have a generator, it would be infeasible to use the generator to power our system. Therefore, it was decided that our system should make use of the solar power
+            available on site, in order to integrate better with their existing processes and minimize any physical transformations required.<br><br>
+            The location of the customer's site generally has a good level of solar power throughout the day. However, relying solely on the incoming sun rays would make the system in-operable at night or when it was cloudier than usual. Therefore,
+            we opted to use a battery that would be charged by solar power during the day, and would last long enough to overcome extended periods of darkness.<br><br>
+            With the help of our supervisor, we calculated the optimal solar panel size and battery capacity. Each feeder with a RFID reader would have its own solar panel and battery; the server would use a battery that is connected to the existing solar
+            panels they have on site. The devices, seen in the picture below, were then purchased by our supervisor.
+            <p class="todo">TODO: pictures of solar panel and battery, also find out from Dan the exact panel size and battery capacity</p>
+        </p>
+        <h3>1.1.4 The server</h3>
+        <p>
+            The server hosting the core of the system (database, application, coordinator service) must meet the following basic requirements:
+            <ul>
+                <li>
+                    Be able to run a standard operating system (Windows / Linux)
+                </li>
+                <li>
+                    Have a user interface that can be used by non-technical users for common tasks, such as restarting the system
+                </li>
+                <li>
+                    Have a serial port for the coordinator
+                </li>
+            </ul>
+            As most modern servers fit the requirements outlined above, we avoided committing to a specific product, instead deferring the decision to when the system will enter its deployment stage. A Raspberry PI is currently viewed
+            as one of the most likely products due to its performance/power consumption balance, high portability and low cost.
         </p>
     </div>
-    <div id="designChoices">
-        <h2> System Hardware & Software Decision <a class="bu" href="#">Back to Top </a></h2>
+    <div id="softwareChoices">
+        <h2> 1.2 Software Decisions <a class="bu" href="#">Back to Top </a></h2>
     </div>
     <div id="users">
         <h2> Understanding the user <a class="bu" href="#">Back to Top </a></h2>
@@ -528,6 +603,7 @@
     </div>
     <div id="netdi">
         <h2> 3.2 Network Diagram <a class="bu" href="#">Back to Top </a></h2>
+        <img src="Phase3/Img/NetworkDiagram.svg" class="center"></img>
     </div>
     <div id="sysdi">
         <h2> 3.3 System Diagram <a class="bu" href="#">Back to Top </a></h2>
@@ -893,7 +969,7 @@
                 </li>
                 <li>
                     <strong>Support of API mode.</strong><br> Currently, the service can only read data received in XBee
-                    AT mode (AT and API modes compared in section 1.2). API mode support could be added as it allows for
+                    AT mode (AT and API modes compared in section 1.1.1). API mode support could be added as it allows for
                     greater extensibility and more
                     features, such as identifying when a network device has gone offline.<br> This wasn't included due
                     to the increased complexity of API mode and the system requirements lacking features that could make
