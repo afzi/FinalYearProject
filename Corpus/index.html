@@ -74,7 +74,7 @@
             </tr>
             <tr>
                 <td> 2.3 </td>
-                <td><a href="#usecases"> Use Case Diagrams </a></td>
+                <td><a href="#usecases"> Use Case Descriptions </a></td>
                 <td> Karlis Jaunslavietis, Elina Voitane, Priyesh Patel, Afzaal Ahmad Razeem</td>
                 <td></td>
             </tr>
@@ -428,7 +428,7 @@
         <h2> 1.2 Software Decisions <a class="bu" href="#">Back to Top </a></h2>
     </div>
     <div id="users">
-        <h2> Understanding the user <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 2.1 Understanding the user <a class="bu" href="#">Back to Top </a></h2>
 
         <p>One of the first challenges when working on requirements from the client was to understand users of the
             system, what they are responsible for when working on field and how much access they are allowed to
@@ -464,7 +464,7 @@
         </p>
     </div>
     <div id="stories">
-        <h2> User Stories <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 2.2 User Stories <a class="bu" href="#">Back to Top </a></h2>
 
         <p> To get better understanding of user requirements and system functionality we have written users stories to
             describe different features of the system.</p>
@@ -522,10 +522,67 @@
         </ol>
     </div>
     <div id="usecases">
-        <h2> Use Case Diagrams <a class="bu" href="#">Back to Top </a></h2>
+        <h2>2.3 Use Case Descriptions <a class="bu" href="#">Back to Top </a></h2>
+        <h3>2.3.1 About Use Cases</h3>
+        The use cases were defined in the early stages of the project, loosely based on the user stories described in section 2.2. They were meant to provide us guidelines for what is expected of the system and how the
+        users will interact with it. Due to the evolution of the requirements and overall system, some of the use cases later became outdated, irrelevant or not implemented
+        due to technical difficulties / oversights; furthermore, some aspects of the current system (for example, live view) are not described in the use cases. Overall, however, they achieved their purpose of setting out a roadmap for development and keeping us on track to implement
+        the most essential features.<br><br>
+        The following sections contain all use cases as they were described originally. Where a use case doesn't reflect the current behaviour of the system, a short summary of the deviations and reasons will be provided.
+        <h3>2.3.2 Bird Functionality</h3>
+        <a href="Phase2/usecases/Bird_Functionality/UserViewsData.pdf"><h4>User Views Bird Data</h4></a>
+        <p>The 'User Views Bird Data' use case is largely up-to-date, with the exception that the user requires Read privileges to view bird data - this was changed after defining the permissions model (described in section 2.1) 
+            that specifies that users must have Read permissions to view bird data.
+        </p>
+        <a href="Phase2/usecases/Bird_Functionality/UserExportsDataFromDatabase.pdf"><h4>User Exports Bird Data from Database </h4></a>
+        <p>
+            Although the 'User Exports Bird Data from Database' use case specifies that the user should be able to select the bird who's data they're exporting, an export can only be made on the entire list of birds. The user can then use their spreadsheet software, such as Excel,
+            to further filter the data and access the specific bird that they require. This change was made as the customer indicated they don't require the functionality to export data on a single bird.
+        </p>
+        <a href="Phase2/usecases/Bird_Functionality/UserRegistersBird.pdf"><h4>User Registers Bird </h4></a>
+        <p>
+            The 'User Registers Bird' use case specifies that the user must enter a RFID tag as a minimum to register a bird. In fact, assigning a RFID tag is not required when creating a new bird, and the only required field is 'Bird Name'.
+            This change was made as we deemed it unnecessarily restrictive - our system now allows the user to also register birds that haven't been equipped with a RFID tag yet, but might be in the future.<br>
+            A further change is that, even though validation is performed to check whether the RFID tag is currently un-assigned, it doesn't tell the user which bird it is assigned to. This was an oversight as this functionality could improve
+            user experience by helping them troubleshoot data entry errors.
+        </p>
+        <a href="Phase2/usecases/Bird_Functionality/UserEditsData.pdf"><h4>User Edits Bird Data</h4></a>
+        <a href="Phase2/usecases/Bird_Functionality/UserImportsRingsIntoSystem.pdf"><h4>User Imports Rings into System </h4></a>
+        <a href="Phase2/usecases/Bird_Functionality/UserRegistersNestSite.pdf"><h4>User Registers Nest Site </h4></a>
+        <h3>2.3.3 System Maintenance</h3>
+        <a href="Phase2/usecases/System_Maintenance/10_Network_setup.pdf"><h4>User Sets up Network</h4></a>
+        <p>
+            The 'User Sets up Network' use case mentions that the channel, network id and node identifier must be set on the microcontroller. As we decided against using a microcontroller (explained in section 1.1) but instead connect the ZigBee to the RFID directly,
+            these parameters must be set on the ZigBee instead.
+        </p>
+        <a href="Phase2/usecases/System_Maintenance/1_SystemNotifyUserOfFailure.pdf"><h4>System Notifies User of Failure</h4></a>
+        <p>
+            The 'System Notifies User of Failure' use case is obsolete. As described in section 1.1, we use AT mode on our ZigBees, which makes it impossible to automatically detect when a network device goes offline. This was one of the main drawbacks
+            of using AT mode over API mode, however the benefits outweighed the negatives, and so plans for this functionality were scrapped.
+        </p>
+        <a href="Phase2/usecases/System_Maintenance/2_UserRecoverHubFromFailure.pdf"><h4>User Recovers Hub from Failure</h4></a>
+        <a href="Phase2/usecases/System_Maintenance/4_UserUpdatesHub.pdf"><h4>User Updates Hub</h4></a>
+        <h3>2.3.4 User Management</h3>
+        <a href="Phase2/usecases/User_Management/UserRegistration.pdf"><h4>Admin Registers User</h4></a>
+        <p>
+            The 'Admin Registers User' use case is largely up-to-date, with the exception that the 'Register New User' button is available from the Manage Users screen instead of the navigation menu. This change was made as part of the evolution
+            of the design prototype (Phase 4).
+        </p>
+        <a href="Phase2/usecases/User_Management/DeleteUserProfile.pdf"><h4>Admin Deletes User Profile</h4></a>
+        <p>
+            The 'Admin Deletes User Profile' use case is largely up-to-date, with the exception that the page where users can be deleted is called 'Manage Users' instead of 'View All Users'. This change was made as part of the evolution
+            of the design prototype (Phase 4).
+        </p>
+        <a href="Phase2/usecases/User_Management/LogIn_LogOut.pdf"><h4>User Logs In & User Logs Out</h4></a>
+        <p>
+            The 'User Logs Out' use case describes that the system should ask the user for confirmation if they have unsaved changes and they attempt to log out. In fact, as all edit / create functionality is done using modal pop-up forms, 
+            the 'Log Out' button is inaccessible while editing / creating new data. Instead, a confirmation is requested when the user attempts to close a form with unsaved changes. This change was made as part of the evolution
+            of the design prototype (Phase 4).
+        </p>
+        <a href="Phase2/usecases/User_Management/ViewLogs.pdf"><h4>Admin Views Logs</h4></a>
     </div>
     <div id="reqdoc">
-        <h2> Requirements Document <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 2.4 Requirements Document <a class="bu" href="#">Back to Top </a></h2>
     </div>
     <div id="datadi">
         <h2> 3.1 Database Diagram <a class="bu" href="#">Back to Top </a></h2>
@@ -1485,7 +1542,7 @@
                 The ability to filter on username and privilege level could be useful and simple from a development perspective. We could also store more information
                 about each user - for example, the last time they were active, or the IP address from which they logged on.<br>
                 This wasn't added as it wasn't required by the user, however it could be suggested as a possible improvement in the future to improve
-                the administration experience.
+                the administration experience and capabilities.
             </li>
         </ul>
 
@@ -1630,7 +1687,7 @@
                     birdID: 5
                 }
             </code></pre>
-            having map="nfcRFID" will mean that only the value of the nfcRFID field ("ah202") will be shown in the suggestions.<br>
+            having <code>map="nfcRFID"</code> will mean that only the value of the nfcRFID field ("ah202") will be shown in the suggestions.<br>
             The <code>is-async</code> parameter indicates that the suggestions should be retrieved from the backend asynchronously.
         </p>
         <h3>5.13.2 Concurrency Lock - Karlis Jaunslavietis</h3>
