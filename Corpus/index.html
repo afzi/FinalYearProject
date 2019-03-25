@@ -1001,7 +1001,7 @@
             diagram was actually workable and to check if Sails handled the data types we wanted as expected.
 
         </p>
-        <h3>5.2.3 Test Data</h3>
+        <h3>5.2.2 Test Data</h3>
         <p>
             Now that the database was in place we created a set of insert statements to generate dummy data based on
             input from the user on the data they currently use and based on what we knew we would need to test any edge
@@ -1635,6 +1635,27 @@
             so that the locking mechanism can correctly identify what data is being edited.<br>
             The <code>run-on-failed</code> attribute identifies the function that should run if the lock isn't acquired successfully;
             normally, this should be a function that exits the editing mode, reloads the page or otherwise prevents the user from continuing.
+        </p>
+        <h3>5.13.3 DateTime Conversions - Priyesh Patel</h3>
+        <p>
+            <code>TimeUtils</code> is a service defined in <code>api/services/TimeUtils.js</code>. Sails allows funtions that need to be used by multiple controllers to be defined in this services folder and they can then be accessed with <code>FileName.FunctionName();</code>.
+<br><br>
+            in our database we store all dates as Unix Timestamps, we did this because we wanted to make use of Sails' default functionality of making createdAt and UpdatedAt entries for database entries as we could use these to note things like when a bird was made, when someone made changes, what time visit occurred, etc. Sails uses Unix Timestamps for this so in order to keep the data type consitent throughout the database we too used them, but this meant that we would need ways for them to converted to something more meaningful for a human to read.
+        <br><br>
+        usage off this service can be seen throughout the system, the following images show the usage in code and the output on screen resulting from it:
+        </p>
+        <h4>api/controllers/live/live-view.js</h4>
+        <p>
+            In the code which goes through the output from the database query by each row returned the timestamp is converted to AM/PM time.
+        <div><img src="Phase5/Img/VisitTimeLive.png" class="centerTrue"></img></div>
+        </p>
+        <h4>api/controllers/bird/get-bird.js</h4>
+        <p>
+            Similarly in bird view the timestamp is take and is converted, but this time into an age string show how old the bird is based on hatch date.
+        <div><img src="Phase5/Img/AgeString.png" class="centerTrue"></img></div>
+        </p>
+        <p>
+            It is also used extensivly in the export module <code><b>api/controllers/bird/export-data-bird-simple.js</b></code> to perform similar actions to the above and additionaly used in dating the file name of the report to avoid a researcher with multiple files with the same name (report, report(1), etc).
         </p>
     </div>
 

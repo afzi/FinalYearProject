@@ -1,6 +1,5 @@
   module.exports = {
 
-    //Adapted From https://hype.codes/how-get-current-date-javascript
     currentTimestamp: function(){
       var today = new Date();
       var dd = today.getDate();
