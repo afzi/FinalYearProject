@@ -1026,10 +1026,10 @@
         <p>
             A lot of effort has been put to make the overall website interactive and easy to navigate. We have tried to make it consistent and easy to use web interface.
         </p>
-        <h4>5.3.2.1 Contrast and color</h4>
+        <h4>5.3.2.1 Contrast and colour</h4>
         <p>
-            We chose the colors very carefully including the theme colors, buttons, text. The chosen colors were agreed with the client and we made sure
-            that they meet usability standards. The colors are kept consistent throughout the website.
+            We chose the colours very carefully including the theme colours, buttons, text. The chosen colours were agreed with the client and we made sure
+            that they meet usability standards. The colours are kept consistent throughout the website.
         </p>
         <h4>5.3.2.2 Buttons</h4>
         <img src="Phase5/Img/buttons.png" class="center"></img>
@@ -1045,8 +1045,8 @@
         </p>
         <h4>5.3.2.4 tables</h4>
         <p>
-            Tables have been used throughout the website. We have used the same colors, styles, font sizes for all the tables to make is consistent. For example, the first
-            column and first row of every table has a different color which was kept consistent throughout the website.
+            Tables have been used throughout the website. We have used the same colours, styles, font sizes for all the tables to make is consistent. For example, the first
+            column and first row of every table has a different colour which was kept consistent throughout the website.
         </p>
 
 
@@ -1066,9 +1066,9 @@
         <h3>5.4.1 Logging in</h3>
         <img src="Phase5/Img/login.png" style="background-color:#F0F0F0; padding: 20px" class="center"></img>
         <p>
-            Login is a simple screen that shows two input fields for username and password, and a "Remember me" checkbox for extending the lifetime of the user's session if ticked. User can login using thier unique username and password. When "Sign in" button is clicked,
+            Login is a simple screen that shows two input fields for username and password, and a "Remember me" checkbox for extending the lifetime of the user's session if ticked. User can login using their unique username and password. When "Sign in" button is clicked,
             data is sent to the back-end <code>login.js</code> which attempts to look up the user record in the database with the specified username. Then, if the username exists, it uses
-            bcrypt to compare the hashed password from the database with the provided password. If that matches then user is logged in and redicted to the home page.
+            bcrypt to compare the hashed password from the database with the provided password. If that matches then user is logged in and redirected to the home page.
         </br>
             if however, username does not exist in the database or provided email and password combination does not match any user in the database, 
             it displays a message saying that username and/or password is incorrect.
@@ -1092,7 +1092,7 @@
             The Birds are displayed in a simple paginated HTML table, following the design of similar pages. The Birds data for the current page is pulled from the back-end (<code>get-bird.js</code>) 
             and the table is populated using a v-for loop. When the page is loaded, instead of displaying all the information about the birds it only displays the important and frequently accessed
             information which was discussed and agreed with the client.</br>
-            Filtering is available on the fields using a contains-match excpet for "Gender", "Status" and "Breeder" which are made a drop down options for user to choose from instead of typing.
+            Filtering is available on the fields using a contains-match except for "Gender", "Status" and "Breeder" which are made a drop down options for user to choose from instead of typing.
             Filtering is done in the backend and the list of matching Birds is updated as soon as the user types or edits anything in any of the filter fields. All filters can be cleared by clicking "Clear Filters" button.
         </p>
         <h3>5.6.2 More Fields</h3>
@@ -1111,7 +1111,7 @@
         </br>
             Condition History is also added in the single view which displays the most currently added condition of the bird. Condition History can be expanded further to see the past conditions of the bird.
     </br>
-            All birds can be edited from single bird view by clicking the edit button. The modal can be closed by either clicking close button or simply cliking outside the modal.
+            All birds can be edited from single bird view by clicking the edit button. The modal can be closed by either clicking close button or simply clicking outside the modal.
         <img src="Phase5/Img/past-visit.png" class="center"></img>
         </p>
 
@@ -1133,7 +1133,7 @@
                     Where Hatched, Where Laid, Where Released, Where Fledged, New Breeding Site, if present, must be valid Nest Site records
                 </li>
             </ul>
-            If an invalid value is detected, the field is highlited in red and the user isn't allowed to submit the form
+            If an invalid value is detected, the field is highlighted in red and the user isn't allowed to submit the form
             until they enter valid values:
             <div><img src="Phase5/Img/invalidbirdform-ss.png" class="center"></img></div>
             When the user clicks 'Save', if all values are valid, the new data is sent to the back-end
@@ -1185,6 +1185,38 @@
     </div>
     <div id="export">
         <h2> 5.7 Bird Data Export <a class="bu" href="#">Back to Top </a></h2>
+        (this is a rather long file so it is not possible to show screenshots of all the relevant parts, <b><a href="Phase5/Src/export-data-bird-simple.js">click here to open the controller in a new window and to be able to see the parts discussed</a></b>. It should not be required, however, as I'll try my best to detail the basics here.)
+        <h3>5.7.1 Exporting - Why & What we used</h3>
+        <p>
+            To support the legacy systems of the client we needed a way for the data on screen in the Bird View to be exported to an excel spreadsheet, originally this was planned to be done client side (i.e. in-browser) however we discovered a bug in the npm module we wanted to use (<a href="https://www.npmjs.com/package/sheetjs" target="_blank"><code>Sheet.js</code> (click to go to npm page)</a>) and Sails.Js. The conversion from a back-end node module to a front-end one requires the use of Sails' built-in <code>browserify.js</code> however this was not compatible (there is a strange bug where the conversion code generated and to reference the package it uses <code>"JS" + "zip" but it only works when it is "JSzip"</code>). <br><br>Because of this we decided to move the generation to the server side, since the file generated shouldn't be computationally expensive it was agreed that it wouldn't be an issue. During the research before making this change we found a module <a href="https://www.npmjs.com/package/node-excel-export" target="_blank"><code>node-excel-export</code> (click to go to npm page)</a> that was had documentation written specifically for Sails and had all the main features we needed, so we switched to using that to save some development time.
+        </p>
+        <h3>5.7.2 How it works</h3>
+        <p>
+            All the logic for the export is located in a single controller (<b>export-data-bird-simple.js</b>) and is accessed by the Bird View when export is pressed the exportToExcel function in <b>get-bird-page.js</b> is called (shown below) which checks which fields are currently being displayed and then use HTML GET to send them over to the export controller.
+            <img src="Phase5/Img/exportToExcel.png" class="centerTrue"></img>
+            <br> The export controller will then use this list of parameters to build a Specification array (see below for small snippet) which is used by node-excel-export to define the columns that will be in the report, it handles the name, style and size of each column and the key (seen as specification.KEYNAME in the image) is used to map on to the data from the database queries. A specification entry is required for each field and as such this is a rather long list of if statements checking each parameter from the get-bird controller and creating a matching specification.
+            <img src="Phase5/Img/exportSpec.png" class="centerTrue"></img>
+            <br> In order to get the data that the specification will map onto there are five different queries being used (lines 78 to line 155 in controller) and that's because this controller is essentially combining information from multiple pages (ring, nest, bird). In retrospect some of these could have been combined into joins however the complexity of refactoring outweighed the available time and had no visible benefit to the end user so it wasn't deemed a priority. This data then had to be processed row by row to create bird entries with keys matching that of the specification (see snippet below).
+            <img src="Phase5/Img/exportData.png" class="centerTrue"></img>
+            <br>After this, node-excel-export had all it needed to create the spreadsheet and use Sails' built-in document downloading features to send to the user for download.
+            <img src="Phase5/Img/exportReportMaking.png" class="centerTrue"></img>
+        </p>
+        <h3>5.7.4 The End Report</h3>
+        <p>
+        from this report the user can use excel's built in filtering features to filter the data as they would have done in their old system (see below, on the top is the legacy sheet, on the bottom is our generated one. (<a href="Phase5/Asset/report 25-03-2019.xlsx">downloadable here for clearer view</a>))</p>
+        <img src="Phase5/Img/exportReportFinal.png" class="center"></img>
+        <h3>5.7.5 Future Improvements</h3>
+        <ul>
+            <li>
+                <strong>Factor in active filters on the export data</strong><br>
+                Currently Only the column selection is taken into account for selecting the data to create the report from however we have a filter bar that allows data to be filtered on screen so it would be a nice idea to see those active filters translate over on to the report (i.e. if the user is searching for birds with name containing "br" and then presses export, the report could only contain these birds). This can of course be done through excel anyway but requires an extra few clicks. It was not implemented due to 1) the time constraint (export was started very late in development); 2) the complexity of handling just the fields resulted in around 30 conditionals so adding in filter checks would have doubled the number of checks at the least; and 3) The most important reason we didn't add this was because the client said it wasn't a must have feature when we asked them after on of the live demonstrations (see below for interaction). So if there was time it would be a nice to have thing.
+                <img src="Phase5/Img/exportClient.png" class="centerTrue"></img>
+            </li>
+            <li>
+                <strong>Enable Filtering by default in spreadsheet</strong><br>
+                This is just a small ease of life feature we would have liked to have but ultimately doesn't affect the features available to the end user. As it stands to turn on filtering in the excel report the user has to click Sort & Filter and then Filter, after this filters are ready to use. What we wanted was for these filters to be active by default so as soon as the report is open filtering options are already there to use however, the module we used for the export doesn't have a feature to do this and we only thought of this after everything had been written and the cost of rewriting and retesting with a different module didn't match up with the benefit of saving at most 2 clicks.
+            </li>
+        </ul>
     </div>
     <div id="ring">
         <h2>5.8 Ring Management <a class="bu" href="#">Back to Top </a></h2>
@@ -1638,9 +1670,9 @@
         </p>
         <h3>5.13.3 DateTime Conversions - Priyesh Patel</h3>
         <p>
-            <code>TimeUtils</code> is a service defined in <code>api/services/TimeUtils.js</code>. Sails allows funtions that need to be used by multiple controllers to be defined in this services folder and they can then be accessed with <code>FileName.FunctionName();</code>.
+            <code>TimeUtils</code> is a service defined in <code>api/services/TimeUtils.js</code>. Sails allows functions that need to be used by multiple controllers to be defined in this services folder and they can then be accessed with <code>FileName.FunctionName();</code>.
 <br><br>
-            in our database we store all dates as Unix Timestamps, we did this because we wanted to make use of Sails' default functionality of making createdAt and UpdatedAt entries for database entries as we could use these to note things like when a bird was made, when someone made changes, what time visit occurred, etc. Sails uses Unix Timestamps for this so in order to keep the data type consitent throughout the database we too used them, but this meant that we would need ways for them to converted to something more meaningful for a human to read.
+            in our database we store all dates as Unix Timestamps, we did this because we wanted to make use of Sails' default functionality of making createdAt and UpdatedAt entries for database entries as we could use these to note things like when a bird was made, when someone made changes, what time visit occurred, etc. Sails uses Unix Timestamps for this so in order to keep the data type consistent throughout the database we too used them, but this meant that we would need ways for them to converted to something more meaningful for a human to read.
         <br><br>
         usage off this service can be seen throughout the system, the following images show the usage in code and the output on screen resulting from it:
         </p>
@@ -1655,7 +1687,7 @@
         <div><img src="Phase5/Img/AgeString.png" class="centerTrue"></img></div>
         </p>
         <p>
-            It is also used extensivly in the export module <code><b>api/controllers/bird/export-data-bird-simple.js</b></code> to perform similar actions to the above and additionaly used in dating the file name of the report to avoid a researcher with multiple files with the same name (report, report(1), etc).
+            It is also used extensively in the export module <code><b>api/controllers/bird/export-data-bird-simple.js</b></code> to perform similar actions to the above and additionally used in dating the file name of the report to avoid a researcher with multiple files with the same name (report, report(1), etc).
         </p>
     </div>
 
