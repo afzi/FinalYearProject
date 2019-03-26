@@ -149,7 +149,7 @@ INSERT INTO nestsite
 
 INSERT INTO user 
 (id,username,fullName,password,hasRead,hasCreateEdit,hasEditFull,hasExport,hasAdmin, isSuperAdmin, createdAt, updatedAt) VALUES
-(1,'superadmin','Roman Superadmin','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,1,0,1,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
+(1,'superadmin','Roman Superadmin','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,1,1,1,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
 (2,'reader','John Reader','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,0,0,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
 (3,'creator','Bayley Creator','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,0,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
 (4,'editor','Seth Editior','$2a$10$6XAzUge1xnab3kDjOjb/LONHoFgZEV5wFJOmw8AgvClDIRMx8hrzK',1,1,1,0,0,0,UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00')),UNIX_TIMESTAMP(concat(curdate(), ' 05:30:00'))),
