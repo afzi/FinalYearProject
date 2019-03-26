@@ -53,7 +53,7 @@
             <tr>
                 <td> 1.2 </td>
                 <td><a href="#softwareChoices"> Software Decisions</a></td>
-                <td> Karlis Jaunslavietis, Priyesh Patel, Afzaal Ahmad Razeem </td>
+                <td> Karlis Jaunslavietis, Priyesh Patel, Afzaal Ahmad Razeem, Elina Voitane</td>
                 <td></td>
             </tr>
 
@@ -427,6 +427,14 @@
     </div>
     <div id="softwareChoices">
         <h2> 1.2 Software Decisions <a class="bu" href="#">Back to Top </a></h2>
+        
+        <h3> Software for UI design</h3>
+        
+        <li>myBalsamiq</li>
+        <p>The first UI design was done using myBalsamiq tool. It was used to get rough sketches and mock up ideas to visualise what needs to be included in the system. The most important task when designing UI for our system was to decide how to display bird's data which included work with different sets of mock data. myBalsamiq tool turned to be too Lo-Fi for expected results so it was decided to use Google Slides instead to continue working on system's UI design.</p>
+        <li>Google Slides</li>
+        <p>Google Slides turned to be the most optimal software choice for system's UI designed. Real time editing and collaboration features allowed us to view and edit different parts of UI at the same time. This software provided us with all the necessary tools to create Hi-Fi UI prototypes and use them to run usability test with the client. Throughout the project we used Google Drive as a main tool to create and store all documents related to the project which is also why Google Slides was chosen as it can all be stored in the same place. Version and activity control allowed to see all changes made throughout UI design process which was extremely important for documentation purposes.</p>
+        
     </div>
     <div id="users">
         <h2> 2.1 Understanding the user <a class="bu" href="#">Back to Top </a></h2>
@@ -599,25 +607,25 @@
         <p>For our initial design all we had to go on was the input we had from a client email when we asked for a
             sample of their current data spreadsheet however due to some data sharing rules this was not possible so
             instead we were sent the table headings with some dummy data. See below for the interaction: </p>
-        <img src="Phase3/v1clientInput.png" class="centerTrue"></img>
+        <img src="Phase4/v1clientInput.png" class="centerTrue"></img>
         <p>Based off what was interpreted from the dummy data and our own understanding of what the system should be,
-            this version was made <a href="Phase3/BirdsV1.jpeg" target="_blank">(click here to open diagram image)</a>. </p>
+            this version was made <a href="Phase4/BirdsV1.jpeg" target="_blank">(click here to open diagram image)</a>. </p>
         <h3> Version 2</h3>
         <p>V2 was a small update to add some missing information (such as group name) and to include user permissions
             based off of the interactions discussed in the <b>Understanding the user</b> section. Also the missing table
             for RFID tags was added in and the unnessacary separation of user and user details was removed.
-            <a href="Phase3/BirdsV2.png" target="_blank">(click here to open diagram image)</a>
+            <a href="Phase4/BirdsV2.png" target="_blank">(click here to open diagram image)</a>
         </p>
         <h3> Version 3</h3>
         <p> For V3 we removed the unneeded splitting of Bird, Status and Bird Creation Details. They were all one to one
             relations so I just made sense to have them in one table (even though that did mean a rather large one).
-            <a href="Phase3/BirdsV3.png" target="_blank">(click here to open diagram image)</a></p>
+            <a href="Phase4/BirdsV3.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 4</h3>
         <p> V4 was mostly a tidying up of V3 but we also made a change in that the user and permissions table was
             combined (following the same reasoning as Bird Table in V3) and an overlooked part of one of the client's
             request was added in, which was the ability to see previous nest sites, to do this we thought it would be
             necessary to add in a table for nest sites.
-            <a href="Phase3/BirdsV4.png" target="_blank">(click here to open diagram image)</a></p>
+            <a href="Phase4/BirdsV4.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 5</h3>
         <p> As we got further into development some inadequacies in the database started to show, such as a lack of
             being able to properly handle historical nest sites, to counter this a new table was added called bird nest
@@ -626,12 +634,12 @@
             the complexity of the Python Reader Scripts Also the feeder table was removed as the client didn't express
             interest in managing specific feeding locations as we have for nest sites so instead a field with feeder ID
             was added to visits.
-            <a href="Phase3/BirdsV5.png" target="_blank">(click here to open diagram image)</a></p>
+            <a href="Phase4/BirdsV5.png" target="_blank">(click here to open diagram image)</a></p>
         <h3> Version 6 - Final</h3>
         <p> As development ramped up in it's final stages the models in the system began to change often, at which point
             it was no longer feasible to keep updating this diagram, so V6 was created retroactively at the end of
             development to model the final state of the database.<br><br> As you'll be able to tell from the image of
-            this diagram <a href="Phase3/BirdsV6.png" target="_blank">(click here to open diagram image)</a>, a lot has changed from V6.
+            this diagram <a href="Phase4/BirdsV6.png" target="_blank">(click here to open diagram image)</a>, a lot has changed from V6.
             <ol>
                 <li>
                     We have a new lock table which was created for Karlis' concurrent access locking mechanism
@@ -659,75 +667,106 @@
     </div>
     <div id="netdi">
         <h2> 3.2 Network Diagram <a class="bu" href="#">Back to Top </a></h2>
-        <img src="Phase3/Img/NetworkDiagram.svg" class="center"></img>
+        <img src="Phase4/Img/NetworkDiagram.svg" class="center"></img>
     </div>
     <div id="sysdi">
         <h2> 3.3 System Diagram <a class="bu" href="#">Back to Top </a></h2>
     </div>
     <div id="lofi1">
-        <h2> Lo-Fi Design 1 <a class="bu" href="#">Back to Top </a></h2>
-        <p>The first version of Lo-Fi prototype was created using myBalsamiq tool. The idea of the first prototype was
-            to decide on basic layout for buttons and how data will be displayed on the screen. </p>
-        <p> First list of requirements listed by client includes:</p>
-        <ul>
-            <li>Register new birds</li>
-            <li>Register new nest sites</li>
-            <li>View database with all bird data</li>
-            <li>Create reports</li>
-            <li>Search information</li>
-            <li>Live View (This functionality was proposed by us and it was approved by client as it would be useful for
-                researchers to see which birds and how often are visiting feeders.)</li>
-        </ul>
-
+        <h2> 4.1 Lo-Fi Design 1 <a class="bu" href="#">Back to Top </a></h2>
+        <p>The first to Lo-Fi designs were attempted using myBalsamiq tool. The idea of the first prototype was to decide on basic layout for buttons and how data will be displayed on the screen. Below is an example of first Lo-Fi version of Log In page and Home screen that was designed using myBalsamiq tool.</p>
 
         <table id="lofitable1" border="0">
             <tr>
                 <td id="img"> Home Screen </td>
-                <td id="img"> Live View </td>
+                <td id="img"> Log In </td>
             </tr>
 
             <tr>
-                <td id="img"><img src="Phase3/lofihomescreen.png" width="400" height="200"></td>
-                <td id='img'><img src="Phase3/lofiliveview.png" width="400" height="200"></td>
-            </tr>
-
-            <tr>
-                <td id="img"> Admin page </td>
-                <td id="img"> Register New User Page </td>
-            </tr>
-
-            <tr>
-                <td id="img"><img src="Phase3/lofiadminpage.png" width="400" height="200"></td>
-                <td id='img'><img src="Phase3/lofiregnewuser.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/lofihomescreen.png" width="400" height="200"></td>
+                <td id='img'><img src="Phase4/login.png" width="400" height="200"></td>
             </tr>
         </table>
+        
+        <p>
+        We have requested 'dummy' data from the client to understand what sort of information is stored in the system. Due to data sharing agreement with MWF, our client was unable to send the actual data that is currently being stored about birds, however we received an excel spreadsheet that included all database fields that need to be included in the system. Based on this information we started to plan the system. 
+        </p>
+        
+        <table id="lofitable1" border="0">
+
+            <tr>
+                <td id="img"><img src="Phase4/dummy1.png" width="600" height="100"></td>
+            </tr>
+            <tr>
+                <td id='img'><img src="Phase4/dummy2.png" width="600" height="100"></td>
+            </tr>
+            <tr>
+                <td id='img'><img src="Phase4/dummy3.png" width="600" height="100"></td>
+            </tr>
+            <tr>
+                <td id='img'><img src="Phase4/dummy4.png" width="600" height="100"></td>
+            </tr>
+            <tr>
+                <td id='img'><img src="Phase4/dummy5.png" width="600" height="100"></td>
+            </tr>
+        </table>
+        
+        <p>The challenge was to understand how to divide all the information that is collected about birds and how frequently it is used e.g. daily, weekly or monthly. We have sent a number of questions to client to understand what information is needed for immediate access. </p>
+        
+        <table id="lofitable1" border="0">
+
+            <tr>
+                <td id="img"><img src="Phase4/dailyinfo.png" width="325" height="250"></td>
+            </tr>
+        </table>
+    
+        
+        
     </div>
     <div id="lofi2">
-        <h2> Lo-Fi Design 2 <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 4.2 Lo-Fi Design 2 <a class="bu" href="#">Back to Top </a></h2>
 
-        <p>Second version of Lo-Fi prototype and all the following versions were created using Google Slides. In second
-            version we have changed layout of the home screen and decided to locate all menu options to the left side as
-            it allows users to navigate
-            through the application without going back to main menu screen. Version 2 of Lo-Fi design shows 2 different
-            options of Live View. First option displays all data entries in a large table. This view does not include
-            filters and pagination and
-            hence is not user friendly especially when dealing with large amounts of data. In second version we have
-            added filters and pagination. This will enable users to easily navigate through large amounts of data,
-            search for information using search
-            bar at the top and pick specific bird visit times using time filter.</p>
+        <p>Based on answers from client, we came up with the idea to show 'Live View'of birds visiting feeders. It would include information that is collected on daily basis such as: bird's condition, time of visit and bird's unique identifiers such as name, Left Ring ID and Right Ring ID. The idea was communicated back to client and it was approved. Based on this we have begun to design 'Live View' of the system. </p>
         <br>
+        
         <table id="lofitable1" border="0">
-            <tr>
-                <td id="img"> Live View Version 1 </td>
-                <td id="img"> Live View Version 2 - (Priyesh Patel)</td>
-            </tr>
 
             <tr>
-                <td id="img"><img src="Phase3/lofiliveview2.png" width="400" height="200"></td>
-                <td id='img'><img src="Phase3/lofiliveview3.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/liveviewproposal.png" width="325" height="200"></td>
+            </tr>
+        </table>
+        
+        <p>Next version of UI prototype was created using Google Slides. Version 1 below shows new two-pane design which has Live View as a main screen and menu bar on the left. We have produced mock data based on conversation with client about what whata is used on daily basis. This version of Live View gave an idea of basic layout for the system, however it lacked many user friendly features. </p>
+        
+        <h3> Live View Version 1</h3>
+        <table id="lofitable1" border="0">
+           
+
+            <tr>
+                <td id="img"><img src="Phase4/lofiliveview2.png" width="400" height="200"></td>
             </tr>
         </table>
         <br>
+        
+        <h3> Live View Version 2 - Designed by Priyesh Patel</h3>
+        
+        <p>Live View version 2 included number of user-friendly features that improved system’s usability. </p>
+        <table id="lofitable1" border="0">
+            <tr>
+                <td id='img'><img src="Phase4/lofiliveview3.png" width="400" height="200"></td>
+            </tr>
+        </table>
+        
+        <ol>
+        <li>Pagination was added into Live View. In previous version, information was displayed as a large list of entries which would be difficult to understand and oversee. </li>
+        <li>Enry number filter allowed users to restrict number of table entries displayed on screen.</li>
+        <li>Time filter allowed to pick specific time of the day when birds are visiting feeders. </li>
+        <li>Text filter allowed to search for specific bird by typing its name or ring information.</li>
+        <li>Text label next to pagination bar allowed to see how many entries there are in total on the Live View. </li>
+        </ol>
+        
+        <p>Whilst this Lo-Fi version of UI was a big improvement from Version 1 it was still unclear what functionality should it include as well as it was unclear how we will be developing the system. The initial plan was to use Java programming language to develop the system, however during the development planning phase the plan changed. </p>
+        
     </div>
     <div id="hifi1">
         <h2> Hi-Fi Design 1 <a class="bu" href="#">Back to Top </a></h2>
@@ -753,8 +792,8 @@
             </tr>
 
             <tr>
-                <td id="img"><img src="Phase3/hifiliveview1.png" width="400" height="200"></td>
-                <td id="img"><img src="Phase3/hifiliveview2.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/hifiliveview1.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/hifiliveview2.png" width="400" height="200"></td>
             </tr>
         </table>
 
@@ -779,8 +818,8 @@
             </tr>
 
             <tr>
-                <td id="img"><img src="Phase3/liveview4.png" width="400" height="200"></td>
-                <td id="img"><img src="Phase3/liveview4menu.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/liveview4.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/liveview4menu.png" width="400" height="200"></td>
             </tr>
         </table>
 
@@ -797,8 +836,8 @@
                 <td id="img"> Bird View Edit Mode </td>
             </tr>
             <tr>
-                <td id="img"><img src="Phase3/birdview.png" width="400" height="200"></td>
-                <td id="img"><img src="Phase3/birdviewedit.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/birdview.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/birdviewedit.png" width="400" height="200"></td>
             </tr>
         </table>
 
@@ -818,13 +857,13 @@
             </tr>
 
             <tr>
-                <td id="img"><img src="Phase3/birdview2.2.png" width="400" height="200"></td>
-                <td id="img"><img src="Phase3/birdviewedit2.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/birdview2.2.png" width="400" height="200"></td>
+                <td id="img"><img src="Phase4/birdviewedit2.png" width="400" height="200"></td>
             </tr>
         </table>
         <table>
             <tr>
-                <td id="img"><img src="Phase3/birdviewdecision.png" width="400" height="175"></td>
+                <td id="img"><img src="Phase4/birdviewdecision.png" width="400" height="175"></td>
             </tr>
         </table>
     </div>
@@ -837,7 +876,7 @@
 
         <table id="lofitable1" border="0">
             <tr>
-                <td id="img"><img src="Phase3/contrastfail.png" width="350" height="200"></td>
+                <td id="img"><img src="Phase4/contrastfail.png" width="350" height="225"></td>
             </tr>
         </table>
 
@@ -849,8 +888,8 @@
 
         <table id="lofitable1" border="0">
             <tr>
-                <td id="img"><img src="Phase3/contrastpass1.png" width="350" height="200"></td>
-                <td id="img"><img src="Phase3/contrastpass2.png" width="350" height="200"></td>
+                <td id="img"><img src="Phase4/contrastpass1.png" width="350" height="225"></td>
+                <td id="img"><img src="Phase4/contrastpass2.png" width="350" height="225"></td>
             </tr>
         </table>
 
