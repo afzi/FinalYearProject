@@ -912,12 +912,25 @@
 
             The files can typically be found / identified by the following features:<br>
             <ul>
-                <li>Views (V): api/views/pages [files ending with “.ejs“]</li>
-                <li>Models (M): api/models</li>
-                <li>Routing Controller (RC): api/controllers/ [files with prefix of “view-“ and ending “.js”]</li>
-                <li>Front-end Controller (FC): api/controllers/ [files with suffix of “.page.js“]</li>
-                <li>Back-end Controller (BC): api/controllers/ [all other files ending with “.js“]</li>
+                <li><b>Views (V):</b> api/views/pages [files ending with “.ejs“]</li>
+                <li><b>Models (M):</b> api/models</li>
+                <li><b>Routing Controller (RC):</b> api/controllers/ [files with prefix of “view-“ and ending “.js”]
+                </li>
+                <li><b>Front-end Controller (FC):</b> api/controllers/ [files with suffix of “.page.js“]</li>
+                <li><b>Back-end Controller (BC):</b> api/controllers/ [all other files ending with “.js“]</li>
             </ul>
+            <img src="Phase3/SysDiagram.png"></img>
+            <br><b>Routing</b><br>
+            The URL mapping to controllers in handled by Sails’ routes.js file found under the config files, this allows
+            user friendly URL’s to be mapped to file names and allows easy linking in the view files in cases of buttons
+            linking to another page (e.g. the export button is mapped to /export instead of having to type
+            api/controller/bird/export-date-bird-simple.js).<br><br>
+            <br><b>Styles</b><br>
+            CSS for files are stored in assets/styles and are in files ending .less. Sails handles importing these files
+            to the webpage with use of the importer.less file and then all CSS rules are available to be used. Some of
+            Bootstrap's pre defined CSS is also used and this can be located in assets/dependencies/bootstrap-4 (in the
+            cases that the bootstrap style was overridden it can be found in the previous folder in
+            bootstrap-override.less.<br><br>
         </p>
     </div>
     <div id="lofi1">
