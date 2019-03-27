@@ -828,9 +828,14 @@
             </tr>
         </table>
 
-        <p>This version of 'Live View' has been modified number of times. Table has been moved to centre. First column has been removed to avoid unnecessary information on the screen as it does not serve any purpose for researchers. Menu has been moved to
-            the top right corner and 'Live View' button has been added so that users can always return to live screen from any view. 'View' button at the end of each row has been also removed as we decided that this option can be replaced with different
-            functionality such as pressing on the table entry. This made Live View less cluttered from unnecessary buttons. </p>
+        <p>This version of Live View has been modified number of times. Table has been moved to centre. First column
+            has been removed to avoid unnecessary information on the screen as it does not serve any purpose for
+            researchers. Menu has been moved to
+            the top right corner and 'Live View' button has been added so that users can always return to live screen
+            from any view. 'View' button at the end of each row has been also removed as we decided that this option can
+            be replaced with different
+            functionality such as pressing on the table entry. This made Live View less cluttered from unnecessary
+            buttons. </p>
 
         <p>In order to inform users about new bird visits, notification message would appear in the left corner suggesting users to refresh the page. However, we needed client’s decision whether page can be automatically updated when new birds visited feeders
             or refreshed by users. In terms of system usability, the latter option would be more suitable as automatic page update would mean that bird entries will continuously move down. The current design of pop up message was also adding disruption
@@ -991,6 +996,55 @@
                 <td id="img"><img src="Phase4/contrastpass2.png" width="350" height="225"></td>
             </tr>
         </table>
+        
+        <h3>Live View</h3>
+        <p>Before second user testing some adjustments have been made to the system so we wanted to make sure that these changes are communicated to client and will not largely affect system usability. </p>
+        <ol>
+        <li>During development stage it was decided to change Menu option. Instead of one Menu button in the web page header, we decided to have three buttons on the right side of the header. This simplified developer’s task and saved some time to work on other system functionality and did not affect systems usability.</li>
+        
+        <p>Menu buttons included:</p>
+        <ul>
+        <li>Task Manager – Live View, Birds Table, Manage Rings, Manage Nest Sites</li>   
+        <li>Admin – Manage Users, User Activity Monitor</li>  
+        <li>Account – My Profile, Log Out</li>
+        </ul>
+        <p>Buttons such as Register New Bird and Register New User has been removed from Menu and added to Birds Table View and Manage Users View as requested by client during second user testing.</p>
+        <li>All pagination related information has been moved to the footer of the page, this was not client request, but it grouped all related filters in one area.</li>
+        <li>Notifications related to new bird visits have also been moved to the footer. As per client’s request we have added refresh button and text label that informs users when new visits have been registered in the system. The pop-up message was removed from the prototype. </li>
+        <li>Table design has been modified to match colours that passed usability test</li>
+        <li>Vue.js provides a number of user-friendly UI features including date and time pickers. Chosen time filter provided option to choose time and date using same design which is why it was chosen as it would add consistency element throughout the design. </li>
+        </ol>
+        <table id="lofitable1" border="0">
+            <tr>
+                <td id="img"><img src="Phase4/timepicker.png" width="150" height="150"></td>
+                <td id="img"><img src="Phase4/timepicker2.png" width="150" height="150"></td>
+                <td id="img"><img src="Phase4/datepicker.png" width="150" height="150"></td>
+            </tr>
+        </table>
+        
+        <p>Final version of Live View includes all improvements and modifications suggested by client. </p>
+        
+        <table id="lofitable1" border="0">
+            <tr>
+                <td id="img"> Live View Version 5 </td>
+                <td id="img"> Live View Final Version </td>
+            </tr>
+
+            <tr>
+                <td id="img"><img src="Phase4/liveviewversion5.png" width="375" height="200"></td>
+                <td id="img"><img src="Phase4/liveviewfinal.png" width="375" height="200"></td>
+            </tr>
+        </table>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     </div>
     <div id="scripts">
