@@ -102,7 +102,7 @@
             </tr>
             <tr>
                 <td> 3.3 </td>
-                <td><a href="#sysdi"> System Diagram </a></td>
+                <td><a href="#sysdi"> System Structure </a></td>
                 <td> Priyesh Patel </td>
                 <td></td>
             </tr>
@@ -703,7 +703,28 @@
         </p>
     </div>
     <div id="sysdi">
-        <h2> 3.3 System Diagram <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 3.3 System Structure <a class="bu" href="#">Back to Top </a></h2>
+        <p>
+            This section aims to provide the basic knowledge needed to navigate and understand the folder structure of the system, it consists of sections for each area of the system details the contributing files and some paragraphs explaining key features of the program that allow it to run in general.<br><br>
+There are typically 5 types of files responsible per page and consist of:<br>
+<ul>
+ <li>1 view containing the front-end html page that the user will see</li>
+ <li><ul>3 Controllers –
+    <li>1 manages front-end JavaScript</li>
+    <li>1 for back-end Server / database interactions (mapping to database handled by Model files) </li>
+    <li>1 routing controller that handles directing to a page</li></ul></li>
+</ul>
+There are cases where a larger page uses more than 3 controllers, but this will be explained when they appear.<br><br>
+
+The files can typically be found / identified by the following features:<br>
+<ul>
+    <li>Views (V): api/views/pages [files ending with “.ejs“]</li>
+        <li>Models (M): api/models</li>
+            <li>Routing Controller (RC): api/controllers/ [files with prefix of “view-“ and ending “.js”]</li>
+                <li>Front-end Controller (FC): api/controllers/ [files with suffix of “.page.js“]</li>
+                    <li>Back-end Controller (BC): api/controllers/ [all other files ending with “.js“]</li>
+</ul>
+        </p>
     </div>
     <div id="lofi1">
         <h2> 4.1 Lo-Fi Design 1 <a class="bu" href="#">Back to Top </a></h2>
