@@ -363,7 +363,6 @@
             Three ZigBee-compliant radio modules (Digi XBee) were given to us by our supervisor for development and testing purposes. One is used as the network 'coordinator'; in a ZigBee network the coordinator is responsible for creating and maintaining the
             network and administrating other devices joining the network. Our system also uses the coordinator as the receiver of all data; it is connected via serial to the server (described in sections 1.1.4 and 5.1), which reads the incoming data and stores
             it in the database.
-            <p class="todo">TODO: check with Dan that they're actually XBees</p>
                 </p>
         <h3>1.1.2 RFID techonology</h3>
         <p>
@@ -394,8 +393,9 @@
             
             With these two factors in mind, we opted to use a 134.2 KHz RFID reader and tags. The read distance (~2 cm) was determined to be suitable for the use case, as the reader can be positioned in such a way that it is guaranteed to register a visit once the bird accesses the food stored in the hopper.
             The specific devices we used for development and testing were recommended and purchased by our supervisor. They are ISO 11784/11785 ("Radio Frequency Identification of Animals") compliant, which means that there is standardized documentation available and a different ISO-compliant vendor can be used in the future, if required.
-            The size of the antenna is 1.25mm x 7mm, which can comfortably fit into a bird ring.
-            <p class="todo">TODO: pictures of the tag and reader</p>
+            The size of the antenna is 1.25mm x 7mm, which can comfortably fit into a bird ring. In the picture below, the RFID reader (green) is connected to the ZigBee device with the use of a breadboard; in a real-life scenario,
+            they would be connected directly to one another.
+            <div><img src="Phase1/Img/readerstuff.jpeg" class="center"></div>
         </p>
         <h3>1.1.3 Power Solution</h3>
         <p>
@@ -403,9 +403,11 @@
             available on site, in order to integrate better with their existing processes and minimize any physical transformations required.<br><br>
             The location of the customer's site generally has a good level of solar power throughout the day. However, relying solely on the incoming sun rays would make the system in-operable at night or when it was cloudier than usual. Therefore,
             we opted to use a battery that would be charged by solar power during the day, and would last long enough to overcome extended periods of darkness.<br><br>
-            With the help of our supervisor, we calculated the optimal solar panel size and battery capacity. Each feeder with a RFID reader would have its own solar panel and battery; the server would use a battery that is connected to the existing solar
+            With the help of our supervisor, we calculated the optimal solar panel size and battery capacity (7 Ah). Each feeder with a RFID reader would have its own solar panel and battery; the server would use a battery that is connected to the existing solar
             panels they have on site. The devices, seen in the picture below, were then purchased by our supervisor.
-            <p class="todo">TODO: pictures of solar panel and battery, also find out from Dan the exact panel size and battery capacity</p>
+            <div><img src="Phase1/Img/solarstuff.jpeg" class="center"></img></div>
+            The below picture shows the feeder that the solar panel will be attached on top of:
+            <div><img src="Phase1/Img/feeder.jpeg" class="center"></div>
         </p>
         <h3>1.1.4 The server</h3>
         <p>
@@ -428,13 +430,58 @@
     <div id="softwareChoices">
         <h2> 1.2 Software Decisions <a class="bu" href="#">Back to Top </a></h2>
         
-        <h3> Software for UI design</h3>
+        <h3>1.2.1 Software for UI design</h3>
         
         <li>myBalsamiq</li>
         <p>The first UI design was done using myBalsamiq tool. It was used to get rough sketches and mock up ideas to visualise what needs to be included in the system. The most important task when designing UI for our system was to decide how to display bird's data which included work with different sets of mock data. myBalsamiq tool turned to be too Lo-Fi for expected results so it was decided to use Google Slides instead to continue working on system's UI design.</p>
         <li>Google Slides</li>
         <p>Google Slides turned to be the most optimal software choice for system's UI designed. Real time editing and collaboration features allowed us to view and edit different parts of UI at the same time. This software provided us with all the necessary tools to create Hi-Fi UI prototypes and use them to run usability test with the client. Throughout the project we used Google Drive as a main tool to create and store all documents related to the project which is also why Google Slides was chosen as it can all be stored in the same place. Version and activity control allowed to see all changes made throughout UI design process which was extremely important for documentation purposes.</p>
         
+        <h3>1.2.2 Database Software</h3>
+        <h3>1.2.3 Programming Language - EchoBook</h3>
+        <p>
+            Our initial plan was to use Java for both the front-end and the back-end of the EchoBook application, as that was the language that all of us had the most experience with. However,
+            Java is infamous for requiring a lot of planning, configuration and boilerplate code just to get started, and a well thought-out code structure would be very important to prevent maintenance
+            issues when the project is handed over to a new development team. Furthermore, we all felt that user interfaces built using Java look outdated and are generally unpleasant to use.<br><br>Karlis had
+            just finished a NodeJS project for a separate University coursework and was impressed by the development speed when working with NodeJS compared to Java, and the wide amount of third-party libraries
+            easily available that could help avoid writing boilerplate code. The main drawback for using NodeJS was that the team had very little experience with NodeJS itself, although all of us had written
+            JavaScript in the past. However, after a planning session, we decided to use NodeJS for the following reasons:
+            <ul>
+                <li>
+                    Speed of development
+                </li>
+                <li>
+                    Large amounts of third-party libraries available via its simple-to-use package manager, npm
+                </li>
+                <li>
+                    Availability of all-inclusive and beginner-friendly frameworks
+                </li>
+                <li>
+                    The ability to write a web application, rather than a desktop application. Although web applications can be written in Java as well, the process is tedious and requires significant
+                    amounts of configuration and orchestrated use of third-party tools, so creating a web application in Java was deemed unfeasible. Web applications are preferable because of improved scalability and
+                    platform-independence compared to desktop applications, which would allow our application to be used on a wide range of devices, such as desktops, smartphones, tablets, etc.
+                </li>
+                <li>
+                    'Forgiveness' for mistakes. Although we had limited experience with NodeJS, JavaScript is known for being forgiving to developers that don't follow best practices, and working smoothly
+                    even if the code isn't optimal.
+                </li>
+            </ul>
+        </p>
+        <h3>1.2.4 Framework - EchoBook</h3>
+        <p>
+            Initially, we considered using a JavaScript framework such as Angular for the front-end, and plain NodeJS for the back-end. However, given our limited experience with NodeJS, we instead
+            opted to use a full-stack framework, as this would allow us to minimize the time required for configuration and enforce standard NodeJS practices that we might not be aware of. We chose to
+            use Sails.js as it has a large online community, provides all-inclusive templates and code generation tools for bootstrapping projects, and is highly configurable, allowing us to get started easily without losing
+            the ability to add more advanced features / configurations later down the line. In its default configuration, Sails.js uses the Vue.js framework for the front-end, which shares much of its
+            functionality with Angular, but is significantly simpler while still providing the same core features. We had determined that we wouldn't be making use of the advanced functionality that Angular offers
+            and, therefore, we settled for Vue.js. 
+        </p>
+        <h3>1.2.5 Programming Language - Coordinator</h3>
+        <p>
+            We used Python 3 for the ZigBee coordinator service due to the availability of the <a href="https://pythonhosted.org/pyserial/" target="_blank"><code>pyserial</code></a> library, recommended by our supervisor who had used it in the past.
+            This library is well documented takes away a lot of the complexity in interacting with serial devices, which allowed us to focus on the data handling logic, rather than the technic aspects of communication
+            with the coordinator.
+        </p>
     </div>
     <div id="users">
         <h2> 2.1 Understanding the user <a class="bu" href="#">Back to Top </a></h2>
