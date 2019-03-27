@@ -80,27 +80,27 @@ parasails.registerPage('user-activity-monitor', {
 
   watch: {
     // whenever one of the filters changes, this function will run
-    currentUserFilter: function (_, _) {
+    currentUserFilter: function () {
       if($("#username").data('locked') != 1) {
         this.refresh();
       }
     },
-    currentActionFilter: function (_, _) {
+    currentActionFilter: function () {
       this.refresh();
     },
-    currentDateFromFilter: function (_, _) {
+    currentDateFromFilter: function () {
       this.refresh();
     },
-    currentDateToFilter: function (_, _) {
+    currentDateToFilter: function () {
       this.refresh();
     },
-    currentOldDataFilter: function (_, _) {
+    currentOldDataFilter: function () {
       this.refresh();
     },
-    currentNewDataFilter: function (_, _) {
+    currentNewDataFilter: function () {
       this.refresh();
     },
-    pageSize: function (_, _) {
+    pageSize: function () {
       this.refresh();
     }
   

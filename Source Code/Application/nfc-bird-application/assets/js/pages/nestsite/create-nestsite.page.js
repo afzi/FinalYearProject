@@ -45,11 +45,11 @@ parasails.registerPage('create-nestsite', {
 
   watch: {
     // whenever one of the filters changes, this function will run
-    pageSize: function (_, _) {
+    pageSize: function () {
       this.refresh();
     },
 
-    'formData.nestID': function(_,_) {
+    'formData.nestID': function() {
       if($("#nestID").data('locked') != 1) {
         this.validateNestName();
       }

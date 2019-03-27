@@ -66,7 +66,7 @@ parasails.registerPage('full-bird', {
     watch: {
         
        
-        pageSize: function(_, _) {
+        pageSize: function() {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();

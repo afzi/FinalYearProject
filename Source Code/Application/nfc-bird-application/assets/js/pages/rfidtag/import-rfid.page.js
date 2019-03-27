@@ -54,17 +54,17 @@ parasails.registerPage('import-rfid', {
 
   watch: {
     // whenever one of the filters changes, this function will run
-    pageSize: function (_, _) {
+    pageSize: function () {
       this.refresh();
     },
 
-    ringidFilter: function(_, _) {
+    ringidFilter: function() {
       if($("#nfcRFIDFilter").data('locked') != 1) {
         this.refresh();
       }
     },
 
-//   ringidFilter: function(_, _) {
+//   ringidFilter: function() {
 //     this.refresh();
 // },
     

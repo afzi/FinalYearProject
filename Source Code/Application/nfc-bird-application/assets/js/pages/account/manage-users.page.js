@@ -55,11 +55,11 @@ parasails.registerPage('manage-users', {
 
   watch: {
     // whenever one of the filters changes, this function will run
-    pageSize: function (_, _) {
+    pageSize: function () {
       this.refresh();
     },
 
-    currentFullNameFilter: function (_, _) {
+    currentFullNameFilter: function () {
       if($("#fullName").data('locked') != 1) {
         this.currentPage = 1;
         this.$refs.paginate.selected = 1;
