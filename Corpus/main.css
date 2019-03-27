@@ -1,9 +1,4 @@
-html {
-    position: absolute;
-    min-width: 1024px;
-    min-height: 768px;
-    height: 100%;
-}
+
 body {
     background: #fff;
     color: #545454;
