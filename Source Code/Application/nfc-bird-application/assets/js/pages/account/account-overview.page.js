@@ -35,17 +35,17 @@ parasails.registerPage('account-overview', {
   },
 
   watch: {
-    'passwordFormData.password': function(_,_) {
+    'passwordFormData.password': function() {
       if(this.isEditPasswordMode) {
         this.validatePassword();
       }
     },
-    'passwordFormData.confirmPassword': function(_,_) {
+    'passwordFormData.confirmPassword': function() {
       if(this.isEditPasswordMode) {
         this.validateConfirmPassword();
       }
     },
-    'profileFormData.fullName': function(_,_) {
+    'profileFormData.fullName': function() {
       if(this.isEditProfileMode) {
         this.validateFullName();
       }

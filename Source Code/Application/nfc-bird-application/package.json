@@ -1,8 +1,8 @@
 {
-  "name": "nfc-bird-backend",
+  "name": "echobook",
   "private": true,
-  "version": "0.0.0",
-  "description": "a Sails application",
+  "version": "0.0.1",
+  "description": "EchoBook - the smart bird ring management system",
   "keywords": [],
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
@@ -23,17 +23,40 @@
     "stream": "0.0.2",
     "underscore": "^1.9.1",
     "vue-bootstrap-datetimepicker": "^5.0.1",
-    "vuejs-paginate": "^2.1.0"
+    "vuejs-paginate": "^2.1.0",
+    "grunt": "^1.0.4",
+    "sails-hook-grunt": "^3.1.0"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
     "@sailshq/htmlhint": "^0.9.16",
     "@sailshq/lesshint": "^4.6.6",
-    "grunt": "^1.0.4",
     "mocha": "^5.2.0",
-    "sails-hook-grunt": "^3.1.0",
     "supertest": "^3.4.2"
   },
+  "bundleDependencies": [
+    "@sailshq/connect-redis",
+    "@sailshq/lodash",
+    "@sailshq/socket.io-redis",
+    "ajv",
+    "browserify-fs",
+    "grunt-browserify",
+    "moment",
+    "node-excel-export",
+    "papaparse",
+    "sails",
+    "sails-hook-apianalytics",
+    "sails-hook-organics",
+    "sails-hook-orm",
+    "sails-hook-sockets",
+    "sails-mysql",
+    "stream",
+    "underscore",
+    "vue-bootstrap-datetimepicker",
+    "vuejs-paginate",
+    "grunt",
+    "sails-hook-grunt"
+  ],
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "test": "node ./node_modules/mocha/bin/mocha test/lifecycle.test.js test/integration/**/*.test.js",
@@ -46,7 +69,7 @@
     "type": "git",
     "url": "git://github.com/anonymous node/sails user/nfc-bird-backend.git"
   },
-  "author": "anonymous node/sails user",
+  "author": "Karlis Jaunslavietis, Priyesh Patel, Afzaal Ahmad Razeem, Elina Voitane",
   "license": "",
   "engines": {
     "node": "^9.8"

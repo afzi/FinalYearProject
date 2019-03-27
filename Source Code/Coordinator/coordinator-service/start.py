@@ -206,7 +206,6 @@ class SerialReader:
         logging.debug("Received SIGINT, exiting")
         self.__finished()
 
-
 s = SerialReader(config)
 s.connect()
 s.listen()

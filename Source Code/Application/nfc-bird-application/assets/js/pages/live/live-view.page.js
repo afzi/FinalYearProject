@@ -62,16 +62,16 @@ parasails.registerPage('live-view', {
     },
     watch: {
         // whenever one of the filters changes, this function will run
-        pageSize: function(_, _) {
+        pageSize: function() {
             this.refresh();
         },
-        search: function(_, _) {
+        search: function() {
             this.refresh();
         },
-        timeFrom: function(_, _) {
+        timeFrom: function() {
             this.refresh();
         },
-        timeTo: function(_, _) {
+        timeTo: function() {
             this.refresh();
         }
 

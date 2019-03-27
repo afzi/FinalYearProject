@@ -228,7 +228,7 @@ parasails.registerPage('get-bird', {
 
     watch: {
         // whenever one of the filters changes, this function will run
-        currentBirdFilter: function(_, _) {
+        currentBirdFilter: function() {
             if ($("#birdName").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -236,19 +236,19 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentStatusFilter: function(_, _) {
+        currentStatusFilter: function() {
             if ($("#status").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
                 this.refresh();
             }
         },
-        currentSexFilter: function(_, _) {
+        currentSexFilter: function() {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
         },
-        currentBirdIdFilter: function(_, _) {
+        currentBirdIdFilter: function() {
             if ($("#studID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -256,7 +256,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentLeftRingFilter: function(_, _) {
+        currentLeftRingFilter: function() {
             if ($("#leftRingID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -264,14 +264,14 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentRightRingFilter: function(_, _) {
+        currentRightRingFilter: function() {
             if ($("#leftRingID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
                 this.refresh();
             }
         },
-        currentCreatorFilter: function(_, _) {
+        currentCreatorFilter: function() {
             if ($("#leftRingID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -279,7 +279,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentNewStudIdFilter: function(_, _) {
+        currentNewStudIdFilter: function() {
             if ($("#newStudID").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -287,40 +287,40 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentFatherFilter: function(_, _) {
+        currentFatherFilter: function() {
             if ($("#fatherName").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
                 this.refresh();
             }
         },
-        currentMotherFilter: function(_, _) {
+        currentMotherFilter: function() {
             if ($("#motherName").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
                 this.refresh();
             }
         },
-        currentBreederFilter: function(_, _) {
+        currentBreederFilter: function() {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
         },
-        currentHatchWhereFilter: function(_, _) {
+        currentHatchWhereFilter: function() {
             if ($("#hatchedWhere").data('locked') != 1) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
             }
         },
-        currentFledgeWhereFilter: function(_, _) {
+        currentFledgeWhereFilter: function() {
             if ($("#fledgedWhere").data('locked') != 1) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
             }
         },
-        currentreleasedWhereFilter: function(_, _) {
+        currentreleasedWhereFilter: function() {
             if ($("#releasedWhere").data('locked') != 1) {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
@@ -328,7 +328,7 @@ parasails.registerPage('get-bird', {
             }
         },
         
-        currentLaidWhereFilter: function(_, _) {
+        currentLaidWhereFilter: function() {
             if ($("#laidWhere").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -336,7 +336,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        currentNestSiteFilter: function(_, _) {
+        currentNestSiteFilter: function() {
             if ($("#currentNestSite").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -344,7 +344,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        previousNestSiteFilter: function(_, _) {
+        previousNestSiteFilter: function() {
             if ($("#previousNestSite").data('locked') != 1) {
                 this.currentPage = 1;
                 this.$refs.paginate.selected = 1;
@@ -352,7 +352,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        pageSize: function(_, _) {
+        pageSize: function() {
             this.currentPage = 1;
             this.$refs.paginate.selected = 1;
             this.refresh();
@@ -382,7 +382,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        'editBirdData.birdName': function(_, _) {
+        'editBirdData.birdName': function() {
             if (this.isEditMode) {
                 this.validateUniqueBirdName(this.editBirdData.id);
             }
@@ -424,7 +424,7 @@ parasails.registerPage('get-bird', {
             }
         },
 
-        'createBirdData.birdName': function(_, _) {
+        'createBirdData.birdName': function() {
             if (this.isCreateMode) {
                 this.validateUniqueBirdName(this.editBirdData.id);
             }
