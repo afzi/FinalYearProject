@@ -238,6 +238,15 @@
                 <td> Priyesh Patel </td>
                 <td></td>
             </tr>
+            <tr>
+                <th colspan="4"> Phase 7 Post-Development </th>
+            </tr>
+            <tr>
+                <td> 7.1 </td>
+                <td><a href="#deployment"> Deployment </a></td>
+                <td> Karlis Jaunslavietis </td>
+                <td></td>
+            </tr>
             <th colspan="4"> Module Deliverables </th>
             </tr>
             <tr>
@@ -2560,7 +2569,96 @@
         </p>
     </div>
 
+    <div id="deployment">
+        <h2>7.1 Deployment <a class="bu" href="#">Back to Top </a></h2>
+        <h3>7.1.1 About Deployment</h3>
+        <p>
+            As the customer's site doesn't have an internet connection, any deployment would have to happen either before the server is
+            delivered to the site, or have all dependencies (such as libraries and runtimes) bundled for offline installation. The following sections
+            describe a proof-of-concept offline deployment method on Linux servers; this has been tested only on 64-bit Ubuntu 18.04, but should, in theory,
+            work on any 32-bit or 64-bit Linux machine with Bash available.
+            <h3>7.1.2 EchoBook deployment</h3>
+            To deploy the main EchoBook system that hosts the user interface and backend, the following actions must be taken (steps 1 - 3 require npm to be installed and an internet connection):
+            <ol>
+                <li>
+                    Ensure that all production dependencies are included in the <code>bundleDependencies</code> list of <code>package.json</code>, like so:
+                    <pre><code>
+                    "bundleDependencies": [
+                        "@sailshq/connect-redis",
+                        "@sailshq/lodash",
+                        "@sailshq/socket.io-redis",
+                        "ajv",
+                        "browserify-fs",
+                        "grunt-browserify",
+                        "moment",
+                        "node-excel-export",
+                        "papaparse",
+                        "sails",
+                        "sails-hook-apianalytics",
+                        "sails-hook-organics",
+                        "sails-hook-orm",
+                        "sails-hook-sockets",
+                        "sails-mysql",
+                        "stream",
+                        "underscore",
+                        "vue-bootstrap-datetimepicker",
+                        "vuejs-paginate",
+                        "grunt",
+                        "sails-hook-grunt"
+                      ],
+                    </code></pre>
+                </li>
+                <li>
+                    Install all dependencies in the current directory using the command <code>npm install --no-bin-links</code>
+                </li>
+                <li>
+                    Bundle the project itself, along with all its dependencies, using the command <code>npm pack</code>
+                </li>
+                <li>
+                    Copy the generated archive to the Deployment/echobook folder. After, the folder can be transferred to any portable storage medium, such as a USB drive that will be taken to the customer's site.
+                </li>
+                <li>
+                    On the target server, run script <code>install_echobook.sh</code>  (ensure that the correct archive name is set within the script). This installs NodeJS & npm on the server from the binaries included in the Dependencies folder, as well as unpacks EchoBook
+                </li>
+                <li>
+                    To run EchoBook, run script <code>launch_echobook.sh</code>. This checks for any missing configuration parameters (such as database hostname) and, if missing, prompts the user to enter them before continuing.
+                </li>
+            </ol>
+        </p>
+        <h3>7.1.3 Database Deployment</h3>
+        <p>
+            The target server should have MySQL server pre-installed; this wasn't automated as no specific MySQL version is required and, during installation, the user is likely to want to be able
+            to adjust the configuration themselves.<br><br>
+            Once the MySQL server is installed, the user should create a new database and run the <code>init.sql</code> script inside the database; this creates the required tables and inserts a single user with
+            Superadmin privileges (username: superadmin, password: password). This password should be changed at the first opportunity.
+        </p>
+        <h3>7.1.4 Coordinator Service Deployment</h3>
+        <p>
+            To deploy the coordinator server, the following actions must be taken (steps 1-3 require an internet connection and Python 3, pip and virtualenv):
+            <ol>
+                <li>
+                    From the coordinator service folder, install the dependencies by running the command <code>pip install -r requirements.txt</code>
+                </li>
+                <li>
+                    Create a Python 3 virtual environment by running the command <code>virtualenv env --python=python3</code>. This will contain a python 3 installation and all the required dependencies.
+                </li>
+                <li>
+                    Bundle the project itself, along with all its dependencies, using the command <code>tar -czvf coordinator-service.tar.gz *</code> (any other archiving software can be used too)
+                </li>
+                <li>
+                    Copy the generated archive to the Deployment/coordinator folder. After, the folder can be transferred to any portable storage medium, such as a USB drive that will be taken to the customer's site.
+                </li>
+                <li>
+                    On the target server, run script <code>install_coordinator.sh</code> (ensure that the correct archive name is set within the script). This unpacks the archive.
+                </li>
+                <li>
+                    Ensure that the correct configuration parameters are set in <code>config.py</code> (these are described in section 5.1). The coordinator service can then be launched by running the command <code>launch_coordinator.sh</code>,
+                    which uses the virtual environment to run the service.
+                </li>
 
+            </ol>
+        </p>
+    </div>
 </body>
 
 </html>
