@@ -2664,6 +2664,18 @@
 
             </ol>
         </p>
+        <h3>7.1.5 Future Improvements</h3>
+        <ul>
+            <li>
+                <strong>Automatic recovery in case of a crash.</strong><br> Currently, if either EchoBook or the coordinator service crashes, it will go down until manually restarted by a person. It could be automatically
+                restarted by using a tool such as <code>supervisord</code> or <code>forever</code>
+            </li>
+            <li>
+                <strong>HTTPs deployment.</strong><br>
+                Currently, EchoBook is deployed with HTTP only; this is insecure as all data, including passwords, will be transferred over plain text and can easily be intercepted by a malicious actor. HTTPs configuration
+                should be added to the deployment to increase security.
+            </li>
+        </ul>
     </div>
 </body>
 
