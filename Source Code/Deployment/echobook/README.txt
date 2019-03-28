@@ -1,7 +1,7 @@
 To package for offline:
 
 -make sure any production dependencies are added to bundleDependencies in package.json
--from root folder (currently nfc-bird-application), run 'npm install --no-bin-link' (internet connection required for this part)
+-from root folder (currently nfc-bird-application), run 'npm install --no-bin-link --production' (internet connection required for this part)
 -run 'npm pack'
 -copy generated tarball to this folder
 
