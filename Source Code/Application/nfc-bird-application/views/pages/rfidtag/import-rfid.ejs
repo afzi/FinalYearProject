@@ -63,7 +63,7 @@
                     <td>{{rfidtag.birdID ? 'Yes' : 'No'}}</td>
                     <td>{{rfidtag.birdID ? rfidtag.birdID.birdName : '-'}}</td>
                     <td>{{rfidtag.birdID ? new Date(rfidtag.updatedAt).toLocaleDateString('en-GB') : '-'}}</td>
-                    <td><i v-if="!rfidtag.birdID && canEditThisRfid(index)" class="fas fa-trash-alt fa-lg" @click="promptDeleteRing(index)" alt="Delete Ring" title="Delete Ring"></i></td>
+                    <td><i v-if="!rfidtag.birdID && canEditThisRfid(index)" class="fas fa-trash-alt fa-lg" style="cursor:pointer" @click="promptDeleteRing(index)" alt="Delete Ring" title="Delete Ring"></i></td>
                 </tr>
             </tbody>
         </table>
