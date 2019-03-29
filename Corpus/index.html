@@ -40,6 +40,17 @@
             </tr>
 
             <tr>
+                <th colspan="4"> Phase 0 Organisation</th>
+            </tr>
+
+            <tr>
+                <td> 0.1 </td>
+                <td><a href="#groupPlan"> Group Working Plan</a></td>
+                <td> Priyesh Patel, Karlis Jaunslavietis</td>
+                <td></td>
+            </tr>
+
+            <tr>
                 <th colspan="4"> Phase 1 Research</th>
             </tr>
 
@@ -284,14 +295,16 @@
             </tr>
             <tr>
                 <td>D5</td>
-                <td><a href="ModuleDeliverables/VideoFinal.mp4" download target="_blank">System Video - (if on chrome, right click and
+                <td><a href="ModuleDeliverables/VideoFinal.mp4" download target="_blank">System Video - (if on chrome,
+                        right click and
                         save as to download)</a> </td>
                 <td>Priyesh Patel</td>
                 <td></td>
             </tr>
             <tr>
                 <td>D5 - Alternative</td>
-                <td><a href="ModuleDeliverables/VideoNormalSpeed.mp4" download target="_blank">System Video At Normal speed (the above
+                <td><a href="ModuleDeliverables/VideoNormalSpeed.mp4" download target="_blank">System Video At Normal
+                        speed (the above
                         was sped up to meet the 5 minute constraint, this orignal version is here (7min 14sec) if you
                         would prefer to hear a non-sped up version</a> </td>
                 <td>Priyesh Patel</td>
@@ -314,9 +327,58 @@
             </tr>
         </table>
     </div>
+    <div id="groupPlan">
+        <h2> 0.1 Group Working Plan <a class="bu" href="#">Back to Top </a></h2>
+        <p>
+            This section details the way we worked as a group, and the technologies we used.
+        </p>
+        <h3> 0.1.1 Keeping in Contact</h3>
+        <p>
+            <b>Facebook Messenger</b><br>
+            We used Facebook Messenger for real-time communication among the team. Messenger was chosen because the
+            team is familiar with the service and it offers the features required for efficient, short
+            discussions.<br><br>
+            <b>F2F Meetings</b><br>
+            We held team meetings once a week. These meetings were up to an hour long and consisted of us prioritizing and
+            allocating tasks for the following week, preparing for upcoming supervisor / client meeting, as well as
+            discussing any issues that have arisen / may arise. The meetings were led by Karlis.<br><br>
+            <b>Supervisor / Client Meetings</b><br>
+            these meetings were meant for us to engage with the various people involved with the project. typically,
+            they had Dan Knox (our supervisor) and all of us in attendance, but, also we had meetings with our client
+            (Debbie) in a similar format. These meetings were used to
+            report progress, discuss features and requirements, as well as to obtain technical advice from Dan and his
+            colleagues.<br><br>
 
+        </p>
+        <h3> 0.1.2 Task Management</h3>
+        <p>
+            <b>Trello</b><br>
+            Trello is an online project management solution that allows users to organize and track tasks and events. It
+            was used both for technical and non-technical items. The team, with the exception of Priyesh, was new to
+            Trello. It was chosen as it is a free and simple-to-use issue tracking system that would help us stay
+            organized and stay on top of our to-do list. It became less used during the end of development as we reached
+            a stage where we knew what we were doing and saved time in meetings by omitting the step of managing the
+            board. See image below for a capture of our board in one of the earlier stages of the project.<br><br>
+            <img src="Phase0/Trello.png" class="center"></img>
+
+        </p>
+        <h3> 0.1.3 Work Management</h3>
+        <p>
+            <b>Google Drive</b><br>
+            Google Drive was used for sharing and collaborating on documents, such as plans, designs and reports.
+            All relevant files were stored in the ‘CO600’ folder, to which all team members had read/write access.
+            Google Drive was chosen as it is a free storage service with real-time collaboration features that allow for
+            easy and efficient real-time collaboration on documents.<br><br>
+            <b>GitLab</b><br>
+            GitLab was the technology of choice for technical items, such as source code. The team members were already
+            familiar with Git, which is the underlying version-control system for GitLab. It allowed us to manage a
+            single repository of all versions of the source code (which proved it's worth on a few occasions when we
+            needed to revert to earlier versions), ensuring a robust code-base and efficient collaboration.
+
+        </p>
+    </div>
     <div id="hardwareChoices">
-        <h2 id="hardwareChoices"> 1.1 Hardware Decisions <a class="bu" href="#">Back to Top </a></h2>
+        <h2> 1.1 Hardware Decisions <a class="bu" href="#">Back to Top </a></h2>
         <h3>1.1.1 Network technology</h3>
         We chose to use a wireless network because the customer didn't want to have exposed cables running around the
         site, and digging trenches for the cables was deemed infeasible. Given the limited power available on site, we
@@ -820,9 +882,6 @@
             <h4>Admin Views Logs</h4>
         </a>
     </div>
-    <div id="reqdoc">
-        <h2> 2.4 Requirements Document <a class="bu" href="#">Back to Top </a></h2>
-    </div>
     <div id="datadi">
         <h2> 3.1 Database Diagram <a class="bu" href="#">Back to Top </a></h2>
 
@@ -1038,7 +1097,7 @@
 
         <p>Next version of UI prototype was created using Google Slides. Version 1 below shows new two-pane design which
             has Live View as a main screen and menu bar on the left. We have produced mock data based on conversation
-            with client about what whata
+            with client about what 
             is used on daily basis. This version of Live View gave an idea of basic layout for the system, however it
             lacked many user friendly features. </p>
 
@@ -2465,7 +2524,7 @@
                 Fledged'). This would improve readability and make it more user-friendly, as this screen is intended to
                 be used by both technical and
                 non-technical users.<br> This wasn't done as it would require planning to prevent the codebase from
-                becoming convulated, and it was viewed as a relatively insignificant improvement, so wasn't prioritised.
+                becoming convoluted, and it was viewed as a relatively insignificant improvement, so wasn't prioritised.
             </li>
             <li>
                 <strong>Add a scheduled clean-up function.</strong><br> As the system is used over years, the database
@@ -2502,7 +2561,7 @@
             Live validation is done on the password field to ensure that it is at least 6 characters long, and the
             password confirmation matches. Live validation is also done on the full name field to ensure that the full
             name isn't empty. If validation fails, the
-            field is highlited in red and the user is prevented from saving the form.<br> When clicking save, the data
+            field is highlighted in red and the user is prevented from saving the form.<br> When clicking save, the data
             is sent to the back-end (<code>update-password.js</code> for password and
             <code>update-profile.js</code> for full name), where the relevant database record is then updated with the
             new data.
@@ -2532,7 +2591,7 @@
             that should contain any additional parameters passed to the controller.<br> The <code>map</code> attribute
             is a string that, if present, indicates the field key that should be used to populate the autocomplete
             suggestions if a complex object
-            is retreived. For example, if the following object is received from the controller:
+            is retrieved. For example, if the following object is received from the controller:
             <pre><code>
                 {
                     id: 3,
@@ -2625,7 +2684,6 @@
             with multiple files with the same name (report, report(1), etc).
         </p>
     </div>
-
     <div id="deployment">
         <h2>7.1 Deployment <a class="bu" href="#">Back to Top </a></h2>
         <h3>7.1.1 About Deployment</h3>
