@@ -11,7 +11,7 @@
     "ajv": "^6.7.0",
     "browserify-fs": "^1.0.0",
     "grunt-browserify": "^5.3.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-excel-export": "^1.4.4",
     "papaparse": "^4.6.3",
     "sails": "^1.1.0",
