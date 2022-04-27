@@ -24,7 +24,7 @@
     "underscore": "^1.9.1",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vuejs-paginate": "^2.1.0",
-    "grunt": "^1.0.4",
+    "grunt": "^1.5.2",
     "sails-hook-grunt": "^3.1.0"
   },
   "devDependencies": {
